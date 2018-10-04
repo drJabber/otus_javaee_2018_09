@@ -1,0 +1,7 @@
+id;authority
+1;can_get_general_information
+2;can_get_salary
+3;can_modify_salary
+4;can_modify_general_information
+5;can_delete_staff
+6;can_add_staff

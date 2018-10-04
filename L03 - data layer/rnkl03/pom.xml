@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.rnk.l03</groupId>
+  <artifactId>rnk.l03</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <name>rnk-l03</name>
+  <packaging>war</packaging>
+
+  <!-- FIXME change it to the project's website -->
+  <url>http://www.example.com</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+    <javaee.version>8.0</javaee.version>
+    <hibernate.version>5.3.6.Final</hibernate.version>
+    <lombok.version>1.18.0</lombok.version>
+    <postgresql.jdbc.version>42.2.5</postgresql.jdbc.version>
+    <junit.version>4.11</junit.version>
+    <h2.version>1.4.197</h2.version>
+
+    <log4j.version>2.9.1</log4j.version>
+
+    <opencsv.version>4.2</opencsv.version>
+
+    <mavencompiler.version>3.5.1</mavencompiler.version>
+    <mavenbuilder.version>3.0.0</mavenbuilder.version>
+    <mavendeploy.version>2.2</mavendeploy.version>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+
+    <tomcat.deploymentPath>http://localhost:8080/manager/text</tomcat.deploymentPath>
+    <glassfish.location>/opt/glassfish5</glassfish.location>
+
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>javax</groupId>
+      <artifactId>javaee-api</artifactId>
+      <version>${javaee.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.11</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>${lombok.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-core</artifactId>
+      <version>${hibernate.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+      <version>${h2.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>com.opencsv</groupId>
+      <artifactId>opencsv</artifactId>
+      <version>${opencsv.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.postgresql</groupId>
+      <artifactId>postgresql</artifactId>
+      <version>${postgresql.jdbc.version}</version>
+      <scope>compile</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-api</artifactId>
+      <version>${log4j.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-core</artifactId>
+      <version>${log4j.version}</version>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <finalName>rnk.l03</finalName>
+    <sourceDirectory>src/main/java</sourceDirectory>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+      </resource>
+    </resources>
+    <testResources>
+      <testResource>
+        <directory>src/test/resources</directory>
+      </testResource>
+    </testResources>
+    <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
+      <plugins>
+        <plugin>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>${mavencompiler.version}</version>
+          <configuration>
+            <source>${maven.compiler.source}</source>
+            <target>${maven.compiler.target}</target>
+          </configuration>
+        </plugin>
+        <plugin>
+          <artifactId>maven-war-plugin</artifactId>
+          <version>${mavenbuilder.version}</version>
+          <configuration>
+            <warSourceDirectory>src/main/webapp</warSourceDirectory>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.tomcat.maven</groupId>
+          <artifactId>tomcat7-maven-plugin</artifactId>
+          <version>${mavendeploy.version}</version>
+          <configuration>
+            <url>${tomcat.deploymentPath}</url>
+            <server>TomcatServer</server>
+            <path>/${project.build.finalName}</path>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.codehaus.cargo</groupId>
+          <artifactId>cargo-maven2-plugin</artifactId>
+          <configuration>
+            <container>
+              <containerId>glassfish5x</containerId>
+              <type>installed</type>
+              <!-- Path to directory where glassfish is installed -->
+              <home>${glassfish.location}</home>
+            </container>
+            <configuration>
+              <type>existing</type>
+              <!-- Path to domains directory -->
+              <home>${glassfish.location}/glassfish/domains</home>
+              <properties>
+                <!-- Domain name where application will be deployed. -->
+                <cargo.glassfish.domain.name>domain1</cargo.glassfish.domain.name>
+                <!-- Glassfish user to authenticate -->
+                <cargo.remote.username>admin</cargo.remote.username>
+                <!-- Glassfish password to authenticate -->
+                <cargo.remote.password></cargo.remote.password>
+              </properties>
+            </configuration>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+</project>
