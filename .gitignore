@@ -24,6 +24,7 @@ hs_err_pid*
 
 
 #generated folders
+.idea/
 target/
 work/
 Totalizator/
