@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -199,33 +200,57 @@ public class RNKServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest rq, HttpServletResponse rsp) throws ServletException, IOException {
-        try(
-            Connection cn=ds.getConnection();
-            PreparedStatement q=cn.prepareStatement(
-                    "select s.fio, p.position, d.departament from staff s " +
-                            "join positions p on p.id=s.position_id "+
-                            "join departaments d on d.id=s.departament_id ");
-            ResultSet rs=q.executeQuery())
-        {
-            StringBuilder sb=new StringBuilder();
-            while (rs.next())
+        Map<String,String[]> parameters=rq.getParameterMap();
+        if (parameters.containsKey("get_max_salary_fio")) {
+            try(
+                    Connection cn=ds.getConnection();
+                    CallableStatement q=cn.prepareCall("{?=call get_max_salary_fio()}");
+                    )
             {
-                sb.append(
-                        Stream.of(
-                                rs.getString("fio:")+" "+
-                                rs.getString("position")+" at "+
-                                rs.getString("departament")
+                q.registerOutParameter(1,Types.VARCHAR  );
+                q.execute();
 
-                        ).collect(Collectors.joining("|"))
-                );
+                rsp.setCharacterEncoding("utf-8");
+                rsp.getWriter().println(q.getString(1).split(" ")[0]);
+
+
+            }catch(SQLException ex)
+            {
+                throw new ServletException(ex);
             }
-
-            rsp.getWriter().println(sb.toString());
-
-
-        }catch(SQLException ex)
+        }else
         {
-            throw new ServletException(ex);
+            try(
+                    Connection cn=ds.getConnection();
+                    PreparedStatement q=cn.prepareStatement(
+                            "select s.id, s.fio, p.position, d.departament from staff s " +
+                                    "join positions p on p.id=s.position_id "+
+                                    "join departaments d on d.id=s.departament_id "+
+                                    "order by s.id desc");
+                    ResultSet rs=q.executeQuery())
+            {
+                StringBuilder sb=new StringBuilder();
+                while (rs.next())
+                {
+                    sb.append(
+                            Stream.of(
+                                    rs.getString("id")+" - "+
+                                            rs.getString("fio")+": "+
+                                            rs.getString("position")+" at "+
+                                            rs.getString("departament")+"\n"
+
+                            ).collect(Collectors.joining("|"))
+                    );
+                }
+
+                rsp.setCharacterEncoding("utf-8");
+                rsp.getWriter().println(sb.toString());
+
+
+            }catch(SQLException ex)
+            {
+                throw new ServletException(ex);
+            }
         }
     }
 
@@ -253,15 +278,18 @@ public class RNKServlet extends HttpServlet {
         try(
                 Connection cn=ds.getConnection();
                 PreparedStatement q=cn.prepareStatement(
-                        "update authorities set authority=? where id=?");
+                        "update staff set fio=?, position_id=? where id=?");
         )
         {
-            q.setString(1,"can_get_general_info");
-            q.setInt(2,1);
+            q.setString(1,"Марзаганов Зульпикар Зульпикарович");
+            q.setInt(2,3);
+            q.setInt(3,4);
             q.executeUpdate();
 
-            q.setString(1,"can_modify_general_info");
+            q.setString(1,"Петрова Марина Сергеевна");
             q.setInt(2,4);
+            q.setInt(3,5);
+            q.executeUpdate();
             q.executeUpdate();
         }catch(SQLException ex)
         {
@@ -274,10 +302,12 @@ public class RNKServlet extends HttpServlet {
         try(
                 Connection cn=ds.getConnection();
                 PreparedStatement q=cn.prepareStatement(
-                        "delete from authorities where id=?");
+                        "delete from staff where id=?");
         )
         {
             q.setInt(1,6);
+            q.executeUpdate();
+            q.setInt(1,7);
             q.executeUpdate();
         }catch(SQLException ex)
         {
