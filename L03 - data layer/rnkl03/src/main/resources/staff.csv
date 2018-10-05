@@ -1,0 +1,6 @@
+fio;position_id;departament_id;salary;role_id;login;passwd_hash;passwd_salt
+Шушмарев Ринат Ибрагимович;1;1;80000;1;r_shushmarev;-;-
+Зульпикаров Зульпикар Зульпикарович;2;2;40000;3;z_zulpikarov;-;-
+Захарова Марина Сергеевна;1;1;70000;1;m_zakharova;-;-
+Абакусов Нельсон Маркович;3;3;50000;2;n_abakusov;-;-
+Боос Евгений Авраамович;4;4;213000;4;e_boos;-;-

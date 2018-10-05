@@ -129,8 +129,8 @@
           <version>${mavendeploy.version}</version>
           <configuration>
             <url>${tomcat.deploymentPath}</url>
-            <server>TomcatServer</server>
-            <path>/${project.build.finalName}</path>
+            <server>TomcatServerRNK</server>
+            <path>/rnk</path>
           </configuration>
         </plugin>
         <plugin>

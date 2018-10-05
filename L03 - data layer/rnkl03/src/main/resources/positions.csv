@@ -1,0 +1,5 @@
+position;default_dept_id;head_id;default_role_id;default_salary
+Developer;1;;1;100000
+HR;2;;3;40000
+Accountant;3;;2;50000
+CEO;4;;4;200000
