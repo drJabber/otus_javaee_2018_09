@@ -132,28 +132,4 @@ public class Loader {
 
     }
 
-    public ArrayList<String> getAuthorities(){
-        return authorities;
-    }
-
-    public ArrayList<String> getRoles(){
-        return roles;
-    }
-
-    public ArrayList<String[]> getRoleAuth(){
-        return role_auth;
-    }
-
-    public ArrayList<String[]> getPositions(){
-        return positions;
-    }
-
-    public ArrayList<String[]> getDepartaments(){
-        return departaments;
-    }
-
-    public ArrayList<String[]> getStaff(){
-        return staff;
-    }
-
 }

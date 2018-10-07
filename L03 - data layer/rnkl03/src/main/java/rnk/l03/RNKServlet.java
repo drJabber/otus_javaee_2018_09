@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -31,7 +32,7 @@ public class RNKServlet extends HttpServlet {
                         "insert into authorities(id, authority) values(?,?)");
         )
         {
-            ArrayList<String> authorities=loader.getAuthorities();
+            List<String> authorities=loader.getAuthorities();
             int idx=1;
             for (String authority: authorities
             ) {
@@ -55,7 +56,7 @@ public class RNKServlet extends HttpServlet {
                         "insert into roles(role) values(?)");
         )
         {
-            ArrayList<String> roles=loader.getRoles();
+            List<String> roles=loader.getRoles();
             int idx=1;
             for (String role: roles
             ) {
@@ -78,7 +79,7 @@ public class RNKServlet extends HttpServlet {
                         "insert into role_auth(role_id,auth_id) values(?,?)");
         )
         {
-            ArrayList<String []> role_auths=loader.getRoleAuth();
+            List<String []> role_auths=loader.getRole_auth();
             int idx=1;
             for (String[] role_auth: role_auths
             ) {
@@ -102,7 +103,7 @@ public class RNKServlet extends HttpServlet {
                         "insert into positions(position, default_dept_id, head_id, default_role_id, default_salary) values(?,?,?,?,?)");
         )
         {
-            ArrayList<String []> positions=loader.getPositions();
+            List<String []> positions=loader.getPositions();
             int idx=1;
             for (String[] position: positions
             ) {
@@ -135,7 +136,7 @@ public class RNKServlet extends HttpServlet {
                         "insert into departaments(departament,head_dept_id,head_of_dept_id,town) values(?,?,?,?)");
         )
         {
-            ArrayList<String []> departaments=loader.getDepartaments();
+            List<String []> departaments=loader.getDepartaments();
             int idx=1;
             for (String[] departament: departaments
             ) {
@@ -174,7 +175,7 @@ public class RNKServlet extends HttpServlet {
                         "insert into staff(fio,position_id,departament_id,salary,role_id,login,passwd_hash,passwd_salt) values(?,?,?,?,?,?,?,?)");
         )
         {
-            ArrayList<String []> staff=loader.getStaff();
+            List<String []> staff=loader.getStaff();
             int idx=1;
             for (String[] person: staff
             ) {

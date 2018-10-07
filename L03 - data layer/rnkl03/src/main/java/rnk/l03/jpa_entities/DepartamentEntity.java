@@ -1,4 +1,4 @@
-package rnk.l03.jpa;
+package rnk.l03.jpa_entities;
 
 import lombok.Data;
 
