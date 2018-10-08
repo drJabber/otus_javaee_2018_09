@@ -11,8 +11,9 @@ import javax.validation.constraints.Size;
 @Table(name="staff",schema="public")
 public class StaffEntity {
     @Id
-    @GeneratedValue(strategy= GenerationType.SEQUENCE)
-    @Column(name="id")
+    @SequenceGenerator(name="staff_id_seq",sequenceName = "staff_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy= GenerationType.SEQUENCE, generator="staff_id_seq")
+    @Column(name="id",updatable=false)
     private Integer id;
 
     @NotNull
@@ -27,6 +28,10 @@ public class StaffEntity {
     @ManyToOne
     @JoinColumn(name="departament_id")
     private DepartamentEntity departament;
+
+    @ManyToOne
+    @JoinColumn(name="role_id")
+    private RoleEntity role;
 
     @Column(name="salary")
     private Integer salary;

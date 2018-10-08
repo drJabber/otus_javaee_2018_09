@@ -8,7 +8,6 @@ import javax.validation.constraints.Size;
 import java.util.Set;
 import java.util.HashSet;
 
-@Data
 @Entity
 @Table(name="roles",schema="public")
 public class RoleEntity {
@@ -23,13 +22,45 @@ public class RoleEntity {
     private String role;
 
 
+
     @ManyToMany(fetch=FetchType.LAZY,
-                cascade={CascadeType.PERSIST,
-                         CascadeType.MERGE
-                },
-            mappedBy="roles"
+            cascade={CascadeType.PERSIST,
+                    CascadeType.MERGE
+            }
     )
-    private Set<RoleEntity> roles=new HashSet<>();
+    @JoinTable(name="role_auth",
+            joinColumns = {@JoinColumn(name="role_id")},
+            inverseJoinColumns = {@JoinColumn(name="auth_id")})
+    private Set<AuthorityEntity> authorities=new HashSet<>();
+
+    @Override
+    public String toString(){
+        return role;
+    }
+
+    public Integer getId(){
+        return id;
+    }
+
+    public void setId(Integer value){
+        id=value;
+    }
+
+    public String getRole(){
+        return role;
+    }
+
+    public void setRole(String value){
+        role=value;
+    }
+
+    public Set<AuthorityEntity> getAuthorities(){
+        return authorities;
+    }
+
+    public void setAuthorities(Set<AuthorityEntity> value){
+        authorities=value;
+    }
 }
 
 

@@ -1,9 +1,7 @@
 package rnk.l03;
 
 
-import rnk.l03.jpa_entities.DepartamentEntity;
-import rnk.l03.jpa_entities.PositionEntity;
-import rnk.l03.jpa_entities.StaffEntity;
+import rnk.l03.jpa_entities.*;
 
 import javax.persistence.*;
 import javax.servlet.ServletException;
@@ -18,6 +16,7 @@ import java.security.SecureRandom;
 import java.util.Base64;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
@@ -37,16 +36,43 @@ public class RNKJPAServlet extends HttpServlet {
         EntityTransaction transaction = em.getTransaction();
         try {
             transaction.begin();
-            Query q = em.createQuery(
-                    "select staff "+
-                       "from StaffEntity staff "+
-                       "JOIN staff.departament dept " +
-                       "join staff.position pos "+
-                       "order by staff.id desc");
-            List<StaffEntity> result = q.getResultList();
-            try (PrintWriter pw = response.getWriter()){
-                for (StaffEntity e : result){
-                    pw.println(String.format("%d - %s: %s at %s",e.getId(),e.getFio(),e.getPosition().getPosition(),e.getDepartament().getDepartament()));
+
+            if (request.getParameterMap().containsKey("get_max_salary_fio")){
+                StoredProcedureQuery q = em
+                        .createStoredProcedureQuery("get_max_salary_fio")
+                        .registerStoredProcedureParameter(0,
+                                String.class, ParameterMode.OUT);
+                q.execute();
+
+                String mx= q.getOutputParameterValue(0).toString();
+
+                response.setCharacterEncoding("utf-8");
+                response.getWriter().println(mx.split(" ")[0]);
+
+
+            }else
+            {
+                Query q = em.createQuery(
+                        "select staff "+
+                                "from StaffEntity staff "+
+                                "order by staff.id desc");
+                List<StaffEntity> result = q.getResultList();
+
+                response.setCharacterEncoding("utf-8");
+                try (PrintWriter pw = response.getWriter()){
+                    for (StaffEntity e : result){
+                        String s="";
+                        RoleEntity role=e.getRole();
+                        Set<AuthorityEntity> auths=role.getAuthorities();
+                        for (AuthorityEntity auth: auths) {
+                            s=s+auth.getAuthority()+", ";
+                        }
+                        if (!s.isEmpty())
+                        {
+                            s=s.substring(0,s.length()-2);
+                        }
+                        pw.println(String.format("%d - %s: %s at %s; role: %s(%s)",e.getId(),e.getFio(),e.getPosition().getPosition(),e.getDepartament().getDepartament(),role.getRole(),s));
+                    }
                 }
             }
             transaction.commit();
@@ -81,27 +107,31 @@ public class RNKJPAServlet extends HttpServlet {
 
         try {
             transaction.begin();
-            Map<String,String[]> parameters=request.getParameterMap();
-            Query q;
 
             StaffEntity staffEntity = new StaffEntity();
-            staffEntity.setFio(parameters.get("fio")[0]);
+            staffEntity.setFio(request.getParameter("fio"));
 
-            q = em.createQuery("select dept from DepartamentEntity dept where dept.departament=:departament");
-            q.setParameter("departament",parameters.get("dept")[0]);
-            List<DepartamentEntity> departaments= q.getResultList();
+            Query q1 = em.createQuery("select dept from DepartamentEntity dept where dept.departament=:departament");
+            q1.setParameter("departament",request.getParameter("dept"));
+            List<DepartamentEntity> departaments= q1.getResultList();
             staffEntity.setDepartament(departaments.get(0));
 
-            q = em.createQuery("select position from PositionEntity position where position.position=:position");
-            q.setParameter("position",parameters.get("position")[0]);
-            List<PositionEntity> positions= q.getResultList();
+            Query q2 = em.createQuery("select position from PositionEntity position where position.position=:position");
+            q2.setParameter("position",request.getParameter("position"));
+            List<PositionEntity> positions= q2.getResultList();
             staffEntity.setPosition(positions.get(0));
 
-            staffEntity.setSalary(Integer.parseInt(parameters.get("salary")[0]));
-            staffEntity.setLogin(parameters.get("login")[0]);
+            Query q3 = em.createQuery("select role from RoleEntity role where role.role=:role");
+            q3.setParameter("role",request.getParameter("role"));
+            List<RoleEntity> roles= q3.getResultList();
+            staffEntity.setRole(roles.get(0));
+
+            staffEntity.setSalary(Integer.parseInt(request.getParameter("salary")));
+
+            staffEntity.setLogin(request.getParameter("login"));
 
             byte[] salt=get_salt();
-            String password=parameters.get("password")[0];
+            String password=request.getParameter("password");
             staffEntity.setPasswd_hash(hash(password,salt));
             staffEntity.setPasswd_salt(Base64.getEncoder().encodeToString(salt));
 
@@ -109,7 +139,43 @@ public class RNKJPAServlet extends HttpServlet {
             em.flush();
 
             transaction.commit();
-            response.getWriter().println("Person '" + parameters.get("fio")[0] + "' has been successfully created");
+            response.getWriter().println("Person '" + request.getParameter("fio")+ "' has been successfully created");
+        }
+            catch (Exception e){
+            transaction.rollback();
+            throw new ServletException(e);
+        }
+        finally {
+            em.close();
+        }
+    }
+
+
+    @Override
+    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        EntityManager em = emf.createEntityManager(); // for Tomcat
+        EntityTransaction transaction = em.getTransaction();
+
+        try {
+            transaction.begin();
+
+            Integer staff_id=Integer.parseInt(request.getParameter("staff_id"));
+            String new_fio=request.getParameter("new_fio");
+            String new_dept=request.getParameter("new_dept");
+
+            StaffEntity staffEntity = em.find(StaffEntity.class,staff_id);
+            staffEntity.setFio(new_fio);
+
+            Query q1 = em.createQuery("select dept from DepartamentEntity dept where dept.departament=:departament");
+            q1.setParameter("departament",new_dept);
+            List<DepartamentEntity> departaments= q1.getResultList();
+            staffEntity.setDepartament(departaments.get(0));
+
+            em.merge(staffEntity);
+            em.flush();
+
+            transaction.commit();
+            response.getWriter().println("Person '" + new_fio+ "' has been successfully updated");
         }
         catch (Exception e){
             transaction.rollback();
@@ -120,6 +186,33 @@ public class RNKJPAServlet extends HttpServlet {
         }
     }
 
+    @Override
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        EntityManager em = emf.createEntityManager(); // for Tomcat
+        EntityTransaction transaction = em.getTransaction();
+
+        try {
+            transaction.begin();
+
+            Integer staff_id=Integer.parseInt(request.getParameter("staff_id"));
+
+            StaffEntity staffEntity = em.find(StaffEntity.class,staff_id);
+            String fio=staffEntity.getFio();
+
+            em.remove(staffEntity);
+            em.flush();
+
+            transaction.commit();
+            response.getWriter().println("Person '" + fio+ "' has been deleted");
+        }
+        catch (Exception e){
+            transaction.rollback();
+            throw new ServletException(e);
+        }
+        finally {
+            em.close();
+        }
+    }
 
 }
 
