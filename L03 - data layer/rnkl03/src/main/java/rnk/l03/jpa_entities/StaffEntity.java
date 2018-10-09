@@ -51,4 +51,9 @@ public class StaffEntity {
     @Column(name="passwd_salt")
     private String passwd_salt;
 
+
+    private Integer position_id;
+    private Integer departament_id;
+    private Integer role_id;
+
 }

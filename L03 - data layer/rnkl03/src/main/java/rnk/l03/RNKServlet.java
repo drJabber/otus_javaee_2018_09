@@ -8,14 +8,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import rnk.l03.jpa_entities.*;
 import rnk.l03.utils.Loader;
 
 
@@ -32,11 +31,11 @@ public class RNKServlet extends HttpServlet {
                         "insert into authorities(id, authority) values(?,?)");
         )
         {
-            List<String> authorities=loader.getAuthorities();
+            List<AuthorityEntity> authorities=loader.getAuthorities();
             int idx=1;
-            for (String authority: authorities
+            for (AuthorityEntity authority: authorities
             ) {
-                q.setString(2,authority);
+                q.setString(2,authority.getAuthority());
                 q.setInt(1,idx);
                 q.executeUpdate();
                 idx++;
@@ -56,11 +55,11 @@ public class RNKServlet extends HttpServlet {
                         "insert into roles(role) values(?)");
         )
         {
-            List<String> roles=loader.getRoles();
+            List<RoleEntity> roles=loader.getRoles();
             int idx=1;
-            for (String role: roles
+            for (RoleEntity role: roles
             ) {
-                q.setString(1,role);
+                q.setString(1,role.getRole());
                 q.executeUpdate();
                 idx++;
                 rsp.getWriter().println("Role '"+role+"' created");
@@ -79,15 +78,15 @@ public class RNKServlet extends HttpServlet {
                         "insert into role_auth(role_id,auth_id) values(?,?)");
         )
         {
-            List<String []> role_auths=loader.getRole_auth();
+            List<RoleAuthPair> role_auths=loader.getRole_auth();
             int idx=1;
-            for (String[] role_auth: role_auths
+            for (RoleAuthPair role_auth: role_auths
             ) {
-                q.setInt(1, Integer.parseInt(role_auth[0]));
-                q.setInt(2, Integer.parseInt(role_auth[1]));
+                q.setInt(1, role_auth.getFirst());
+                q.setInt(2, role_auth.getSecond());
                 q.executeUpdate();
                 idx++;
-                rsp.getWriter().println("Role_auth '"+role_auth[0]+" "+role_auth[1]+"' created");
+                rsp.getWriter().println("Role_auth '"+role_auth.getFirst()+" "+role_auth.getSecond()+"' created");
             }
 
         }catch(SQLException ex)
@@ -103,24 +102,24 @@ public class RNKServlet extends HttpServlet {
                         "insert into positions(position, default_dept_id, head_id, default_role_id, default_salary) values(?,?,?,?,?)");
         )
         {
-            List<String []> positions=loader.getPositions();
+            List<PositionEntity> positions=loader.getPositions();
             int idx=1;
-            for (String[] position: positions
+            for (PositionEntity position: positions
             ) {
-                q.setString(1, position[0]);
-                q.setInt(2, Integer.parseInt(position[1]));
+                q.setString(1, position.getPosition());
+                q.setInt(2, position.getDefault_dept_id());
 
-                String p=position[2];
-                if (p.isEmpty()){
+                Integer p=position.getHead_id();
+                if (p<0){
                     q.setNull(3, Types.INTEGER);
                 }else{
-                    q.setInt(3, Integer.parseInt(p));
+                    q.setInt(3, p);
                 }
-                q.setInt(4, Integer.parseInt(position[3]));
-                q.setInt(5, Integer.parseInt(position[4]));
+                q.setInt(4, position.getDefault_role_id());
+                q.setInt(5, position.getDefault_salary());
                 q.executeUpdate();
                 idx++;
-                rsp.getWriter().println("position '"+position[0]+"' created");
+                rsp.getWriter().println("position '"+position.getPosition()+"' created");
             }
 
         }catch(SQLException ex)
@@ -136,30 +135,32 @@ public class RNKServlet extends HttpServlet {
                         "insert into departaments(departament,head_dept_id,head_of_dept_id,town) values(?,?,?,?)");
         )
         {
-            List<String []> departaments=loader.getDepartaments();
+            List<DepartamentEntity> departaments=loader.getDepartaments();
             int idx=1;
-            for (String[] departament: departaments
+            for (DepartamentEntity departament: departaments
             ) {
-                q.setString(1, departament[0]);
+                q.setString(1, departament.getDepartament());
 
-                String p=departament[1];
-                if (p.isEmpty()){
-                    q.setNull(2, Types.INTEGER);
-                }else{
-                    q.setInt(2, Integer.parseInt(p));
+                Integer h=departament.getHead_dept_id();
+                if (h<0){
+                    q.setNull(2,Types.INTEGER);
+                }else
+                {
+                    q.setInt(2,h);
                 }
 
-                p=departament[2];
-                if (p.isEmpty()){
-                    q.setNull(3, Types.INTEGER);
-                }else{
-                    q.setInt(3, Integer.parseInt(p));
+                h=departament.getHead_of_dept_id();
+                if (h<0){
+                    q.setNull(3,Types.INTEGER);
+                }else
+                {
+                    q.setInt(3,h);
                 }
 
-                q.setString(4, departament[3]);
+                q.setString(4, departament.getTown());
                 q.executeUpdate();
                 idx++;
-                rsp.getWriter().println("departament '"+departament[0]+"' created");
+                rsp.getWriter().println("departament '"+departament.getDepartament()+"' created");
             }
 
         }catch(SQLException ex)
@@ -175,21 +176,21 @@ public class RNKServlet extends HttpServlet {
                         "insert into staff(fio,position_id,departament_id,salary,role_id,login,passwd_hash,passwd_salt) values(?,?,?,?,?,?,?,?)");
         )
         {
-            List<String []> staff=loader.getStaff();
+            List<StaffEntity> staff=loader.getStaff();
             int idx=1;
-            for (String[] person: staff
+            for (StaffEntity person: staff
             ) {
-                q.setString(1, person[0]);
-                q.setInt(2, Integer.parseInt(person[1]));
-                q.setInt(3, Integer.parseInt(person[2]));
-                q.setInt(4, Integer.parseInt(person[3]));
-                q.setInt(5, Integer.parseInt(person[4]));
-                q.setString(6, person[5]);
-                q.setString(7, person[6]);
-                q.setString(8, person[7]);
+                q.setString(1, person.getFio());
+                q.setInt(2, person.getPosition_id());
+                q.setInt(3, person.getDepartament_id());
+                q.setInt(4, person.getSalary());
+                q.setInt(5, person.getRole_id());
+                q.setString(6, person.getLogin());
+                q.setString(7, person.getPasswd_hash());
+                q.setString(8, person.getPasswd_salt());
                 q.executeUpdate();
                 idx++;
-                rsp.getWriter().println("person '"+person[0]+"' created");
+                rsp.getWriter().println("person '"+person.getFio()+"' created");
             }
 
         }catch(SQLException ex)
@@ -284,12 +285,12 @@ public class RNKServlet extends HttpServlet {
         {
             q.setString(1,"Марзаганов Зульпикар Зульпикарович");
             q.setInt(2,3);
-            q.setInt(3,4);
+            q.setInt(3,18);
             q.executeUpdate();
 
             q.setString(1,"Петрова Марина Сергеевна");
             q.setInt(2,4);
-            q.setInt(3,5);
+            q.setInt(3,19);
             q.executeUpdate();
             q.executeUpdate();
         }catch(SQLException ex)
@@ -306,9 +307,9 @@ public class RNKServlet extends HttpServlet {
                         "delete from staff where id=?");
         )
         {
-            q.setInt(1,6);
+            q.setInt(1,20);
             q.executeUpdate();
-            q.setInt(1,7);
+            q.setInt(1,21);
             q.executeUpdate();
         }catch(SQLException ex)
         {

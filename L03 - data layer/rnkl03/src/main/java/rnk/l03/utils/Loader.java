@@ -5,21 +5,23 @@ import com.opencsv.CSVReaderBuilder;
 import com.opencsv.CSVParser;
 import com.opencsv.CSVParserBuilder;
 import lombok.Data;
+import rnk.l03.jpa_entities.*;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.List;
 
 @Data
 public class Loader {
 
-    private ArrayList<String> authorities;
-    private ArrayList<String> roles;
-    private ArrayList<String[]> departaments;
-    private ArrayList<String[]> positions;
-    private ArrayList<String[]> staff;
-    private ArrayList<String[]> role_auth;
+    private List<AuthorityEntity> authorities;
+    private List<RoleEntity> roles;
+    private List<DepartamentEntity> departaments;
+    private List<PositionEntity> positions;
+    private List<StaffEntity> staff;
+    private List<RoleAuthPair> role_auth;
 
     private void loadAuthorities() throws IOException {
         authorities.clear();
@@ -31,7 +33,9 @@ public class Loader {
         ){
             String[] csvLine;
             while ((csvLine=reader.readNext())!=null){
-                authorities.add(csvLine[1]);
+                AuthorityEntity a=new AuthorityEntity();
+                a.setAuthority(csvLine[1]);
+                authorities.add(a);
             }
         }
     }
@@ -46,7 +50,9 @@ public class Loader {
         ){
             String[] csvLine;
             while ((csvLine=reader.readNext())!=null){
-                roles.add(csvLine[0]);
+                RoleEntity r=new RoleEntity();
+                r.setRole(csvLine[0]);
+                roles.add(r);
             }
         }
     }
@@ -61,7 +67,11 @@ public class Loader {
         ){
             String[] csvLine;
             while ((csvLine=reader.readNext())!=null){
-                role_auth.add(csvLine);
+                RoleAuthPair p=new RoleAuthPair();
+                p.setFirst(Integer.parseInt(csvLine[0]));
+                p.setSecond(Integer.parseInt(csvLine[1]));
+
+                role_auth.add(p);
             }
         }
     }
@@ -77,7 +87,22 @@ public class Loader {
         ){
             String[] csvLine;
             while ((csvLine=reader.readNext())!=null){
-                positions.add(csvLine);
+                PositionEntity p=new PositionEntity();
+
+                p.setPosition(csvLine[0]);
+                p.setDefault_dept_id(Integer.parseInt(csvLine[1]));
+
+                String h=csvLine[2];
+                if (h.isEmpty()){
+                    p.setHead_id(-1);
+                }else
+                {
+                    p.setHead_id(Integer.parseInt(h));
+                }
+                p.setDefault_role_id(Integer.parseInt(csvLine[3]));
+                p.setDefault_salary(Integer.parseInt(csvLine[4]));
+
+                positions.add(p);
             }
         }
     }
@@ -92,7 +117,28 @@ public class Loader {
         ){
             String[] csvLine;
             while ((csvLine=reader.readNext())!=null){
-                departaments.add(csvLine);
+                DepartamentEntity d=new DepartamentEntity();
+                d.setDepartament(csvLine[0]);
+
+                String h=csvLine[1];
+                if (h.isEmpty()){
+                    d.setHead_dept_id(-1);
+                }else
+                {
+                    d.setHead_dept_id(Integer.parseInt(h));
+                }
+
+                h=csvLine[2];
+                if (h.isEmpty()){
+                    d.setHead_of_dept_id(-1);
+                }else
+                {
+                    d.setHead_of_dept_id(Integer.parseInt(h));
+                }
+
+                d.setTown(csvLine[3]);
+
+                departaments.add(d);
             }
         }
     }
@@ -107,19 +153,28 @@ public class Loader {
         ){
             String[] csvLine;
             while ((csvLine=reader.readNext())!=null){
-                staff.add(csvLine);
+                StaffEntity s=new StaffEntity();
+                s.setFio(csvLine[0]);
+                s.setPosition_id(Integer.parseInt(csvLine[1]));
+                s.setDepartament_id(Integer.parseInt(csvLine[2]));
+                s.setSalary(Integer.parseInt(csvLine[3]));
+                s.setRole_id(Integer.parseInt(csvLine[4]));
+                s.setLogin(csvLine[5]);
+                s.setPasswd_hash(csvLine[6]);
+                s.setPasswd_salt(csvLine[7]);
+                staff.add(s);
             }
         }
     }
 
 
     public Loader(){
-        authorities=new ArrayList<String>();
-        roles=new ArrayList<String>();
-        role_auth=new ArrayList<String[]>();
-        positions=new ArrayList<String[]>();
-        departaments=new ArrayList<String[]>();
-        staff=new ArrayList<String[]>();
+        authorities=new ArrayList<AuthorityEntity>();
+        roles=new ArrayList<RoleEntity>();
+        role_auth=new ArrayList<RoleAuthPair>();
+        positions=new ArrayList<PositionEntity>();
+        departaments=new ArrayList<DepartamentEntity>();
+        staff=new ArrayList<StaffEntity>();
     }
 
     public void loadAll() throws IOException{

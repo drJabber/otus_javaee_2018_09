@@ -35,4 +35,9 @@ public class PositionEntity {
 
     @Column(name="default_salary")
     private Integer default_salary;
+
+
+    private Integer default_dept_id;
+    private Integer head_id;
+    private Integer default_role_id;
 }

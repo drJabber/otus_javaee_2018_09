@@ -36,4 +36,8 @@ public class DepartamentEntity {
     @Column(name="town")
     private String town;
 
+
+    private Integer head_dept_id;
+    private Integer head_of_dept_id;
+
 }
