@@ -17,7 +17,9 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
     <javaee.version>8.0</javaee.version>
-    <jaxb-api.version>2.3.0</jaxb-api.version>
+    <jaxb-api.version>2.3.1</jaxb-api.version>
+    <jaxb-runtime.version>2.3.0</jaxb-runtime.version>
+    <javax.activation.version>1.2.0</javax.activation.version>
     <hibernate.version>5.3.6.Final</hibernate.version>
     <lombok.version>1.18.0</lombok.version>
     <postgresql.jdbc.version>42.2.5</postgresql.jdbc.version>
@@ -50,8 +52,23 @@
       <groupId>javax.xml.bind</groupId>
       <artifactId>jaxb-api</artifactId>
       <version>${jaxb-api.version}</version>
-      <!--<scope>provided</scope>-->
     </dependency>
+      <dependency>
+          <groupId>org.glassfish.jaxb</groupId>
+          <artifactId>jaxb-runtime</artifactId>
+          <version>${jaxb-runtime.version}</version>
+      </dependency>
+      <!-- JAXB needs javax.activation module (jdk9) -->
+      <dependency>
+          <groupId>javax.activation</groupId>
+          <artifactId>javax.activation-api</artifactId>
+          <version>${javax.activation.version}</version>
+      </dependency>
+      <!--<dependency>-->
+          <!--<groupId>com.sun.xml.bind</groupId>-->
+          <!--<artifactId>jaxb-impl</artifactId>-->
+          <!--<version>${jaxb-impl.version}</version>-->
+      <!--</dependency>-->
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>

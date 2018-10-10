@@ -37,7 +37,7 @@ public class PositionEntity {
     private Integer default_salary;
 
 
-    private Integer default_dept_id;
-    private Integer head_id;
-    private Integer default_role_id;
+    private Integer default_dept_id0;
+    private Integer head_id0;
+    private Integer default_role_id0;
 }

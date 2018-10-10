@@ -90,16 +90,16 @@ public class Loader {
                 PositionEntity p=new PositionEntity();
 
                 p.setPosition(csvLine[0]);
-                p.setDefault_dept_id(Integer.parseInt(csvLine[1]));
+                p.setDefault_dept_id0(Integer.parseInt(csvLine[1]));
 
                 String h=csvLine[2];
                 if (h.isEmpty()){
-                    p.setHead_id(-1);
+                    p.setHead_id0(-1);
                 }else
                 {
-                    p.setHead_id(Integer.parseInt(h));
+                    p.setHead_id0(Integer.parseInt(h));
                 }
-                p.setDefault_role_id(Integer.parseInt(csvLine[3]));
+                p.setDefault_role_id0(Integer.parseInt(csvLine[3]));
                 p.setDefault_salary(Integer.parseInt(csvLine[4]));
 
                 positions.add(p);
@@ -122,18 +122,18 @@ public class Loader {
 
                 String h=csvLine[1];
                 if (h.isEmpty()){
-                    d.setHead_dept_id(-1);
+                    d.setHead_dept_id0(-1);
                 }else
                 {
-                    d.setHead_dept_id(Integer.parseInt(h));
+                    d.setHead_dept_id0(Integer.parseInt(h));
                 }
 
                 h=csvLine[2];
                 if (h.isEmpty()){
-                    d.setHead_of_dept_id(-1);
+                    d.setHead_of_dept_id0(-1);
                 }else
                 {
-                    d.setHead_of_dept_id(Integer.parseInt(h));
+                    d.setHead_of_dept_id0(Integer.parseInt(h));
                 }
 
                 d.setTown(csvLine[3]);
@@ -155,10 +155,10 @@ public class Loader {
             while ((csvLine=reader.readNext())!=null){
                 StaffEntity s=new StaffEntity();
                 s.setFio(csvLine[0]);
-                s.setPosition_id(Integer.parseInt(csvLine[1]));
-                s.setDepartament_id(Integer.parseInt(csvLine[2]));
+                s.setPosition_id0(Integer.parseInt(csvLine[1]));
+                s.setDepartament_id0(Integer.parseInt(csvLine[2]));
                 s.setSalary(Integer.parseInt(csvLine[3]));
-                s.setRole_id(Integer.parseInt(csvLine[4]));
+                s.setRole_id0(Integer.parseInt(csvLine[4]));
                 s.setLogin(csvLine[5]);
                 s.setPasswd_hash(csvLine[6]);
                 s.setPasswd_salt(csvLine[7]);

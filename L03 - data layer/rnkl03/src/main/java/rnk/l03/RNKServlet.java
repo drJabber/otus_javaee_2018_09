@@ -107,15 +107,15 @@ public class RNKServlet extends HttpServlet {
             for (PositionEntity position: positions
             ) {
                 q.setString(1, position.getPosition());
-                q.setInt(2, position.getDefault_dept_id());
+                q.setInt(2, position.getDefault_dept_id0());
 
-                Integer p=position.getHead_id();
+                Integer p=position.getHead_id0();
                 if (p<0){
                     q.setNull(3, Types.INTEGER);
                 }else{
                     q.setInt(3, p);
                 }
-                q.setInt(4, position.getDefault_role_id());
+                q.setInt(4, position.getDefault_role_id0());
                 q.setInt(5, position.getDefault_salary());
                 q.executeUpdate();
                 idx++;
@@ -141,7 +141,7 @@ public class RNKServlet extends HttpServlet {
             ) {
                 q.setString(1, departament.getDepartament());
 
-                Integer h=departament.getHead_dept_id();
+                Integer h=departament.getHead_dept_id0();
                 if (h<0){
                     q.setNull(2,Types.INTEGER);
                 }else
@@ -149,7 +149,7 @@ public class RNKServlet extends HttpServlet {
                     q.setInt(2,h);
                 }
 
-                h=departament.getHead_of_dept_id();
+                h=departament.getHead_of_dept_id0();
                 if (h<0){
                     q.setNull(3,Types.INTEGER);
                 }else
@@ -181,10 +181,10 @@ public class RNKServlet extends HttpServlet {
             for (StaffEntity person: staff
             ) {
                 q.setString(1, person.getFio());
-                q.setInt(2, person.getPosition_id());
-                q.setInt(3, person.getDepartament_id());
+                q.setInt(2, person.getPosition_id0());
+                q.setInt(3, person.getDepartament_id0());
                 q.setInt(4, person.getSalary());
-                q.setInt(5, person.getRole_id());
+                q.setInt(5, person.getRole_id0());
                 q.setString(6, person.getLogin());
                 q.setString(7, person.getPasswd_hash());
                 q.setString(8, person.getPasswd_salt());

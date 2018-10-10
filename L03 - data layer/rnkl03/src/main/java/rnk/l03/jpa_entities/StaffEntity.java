@@ -1,12 +1,19 @@
 package rnk.l03.jpa_entities;
 
 import lombok.Data;
+import rnk.l03.xml.DepartamentEntityAdapter;
+import rnk.l03.xml.PositionEntityAdapter;
+import rnk.l03.xml.RoleEntityAdapter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 @Data
+@XmlRootElement(name="employee")
+@XmlAccessorType(XmlAccessType.FIELD)
 @Entity
 @Table(name="staff",schema="public")
 public class StaffEntity {
@@ -14,46 +21,57 @@ public class StaffEntity {
     @SequenceGenerator(name="staff_id_seq",sequenceName = "staff_id_seq", allocationSize = 1)
     @GeneratedValue(strategy= GenerationType.SEQUENCE, generator="staff_id_seq")
     @Column(name="id",updatable=false)
+    @XmlAttribute(required = true)
     private Integer id;
 
     @NotNull
     @Size(max=500)
     @Column(name="fio")
+    @XmlAttribute(required = true)
     private String fio;
 
     @ManyToOne
     @JoinColumn(name="position_id")
+    @XmlAttribute(required = true)
+    @XmlJavaTypeAdapter(PositionEntityAdapter.class)
     private PositionEntity position;
 
     @ManyToOne
     @JoinColumn(name="departament_id")
+    @XmlElement(required = true)
+    @XmlJavaTypeAdapter(DepartamentEntityAdapter.class)
     private DepartamentEntity departament;
 
     @ManyToOne
     @JoinColumn(name="role_id")
+    @XmlElement(required = true)
+    @XmlJavaTypeAdapter(RoleEntityAdapter.class)
     private RoleEntity role;
 
     @Column(name="salary")
+    @XmlAttribute(required = true)
     private Integer salary;
 
     @NotNull
     @Size(max=200)
     @Column(name="login")
+    @XmlElement(required = true)
     private String login;
 
     @NotNull
     @Size(max=500)
     @Column(name="passwd_hash")
+    @XmlElement(required = true)
     private String passwd_hash;
 
     @NotNull
     @Size(max=100)
     @Column(name="passwd_salt")
+    @XmlElement(required = true)
     private String passwd_salt;
 
-
-    private Integer position_id;
-    private Integer departament_id;
-    private Integer role_id;
+    private Integer position_id0;
+    private Integer departament_id0;
+    private Integer role_id0;
 
 }
