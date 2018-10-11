@@ -19,6 +19,8 @@
     <javaee.version>8.0</javaee.version>
     <jaxb-api.version>2.3.1</jaxb-api.version>
     <jaxb-runtime.version>2.3.0</jaxb-runtime.version>
+    <javax.jsonb.version>1.0</javax.jsonb.version>
+    <javax.json.version>1.1</javax.json.version>
     <javax.activation.version>1.2.0</javax.activation.version>
     <hibernate.version>5.3.6.Final</hibernate.version>
     <lombok.version>1.18.0</lombok.version>
@@ -58,17 +60,26 @@
           <artifactId>jaxb-runtime</artifactId>
           <version>${jaxb-runtime.version}</version>
       </dependency>
-      <!-- JAXB needs javax.activation module (jdk9) -->
       <dependency>
           <groupId>javax.activation</groupId>
           <artifactId>javax.activation-api</artifactId>
           <version>${javax.activation.version}</version>
       </dependency>
-      <!--<dependency>-->
-          <!--<groupId>com.sun.xml.bind</groupId>-->
-          <!--<artifactId>jaxb-impl</artifactId>-->
-          <!--<version>${jaxb-impl.version}</version>-->
-      <!--</dependency>-->
+      <dependency>
+        <groupId>javax.json.bind</groupId>
+        <artifactId>javax.json.bind-api</artifactId>
+        <version>${javax.jsonb.version}</version>
+      </dependency>
+    <dependency>
+      <groupId>org.eclipse</groupId>
+      <artifactId>yasson</artifactId>
+      <version>${javax.jsonb.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish</groupId>
+      <artifactId>javax.json</artifactId>
+      <version>${javax.json.version}</version>
+    </dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
