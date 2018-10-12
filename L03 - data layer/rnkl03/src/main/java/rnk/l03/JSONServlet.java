@@ -1,9 +1,5 @@
 package rnk.l03;
 
-import net.bytebuddy.description.method.MethodDescription;
-import org.apache.logging.log4j.core.jackson.Log4jJsonObjectMapper;
-import org.hibernate.type.ListType;
-import org.hibernate.type.TypeFactory;
 import rnk.l03.jpa_entities.StaffEntity;
 import rnk.l03.xml.StaffEntitiesList;
 
@@ -11,7 +7,6 @@ import javax.json.bind.Jsonb;
 import javax.json.bind.JsonbBuilder;
 import javax.json.bind.JsonbConfig;
 import javax.json.bind.config.PropertyNamingStrategy;
-import javax.persistence.*;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -31,32 +26,30 @@ import java.util.stream.IntStream;
 
 @WebServlet("/rnk_json")
 public class JSONServlet extends HttpServlet {
-//    public static final String PERSISTENCE_UNIT_NAME="rnk-jpa";
-//    private static final EntityManagerFactory emf= Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME); //tomcat, see
 
     @Override
     protected void doPost(HttpServletRequest rq, HttpServletResponse rsp) throws ServletException, IOException {
         try{
-            try{
-                JAXBContext jc=JAXBContext.newInstance(StaffEntitiesList.class);
-                Unmarshaller m=jc.createUnmarshaller();
-                Path xml_path= Paths.get(getServletContext().getAttribute(ServletContext.TEMPDIR)+"/xml/employees.xml");
-                Path json_path= Paths.get(getServletContext().getAttribute(ServletContext.TEMPDIR)+"/xml/employees.json");
-                Files.createDirectories(xml_path.getParent());
-                StaffEntitiesList sl=(StaffEntitiesList)m.unmarshal(xml_path.toFile());
+            JAXBContext jc=JAXBContext.newInstance(StaffEntitiesList.class);
+            Unmarshaller m=jc.createUnmarshaller();
 
-                JsonbConfig jsoncfg=new JsonbConfig()
-                        .withFormatting(Boolean.TRUE)
-                        .withPropertyNamingStrategy(PropertyNamingStrategy.LOWER_CASE_WITH_UNDERSCORES);
-                Jsonb jsonb= JsonbBuilder.create(jsoncfg);
-                OutputStream os=new FileOutputStream(json_path.toFile());
-                jsonb.toJson(sl.getStaff_list(), os);
-                rsp.setCharacterEncoding("utf-8");
-                rsp.getWriter().println(json_path.toAbsolutePath().toString());
-            }catch(Exception ex){
-                throw new ServletException(ex);
-            }
-        }finally{
+            Path xml_path= Paths.get(getServletContext().getAttribute(ServletContext.TEMPDIR)+"/xml/employees.xml");
+            Path json_path= Paths.get(getServletContext().getAttribute(ServletContext.TEMPDIR)+"/xml/employees.json");
+            Files.createDirectories(xml_path.getParent());
+            StaffEntitiesList sl=(StaffEntitiesList)m.unmarshal(xml_path.toFile());
+
+            JsonbConfig jsoncfg=new JsonbConfig()
+                    .withFormatting(Boolean.TRUE)
+                    .withPropertyNamingStrategy(PropertyNamingStrategy.LOWER_CASE_WITH_UNDERSCORES);
+            Jsonb jsonb= JsonbBuilder.create(jsoncfg);
+            OutputStream os=new FileOutputStream(json_path.toFile());
+            jsonb.toJson(sl.getStaff_list(), os);
+            rsp.setCharacterEncoding("utf-8");
+            rsp.getWriter().println(json_path.toAbsolutePath().toString());
+        }catch(Exception ex){
+            throw new ServletException(ex);
+        }
+        finally{
         }
     }
 
@@ -64,27 +57,26 @@ public class JSONServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest rq, HttpServletResponse rsp) throws ServletException, IOException {
         try{
-            try{
-                Path json_path= Paths.get(getServletContext().getAttribute(ServletContext.TEMPDIR)+"/xml/employees.json");
-                JsonbConfig jsoncfg=new JsonbConfig()
-                        .withFormatting(Boolean.TRUE)
-                        .withPropertyNamingStrategy(PropertyNamingStrategy.LOWER_CASE_WITH_UNDERSCORES);
-                Jsonb jsonb= JsonbBuilder.create(jsoncfg);
-                InputStream s=new FileInputStream(json_path.toFile());
+            Path json_path= Paths.get(getServletContext().getAttribute(ServletContext.TEMPDIR)+"/xml/employees.json");
+            JsonbConfig jsoncfg=new JsonbConfig()
+                    .withFormatting(Boolean.TRUE)
+                    .withPropertyNamingStrategy(PropertyNamingStrategy.LOWER_CASE_WITH_UNDERSCORES);
+            Jsonb jsonb= JsonbBuilder.create(jsoncfg);
+            InputStream s=new FileInputStream(json_path.toFile());
 
 
-                Type type = new ArrayList<StaffEntity>() {}.getClass().getGenericSuperclass();
-                List<StaffEntity> sl =jsonb.fromJson(s, type);
-                rsp.setCharacterEncoding("utf-8");
-                IntStream
-                        .iterate(1, i ->i+2)
-                        .limit(sl.size())
-                        .mapToObj(i->sl.get(i))
-                        .forEach(rsp.getWriter()::println);
-            }catch(Exception ex){
-                throw new ServletException(ex);
-            }
-        }finally{
+            Type type = new ArrayList<StaffEntity>() {}.getClass().getGenericSuperclass();
+            List<StaffEntity> sl =jsonb.fromJson(s, type);
+            rsp.setCharacterEncoding("utf-8");
+            IntStream
+                    .iterate(1, i ->i+2)
+                    .limit(sl.size())
+                    .mapToObj(i->sl.get(i))
+                    .forEach(rsp.getWriter()::println);
+        }catch(Exception ex){
+            throw new ServletException(ex);
+        }
+        finally{
         }
     }
 }

@@ -20,11 +20,9 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathFactory;
 import java.io.IOException;
-import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Enumeration;
 
 @WebServlet("/rnk_xml")
 public class XMLServlet extends HttpServlet {
@@ -69,30 +67,29 @@ public class XMLServlet extends HttpServlet {
         EntityManager em=emf.createEntityManager();
         EntityTransaction et=em.getTransaction();
         try{
-            try{
-                et.begin();
-                Query q = em.createQuery(
-                        "select staff "+
-                                "from StaffEntity staff "+
-                                "order by staff.id desc");
-                StaffEntitiesList sl=new StaffEntitiesList();
-                sl.setStaff_list(q.getResultList());
+            et.begin();
+            Query q = em.createQuery(
+                    "select staff "+
+                            "from StaffEntity staff "+
+                            "order by staff.id desc");
+            StaffEntitiesList sl=new StaffEntitiesList();
+            sl.setStaff_list(q.getResultList());
 
-                JAXBContext jc=JAXBContext.newInstance(sl.getClass());
-                Marshaller m=jc.createMarshaller();
-                m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT,Boolean.TRUE);
-                Path path=Paths.get(getServletContext().getAttribute(ServletContext.TEMPDIR)+"/xml/employees.xml");
-                Files.createDirectories(path.getParent());
-                m.marshal(sl, path.toFile());
+            JAXBContext jc=JAXBContext.newInstance(sl.getClass());
+            Marshaller m=jc.createMarshaller();
+            m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT,Boolean.TRUE);
+            Path path=Paths.get(getServletContext().getAttribute(ServletContext.TEMPDIR)+"/xml/employees.xml");
+            Files.createDirectories(path.getParent());
+            m.marshal(sl, path.toFile());
 
-                rsp.setCharacterEncoding("utf-8");
-                rsp.getWriter().println(path.toAbsolutePath().toString());
-                et.commit();
-            }catch(Exception ex){
-                et.rollback();
-                throw new ServletException(ex);
-            }
-        }finally{
+            rsp.setCharacterEncoding("utf-8");
+            rsp.getWriter().println(path.toAbsolutePath().toString());
+            et.commit();
+        }catch(Exception ex){
+            et.rollback();
+            throw new ServletException(ex);
+        }
+        finally{
             em.close();
         }
     }
