@@ -1,0 +1,58 @@
+
+[
+    {
+        "departament": "CEO Office",
+        "fio": "Боос Евгений Авраамович",
+        "id": 21,
+        "login": "e_boos",
+        "passwd_hash": "-",
+        "passwd_salt": "-",
+        "position": "CEO",
+        "role": "Boss",
+        "salary": 213000
+    },
+    {
+        "departament": "Accounting office",
+        "fio": "Абакусов Нельсон Маркович",
+        "id": 20,
+        "login": "n_abakusov",
+        "passwd_hash": "-",
+        "passwd_salt": "-",
+        "position": "Accountant",
+        "role": "Accountant",
+        "salary": 50000
+    },
+    {
+        "departament": "R&D",
+        "fio": "Захарова Марина Сергеевна",
+        "id": 19,
+        "login": "m_zakharova",
+        "passwd_hash": "-",
+        "passwd_salt": "-",
+        "position": "Developer",
+        "role": "Common",
+        "salary": 70000
+    },
+    {
+        "departament": "HR",
+        "fio": "Зульпикаров Зульпикар Зульпикарович",
+        "id": 18,
+        "login": "z_zulpikarov",
+        "passwd_hash": "-",
+        "passwd_salt": "-",
+        "position": "HR",
+        "role": "HR",
+        "salary": 500
+    },
+    {
+        "departament": "R&D",
+        "fio": "Шушмарев Ринат Ибрагимович",
+        "id": 17,
+        "login": "r_shushmarev",
+        "passwd_hash": "-",
+        "passwd_salt": "-",
+        "position": "Developer",
+        "role": "Common",
+        "salary": 200
+    }
+]

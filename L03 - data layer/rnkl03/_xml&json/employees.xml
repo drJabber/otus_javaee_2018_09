@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<employees>
+    <employee id="21" fio="Боос Евгений Авраамович" position="CEO" salary="213000">
+        <departament>CEO Office</departament>
+        <role>Boss</role>
+        <login>e_boos</login>
+        <passwd_hash>-</passwd_hash>
+        <passwd_salt>-</passwd_salt>
+    </employee>
+    <employee id="20" fio="Абакусов Нельсон Маркович" position="Accountant" salary="50000">
+        <departament>Accounting office</departament>
+        <role>Accountant</role>
+        <login>n_abakusov</login>
+        <passwd_hash>-</passwd_hash>
+        <passwd_salt>-</passwd_salt>
+    </employee>
+    <employee id="19" fio="Захарова Марина Сергеевна" position="Developer" salary="70000">
+        <departament>R&amp;D</departament>
+        <role>Common</role>
+        <login>m_zakharova</login>
+        <passwd_hash>-</passwd_hash>
+        <passwd_salt>-</passwd_salt>
+    </employee>
+    <employee id="18" fio="Зульпикаров Зульпикар Зульпикарович" position="HR" salary="500">
+        <departament>HR</departament>
+        <role>HR</role>
+        <login>z_zulpikarov</login>
+        <passwd_hash>-</passwd_hash>
+        <passwd_salt>-</passwd_salt>
+    </employee>
+    <employee id="17" fio="Шушмарев Ринат Ибрагимович" position="Developer" salary="200">
+        <departament>R&amp;D</departament>
+        <role>Common</role>
+        <login>r_shushmarev</login>
+        <passwd_hash>-</passwd_hash>
+        <passwd_salt>-</passwd_salt>
+    </employee>
+</employees>
