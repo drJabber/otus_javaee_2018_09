@@ -11,3 +11,4 @@ ERD - проект Visual Paradigm в папке uml
 
 этап 3 - без JPA 
 исходники - в папке rnkl03. url - localhost:8080/rnk/rnk_jdbc - протестировал POST, PUT, DELETE. GET - не тестировал, т.к. таблица staff пока пустая
+
