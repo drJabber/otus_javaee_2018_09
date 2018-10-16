@@ -5,7 +5,7 @@ var updateLoginButton= function(){
     }else
     {
         document.getElementById("login-logout-button").innerText="Вход";
-        document.getElementById("login-logout-button").href="login.html";
+        document.getElementById("login-logout-button").href="admin.html";
     }
 }
 
