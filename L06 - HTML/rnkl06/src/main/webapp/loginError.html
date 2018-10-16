@@ -4,6 +4,7 @@
         <title>Гаражный кооператив "Шарабан"</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" >
         <link rel="stylesheet" type="text/css" href="static/css/styles.css" />
+        <script src="static/scripts/scripts.js" ></script>
     </head>
     <body id="body">
         <header class="main-header">
@@ -37,8 +38,12 @@
                     <li><a class="root-menuitem" href="contact.html">Контакты</a></li>
                     <li><a class="root-menuitem" href="members.html">Участники</a></li>
                     <li><a class="root-menuitem" href="faq.html">Вопрос-ответ</a></li>
-                    <li><a class="root-menuitem" href="admin.html">Вход</a></li>
+                    <li><a id="login-logout-button" class="root-menuitem" href="admin.html">Вход</a></li>
                 </ul>
+
+                <script>
+                    updateLoginButton();
+                </script>
             </nav>
         </header>
 
@@ -46,7 +51,7 @@
                 menu
         </aside>
         <main class="main-container">
-            <p>Неудачная попытка входа</p>>
+            <p>Неудачная попытка входа</p>
         </main>
     
         <footer class="footer-container">

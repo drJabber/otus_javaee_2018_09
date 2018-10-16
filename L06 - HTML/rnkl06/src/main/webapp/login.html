@@ -4,6 +4,7 @@
         <title>Гаражный кооператив "Шарабан"</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" >
         <link rel="stylesheet" type="text/css" href="static/css/styles.css" />
+        <script src="static/scripts/scripts.js" ></script>
     </head>
     <body id="body">
         <header class="main-header">
@@ -37,8 +38,12 @@
                     <li><a class="root-menuitem" href="contact.html">Контакты</a></li>
                     <li><a class="root-menuitem" href="members.html">Участники</a></li>
                     <li><a class="root-menuitem" href="faq.html">Вопрос-ответ</a></li>
-                    <li><a class="root-menuitem" href="admin.html">Вход</a></li>
+                    <li><a id="login-logout-button" class="root-menuitem" href="admin.html">Вход</a></li>
                 </ul>
+
+                <script>
+                    updateLoginButton();
+                </script>
             </nav>
         </header>
 
@@ -46,7 +51,7 @@
                 menu
         </aside>
         <main class="main-container">
-            <form method="post" action="j_security_check" class="login-form">
+            <form method="get" action="j_security_check" class="login-form">
                 <p><strong>Надо войти:</strong> </p>
                 <div>
                     <label for="login">Login:</label>
@@ -60,26 +65,8 @@
             </form>
 
             <script>
-                var checkLoginForm = function() {
-                    var checked = document.getElementById('login').value != ''
-                        && document.getElementById('password').value != '';
-                    if (checked) {
-                        document.getElementById('submit').removeAttribute('disabled');
-                    }
-                    else {
-                        document.getElementById('submit').setAttribute('disabled', 'disabled')
-                    }
-                };
-
                 checkLoginForm();
 
-                var focusListener = function(event) {
-                    event.target.style.background = "#F9F0DA";
-                };
-                var blurListener = function(event) {
-                    event.target.style.background = "";
-                    checkLoginForm();
-                };
                 var inputElement = document.getElementById('login');
                 inputElement.addEventListener("focus", focusListener, true);
                 inputElement.addEventListener("blur", blurListener, true);
