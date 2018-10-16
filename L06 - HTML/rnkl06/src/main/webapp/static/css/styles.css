@@ -48,7 +48,7 @@ max-width: 1200px; */
 }
 
 .phone-logo {
-  background-image: url("../img/telephone.png");
+  background-image: url("/rnk/static/img/telephone.png");
   background-repeat: no-repeat;
   padding: 5px 9px 5px 7px;
 }
@@ -76,7 +76,7 @@ nav {
   background-repeat: repeat-x;
   background-position: 0% 0%;
   background-attachment: scroll;
-  background-image:  url("../img/bg-menubar.png");
+  background-image:  url("/rnk/static/img/bg-menubar.png");
   background-size: auto auto;
   background-origin: padding-box;
   background-clip: border-box;
@@ -142,7 +142,7 @@ nav {
 }
 
 .search-form button {
-  background-image: url("../img/search.png");
+  background-image: url("/rnk/static/img/search.png");
   height: 26px;
   width: 26px;
   position: absolute;
@@ -154,7 +154,7 @@ nav {
 footer {
   margin: 0 auto;
   width:100%;
-  background-image: url("../img/bg-footer.png");
+  background-image: url("/rnk/static/img/bg-footer.png");
   background-repeat: no-repeat;
   background-position: left bottom;
  }
@@ -185,7 +185,7 @@ footer {
 .b-footer .b-footer-line {
   height: 4px;
   width: 100%;
-  background-image: url("../img/bg-foot-line.png");
+  background-image: url("/rnk/static/img/bg-foot-line.png");
   background-repeat: repeat-x;
 }
 
@@ -217,4 +217,13 @@ footer {
 
 aside{
   float: right;
+}
+
+main{
+  margin: 0 auto;
+  width:1200px;
+}
+
+form.login-form{
+  windth: 400px;
 }

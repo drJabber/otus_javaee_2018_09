@@ -4,8 +4,16 @@
 		 http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
   <display-name>Archetype Created Web Application</display-name>
+    <servlet>
+        <servlet-name>rnk.GWTApp.GWTApp GWTAppService</servlet-name>
+        <servlet-class>rnk.GWTApp.server.GWTAppServiceImpl</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>rnk.GWTApp.GWTApp GWTAppService</servlet-name>
+        <url-pattern>/GWTApp/GWTAppService</url-pattern>
+    </servlet-mapping>
 
-  <resource-ref>
+    <resource-ref>
     <description>DB Connection</description>
     <res-ref-name>jdbc/rnk_db</res-ref-name>
     <res-type>javax.sql.DataSource</res-type>

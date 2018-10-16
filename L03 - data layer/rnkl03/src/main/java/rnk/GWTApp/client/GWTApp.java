@@ -22,10 +22,9 @@ public class GWTApp implements EntryPoint {
         button.addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
                 if (label.getText().equals("")) {
-                  GWTAppService.App.getInstance().getMessage( "Hello, World!", new MyAsyncCallback(label));
-                }
-                else {
-                  label.setText("");
+                    GWTAppService.App.getInstance().getMessage("Hello, World!", new MyAsyncCallback(label));
+                } else {
+                    label.setText("");
                 }
             }
         });
@@ -41,16 +40,17 @@ public class GWTApp implements EntryPoint {
 
     private static class MyAsyncCallback implements AsyncCallback<String> {
         private Label label;
+
         public MyAsyncCallback(Label label) {
-          this.label = label;
+            this.label = label;
         }
 
         public void onSuccess(String result) {
-          label.getElement().setInnerHTML(result);
+            label.getElement().setInnerHTML(result);
         }
 
         public void onFailure(Throwable throwable) {
-          label.setText("Failed to receive answer from server!");
+            label.setText("Failed to receive answer from server!");
         }
     }
 }

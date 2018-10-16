@@ -14,10 +14,10 @@ public interface GWTAppService extends RemoteService {
      * Use GWTAppService.App.getInstance() to access static instance of GWTAppServiceAsync
      */
     public static class App {
-      private static GWTAppServiceAsync ourInstance = GWT.create(GWTAppService.class);
+        private static GWTAppServiceAsync ourInstance = GWT.create(GWTAppService.class);
 
-      public static synchronized GWTAppServiceAsync getInstance() {
-        return ourInstance;
-      }
+        public static synchronized GWTAppServiceAsync getInstance() {
+            return ourInstance;
+        }
     }
 }

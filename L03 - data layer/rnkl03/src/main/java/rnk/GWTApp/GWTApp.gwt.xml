@@ -1,14 +1,17 @@
-<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 2.8.0//EN" "http://gwtproject.org/doctype/2.8.0/gwt-module.dtd">
+<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 2.8.0//EN"
+        "http://gwtproject.org/doctype/2.8.0/gwt-module.dtd">
 <module rename-to="GWTApp">
 
-	<!-- Inherit the core Web Toolkit stuff.                  -->
-	<inherits name='com.google.gwt.user.User'/>
+    <!-- Inherit the core Web Toolkit stuff.                  -->
+    <inherits name='com.google.gwt.user.User'/>
 
-	<!-- Specify the app entry point class.                   -->
-	<entry-point class='rnk.GWTApp.client.GWTApp'/>
+    <!-- Specify the app entry point class.                   -->
+    <entry-point class='rnk.GWTApp.client.GWTApp'/>
 
 
-  <!-- Specify the app servlets.                   -->
-  <servlet path='/GWTAppService' class='rnk.GWTApp.server.GWTAppServiceImpl'/>
+    <!-- Specify the app servlets.                   -->
+    <servlet path='/GWTAppService' class='rnk.GWTApp.server.GWTAppServiceImpl'/>
 
+    <source path="client" />
+    <source path="shared">
 </module>
