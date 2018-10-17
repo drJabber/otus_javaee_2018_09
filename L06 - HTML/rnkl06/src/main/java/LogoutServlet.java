@@ -12,6 +12,7 @@ public class LogoutServlet extends HttpServlet {
     protected void doGet(HttpServletRequest rq, HttpServletResponse rsp) throws ServletException, IOException {
         try{
             rq.getSession().invalidate();
+            rsp.sendRedirect("logout.html");
         }catch(Exception ex){
             throw new ServletException(ex);
         }

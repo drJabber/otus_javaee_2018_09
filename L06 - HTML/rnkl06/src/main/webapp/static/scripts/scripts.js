@@ -20,6 +20,20 @@ var checkLoginForm = function() {
     }
 };
 
+var getCBCurrencies=function(){
+    jQuery.get("cbcurr", function(data){
+        var items = [];
+        items.push("<table><tr><th>Валюта</th><th>Курс</th></tr>");
+        jQuery.each(data, function(key, val){
+            items.push("<tr>");
+            items.push("<td id =''"+key+"''>"+val.charCode+"</td>");
+            items.push("<td id =''"+key+"''>"+val.value+"</td>");
+            items.push("</tr>");
+        });
+        items.push("</table>");
+        $("<table/>",{html: items.join("")}).appendTo("#aside-currencies-table");
+    });
+}
 var focusListener = function(event) {
     event.target.style.background = "#F9F0DA";
 };

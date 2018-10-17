@@ -4,6 +4,7 @@
         <title>Гаражный кооператив "Шарабан"</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" >
         <link rel="stylesheet" type="text/css" href="static/css/styles.css" />
+        <script type="text/javascript" src="static/scripts/jquery-3.3.1.slim.min.js"></script>
         <script src="static/scripts/scripts.js" ></script>
     </head>
     <body id="body">
@@ -23,11 +24,11 @@
                     </div>
 
                     <div class="head-search-container">              
-                        <div class="search-container"> 
-                            <form class="search-form" action="" method="get">
-                                <input name="s" placeholder="Поиск..." type="search">
+                        <div class="search-container">
+                            <form class="search-form" action="http://google.com/search" target="_blank">
+                                <input name="q" placeholder="Поиск..." type="search">
                                 <button type="submit"></button>
-                            </form>            
+                            </form>
                         </div>           
                     </div>
                 </div>
@@ -47,8 +48,13 @@
             </nav>
         </header>
 
-        <aside>
-                menu
+        <aside class="b-rigth-sidebar">
+            <div class="b-right-sidebar-item">
+                <div id="aside-currencies-table" class="aside-currencies">
+
+                </div>
+            </div>
+            <script>getCBCurrencies()</script>
         </aside>
         <main class="main-container">
             <p>Участники.</p>

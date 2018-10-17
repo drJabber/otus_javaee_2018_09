@@ -216,6 +216,7 @@ footer {
 }
 
 aside{
+  width: 250px;
   float: right;
 }
 
@@ -226,4 +227,25 @@ main{
 
 form.login-form{
   windth: 400px;
+}
+
+
+.b-rigth-sidebar .b-right-sidebar-item {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.4px;
+  height: 71px;
+  width:100%;
+  position: relative;
+}
+
+.aside-currencies table {
+  text-align:left;
+  width:100%;
+}
+
+.aside-currencies table tr th,td{
+  padding:3px;
+  margin: 0 auto;
+  width:50%;
 }
