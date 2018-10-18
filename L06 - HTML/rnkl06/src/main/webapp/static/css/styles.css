@@ -216,7 +216,7 @@ footer {
 }
 
 aside{
-  width: 250px;
+  width: 300px;
   float: right;
 }
 
@@ -229,12 +229,21 @@ form.login-form{
   windth: 400px;
 }
 
+.admin-form-container{
+  width:400px;
+  height:150px;
+}
+
+.admin-script-response-container{
+  width:400px;
+  height:150px;
+}
 
 .b-rigth-sidebar .b-right-sidebar-item {
   font-family: Helvetica, Arial, sans-serif;
   font-size: 11px;
   letter-spacing: 0.4px;
-  height: 71px;
+  height: 100px;
   width:100%;
   position: relative;
 }
@@ -248,4 +257,22 @@ form.login-form{
   padding:3px;
   margin: 0 auto;
   width:50%;
+}
+
+.aside-news-header {
+  text-align:center;
+  vertical-align: top;
+  width:100%;
+}
+
+
+.aside-news table {
+  text-align:left;
+  width:100%;
+}
+
+.aside-news table tr th,td{
+  padding:3px;
+  margin: 0 auto;
+  width:100%;
 }

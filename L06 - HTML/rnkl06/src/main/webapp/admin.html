@@ -3,15 +3,15 @@
     <head>
         <title>Гаражный кооператив "Шарабан"</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" >
-        <link rel="stylesheet" type="text/css" href="static/css/styles.css" />
-        <script type="text/javascript" src="static/scripts/jquery-3.3.1.slim.min.js"></script>
-        <script src="static/scripts/scripts.js" ></script>
+        <link rel="stylesheet" type="text/css" href="/rnk/static/css/styles.css" />
+        <script type="text/javascript" src="/rnk/static/scripts/jquery-3.3.1.slim.min.js"></script>
+        <script src="/rnk/static/scripts/scripts.js" ></script>
     </head>
     <body id="body">
         <header class="main-header">
             <div class="head-container">
                 <div class="head-logo-container" style="top:15px;">
-                    <div class="logo"><a href="/"><img alt="Шарабан - гаражный кооператив" src="static/img/logo.png"></a>
+                    <div class="logo"><a href="/rnk"><img alt="Шарабан - гаражный кооператив" src="static/img/logo.png"></a>
                     </div>
                 </div>
                 <div class="head-right-container">
@@ -35,11 +35,12 @@
             </div>
             <nav class="menubar">
                 <ul>
-                    <li><a class="root-menuitem" href="index.html">Главная</a></li>
-                    <li><a class="root-menuitem" href="contact.html">Контакты</a></li>
-                    <li><a class="root-menuitem" href="members.html">Участники</a></li>
-                    <li><a class="root-menuitem" href="faq.html">Вопрос-ответ</a></li>
-                    <li><a id="login-logout-button" class="root-menuitem" href="admin.html">Вход</a></li>
+                    <li><a class="root-menuitem" href="/rnk/index.html">Главная</a></li>
+                    <li><a class="root-menuitem" href="/rnk/contact.html">Контакты</a></li>
+                    <li><a class="root-menuitem" href="/rnk/members.html">Участники</a></li>
+                    <li><a class="root-menuitem" href="/rnk/faq.html">Вопрос-ответ</a></li>
+                    <li><a class="root-menuitem" href="/rnk/admin.html">Админка</a></li>
+                    <li><a id="login-logout-button" class="root-menuitem" href=""></a></li>
                 </ul>
 
                 <script>
@@ -53,16 +54,30 @@
 
         <aside class="b-rigth-sidebar">
             <div class="b-right-sidebar-item">
-                <div id="aside-currencies-table" class="aside-currencies">
+                <div id="aside-currencies-table" class="aside-currencies"></div>
 
-                </div>
+                <script>getCBCurrencies()</script>
             </div>
-            <script>getCBCurrencies()</script>
+
+            <div class="b-right-sidebar-item">
+                <span class="aside-news-header">Новости</span>
+                <div id="aside-news-table" class="aside-news"> </div>
+
+                <script>getNews()</script>
+            </div>
+
         </aside>
         <main class="main-container">
-                <p>Это админка.</p>
-                <p>Вход успешен.</p>
-
+            <div class="admin-form-container">
+                <form id="admin-script-form" class="admin-script-form" onsubmit="return evalServerScript();">
+                    <p>Скрипт</p>
+                    <textarea id="admin-script-memo" name="text" cols="40" rows="2"></textarea>
+                    <input type="submit" value="Выполнить" onsubmit="evalServerScript()">
+                </form>
+            </div>
+            <div class="admin-script-response-container">
+                <div class="admin-script-response" id="admin-script-response">Look at server JS output:</div>
+            </div>
         </main>
     
         <footer class="footer-container">

@@ -1,3 +1,5 @@
+package entities;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
@@ -8,10 +10,9 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import java.io.InputStream;
 
 @XmlRootElement(name="Valute")
-class CurrencyEntity{
+public class CurrencyEntity{
     @XmlElement(name="CharCode")
     private String charCode;
     @XmlElement(name="Value")

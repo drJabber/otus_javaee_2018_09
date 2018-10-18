@@ -11,11 +11,9 @@ import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathFactory;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 
-
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
+import entities.CurrencyEntity;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -29,12 +27,11 @@ import org.w3c.dom.NodeList;
 @WebServlet("/cbcurr")
 public class CBCurrencies extends HttpServlet {
     private static final int TIMEOUT_VALUE=10; //seconds
-    private static final int BUFFER_SIZE=16; //in Kbytes
+    private static final String CBR_CURRENCIES_URL="http://www.cbr.ru/scripts/XML_daily.asp";
     @Override
     protected void doGet(HttpServletRequest rq, HttpServletResponse rsp) throws ServletException, IOException {
         try{
-            String url="http://www.cbr.ru/scripts/XML_daily.asp";
-            HttpGet get=new HttpGet(url);
+            HttpGet get=new HttpGet(CBR_CURRENCIES_URL);
             HttpClient httpClient = HttpClients.createDefault();
             // optional configuration
             RequestConfig config=RequestConfig.custom().setSocketTimeout(TIMEOUT_VALUE * 1000).build();
