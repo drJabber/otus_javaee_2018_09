@@ -1,0 +1,17 @@
+
+
+.dockLayoutPanel > div {
+    overflow: visible  !important;
+}
+
+.rightFlowPanel  > *{
+    display: block;
+    height : 150px;
+}
+
+.footerPanel > div{
+    overflow: visible !important;
+
+}
+
+
