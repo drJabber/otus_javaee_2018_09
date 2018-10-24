@@ -11,6 +11,14 @@ public interface Resources extends ClientBundle {
         String dockLayoutPanel();
         String rightFlowPanel();
         String footerPanel();
+        String menuPanel();
+        String menuItem();
+        String search_form();
+        String search_btn();
+        String search_box();
+
+
+        String mainDeckPanel();
     }
 
 }
