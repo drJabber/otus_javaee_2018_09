@@ -9,7 +9,8 @@
 
 
     <inherits name='com.google.gwt.user.User'/>
-    <inherits name='com.google.gwt.user.theme.dark.Dark'/>
+    <!--<inherits name='com.google.gwt.user.theme.dark.Dark'/>-->
+    <inherits name="rnk.l08.themes.custom.customresources" />
 
     <!--i18n-->
     <inherits name="com.google.gwt.i18n.I18N"/>

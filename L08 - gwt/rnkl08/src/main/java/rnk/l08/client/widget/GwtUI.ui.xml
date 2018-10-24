@@ -12,7 +12,7 @@
 
     <g:HTMLPanel>
         <g:DockLayoutPanel width="100%" height="100%" addStyleNames="{res.style.dockLayoutPanel}">
-            <g:north size="42">
+            <g:north size="30">
                 <g:DockLayoutPanel width="100%" height="100%">
                     <g:west size="200">
                         <g:FlowPanel width="100%" height="100%">
@@ -20,8 +20,8 @@
                         </g:FlowPanel>
                     </g:west>
                     <g:center>
-                        <g:FlowPanel width="100%" height="100%" ui:field="menuPanel">
-                            <g:MenuBar ui:field="menuBar" height="40">
+                        <g:FlowPanel ui:field="menuPanel" addStyleNames="{res.style.menuPanel}">
+                            <g:MenuBar ui:field="menuBar">
                                 <g:MenuItem ui:field="menuItemMain">Главная</g:MenuItem>
                                 <g:MenuItem ui:field="menuItemContacts">Контакты</g:MenuItem>
                                 <g:MenuItem ui:field="menuItemMembers">Участники</g:MenuItem>
@@ -33,8 +33,19 @@
                         </g:FlowPanel>
                     </g:center>
                     <g:east size="400">
-                        <g:FlowPanel width="100%" height="100%">
-                            <g:Label ui:field="mainSearchPanel">search panel</g:Label>
+                        <g:FlowPanel>
+                            <g:FormPanel ui:field="formSearch"  >
+                                <g:DockLayoutPanel height="100%">
+                                    <g:center>
+                                        <g:FlowPanel>
+                                            <g:TextBox  ui:field="searchBox" name="q"  addStyleNames="{res.style.search_box}"></g:TextBox>
+                                        </g:FlowPanel>
+                                    </g:center>
+                                    <g:east size="30">
+                                        <g:SubmitButton  addStyleNames="{res.style.search_btn}"  ></g:SubmitButton>
+                                    </g:east>
+                                </g:DockLayoutPanel>
+                            </g:FormPanel>
                         </g:FlowPanel>
                     </g:east>
                 </g:DockLayoutPanel>
@@ -57,45 +68,42 @@
                         </g:FlowPanel>
 
                     </g:north>
-                    <!--<g:center>-->
-                        <!--<g:FlowPanel visible="true" width="100%"  height="100%" ui:field="mainNewsSideBar">-->
-                            <!--<g:Label>Туцы</g:Label>-->
-                        <!--</g:FlowPanel>-->
-                    <!--</g:center>-->
                 </g:DockLayoutPanel>
             </g:east>
             <g:center>
-                <g:FlowPanel visible="true"  width="100%" height="100%">
-                    <g:DeckPanel height="100%" visible="true" ui:field="deckPanel">
+                <g:FlowPanel width="100%" height="auto">
+                    <g:DeckPanel ui:field="deckPanel" addStyleNames="{res.style.mainDeckPanel}">
                     </g:DeckPanel>
+
+                    <g:DockLayoutPanel width="100%" height="300pt" addStyleNames="{res.style.footerPanel}">
+                        <g:west size="200">
+                            <g:FlowPanel width="100%" height="100%" >
+                            </g:FlowPanel>
+                        </g:west>
+                        <g:center>
+                            <g:DockLayoutPanel width="100%" height="100%">
+                                <g:west size="600">
+                                    <g:FlowPanel width="600pt" height="100%">
+                                        <g:Label ui:field="mainAddressPanel">address panel</g:Label>
+                                    </g:FlowPanel>
+                                </g:west>
+                                <g:center>
+                                    <g:FlowPanel width="auto" height="100%">
+                                        <g:Label ui:field="mainCopirightPanel">copiright panel</g:Label>
+                                    </g:FlowPanel>
+                                </g:center>
+                            </g:DockLayoutPanel>
+                        </g:center>
+                        <g:east size="300">
+                            <g:FlowPanel width="100%" height="100%" >
+                            </g:FlowPanel>
+                        </g:east>
+                    </g:DockLayoutPanel>
                 </g:FlowPanel>
             </g:center>
-            <g:south size="300">
-                <g:DockLayoutPanel width="100%" height="100%">
-                    <g:west size="200">
-                        <g:FlowPanel width="100%" height="100%" >
-                        </g:FlowPanel>
-                    </g:west>
-                    <g:center>
-                        <g:DockLayoutPanel width="100%" height="100%">
-                            <g:west size="600">
-                                <g:FlowPanel width="100%" height="100%">
-                                    <g:Label ui:field="mainAddressPanel">address panel</g:Label>
-                                </g:FlowPanel>
-                            </g:west>
-                            <g:center>
-                                <g:FlowPanel width="100%" height="100%">
-                                    <g:Label ui:field="mainCopirightPanel">copiright panel</g:Label>
-                                </g:FlowPanel>
-                            </g:center>
-                        </g:DockLayoutPanel>
-                    </g:center>
-                    <g:east size="300">
-                        <g:FlowPanel width="100%" height="100%" >
-                        </g:FlowPanel>
-                    </g:east>
-                </g:DockLayoutPanel>
-            </g:south>
+
+            <!--<g:south size="300" >-->
+            <!--</g:south>-->
 
         </g:DockLayoutPanel>
     </g:HTMLPanel>

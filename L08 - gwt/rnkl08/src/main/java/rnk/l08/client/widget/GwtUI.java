@@ -25,9 +25,21 @@ public class GwtUI extends Composite {
 
     @UiField DeckPanel deckPanel;
 
+
+    @UiField(provided = true) FormPanel formSearch;
+
+    @UiField TextBox searchBox;
+
     @UiField Resources res;
 
     public GwtUI() {
+
+//        method="GET" addStyleNames="{res.style.search_form}" action="http://google.com/search
+        formSearch=new FormPanel("_blank");
+        formSearch.setMethod("GET");
+        formSearch.addStyleName(res.style().search_form());
+        formSearch.setAction("http://google.com/search");
+
         initWidget(ourUiBinder.createAndBindUi(this));
 
         res.style().ensureInjected();
@@ -56,8 +68,11 @@ public class GwtUI extends Composite {
         menuItemLogin.setScheduledCommand(new MainMenuCommand(deckPanel, widgets.get(5)));
         menuItemLogout.setScheduledCommand(new MainMenuCommand(deckPanel, widgets.get(6)));
 
+
         deckPanel.showWidget(0);
 
+//        searchBox.set
+//        formSearch.fo
 
     }
 }

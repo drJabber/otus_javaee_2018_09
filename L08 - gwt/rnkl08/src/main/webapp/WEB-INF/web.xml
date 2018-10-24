@@ -8,9 +8,17 @@
     <servlet-name>rnk.l08.Gwtmod GwtRS</servlet-name>
     <servlet-class>rnk.l08.server.GwtRSImpl</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>rnk.l08.Gwtmod AppService</servlet-name>
+    <servlet-class>rnk.l08.server.AppServiceImpl</servlet-class>
+  </servlet>
   <servlet-mapping>
     <servlet-name>rnk.l08.Gwtmod GwtRS</servlet-name>
     <url-pattern>/rnk.l08.Gwtmod/GwtRS</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>rnk.l08.Gwtmod AppService</servlet-name>
+    <url-pattern>/rnk.l08.Gwtmod/AppService</url-pattern>
   </servlet-mapping>
 
   <resource-ref>

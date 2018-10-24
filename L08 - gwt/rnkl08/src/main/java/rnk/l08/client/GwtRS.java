@@ -4,6 +4,8 @@ import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.google.gwt.core.client.GWT;
 
+import javax.servlet.ServletException;
+
 @RemoteServiceRelativePath("GwtRS")
 public interface GwtRS extends RemoteService {
     /**
@@ -16,5 +18,8 @@ public interface GwtRS extends RemoteService {
         public static GwtRSAsync getInstance() {
             return ourInstance;
         }
+
     }
+
+    void search(String query) throws ServletException;
 }
