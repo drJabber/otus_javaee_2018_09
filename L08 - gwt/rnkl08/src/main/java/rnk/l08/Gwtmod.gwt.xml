@@ -14,6 +14,7 @@
 
     <!--i18n-->
     <inherits name="com.google.gwt.i18n.I18N"/>
+    <inherits name="com.google.gwt.inject.Inject"/>
     <!--gin-->
     <!--<inherits name="com.google.gwt.inject.Inject"/>-->
 
@@ -25,10 +26,6 @@
     <source path='client'/>
     <source path='shared'/>
 
-
-
-
-
     <entry-point class="rnk.l08.client.GetEP"/>
-    <servlet path="/GwtRS" class="rnk.l08.server.GwtRSImpl"/>
+    <servlet path="/Service" class="rnk.l08.server.ServiceImpl"/>
 </module>

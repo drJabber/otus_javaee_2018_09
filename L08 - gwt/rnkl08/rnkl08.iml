@@ -3,8 +3,14 @@
   <component name="FacetManager">
     <facet type="gwt" name="GWT">
       <configuration>
+        <setting name="compilerMaxHeapSize" value="1024" />
+        <setting name="gwtScriptOutputStyle" value="DETAILED" />
         <setting name="gwtSdkUrl" value="file://$MODULE_DIR$/../../../../frameworks/gwt-2.8.2" />
         <setting name="webFacet" value="Web" />
+        <packaging>
+          <module name="rnk.l08.themes.custom.customresources" enabled="false" />
+          <module name="rnk.l08.themes.custom.customresourcesResources" enabled="false" />
+        </packaging>
       </configuration>
     </facet>
   </component>

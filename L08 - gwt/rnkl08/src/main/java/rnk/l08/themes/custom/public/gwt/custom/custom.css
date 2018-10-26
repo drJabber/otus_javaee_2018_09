@@ -219,8 +219,8 @@ a, a:visited, a:hover {
   background-size: auto auto;
   background-origin: padding-box;
   background-clip: border-box;
-
 }
+
 .gwt-MenuBar .gwt-MenuItem {
     cursor: default;
     height:30px;

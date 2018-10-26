@@ -24,14 +24,27 @@
 }
 
 
-.menuItem{
-    /*height: 36pt;*/
-    /*color : goldenrod !important;*/
-    /*background-color: rosybrown !important;*/
-    /*transition: height 1s;*/
-    /*-moz-transitio                                                                         n: height 1s;!*  Firefox 4 *!*/
-    /*-webkit-transition: height 1s; !* Safari and Chrome *!*/
-    /*-o-transition: height 1s; !* Opera  *!*/
+.logoImg{
+    width:200px ;
+    height:100px ;
+}
+
+.logoPanel{
+    position:relative;
+    height:100px;
+    width:200px;
+}
+
+
+.leftMenuPanel {
+    background-repeat: repeat-x;
+    background-position: 0% 0%;
+    background-attachment: scroll;
+    background-image:  url("/rnk/static/img/bg-menubar.png");
+    background-size: auto auto;
+    background-origin: padding-box;
+    background-clip: border-box;
+
 }
 
 .dockLayoutPanel > div {
@@ -44,7 +57,7 @@
 }
 
 .mainDeckPanel {
-    min-height: 300pt;
+    min-height: 400pt;
 }
 
 
