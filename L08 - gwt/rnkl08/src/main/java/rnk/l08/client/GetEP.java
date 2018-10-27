@@ -7,7 +7,6 @@ import rnk.l08.client.widget.GwtUI;
 
 public class GetEP implements EntryPoint {
     public void onModuleLoad() {
-        initHeaderAndTitle();
         initBody();
     }
 
@@ -15,8 +14,4 @@ public class GetEP implements EntryPoint {
         RootPanel.get("id-main-container").add(new GwtUI());
     }
 
-    private void initHeaderAndTitle() {
-//        Document.get().getElementById("gwt-title").setInnerText("GWT App Title");
-//        Document.get().getElementById("gwt-header").setInnerText("GWT App HEader");
-    }
 }

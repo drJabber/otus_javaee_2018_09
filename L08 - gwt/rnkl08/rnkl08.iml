@@ -3,9 +3,12 @@
   <component name="FacetManager">
     <facet type="gwt" name="GWT">
       <configuration>
+        <setting name="additionalCompilerParameters" value="-Xss1024K -Duser.language=ru -Duser.country=RU -Djavax.xml.parsers.DocumentBuilderFactory=com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderFactoryImpl -Djavax.xml.parsers.SAXParserFactory=com.sun.org.apache.xerces.internal.jaxp.SAXParserFactoryImpl" />
+        <setting name="compilerParameters" value="-logLevel DEBUG -optimize 9 -deploy &quot;$MODULE_DIR$/target/gwtDeploy&quot; -extra extras" />
         <setting name="compilerMaxHeapSize" value="1024" />
-        <setting name="gwtScriptOutputStyle" value="DETAILED" />
-        <setting name="gwtSdkUrl" value="file://$MODULE_DIR$/../../../../frameworks/gwt-2.8.2" />
+        <setting name="gwtScriptOutputStyle" value="PRETTY" />
+        <setting name="gwtSdkUrl" value="file://$MAVEN_REPOSITORY$/com/google/gwt/gwt-dev/2.8.2/" />
+        <setting name="gwtSdkType" value="maven" />
         <setting name="webFacet" value="Web" />
         <packaging>
           <module name="rnk.l08.themes.custom.customresources" enabled="false" />

@@ -7,12 +7,13 @@ import com.google.gwt.core.client.GWT;
 @RemoteServiceRelativePath("Service")
 public interface Service extends RemoteService {
 
-    public String getCurrencies();
+    String getCurrencies();
+    String getNews();
     /**
      * Utility/Convenience class.
      * Use Service.App.getInstance() to access static instance of ServiceAsync
      */
-    public static class App {
+    class App {
         private static final ServiceAsync ourInstance = (ServiceAsync) GWT.create(Service.class);
 
         public static ServiceAsync getInstance() {

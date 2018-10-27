@@ -5,10 +5,12 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.inject.client.GinModules;
 import com.google.gwt.inject.client.Ginjector;
 import rnk.l08.client.ServiceAsync;
+import rnk.l08.client.widget.GwtUI;
 
 @GinModules(SvcGinModule.class)
 public interface SvcInjector extends Ginjector {
     SvcInjector injector= GWT.create(SvcInjector.class);
 
     ServiceAsync getService();
+    GwtUI.GwtUIUiBinder getUIBinder();
 }

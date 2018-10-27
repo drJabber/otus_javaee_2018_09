@@ -53,9 +53,10 @@
                                 <!--<g:Label>Валюты</g:Label>-->
                             <!--</g:FlowPanel>-->
                             <d:CurrenciesPanel ui:field="currencies"/>
-                            <g:FlowPanel width="100%" height="100" >
-                                <g:Label>Новости</g:Label>
-                            </g:FlowPanel>
+                            <d:NewsPanel ui:field="news"/>
+                            <!--<g:FlowPanel width="100%" height="100" >-->
+                                <!--<g:Label>Новости</g:Label>-->
+                            <!--</g:FlowPanel>-->
                         </g:FlowPanel>
 
                     </g:north>

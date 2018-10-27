@@ -6,6 +6,13 @@ import rnk.l08.client.Service;
 public class ServiceImpl extends RemoteServiceServlet implements Service {
     @Override
     public String getCurrencies() {
-        return "Hello from server!";
+        return "Hello from server currencies!";
     }
+
+    @Override
+    public String getNews() {
+        return "Hello from server news!";
+    }
+
+
 }
