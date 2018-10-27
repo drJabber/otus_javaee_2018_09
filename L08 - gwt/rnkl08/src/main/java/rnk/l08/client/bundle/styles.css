@@ -63,7 +63,31 @@
 
 .footerPanel > div{
     position : relative;
+}
 
+.currencies {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #ffffff;
 }
 
 
+.currencies table{
+    table-layout: fixed;
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #ffffff;
+}
+
+.currencies table caption {
+    background-color: #444444;
+}
+
+.currencies table thead{
+    background-color: #666666;
+}
+
+.currencies table tbody{
+    background-color: #888888;
+    text-align: center;
+}

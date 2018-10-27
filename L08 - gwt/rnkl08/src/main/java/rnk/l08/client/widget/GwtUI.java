@@ -1,9 +1,7 @@
 package rnk.l08.client.widget;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.LoadEvent;
 import com.google.gwt.event.logical.shared.AttachEvent;
-import com.google.gwt.http.client.*;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -11,8 +9,6 @@ import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
-//import com.google.gwt.xml.client.*;
-//import rnk.l08.client.entities.CurrencyEntity;
 import rnk.l08.client.ServiceAsync;
 import rnk.l08.client.bundle.Resources;
 
@@ -90,68 +86,21 @@ public class GwtUI extends Composite {
         deckPanel.showWidget(0);
     }
 
-//    private List<CurrencyEntity> getCurrenctieList(Document dom){
-//        Element root=dom.getDocumentElement();
-//        NodeList valutes=root.getElementsByTagName("Valute");
-//
-//        List<CurrencyEntity> list = new ArrayList<CurrencyEntity>();
-//
-//        for (Integer index =0; index<valutes.getLength();index++){
-//            Node node=valutes.item(index);
-//            if (node.getNodeType()==Node.ELEMENT_NODE){
-//                Element valuteElt=(Element)node;
-//
-//                Node codeNode=valuteElt.getElementsByTagName("CharCode").item(0);
-//                String code=codeNode.getNodeValue();
-//                Node valueNode=valuteElt.getElementsByTagName("Value").item(0);
-//                String value=valueNode.getNodeValue();
-//                switch (code){
-//                    case "USD" :
-//                    case "GBP":
-//                    case "EUR" :{
-//                        list.add(new CurrencyEntity(code,value));
-//                        break;
-//                    }
-//                }
-//                if (list.size()>=3){
-//                    break;
-//                }
-//            }
-//        }
-//
-//        return list;
-//    }
-
-//    private void processCurrenciesXML(String text){
-//        currencies.populateCurrencies(getCurrenctieList(XMLParser.parse(text)));
-//
-//    }
 
     @UiHandler("currencies")
     public void attachCurrenciesHandler(AttachEvent event){
-        String url="http://www.cbr.ru/scripts/XML_daily.asp";
-        RequestBuilder builder=new RequestBuilder(RequestBuilder.GET, URL.encode(url));
         try{
-            builder.sendRequest(null, new RequestCallback() {
+            service.getCurrencies(new AsyncCallback<String>() {
                 @Override
-                public void onResponseReceived(Request request, Response response) {
-                    if (response.getStatusCode()==200){
-                        Window.alert("Ok");
-//                        processCurrenciesXML(response.getText());
-                    }else{
-                        Window.alert("Cant get currencies information from CBRF service\ncode:"+
-                                ((Integer)response.getStatusCode()).toString()+","+response.getStatusText()+"\n"+
-                                          response.getText());
-                    }
-
+                public void onSuccess(String result) {
+                    currencies.populateCurrencies(result);
                 }
-
                 @Override
-                public void onError(Request request, Throwable caught) {
-                    Window.alert(caught.getLocalizedMessage());
+                public void onFailure(Throwable caught) {
+                    Window.alert("bad data");
                 }
             });
-        }catch(RequestException ex){
+        }catch(Exception ex){
             Window.alert(ex.getLocalizedMessage());
         }
     }

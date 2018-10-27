@@ -3,11 +3,14 @@ package rnk.l08.client;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.google.gwt.core.client.GWT;
+import rnk.l08.shared.GwtServiceException;
+
+import javax.servlet.ServletException;
 
 @RemoteServiceRelativePath("Service")
 public interface Service extends RemoteService {
 
-    String getCurrencies();
+    String getCurrencies() throws GwtServiceException;
     String getNews();
     /**
      * Utility/Convenience class.

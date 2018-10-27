@@ -45,7 +45,7 @@
                     </g:east>
                 </g:DockLayoutPanel>
             </g:north>
-            <g:east size="200"  >
+            <g:east size="400"  >
                 <g:DockLayoutPanel width="100%" height="100%">
                     <g:north size="600">
                         <g:FlowPanel visible="true" width="100%"  height="100%" ui:field="mainCurrenciesSideBar" styleName="{res.style.rightFlowPanel}">

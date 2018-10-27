@@ -21,6 +21,7 @@ public interface Resources extends ClientBundle {
         String leftMenuPanel();
         String logoImg();
         String logoPanel();
+        String currencies();
 
 
         String mainDeckPanel();
