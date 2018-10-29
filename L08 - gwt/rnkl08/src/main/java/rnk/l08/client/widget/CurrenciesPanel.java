@@ -26,35 +26,6 @@ public class CurrenciesPanel extends Composite {
 
     private static CurrenciesPanelUiBinder ourUiBinder = GWT.create(CurrenciesPanelUiBinder.class);
 
-//    @UiHandler("button_1")
-//    public void buttonPress(ClickEvent event){
-//        String url="http://www.cbr.ru/scripts/XML_daily.asp";
-//        RequestBuilder builder=new RequestBuilder(RequestBuilder.GET, URL.encode(url));
-//        try{
-//            builder.sendRequest(null, new RequestCallback() {
-//                @Override
-//                public void onResponseReceived(Request request, Response response) {
-//                    if (response.getStatusCode()==200){
-//                        Window.alert("Ok");
-////                        processCurrenciesXML(response.getText());
-//                    }else{
-//                        Window.alert("Cant get currencies information from CBRF service\ncode:"+
-//                                ((Integer)response.getStatusCode()).toString()+","+response.getStatusText()+"\n"+
-//                                response.getText());
-//                    }
-//
-//                }
-//
-//                @Override
-//                public void onError(Request request, Throwable caught) {
-//                    Window.alert(caught.getLocalizedMessage());
-//                }
-//            });
-//        }catch(RequestException ex){
-//            Window.alert(ex.getLocalizedMessage());
-//        }
-//
-//    }
 
     public CurrenciesPanel() {
         initWidget(ourUiBinder.createAndBindUi(this));
@@ -83,7 +54,6 @@ public class CurrenciesPanel extends Composite {
                 if (cells!=null){
                     TableCellElement c0=cells.getItem(0);
                     TableCellElement c1=cells.getItem(1);
-                    Window.alert(c1.getFirstChild().getNodeValue());
                     c0.getFirstChild().setNodeValue(code);
                     c1.getFirstChild().setNodeValue(value);
                 }

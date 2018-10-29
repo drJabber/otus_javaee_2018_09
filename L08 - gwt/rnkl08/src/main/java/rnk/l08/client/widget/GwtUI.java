@@ -2,6 +2,8 @@ package rnk.l08.client.widget;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.AttachEvent;
+import com.google.gwt.http.client.RequestBuilder;
+import com.google.gwt.jsonp.client.JsonpRequestBuilder;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -15,6 +17,8 @@ import rnk.l08.client.bundle.Resources;
 import java.util.ArrayList;
 import java.util.List;
 
+import rnk.l08.client.entities.NewsList;
+
 import static rnk.l08.client.gin.SvcInjector.injector;
 
 public class GwtUI extends Composite {
@@ -24,6 +28,7 @@ public class GwtUI extends Composite {
     public interface GwtUIUiBinder extends UiBinder<HTMLPanel, GwtUI> { }
 
     private static GwtUIUiBinder ourUiBinder = GWT.create(GwtUIUiBinder.class);
+    private static String apiKey="0d9bb4b2ad9f4bc59477c4889fe6cdb7";
 
     @UiField MenuBar menuBar;
     @UiField MenuItem menuItemMain;
@@ -97,7 +102,7 @@ public class GwtUI extends Composite {
                 }
                 @Override
                 public void onFailure(Throwable caught) {
-                    Window.alert("bad data");
+                    Window.alert(caught.getLocalizedMessage());
                 }
             });
         }catch(Exception ex){
@@ -107,18 +112,18 @@ public class GwtUI extends Composite {
 
     @UiHandler("news")
     public void attachNewsHandler(AttachEvent event){
-        service.getNews(new AsyncCallback<String>() {
-            @Override
-            public void onFailure(Throwable caught) {
-
-                Window.alert(caught.getLocalizedMessage());
-            }
-
-            @Override
-            public void onSuccess(String result) {
-
-            }
-        });
+        String url = "/rnk/news";
+        JsonpRequestBuilder jsonp = new JsonpRequestBuilder();
+        jsonp.setTimeout(10000);
+        jsonp.requestObject(url,
+                new AsyncCallback<NewsList>() {
+                    public void onFailure(Throwable caught) {
+                        Window.alert(caught.getLocalizedMessage());
+                    }
+                    public void onSuccess(NewsList list) {
+                        news.populateNews(list);
+                    }
+                });
     }
 }
 
