@@ -115,9 +115,15 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
                 q.setParameter(2,user.getPassword());
                 q.execute();
 
+                Object result=q.getOutputParameterValue(0);
                 transaction.commit();
 
-                return Integer.parseInt(q.getOutputParameterValue(0).toString());
+                if (result==null){
+                    return -1;
+                }else
+                {
+                    return Integer.parseInt(result.toString());
+                }
             }
             catch (Exception e){
                 transaction.rollback();

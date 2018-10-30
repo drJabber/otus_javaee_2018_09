@@ -62,7 +62,11 @@ public class RnkLoginPanel extends Composite {
 
                     @Override
                     public void onSuccess(Integer result) {
-                        Window.alert(injector.getConstants().logon_success());
+                        if (result>=0){
+                            Window.alert(injector.getConstants().logon_success());
+                        }else{
+                            Window.alert(injector.getConstants().login_failed());
+                        }
                     }
                 });
             }catch(Exception ex){
