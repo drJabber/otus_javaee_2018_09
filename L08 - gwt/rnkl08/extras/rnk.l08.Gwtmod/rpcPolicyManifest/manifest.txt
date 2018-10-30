@@ -1,3 +1,3 @@
 # Module rnk.l08.Gwtmod
 # RPC service class, partial path of RPC policy file
-rnk.l08.client.Service, 83D77B1F3083FF734A3785F57F8DC014.gwt.rpc
+rnk.l08.client.Service, 26E65C7183C479B980214FD13F15A126.gwt.rpc

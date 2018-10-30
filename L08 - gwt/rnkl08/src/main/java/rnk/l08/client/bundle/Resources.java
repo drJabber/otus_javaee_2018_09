@@ -18,11 +18,17 @@ public interface Resources extends ClientBundle {
         String search_form();
         String search_btn();
         String search_box();
-        String leftMenuPanel();
+//        String leftMenuPanel();
         String logoImg();
         String logoPanel();
         String currencies();
         String news();
+        String loginpanel();
+        String loginform();
+        String logininput();
+        String loginsubmitcontainer();
+        String loginsubmit();
+
 
 
         String mainDeckPanel();

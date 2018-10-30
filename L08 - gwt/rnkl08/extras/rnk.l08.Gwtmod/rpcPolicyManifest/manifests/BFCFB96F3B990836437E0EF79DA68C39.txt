@@ -1,0 +1,2 @@
+serviceClass: rnk.l08.client.Service
+path: 26E65C7183C479B980214FD13F15A126.gwt.rpc

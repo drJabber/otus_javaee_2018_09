@@ -12,6 +12,14 @@
     <!--<inherits name='com.google.gwt.user.theme.dark.Dark'/>-->
     <inherits name="rnk.l08.themes.custom.customresources" />
 
+
+    <inherits name="org.hibernate.validator.HibernateValidator" />
+
+    <replace-with class="rnk.l08.client.validation.ValidatorFactory">
+        <when-type-is class="javax.validation.ValidatorFactory" />
+    </replace-with>
+
+
     <!--XML-->
     <inherits name="com.google.gwt.xml.XML" />
     <!--i18n-->

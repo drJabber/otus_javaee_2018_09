@@ -1,7 +1,28 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
              xmlns:g='urn:import:com.google.gwt.user.client.ui'>
-    <g:VerticalPanel>
-        <g:Label>Login</g:Label>
 
+    <ui:with field="res" type="rnk.l08.client.bundle.Resources" />
+    <ui:with field="txt" type="rnk.l08.client.bundle.TextResources" />
+
+
+    <g:VerticalPanel addStyleNames="{res.style.loginpanel}">
+        <g:FlowPanel addStyleNames="{res.style.loginpanel}">
+            <g:FlowPanel addStyleNames="{res.style.loginform}">
+                <g:HorizontalPanel ui:field="loginpanel">
+                    <g:Label text="{txt.loginLabelText}"></g:Label>
+                    <g:TextBox ui:field="login" addStyleNames="{res.style.logininput}"></g:TextBox>
+                </g:HorizontalPanel>
+                <g:HorizontalPanel  ui:field="passwordpanel">
+                    <g:Label text="{txt.passwordLabelText}"></g:Label>
+                    <g:PasswordTextBox ui:field="password" addStyleNames="{res.style.logininput}"></g:PasswordTextBox>
+                </g:HorizontalPanel>
+                <g:HorizontalPanel>
+                    <g:FlowPanel addStyleNames="{res.style.loginsubmitcontainer}">
+                        <g:Button ui:field="loginsubmit" text="{txt.logonButtonText}" addStyleNames="{res.style.loginsubmit}" ></g:Button>
+                    </g:FlowPanel>
+                </g:HorizontalPanel>
+
+            </g:FlowPanel>
+        </g:FlowPanel>
     </g:VerticalPanel>
 </ui:UiBinder>

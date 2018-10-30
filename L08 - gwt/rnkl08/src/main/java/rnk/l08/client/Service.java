@@ -3,15 +3,15 @@ package rnk.l08.client;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.google.gwt.core.client.GWT;
+import rnk.l08.shared.dto.User;
 import rnk.l08.shared.GwtServiceException;
-
-import javax.servlet.ServletException;
 
 @RemoteServiceRelativePath("Service")
 public interface Service extends RemoteService {
 
     String getCurrencies() throws GwtServiceException;
-    String getNews();
+    String getNews() throws GwtServiceException;
+    Integer authorize(User user) throws GwtServiceException;
     /**
      * Utility/Convenience class.
      * Use Service.App.getInstance() to access static instance of ServiceAsync
@@ -22,5 +22,6 @@ public interface Service extends RemoteService {
         public static ServiceAsync getInstance() {
             return ourInstance;
         }
+
     }
 }

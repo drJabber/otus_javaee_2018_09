@@ -8,13 +8,16 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import rnk.l08.client.Service;
+import rnk.l08.shared.validation.ValidationRule;
+import rnk.l08.shared.dto.User;
 import rnk.l08.shared.GwtServiceException;
 
+import javax.persistence.*;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.OutputKeys;
@@ -32,6 +35,10 @@ import java.io.StringWriter;
 public class ServiceImpl extends RemoteServiceServlet implements Service {
     private static final int TIMEOUT_VALUE=10; //seconds
     private static final String CBR_CURRENCIES_URL="http://www.cbr.ru/scripts/XML_daily.asp";
+    public static final String PERSISTENCE_UNIT_NAME="rnk-jpa";
+    private static final EntityManagerFactory emf= Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME); //tomcat
+
+    private static final Logger logger = Logger.getLogger(ServiceImpl.class.getName());
 
     @Override
     public String getCurrencies() throws  GwtServiceException{
@@ -85,9 +92,44 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
     }
 
     @Override
-    public String getNews() {
+    public String getNews()  throws  GwtServiceException {
         return "Hello from server news!";
     }
 
 
+    @Override
+    public Integer authorize(User user) throws  GwtServiceException{
+        if (ValidationRule.isValid(user)){
+            EntityManager em = emf.createEntityManager(); // for Tomcat
+            EntityTransaction transaction = em.getTransaction();
+            try {
+                transaction.begin();
+
+                StoredProcedureQuery q = em
+                        .createStoredProcedureQuery("authorize")
+                        .registerStoredProcedureParameter(1,String.class, ParameterMode.IN)
+                        .registerStoredProcedureParameter(2,String.class, ParameterMode.IN)
+                        .registerStoredProcedureParameter(0,Integer.class, ParameterMode.OUT);
+
+                q.setParameter(1,user.getLogin());
+                q.setParameter(2,user.getPassword());
+                q.execute();
+
+                transaction.commit();
+
+                return Integer.parseInt(q.getOutputParameterValue(0).toString());
+            }
+            catch (Exception e){
+                transaction.rollback();
+                logger.error("login error:",e);
+                throw new GwtServiceException("ошибка входа");
+            }
+            finally {
+                em.close();
+            }
+        }else
+        {
+            throw new GwtServiceException("ошибка входа");
+        }
+    }
 }

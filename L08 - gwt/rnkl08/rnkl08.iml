@@ -3,10 +3,10 @@
   <component name="FacetManager">
     <facet type="gwt" name="GWT">
       <configuration>
-        <setting name="additionalCompilerParameters" value="-Xss1024K -Duser.language=ru -Duser.country=RU -Djavax.xml.parsers.DocumentBuilderFactory=com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderFactoryImpl -Djavax.xml.parsers.SAXParserFactory=com.sun.org.apache.xerces.internal.jaxp.SAXParserFactoryImpl" />
-        <setting name="compilerParameters" value="-logLevel DEBUG -optimize 9 -deploy &quot;$MODULE_DIR$/target/gwtDeploy&quot; -extra extras" />
+        <setting name="additionalCompilerParameters" value="-Xss1024K -Duser.language=ru -Duser.country=RU -Djavax.xml.parsers.DocumentBuilderFactory=com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderFactoryImpl -Djavax.xml.parsers.SAXParserFactory=com.sun.org.apache.xerces.internal.jaxp.SAXParserFactoryImpl -javaagent:$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.0/lombok-1.18.0.jar=ECJ" />
+        <setting name="compilerParameters" value="-logLevel INFO -optimize 9 -deploy &quot;$MODULE_DIR$/target/gwtDeploy&quot; -extra extras" />
         <setting name="compilerMaxHeapSize" value="1024" />
-        <setting name="gwtScriptOutputStyle" value="PRETTY" />
+        <setting name="gwtScriptOutputStyle" value="DETAILED" />
         <setting name="gwtSdkUrl" value="file://$MAVEN_REPOSITORY$/com/google/gwt/gwt-dev/2.8.2/" />
         <setting name="gwtSdkType" value="maven" />
         <setting name="webFacet" value="Web" />
@@ -14,6 +14,14 @@
           <module name="rnk.l08.themes.custom.customresources" enabled="false" />
           <module name="rnk.l08.themes.custom.customresourcesResources" enabled="false" />
         </packaging>
+      </configuration>
+    </facet>
+    <facet type="jpa" name="JPA">
+      <configuration>
+        <setting name="validation-enabled" value="true" />
+        <setting name="provider-name" value="" />
+        <datasource-mapping />
+        <deploymentDescriptor name="persistence.xml" url="file://$MODULE_DIR$/src/main/resources/META-INF/persistenceTomcat.xml" />
       </configuration>
     </facet>
   </component>

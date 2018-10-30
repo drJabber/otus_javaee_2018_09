@@ -2,7 +2,6 @@ package rnk.l08.client.widget;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.AttachEvent;
-import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.jsonp.client.JsonpRequestBuilder;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -19,16 +18,18 @@ import java.util.List;
 
 import rnk.l08.client.entities.NewsList;
 
+import javax.inject.Inject;
+
 import static rnk.l08.client.gin.SvcInjector.injector;
 
 public class GwtUI extends Composite {
+    @UiTemplate("GwtUI.ui.xml")
+    public interface MainUIBinder extends UiBinder<HTMLPanel, GwtUI> { }
+
+
     private static ServiceAsync service=injector.getService();
 
-    @UiTemplate("GwtUI.ui.xml")
-    public interface GwtUIUiBinder extends UiBinder<HTMLPanel, GwtUI> { }
-
-    private static GwtUIUiBinder ourUiBinder = GWT.create(GwtUIUiBinder.class);
-    private static String apiKey="0d9bb4b2ad9f4bc59477c4889fe6cdb7";
+    private static MainUIBinder ourUiBinder = injector.getUIBinder();
 
     @UiField MenuBar menuBar;
     @UiField MenuItem menuItemMain;
@@ -51,6 +52,7 @@ public class GwtUI extends Composite {
 
     @UiField Resources res;
 
+    @Inject
     public GwtUI() {
 
 //        method="GET" addStyleNames="{res.style.search_form}" action="http://google.com/search
