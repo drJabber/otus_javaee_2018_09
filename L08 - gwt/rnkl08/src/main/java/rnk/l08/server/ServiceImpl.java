@@ -97,7 +97,7 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
         return "Hello from server news!";
     }
 
-    private String makeStaffJson(){
+    private String makeStaffJson() throws GwtServiceException{
         throw new GwtServiceException("not implemented yet");
 
     }
