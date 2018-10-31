@@ -13,6 +13,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import rnk.l08.client.Service;
 import rnk.l08.shared.GwtServiceException;
+import rnk.l08.shared.dto.User;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -31,6 +32,14 @@ import java.io.StringWriter;
 public class ServiceImpl extends RemoteServiceServlet implements Service {
     private static final int TIMEOUT_VALUE=10; //seconds
     private static final String CBR_CURRENCIES_URL="http://www.cbr.ru/scripts/XML_daily.asp";
+    private static LoginServiceImpl loginSvc=null;
+
+    private static final LoginServiceImpl getLoginSvcInstance(){
+        if (loginSvc==null){
+            loginSvc=new LoginServiceImpl();
+        }
+        return loginSvc;
+    }
 
     @Override
     public String getCurrencies() throws  GwtServiceException{
@@ -87,4 +96,24 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
     public String getNews()  throws  GwtServiceException {
         return "Hello from server news!";
     }
+
+    private String makeStaffJson(){
+        throw new GwtServiceException("not implemented yet");
+
+    }
+
+    @Override
+    public String getStaff(String session) throws GwtServiceException{
+        User user=loginSvc.get_user_from_session();
+        if (user!=null && user.getSession()!=null){
+            return makeStaffJson();
+
+        }else{
+            throw new GwtServiceException("")
+        }
+
+    }
+
+
+
 }

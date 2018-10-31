@@ -8,4 +8,5 @@ public interface ServiceAsync {
 
     void getNews(AsyncCallback<String> async) throws GwtServiceException;
 
+    void getStaff(String session, AsyncCallback<String> async) throws GwtServiceException;
 }

@@ -72,6 +72,48 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
             Object u=session.getAttribute("user");
             if (u!=null && u instanceof User){
                 user=(User)u;
+
+                EntityManager em = emf.createEntityManager();
+                EntityTransaction transaction = em.getTransaction();
+                try {
+                    transaction.begin();
+
+                    StoredProcedureQuery q = em
+                            .createStoredProcedureQuery("session_is_valid")
+                            .registerStoredProcedureParameter("p_session_id",String.class, ParameterMode.IN)
+                            .registerStoredProcedureParameter("o_valid", Integer.class, ParameterMode.OUT)
+                            .registerStoredProcedureParameter("o_expire", Timestamp.class, ParameterMode.OUT);
+
+                    q.setParameter("p_session_id",user.getSession());
+                    q.execute();
+
+                    Object valid=q.getOutputParameterValue("o_valid");
+                    Object expire=q.getOutputParameterValue("o_expire");
+                    transaction.commit();
+
+                    if (valid==null){
+                        return null;
+                    }else
+                    {
+                        if ((Integer)valid==1){
+                            user.setExpires((Date)expire);
+                            save_user_in_session(user);
+                            return user;
+                        }else{
+                            return null;
+                        }
+
+                    }
+                }
+                catch (Exception e){
+
+                    transaction.rollback();
+                    logger.error("login error:",e);
+                    throw new GwtServiceException("ошибка входа");
+                }
+                finally {
+                    em.close();
+                }
             }
         }
 
