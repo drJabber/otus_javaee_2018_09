@@ -69,13 +69,13 @@ public class GwtUI extends Composite {
         Label l=new Label();
         l.setText("Label text");
 
-        widgets.add(new RnkMainPanel());
-        widgets.add(new RnkContactsPanel());
-        widgets.add(new RnkMembersPanel());
-        widgets.add(new RnkFaqPanel());
-        widgets.add(new RnkAdminPanel());
-        widgets.add(new RnkLoginPanel());
-        widgets.add(new RnkLogoutPanel());
+        widgets.add(new RnkMainPanel(this));
+        widgets.add(new RnkContactsPanel(this));
+        widgets.add(new RnkMembersPanel(this));
+        widgets.add(new RnkFaqPanel(this));
+        widgets.add(new RnkAdminPanel(this));
+        widgets.add(new RnkLoginPanel(this));
+        widgets.add(new RnkLogoutPanel(this));
 
         widgets.stream().forEach(w->{
             deckPanel.add(w);

@@ -12,7 +12,7 @@ public class RnkAdminPanel extends Composite {
 
     private static RnkAdminPanelUiBinder ourUiBinder = GWT.create(RnkAdminPanelUiBinder.class);
 
-    public RnkAdminPanel() {
+    public RnkAdminPanel(GwtUI parent) {
         initWidget(ourUiBinder.createAndBindUi(this));
     }
 }

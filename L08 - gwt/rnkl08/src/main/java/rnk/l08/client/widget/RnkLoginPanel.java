@@ -9,7 +9,7 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
-import rnk.l08.client.ServiceAsync;
+import rnk.l08.client.LoginServiceAsync;
 import rnk.l08.shared.validation.ValidationRule;
 import rnk.l08.shared.dto.User;
 
@@ -31,39 +31,47 @@ public class RnkLoginPanel extends Composite {
     @UiField
     HorizontalPanel passwordpanel;
 
-
     private Image loginInvalidFieldImage;
     private Image passwordInvalidFieldImage;
+    private GwtUI parent;
 
 
-    private static ServiceAsync service=injector.getService();
+    private static LoginServiceAsync service=injector.getLoginService();
 
     interface RnkLoginPanelUiBinder extends UiBinder<VerticalPanel, RnkLoginPanel> {
     }
 
     private static RnkLoginPanelUiBinder ourUiBinder = GWT.create(RnkLoginPanelUiBinder.class);
 
-    public RnkLoginPanel() {
+    public RnkLoginPanel(GwtUI parent) {
+
         initWidget(ourUiBinder.createAndBindUi(this));
+        this.parent=parent;
     }
 
     @UiHandler("loginsubmit")
     public void loginSubmitHandler(ClickEvent event){
-        User user=new User(login.getValue(),password.getValue());
+        User user=new User(login.getValue(),password.getValue(),-1);
         Set<ConstraintViolation<User>> errors= ValidationRule.getErrors(user);
         clearErrors();
         if (errors.isEmpty()) {
             try{
-                service.authorize(user, new AsyncCallback<Integer>() {
+                service.authorize(user, new AsyncCallback<User>() {
                     @Override
                     public void onFailure(Throwable caught) {
                         Window.alert(caught.getLocalizedMessage());
                     }
 
                     @Override
-                    public void onSuccess(Integer result) {
-                        if (result>=0){
+                    public void onSuccess(User result) {
+                        if (result.getRole()>=0){
                             Window.alert(injector.getConstants().logon_success());
+
+                            parent.menuItemAdmin.setVisible(true);
+                            parent.menuItemLogout.setVisible(true);
+                            parent.menuItemLogin.setVisible(false);
+                            parent.menuItemAdmin.getScheduledCommand().execute();
+
                         }else{
                             Window.alert(injector.getConstants().login_failed());
                         }

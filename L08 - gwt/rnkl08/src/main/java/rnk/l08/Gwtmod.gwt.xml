@@ -38,4 +38,5 @@
 
     <entry-point class="rnk.l08.client.GetEP"/>
     <servlet path="/Service" class="rnk.l08.server.ServiceImpl"/>
+    <servlet path="/LoginService" class="rnk.l08.server.LoginServiceImpl"/>
 </module>

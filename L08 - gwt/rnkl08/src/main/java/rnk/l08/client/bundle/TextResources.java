@@ -22,6 +22,10 @@ public interface TextResources  extends Constants {
     @Key("logon.error")
     String login_error();
 
+
+    @Key("logout.error")
+    String logout_error();
+
 //    @Key("newsapi.key")
 //    String newsapi_key();
 

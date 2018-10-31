@@ -1,8 +1,6 @@
 package rnk.l08.client.widget;
 
 import com.google.gwt.user.client.Command;
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.DeckLayoutPanel;
 import com.google.gwt.user.client.ui.DeckPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -18,6 +16,14 @@ public class MainMenuCommand implements Command {
     @Override
     public void execute(){
 //        Window.alert("Ok");
-        deckPanel.showWidget(deckPanel.getWidgetIndex(widget));
+        if (widget instanceof RnkLogoutPanel){
+            RnkLogoutPanel panel=(RnkLogoutPanel)widget;
+            panel.logout();
+
+        }else
+        {
+            deckPanel.showWidget(deckPanel.getWidgetIndex(widget));
+        }
+
     }
 }

@@ -1,6 +1,7 @@
 package rnk.l08.client.gin;
 
 import com.google.gwt.inject.client.AbstractGinModule;
+import rnk.l08.client.LoginService;
 import rnk.l08.client.Service;
 import rnk.l08.client.bundle.TextResources;
 import rnk.l08.client.bundle.images.ImgResources;
@@ -12,6 +13,7 @@ public class SvcGinModule extends AbstractGinModule {
     protected void configure() {
 
         bind(Service.class);
+        bind(LoginService.class);
         bind(GwtUI.MainUIBinder.class);
         bind(ValidatorFactory.GwtValidator.class);
         bind(TextResources.class);

@@ -12,7 +12,7 @@ public class RnkFaqPanel extends Composite {
 
     private static RnkFaqPanelUiBinder ourUiBinder = GWT.create(RnkFaqPanelUiBinder.class);
 
-    public RnkFaqPanel() {
+    public RnkFaqPanel(GwtUI parent) {
         initWidget(ourUiBinder.createAndBindUi(this));
     }
 }

@@ -38,10 +38,18 @@
     <servlet-name>MyAppService</servlet-name>
     <servlet-class>rnk.l08.server.ServiceImpl</servlet-class>
   </servlet>
-  <servlet-mapping>
+    <servlet>
+        <servlet-name>rnk.l08.Gwtmod LoginService</servlet-name>
+        <servlet-class>rnk.l08.server.LoginServiceImpl</servlet-class>
+    </servlet>
+    <servlet-mapping>
     <servlet-name>MyAppService</servlet-name>
     <url-pattern>/rnk.l08.Gwtmod/Service</url-pattern>
   </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>rnk.l08.Gwtmod LoginService</servlet-name>
+        <url-pattern>/rnk.l08.Gwtmod/LoginService</url-pattern>
+    </servlet-mapping>
 
     <resource-ref>
     <description>DB Connection</description>

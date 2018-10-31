@@ -12,7 +12,7 @@ public class RnkContactsPanel extends Composite {
 
     private static RnkContactsPanelUiBinder ourUiBinder = GWT.create(RnkContactsPanelUiBinder.class);
 
-    public RnkContactsPanel() {
+    public RnkContactsPanel(GwtUI parent) {
         initWidget(ourUiBinder.createAndBindUi(this));
     }
 }
