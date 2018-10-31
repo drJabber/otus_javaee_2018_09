@@ -15,11 +15,15 @@ public class MainMenuCommand implements Command {
     }
     @Override
     public void execute(){
-//        Window.alert("Ok");
         if (widget instanceof RnkLogoutPanel){
             RnkLogoutPanel panel=(RnkLogoutPanel)widget;
             panel.logout();
 
+        }else
+        if (widget instanceof RnkAdminPanel){
+            RnkAdminPanel panel=(RnkAdminPanel)widget;
+            panel.reloadData();
+            deckPanel.showWidget(deckPanel.getWidgetIndex(widget));
         }else
         {
             deckPanel.showWidget(deckPanel.getWidgetIndex(widget));

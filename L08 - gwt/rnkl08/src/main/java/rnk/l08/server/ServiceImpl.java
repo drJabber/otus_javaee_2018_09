@@ -12,9 +12,15 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import rnk.l08.client.Service;
+import rnk.l08.entities.StaffEntity;
 import rnk.l08.shared.GwtServiceException;
 import rnk.l08.shared.dto.User;
 
+import javax.json.bind.Jsonb;
+import javax.json.bind.JsonbBuilder;
+import javax.json.bind.JsonbConfig;
+import javax.json.bind.config.PropertyNamingStrategy;
+import javax.persistence.*;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.OutputKeys;
@@ -28,11 +34,14 @@ import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathFactory;
 import java.io.InputStream;
 import java.io.StringWriter;
+import java.util.List;
 
 public class ServiceImpl extends RemoteServiceServlet implements Service {
     private static final int TIMEOUT_VALUE=10; //seconds
     private static final String CBR_CURRENCIES_URL="http://www.cbr.ru/scripts/XML_daily.asp";
     private static LoginServiceImpl loginSvc=null;
+    private static final String PERSISTENCE_UNIT_NAME="rnk-jpa";
+    private static final EntityManagerFactory emf= Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME); //tomcat, see
 
     private static final LoginServiceImpl getLoginSvcInstance(){
         if (loginSvc==null){
@@ -98,8 +107,34 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
     }
 
     private String makeStaffJson() throws GwtServiceException{
-        throw new GwtServiceException("not implemented yet");
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction transaction = em.getTransaction();
+        try {
+            transaction.begin();
 
+            Query q = em.createQuery(
+                    "select staff "+
+                            "from StaffEntity staff "+
+                            "order by staff.id desc");
+
+            List<StaffEntity> result = q.getResultList();
+
+            transaction.commit();
+
+            JsonbConfig jsoncfg=new JsonbConfig()
+                    .withFormatting(Boolean.TRUE)
+                    .withPropertyNamingStrategy(PropertyNamingStrategy.LOWER_CASE_WITH_UNDERSCORES);
+            Jsonb jsonb= JsonbBuilder.create(jsoncfg);
+
+            return jsonb.toJson(result);
+        }
+        catch (Exception e){
+            transaction.rollback();
+            throw new GwtServiceException(e);
+        }
+        finally {
+            em.close();
+        }
     }
 
     @Override
@@ -109,7 +144,7 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
             return makeStaffJson();
 
         }else{
-            throw new GwtServiceException("");
+            throw new GwtServiceException("ошибка входа");
         }
 
     }
