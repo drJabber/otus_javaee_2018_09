@@ -109,7 +109,7 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
             return makeStaffJson();
 
         }else{
-            throw new GwtServiceException("")
+            throw new GwtServiceException("");
         }
 
     }
