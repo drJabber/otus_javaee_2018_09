@@ -65,12 +65,8 @@ public class RnkLoginPanel extends Composite {
                     @Override
                     public void onSuccess(User result) {
                         if (result.getRole()>=0){
-                            Window.alert(injector.getConstants().logon_success());
-
-                            parent.menuItemAdmin.setVisible(true);
-                            parent.menuItemLogout.setVisible(true);
-                            parent.menuItemLogin.setVisible(false);
-                            parent.menuItemAdmin.getScheduledCommand().execute();
+                            updateUI();
+                            setupSession(user);
 
                         }else{
                             Window.alert(injector.getConstants().login_failed());
@@ -93,6 +89,20 @@ public class RnkLoginPanel extends Composite {
             });
         }
 
+    }
+
+    private void setupSession(User result){
+//        String sessionID = result.getSessionId();
+//        final long DURATION = 1000 * 60 * 60 * 24 * 1;
+//        Date expires = new Date(System.currentTimeMillis() + DURATION);
+//        Cookies.setCookie("sid", sessionID, expires, null, "/", false);
+    }
+
+    private void updateUI(){
+        parent.menuItemAdmin.setVisible(true);
+        parent.menuItemLogout.setVisible(true);
+        parent.menuItemLogin.setVisible(false);
+        parent.menuItemAdmin.getScheduledCommand().execute();
     }
 
     public Image showError(TextBox textBox, Panel panel, String msg){
