@@ -55,7 +55,10 @@ public class GwtUI extends Composite {
     @Inject
     public GwtUI() {
 
-//        method="GET" addStyleNames="{res.style.search_form}" action="http://google.com/search
+        updateIU();
+    }
+
+    public void updateUI(){
         formSearch=new FormPanel("_blank");
         formSearch.setMethod("GET");
         formSearch.addStyleName(res.style().search_form());
@@ -88,11 +91,9 @@ public class GwtUI extends Composite {
         menuItemAdmin.setScheduledCommand(new MainMenuCommand(deckPanel, widgets.get(4)));
         menuItemLogin.setScheduledCommand(new MainMenuCommand(deckPanel, widgets.get(5)));
         menuItemLogout.setScheduledCommand(new MainMenuCommand(deckPanel, widgets.get(6)));
-
-
+    
         deckPanel.showWidget(0);
     }
-
 
     @UiHandler("currencies")
     public void attachCurrenciesHandler(AttachEvent event){

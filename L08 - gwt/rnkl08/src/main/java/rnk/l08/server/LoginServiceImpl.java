@@ -25,7 +25,31 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
 
     @Override
     public Void logout() throws GwtServiceException {
-        remove_user_from_session();
+        EntityManager em = emf.createEntityManager(); 
+        EntityTransaction transaction = em.getTransaction();
+        try {
+            transaction.begin();
+
+            StoredProcedureQuery q = em
+                    .createStoredProcedureQuery("logout")
+                    .registerStoredProcedureParameter(1,String.class, ParameterMode.IN)
+                    .registerStoredProcedureParameter(2,String.class, ParameterMode.IN);
+
+            q.setParameter(1,user.getLogin());
+            q.setParameter(2,user.getSession());
+            q.execute();
+
+            transaction.commit();
+        }
+        catch (Exception e){
+            transaction.rollback();
+            logger.error("logout error:",e);
+        }
+        finally {
+            em.close();
+            remove_user_from_session();
+        }
+        
         return null;
     };
 
@@ -60,7 +84,7 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
     @Override
     public User authorize(User user) throws GwtServiceException {
         if (ValidationRule.isValid(user)){
-            EntityManager em = emf.createEntityManager(); // for Tomcat
+            EntityManager em = emf.createEntityManager(); 
             EntityTransaction transaction = em.getTransaction();
             try {
                 transaction.begin();
@@ -79,10 +103,10 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
                 transaction.commit();
 
                 if (result==null){
-                    return null;
+                    throw new Exception("ошибка входа");
+                    return user;
                 }else
                 {
-                    user.setRole((Integer)result);
                     save_user_in_session(user);
                     return user;
                 }
