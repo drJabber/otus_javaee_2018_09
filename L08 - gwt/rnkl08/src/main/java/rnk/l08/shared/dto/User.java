@@ -8,6 +8,7 @@ import lombok.experimental.FieldNameConstants;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Date;
 
 
 @Data
@@ -24,4 +25,6 @@ public class User implements IsSerializable {
     private String password;
 
     private String session;
+
+    private Date expires;
 }

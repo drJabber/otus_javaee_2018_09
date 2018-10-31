@@ -7,9 +7,11 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
+import rnk.l08.client.LoginServiceAsync;
 import rnk.l08.client.ServiceAsync;
 import rnk.l08.client.bundle.Resources;
 
@@ -17,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import rnk.l08.client.entities.NewsList;
+import rnk.l08.shared.dto.User;
 
 import javax.inject.Inject;
 
@@ -28,6 +31,7 @@ public class GwtUI extends Composite {
 
 
     private static ServiceAsync service=injector.getService();
+    private static LoginServiceAsync loginService=injector.getLoginService();
 
     private static MainUIBinder ourUiBinder = injector.getUIBinder();
 
@@ -52,13 +56,7 @@ public class GwtUI extends Composite {
 
     @UiField Resources res;
 
-    @Inject
-    public GwtUI() {
-
-        updateIU();
-    }
-
-    public void updateUI(){
+    private void updateUI(){
         formSearch=new FormPanel("_blank");
         formSearch.setMethod("GET");
         formSearch.addStyleName(res.style().search_form());
@@ -91,8 +89,71 @@ public class GwtUI extends Composite {
         menuItemAdmin.setScheduledCommand(new MainMenuCommand(deckPanel, widgets.get(4)));
         menuItemLogin.setScheduledCommand(new MainMenuCommand(deckPanel, widgets.get(5)));
         menuItemLogout.setScheduledCommand(new MainMenuCommand(deckPanel, widgets.get(6)));
-    
+
+        selectPanel();
+    }
+
+
+    public void updateLoggedInMenu(){
+        menuItemAdmin.setVisible(true);
+        menuItemLogout.setVisible(true);
+        menuItemLogin.setVisible(false);
+    }
+
+    public void updateLoggedOutMenu(){
+        menuItemAdmin.setVisible(false);
+        menuItemLogout.setVisible(false);
+        menuItemLogin.setVisible(true);
+    }
+
+    private void displayMainPanel(){
         deckPanel.showWidget(0);
+    }
+
+    private void checkSessionIsLegal(String session){
+        try{
+            loginService.authorize_from_session(new AsyncCallback<User>() {
+                @Override
+                public void onFailure(Throwable caught) {
+                    updateLoggedOutMenu();
+                    displayMainPanel();
+                }
+
+                @Override
+                public void onSuccess(User result) {
+                    if (result==null){
+                        updateLoggedOutMenu();
+                        displayMainPanel();
+                    }else
+                    {
+                        if (result.getSession() !=null){
+                            updateLoggedInMenu();
+                            menuItemAdmin.getScheduledCommand().execute();
+                        }else{
+                            updateLoggedOutMenu();
+                            displayMainPanel();
+                        }
+                    }
+                }
+            });
+        }catch(Exception ex){
+            Window.alert(injector.getConstants().login_error());
+        }
+    }
+
+    private void selectPanel(){
+        String session= Cookies.getCookie("sid");
+        if (session == null){
+            displayMainPanel();
+        }else{
+            checkSessionIsLegal(session);
+        }
+    }
+
+    @Inject
+    public GwtUI() {
+
+        updateUI();
     }
 
     @UiHandler("currencies")

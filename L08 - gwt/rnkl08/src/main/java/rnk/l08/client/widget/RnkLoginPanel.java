@@ -6,6 +6,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
@@ -51,7 +52,7 @@ public class RnkLoginPanel extends Composite {
 
     @UiHandler("loginsubmit")
     public void loginSubmitHandler(ClickEvent event){
-        User user=new User(login.getValue(),password.getValue(),-1);
+        User user=new User(login.getValue(),password.getValue(),null,null);
         Set<ConstraintViolation<User>> errors= ValidationRule.getErrors(user);
         clearErrors();
         if (errors.isEmpty()) {
@@ -64,8 +65,10 @@ public class RnkLoginPanel extends Composite {
 
                     @Override
                     public void onSuccess(User result) {
-                        if (result.getRole()>=0){
-                            updateUI();
+                        if (result.getSession()!=null){
+                            parent.updateLoggedInMenu();
+                            parent.menuItemAdmin.getScheduledCommand().execute();
+
                             setupSession(user);
 
                         }else{
@@ -92,18 +95,10 @@ public class RnkLoginPanel extends Composite {
     }
 
     private void setupSession(User result){
-//        String sessionID = result.getSessionId();
-//        final long DURATION = 1000 * 60 * 60 * 24 * 1;
-//        Date expires = new Date(System.currentTimeMillis() + DURATION);
-//        Cookies.setCookie("sid", sessionID, expires, null, "/", false);
+        String session= result.getSession();
+        Cookies.setCookie("sid", session, result.getExpires(), null, "/", false);
     }
 
-    private void updateUI(){
-        parent.menuItemAdmin.setVisible(true);
-        parent.menuItemLogout.setVisible(true);
-        parent.menuItemLogin.setVisible(false);
-        parent.menuItemAdmin.getScheduledCommand().execute();
-    }
 
     public Image showError(TextBox textBox, Panel panel, String msg){
         textBox.getElement().getStyle().setBorderColor("red");

@@ -39,9 +39,7 @@ public class RnkLogoutPanel extends Composite {
 
                 @Override
                 public void onSuccess(Void result) {
-                    parent.menuItemAdmin.setVisible(false);
-                    parent.menuItemLogout.setVisible(false);
-                    parent.menuItemLogin.setVisible(true);
+                    parent.updateLoggedOutMenu();
                     parent.menuItemMain.getScheduledCommand().execute();
                 }
             });
