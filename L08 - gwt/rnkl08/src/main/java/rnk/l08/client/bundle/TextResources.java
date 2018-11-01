@@ -26,6 +26,33 @@ public interface TextResources  extends Constants {
     @Key("logout.error")
     String logout_error();
 
+    @Key("admin.grid.no.data")
+    String no_data_to_display();
+//
+    @Key("admin.grid.fio.caption")
+    String fio_caption();
+
+    @Key("admin.grid.position.caption")
+    String position_caption();
+
+    @Key("admin.grid.dept.caption")
+    String dept_caption();
+
+    @Key("admin.grid.role.caption")
+    String role_caption();
+
+    @Key("admin.grid.salary.caption")
+    String salary_caption();
+
+    @Key("admin.grid.login.caption")
+    String login_caption();
+
+    @Key("admin.grid.password.caption")
+    String password_caption();
+
+    @Key("admin.grid.password.create.caption")
+    String create_password_caption();
+
 //    @Key("newsapi.key")
 //    String newsapi_key();
 
