@@ -11,7 +11,7 @@ public interface Service extends RemoteService {
 
     String getCurrencies() throws GwtServiceException;
     String getNews() throws GwtServiceException;
-    String getStaff(String session) throws GwtServiceException;
+     List<StaffDTO>  getStaff(String session) throws GwtServiceException;
     /**
      * Utility/Convenience class.
      * Use Service.App.getInstance() to access static instance of ServiceAsync

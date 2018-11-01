@@ -90,6 +90,22 @@ public class StaffEntity {
     @JsonbTransient
     private Integer role_id0;
 
+    public StaffEntity(StaffDTO dto){
+        Finder finder=new Finder();
+        this.id=dto.id;
+        this.fio=dto.fio;
+        this.position=finder.findPosition(dto.position);
+        this.departament=finder.findDepartament(dto.departament);
+        this.role=finder.findRole(dto.role);
+        this.salary=dto.salary;
+        this.login=dto.login;
+        if (dto.createPassword==1){
+            PasswordHelper helper=new PasswordHelper();
+            HashedPassword hp=helper.hashPassword(dto.password);
+            this.passwd_hash=helper.passwd_hash;
+            this.passwd_salt=helper.passwd_salt;
+        }
+    }
 
     @Override
     public String toString(){

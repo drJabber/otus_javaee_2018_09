@@ -109,7 +109,7 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
         return "Hello from server news!";
     }
 
-    private String makeStaffJson() throws GwtServiceException{
+    private List<StaffDTO> makeStaffJson() throws GwtServiceException{
         EntityManager em = emf.createEntityManager();
         EntityTransaction transaction = em.getTransaction();
         try {
@@ -124,12 +124,14 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 
             transaction.commit();
 
-            JsonbConfig jsoncfg=new JsonbConfig()
-                    .withFormatting(Boolean.TRUE)
-                    .withPropertyNamingStrategy(PropertyNamingStrategy.LOWER_CASE_WITH_UNDERSCORES);
-            Jsonb jsonb= JsonbBuilder.create(jsoncfg);
+            return createStaffListDTO(result);
 
-            return jsonb.toJson(result);
+            // JsonbConfig jsoncfg=new JsonbConfig()
+            //         .withFormatting(Boolean.TRUE)
+            //         .withPropertyNamingStrategy(PropertyNamingStrategy.LOWER_CASE_WITH_UNDERSCORES);
+            // Jsonb jsonb= JsonbBuilder.create(jsoncfg);
+
+            // return jsonb.toJson(result);
         }
         catch (Exception e){
             transaction.rollback();
@@ -140,8 +142,25 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
         }
     }
 
+    private List<StaffDTO> createStaffListDTO(List<StaffEntity> list){
+        List<StaffDTO> result=new ArrayList<StaffDTO>();
+        list.stream().forEach(e->result.add(createStaffDTO(e)));
+    }
+
+    private StaffDTO createStaffDTO(StaffEntity staff){
+        return new StaffDTO(staff.getId()
+                           ,staff.getFio()
+                           ,staff.getPosition().getPosition()
+                           ,staff.getDepartament().getDepartament()
+                           ,staff.getRole().getRole()
+                           ,staff.getSalary()
+                           ,staff.getLogin()
+                           ,'password hashed'
+                           ,0);
+    }
+
     @Override
-    public String getStaff(String session) throws GwtServiceException{
+    public  List<StaffDTO>  getStaff(String session) throws GwtServiceException{
         SessionInfo si =getLoginSvcInstance().get_user_from_session(session);
         if (si!=null && si.getIsValid()==1){
             return makeStaffJson();

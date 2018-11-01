@@ -29,15 +29,15 @@ public class RnkAdminPanel extends Composite {
     public void reloadData() {
         try{
             String session= Cookies.getCookie("sid");
-            service.getStaff(session, new AsyncCallback<String>() {
+            service.getStaff(session, new AsyncCallback< List<StaffDTO>>() {
                 @Override
                 public void onFailure(Throwable caught) {
                     Window.alert(caught.getLocalizedMessage());
                 }
 
                 @Override
-                public void onSuccess(String result) {
-                    Window.alert(result);
+                public void onSuccess( List<StaffDTO>  result) {
+                    Window.alert(result.toString());
                 }
             });
         }catch(Exception e){
