@@ -28,6 +28,8 @@ public interface Resources extends ClientBundle {
         String logininput();
         String loginsubmitcontainer();
         String loginsubmit();
+        String adminpanel();
+        String admingrid();
 
 
 

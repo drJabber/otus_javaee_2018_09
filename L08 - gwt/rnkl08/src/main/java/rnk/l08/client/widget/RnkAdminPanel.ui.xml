@@ -5,15 +5,11 @@
     <ui:with field="res" type="rnk.l08.client.bundle.Resources" />
     <ui:with field="txt" type="rnk.l08.client.bundle.TextResources" />
 
-
-    <g:VerticalPanel addStyleNames="{res.style.adminpanel}">
-        <g:FlowPanel addStyleNames="{res.style.adminpanel}">
-                <g:HorizontalPanel ui:field="adminpanelheader">
-                    <g:Label text="{txt.adminHeaderLabelText}"></g:Label>
-                </g:HorizontalPanel>
-        </g:FlowPanel>
-        <g:ResizeLayoutPanel>
-            <c:DataGrid ui:field='dataGrid' />
-        </g:ResizeLayoutPanel>
-    </g:VerticalPanel>
+    <g:FlowPanel addStyleNames="{res.style.adminpanel}">
+        <g:Label text="{txt.adminPanelLabelText}"></g:Label>
+        <g:HTMLPanel>
+            <c:DataGrid ui:field="grid" rowCount="20" pageSize="20" addStyleNames="{res.style.admingrid}"/>
+            <c:SimplePager ui:field="pager"></c:SimplePager>
+        </g:HTMLPanel>
+    </g:FlowPanel>
 </ui:UiBinder>

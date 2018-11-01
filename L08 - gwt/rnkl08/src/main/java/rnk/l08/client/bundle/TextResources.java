@@ -26,6 +26,9 @@ public interface TextResources  extends Constants {
     @Key("logout.error")
     String logout_error();
 
+    @Key("admin.panel.label.text")
+    String adminPanelLabelText();
+
     @Key("admin.grid.no.data")
     String no_data_to_display();
 //

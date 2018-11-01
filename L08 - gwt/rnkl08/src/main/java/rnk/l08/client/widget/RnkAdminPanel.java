@@ -1,15 +1,27 @@
 package rnk.l08.client.widget;
 
+import com.google.gwt.cell.client.*;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style;
+import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.cellview.client.Column;
+import com.google.gwt.user.cellview.client.ColumnSortEvent;
+import com.google.gwt.user.cellview.client.DataGrid;
+import com.google.gwt.user.cellview.client.SimplePager;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.*;
+import com.google.gwt.view.client.DefaultSelectionEventManager;
+import com.google.gwt.view.client.MultiSelectionModel;
+import com.google.gwt.view.client.SelectionModel;
 import rnk.l08.client.ServiceAsync;
 import rnk.l08.shared.dto.StaffDTO;
+import rnk.l08.shared.util.StaffGridHelper;
 
+import java.util.Comparator;
 import java.util.List;
 
 import static rnk.l08.client.gin.SvcInjector.injector;
@@ -18,42 +30,48 @@ import static rnk.l08.client.gin.SvcInjector.injector;
 public class RnkAdminPanel extends Composite {
     private static ServiceAsync service=injector.getService();
 
-    @UIField(provided=true)
+    @UiField(provided=true)
     DataGrid<StaffDTO> grid;
 
-    interface RnkAdminPanelUiBinder extends UiBinder<VerticalPanel, RnkAdminPanel> {
+    @UiField(provided = true)
+    SimplePager pager;
+
+    interface RnkAdminPanelUiBinder extends UiBinder<FlowPanel, RnkAdminPanel> {
     }
 
     private static RnkAdminPanelUiBinder ourUiBinder = GWT.create(RnkAdminPanelUiBinder.class);
 
     public RnkAdminPanel(GwtUI parent) {
+        initGrid();
+        initWidget(ourUiBinder.createAndBindUi(this));
     }
 
 
-    @Override 
-    public Widget onInitialize() {
-        grid=new DataGrid<StaffDTO>(StaffDTO.KEY_PROVIDER);
+    private void initGrid(){
+        grid=new DataGrid<StaffDTO>( StaffGridHelper.KEY_PROVIDER);
         grid.setWidth("100%");
         grid.setAutoHeaderRefreshDisabled(true);
-        grid.setEmptyTableWidget(injector.getConstants().no_data_to_display());
-        
-        ListHandler<StaffDTO> listHandler = new ListHandler<StaffDTO>(StaffGridHelper.get().getDataProvider().getList());
+        grid.setEmptyTableWidget(new Label(injector.getConstants().no_data_to_display()));
+
+        ColumnSortEvent.ListHandler<StaffDTO> listHandler = new ColumnSortEvent.ListHandler<StaffDTO>(StaffGridHelper.get().getDataProvider().getList());
         grid.addColumnSortHandler(listHandler);
 
-        // SimplePager.Resources pagerResources = GWT.create(SimplePager.Resources.class);
-        SimplePager.Resources pagerResources=injector.getPagerResources();
-        pager = new SimplePager(TextLocation.CENTER, pagerResources, false, 0, true);
-        pager.setDisplay(grid);        
 
-        final SelectionModel<ContactInfo> selectionModel = new MultiSelectionModel<StaffDTO>(StaffGridHelper.ContactInfo.KEY_PROVIDER);
+        // SimplePager.Resources pagerResources = GWT.create(SimplePager.Resources.class);
+        SimplePager.Resources pagerResources = GWT.create(SimplePager.Resources.class);
+        pager = new SimplePager(SimplePager.TextLocation.CENTER, pagerResources, false, 0, true);
+        pager.setDisplay(grid);
+
+        final SelectionModel<StaffDTO> selectionModel = new MultiSelectionModel<StaffDTO>(StaffGridHelper.KEY_PROVIDER);
         grid.setSelectionModel(selectionModel, DefaultSelectionEventManager.<StaffDTO> createCheckboxManager());
 
         initColumns(selectionModel, listHandler);
 
-        return ourUiBinder.createAndBindUi(this);
+        StaffGridHelper.get().addDisplay(grid);
+
     }
 
-    private void initColumns(final SelectionModel<StaffDTO> selectionModel,ListHandler<StaffDTO> listHandler){
+    private void initColumns(final SelectionModel<StaffDTO> selectionModel, ColumnSortEvent.ListHandler<StaffDTO> listHandler){
         //checkBox column for selection
         Column<StaffDTO, Boolean> checkColumn =
             new Column<StaffDTO, Boolean>(new CheckboxCell(true, false)) {
@@ -65,25 +83,25 @@ public class RnkAdminPanel extends Composite {
             };
 
         grid.addColumn(checkColumn, SafeHtmlUtils.fromSafeConstant("<br/>"));
-        grid.setColumnWidth(checkColumn, 40, Unit.PX);
+        grid.setColumnWidth(checkColumn, 5, Style.Unit.PCT);
 
         // Id
-        Column<StaffDTO, Integer> idColumn = new Column<StaffDTO, Integer>(new IntegerCell()) {
+        Column<StaffDTO, Number> idColumn = new Column<StaffDTO, Number>(new NumberCell()) {
             @Override
             public Integer getValue(StaffDTO object) {
                 return object.getId();
             }
         };
         idColumn.setSortable(true);
-        sortHandler.setComparator(idColumn, new Comparator<StaffDTO>() {
+        listHandler.setComparator(idColumn, new Comparator<StaffDTO>() {
             @Override
             public int compare(StaffDTO o1, StaffDTO o2) {
                 return o1.getId().compareTo(o2.getId());
             }
         });
-        dataGrid.addColumn(idColumn, "id");
-        dataGrid.setColumnWidth(idColumn, 4, Unit.EM);
-        
+        grid.addColumn(idColumn, "id");
+        grid.setColumnWidth(idColumn, 4, Style.Unit.EM);
+
         // Fio
         Column<StaffDTO, String> fioColumn =
             new Column<StaffDTO, String>(new EditTextCell()) {
@@ -107,8 +125,8 @@ public class RnkAdminPanel extends Composite {
                 StaffGridHelper.get().refreshDisplays();
             }
         });
-        grid.setColumnWidth(fioColumn, 20, Unit.PCT);
-        
+        grid.setColumnWidth(fioColumn, 15, Style.Unit.PCT);
+
         // position
         Column<StaffDTO, String> positionColumn =
             new Column<StaffDTO, String>(new EditTextCell()) {
@@ -132,8 +150,8 @@ public class RnkAdminPanel extends Composite {
                 StaffGridHelper.get().refreshDisplays();
             }
         });
-        grid.setColumnWidth(positionColumn, 15, Unit.PCT);
-        
+        grid.setColumnWidth(positionColumn, 6, Style.Unit.PCT);
+
         // departament
         Column<StaffDTO, String> deptColumn =
             new Column<StaffDTO, String>(new EditTextCell()) {
@@ -157,8 +175,8 @@ public class RnkAdminPanel extends Composite {
                 StaffGridHelper.get().refreshDisplays();
             }
         });
-        grid.setColumnWidth(deptColumn, 15, Unit.PCT);
-        
+        grid.setColumnWidth(deptColumn, 6, Style.Unit.PCT);
+
         // role
         Column<StaffDTO, String> roleColumn =
             new Column<StaffDTO, String>(new EditTextCell()) {
@@ -182,32 +200,32 @@ public class RnkAdminPanel extends Composite {
                 StaffGridHelper.get().refreshDisplays();
             }
         });
-        grid.setColumnWidth(roleColumn, 15, Unit.PCT);
-        
+        grid.setColumnWidth(roleColumn, 4, Style.Unit.PCT);
+
         // Salary
-        Column<StaffDTO, Integer> salaryColumn = new Column<StaffDTO, Integer>(new IntegerCell()) {
+        Column<StaffDTO, String> salaryColumn = new Column<StaffDTO, String>(new EditTextCell()) {
             @Override
-            public Integer getValue(StaffDTO object) {
-                return object.getSalary();
+            public String getValue(StaffDTO object) {
+                return object.getSalary().toString();
             }
         };
         salaryColumn.setSortable(true);
-        sortHandler.setComparator(salaryColumn, new Comparator<StaffDTO>() {
+        listHandler.setComparator(salaryColumn, new Comparator<StaffDTO>() {
             @Override
             public int compare(StaffDTO o1, StaffDTO o2) {
                 return o1.getSalary().compareTo(o2.getSalary());
             }
         });
-        dataGrid.addColumn(salaryColumn,  injector.getConstants().salary_caption());
-        roleColumn.setFieldUpdater(new FieldUpdater<StaffDTO, Integer>() {
+        grid.addColumn(salaryColumn,  injector.getConstants().salary_caption());
+        salaryColumn.setFieldUpdater(new FieldUpdater<StaffDTO, String>() {
             @Override
-            public void update(int index, StaffDTO object, Integer value) {
-                object.setsalary(value);
+            public void update(int index, StaffDTO object, String value) {
+                object.setSalary(Integer.parseInt(value));
                 StaffGridHelper.get().refreshDisplays();
             }
         });
-        dataGrid.setColumnWidth(salaryColumn, 7, Unit.EM);
-        
+        grid.setColumnWidth(salaryColumn, 6, Style.Unit.PCT);
+
 
         // login
         Column<StaffDTO, String> loginColumn =
@@ -232,14 +250,14 @@ public class RnkAdminPanel extends Composite {
                 StaffGridHelper.get().refreshDisplays();
             }
         });
-        grid.setColumnWidth(loginColumn, 10, Unit.PCT);
-        
+        grid.setColumnWidth(loginColumn, 6, Style.Unit.PCT);
+
         // password
         Column<StaffDTO, String> passwordColumn =
-            new Column<StaffDTO, String>(new EditTextCell()) {
+            new Column<StaffDTO, String>(new TextCell()) {
                 @Override
                 public String getValue(StaffDTO object) {
-                    return object.getPassword();
+                    return "hashed";
                 }
             };
         passwordColumn.setSortable(true);
@@ -250,22 +268,22 @@ public class RnkAdminPanel extends Composite {
             }
         });
         grid.addColumn(passwordColumn, injector.getConstants().password_caption());
-        passwordColumn.setFieldUpdater(new FieldUpdater<StaffDTO, String>() {
-            @Override
-            public void update(int index, StaffDTO object, String value) {
-                object.setPassword(value);
-                StaffGridHelper.get().refreshDisplays();
-            }
-        });
-        grid.setColumnWidth(passwordColumn, 10, Unit.PCT);
-        
+//        passwordColumn.setFieldUpdater(new FieldUpdater<StaffDTO, String>() {
+//            @Override
+//            public void update(int index, StaffDTO object, String value) {
+//                object.setPassword(value);
+//                StaffGridHelper.get().refreshDisplays();
+//            }
+//        });
+        grid.setColumnWidth(passwordColumn, 8, Style.Unit.PCT);
+
         //checkBox column for create password
         Column<StaffDTO, Boolean> createPasswordColumn =
             new Column<StaffDTO, Boolean>(new CheckboxCell(true, false)) {
                 @Override
                 public Boolean getValue(StaffDTO object) {
                     // Get the value from the selection model.
-                    return object.getCreatePassword());
+                    return object.getCreatePassword()==1;
                 }
             };
 
@@ -273,11 +291,11 @@ public class RnkAdminPanel extends Composite {
         createPasswordColumn.setFieldUpdater(new FieldUpdater<StaffDTO, Boolean>() {
             @Override
             public void update(int index, StaffDTO object, Boolean value) {
-                object.setCreatePassword(value);
+                object.setCreatePassword(value?1:0);
                 StaffGridHelper.get().refreshDisplays();
             }
         });
-        grid.setColumnWidth(createPasswordColumn, 40, Unit.PX);
+        grid.setColumnWidth(createPasswordColumn, 5, Style.Unit.PCT);
     }
 
     public void reloadData() {
@@ -286,12 +304,14 @@ public class RnkAdminPanel extends Composite {
             service.getStaff(session, new AsyncCallback<List<StaffDTO>>() {
                 @Override
                 public void onFailure(Throwable caught) {
-                    Window.alert(caught.getLocalizedMessage());
+                    StaffGridHelper.get().getDataProvider().getList().clear();
                 }
 
                 @Override
                 public void onSuccess( List<StaffDTO>  result) {
-                    Window.alert(result.toString());
+                    List<StaffDTO> list=StaffGridHelper.get().getDataProvider().getList();
+                    result.stream().forEach(r->list.add(r));
+                    StaffGridHelper.get().refreshDisplays();
                 }
             });
         }catch(Exception e){

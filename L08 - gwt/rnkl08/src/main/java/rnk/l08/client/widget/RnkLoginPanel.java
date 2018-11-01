@@ -95,7 +95,6 @@ public class RnkLoginPanel extends Composite {
     private void setupSession(User result){
         String session= result.getSession();
         Cookies.setCookie("sid", session, result.getExpires(), null, "/", false);
-        Window.alert(session);
     }
 
 
