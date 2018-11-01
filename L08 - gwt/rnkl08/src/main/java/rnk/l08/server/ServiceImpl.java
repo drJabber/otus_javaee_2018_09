@@ -14,6 +14,7 @@ import org.w3c.dom.NodeList;
 import rnk.l08.client.Service;
 import rnk.l08.entities.StaffEntity;
 import rnk.l08.shared.GwtServiceException;
+import rnk.l08.shared.dto.SessionInfo;
 import rnk.l08.shared.dto.User;
 
 import javax.json.bind.Jsonb;
@@ -21,6 +22,8 @@ import javax.json.bind.JsonbBuilder;
 import javax.json.bind.JsonbConfig;
 import javax.json.bind.config.PropertyNamingStrategy;
 import javax.persistence.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.OutputKeys;
@@ -139,8 +142,8 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 
     @Override
     public String getStaff(String session) throws GwtServiceException{
-        User user=loginSvc.get_user_from_session();
-        if (user!=null && user.getSession()!=null){
+        SessionInfo si =getLoginSvcInstance().get_user_from_session(session);
+        if (si!=null && si.getIsValid()==1){
             return makeStaffJson();
 
         }else{

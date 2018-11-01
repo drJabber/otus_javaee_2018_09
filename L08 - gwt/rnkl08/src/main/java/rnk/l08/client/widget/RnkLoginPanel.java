@@ -66,11 +66,9 @@ public class RnkLoginPanel extends Composite {
                     @Override
                     public void onSuccess(User result) {
                         if (result.getSession()!=null){
+                            setupSession(result);
                             parent.updateLoggedInMenu();
                             parent.menuItemAdmin.getScheduledCommand().execute();
-
-                            setupSession(user);
-
                         }else{
                             Window.alert(injector.getConstants().login_failed());
                         }
@@ -97,6 +95,7 @@ public class RnkLoginPanel extends Composite {
     private void setupSession(User result){
         String session= result.getSession();
         Cookies.setCookie("sid", session, result.getExpires(), null, "/", false);
+        Window.alert(session);
     }
 
 

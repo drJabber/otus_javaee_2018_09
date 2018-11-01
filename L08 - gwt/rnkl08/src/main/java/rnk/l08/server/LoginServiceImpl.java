@@ -4,10 +4,12 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import org.apache.log4j.Logger;
 import rnk.l08.client.LoginService;
 import rnk.l08.shared.GwtServiceException;
+import rnk.l08.shared.dto.SessionInfo;
 import rnk.l08.shared.dto.User;
 import rnk.l08.shared.validation.ValidationRule;
 
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.sql.Timestamp;
@@ -63,6 +65,42 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
         return null;
     };
 
+
+    public SessionInfo get_user_from_session(String session ) throws GwtServiceException {
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction transaction = em.getTransaction();
+        try {
+            transaction.begin();
+
+            StoredProcedureQuery q = em
+                    .createStoredProcedureQuery("session_is_valid")
+                    .registerStoredProcedureParameter("p_session_id",String.class, ParameterMode.IN)
+                    .registerStoredProcedureParameter("o_valid", Integer.class, ParameterMode.OUT)
+                    .registerStoredProcedureParameter("o_expire", Timestamp.class, ParameterMode.OUT);
+
+            q.setParameter("p_session_id",session);
+            q.execute();
+
+            Object valid=q.getOutputParameterValue("o_valid");
+            Object expire=q.getOutputParameterValue("o_expire");
+            transaction.commit();
+
+            SessionInfo si=new SessionInfo();
+            si.setIsValid((Integer)valid);
+            si.setExpire((Timestamp)expire);
+            return si;
+        }catch (Exception e){
+
+            transaction.rollback();
+            logger.error("login error:",e);
+            throw new GwtServiceException("ошибка входа");
+        }
+        finally {
+            em.close();
+        }
+
+    }
+
     @Override
     public User get_user_from_session() throws GwtServiceException {
         User user=null;
@@ -73,50 +111,18 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
             if (u!=null && u instanceof User){
                 user=(User)u;
 
-                EntityManager em = emf.createEntityManager();
-                EntityTransaction transaction = em.getTransaction();
-                try {
-                    transaction.begin();
+                SessionInfo si=get_user_from_session(user.getSession());
 
-                    StoredProcedureQuery q = em
-                            .createStoredProcedureQuery("session_is_valid")
-                            .registerStoredProcedureParameter("p_session_id",String.class, ParameterMode.IN)
-                            .registerStoredProcedureParameter("o_valid", Integer.class, ParameterMode.OUT)
-                            .registerStoredProcedureParameter("o_expire", Timestamp.class, ParameterMode.OUT);
-
-                    q.setParameter("p_session_id",user.getSession());
-                    q.execute();
-
-                    Object valid=q.getOutputParameterValue("o_valid");
-                    Object expire=q.getOutputParameterValue("o_expire");
-                    transaction.commit();
-
-                    if (valid==null){
-                        return null;
-                    }else
-                    {
-                        if ((Integer)valid==1){
-                            user.setExpires((Date)expire);
-                            save_user_in_session(user);
-                            return user;
-                        }else{
-                            return null;
-                        }
-
-                    }
-                }
-                catch (Exception e){
-
-                    transaction.rollback();
-                    logger.error("login error:",e);
-                    throw new GwtServiceException("ошибка входа");
-                }
-                finally {
-                    em.close();
+                if (si.getIsValid()==null || si.getIsValid()!=1){
+                    return null;
+                }else
+                {
+                    user.setExpires(si.getExpire());
+                    save_user_in_session(user);
+                    return user;
                 }
             }
         }
-
         return user;
     };
 
@@ -159,7 +165,7 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
                 Object expires=q.getOutputParameterValue("o_expires");
                 transaction.commit();
 
-                if (result==null){
+                if (result==null || ((String)result).isEmpty()){
                     throw new Exception("ошибка входа");
                 }else
                 {
