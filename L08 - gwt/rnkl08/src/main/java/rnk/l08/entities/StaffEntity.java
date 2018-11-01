@@ -1,17 +1,22 @@
 package rnk.l08.entities;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import rnk.l08.entities.json.DepartamentEntityJsonAdapter;
 import rnk.l08.entities.json.PositionEntityJsonAdapter;
 import rnk.l08.entities.json.RoleEntityJsonAdapter;
 import rnk.l08.entities.xml.DepartamentEntityAdapter;
 import rnk.l08.entities.xml.PositionEntityAdapter;
 import rnk.l08.entities.xml.RoleEntityAdapter;
+import rnk.l08.shared.dto.StaffDTO;
+import rnk.l08.utils.Finder;
+import rnk.l08.utils.PasswordHelper;
 
 import javax.json.bind.annotation.JsonbProperty;
 import javax.json.bind.annotation.JsonbTransient;
 import javax.json.bind.annotation.JsonbTypeAdapter;
 import javax.persistence.*;
+import javax.servlet.ServletException;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.*;
@@ -19,6 +24,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.util.Set;
 
 @Data
+@NoArgsConstructor
 @XmlRootElement(name="employee")
 @XmlAccessorType(XmlAccessType.FIELD)
 @Entity
@@ -90,20 +96,20 @@ public class StaffEntity {
     @JsonbTransient
     private Integer role_id0;
 
-    public StaffEntity(StaffDTO dto){
+    public StaffEntity(StaffDTO dto) throws ServletException {
         Finder finder=new Finder();
-        this.id=dto.id;
-        this.fio=dto.fio;
-        this.position=finder.findPosition(dto.position);
-        this.departament=finder.findDepartament(dto.departament);
-        this.role=finder.findRole(dto.role);
-        this.salary=dto.salary;
-        this.login=dto.login;
-        if (dto.createPassword==1){
+        this.id=dto.getId();
+        this.fio=dto.getFio();
+        this.position=finder.findPosition(dto.getPosition());
+        this.departament=finder.findDepartament(dto.getDepartament());
+        this.role=finder.findRole(dto.getRole());
+        this.salary=dto.getSalary();
+        this.login=dto.getLogin();
+        if (dto.getCreatePassword()==1){
             PasswordHelper helper=new PasswordHelper();
-            HashedPassword hp=helper.hashPassword(dto.password);
-            this.passwd_hash=helper.passwd_hash;
-            this.passwd_salt=helper.passwd_salt;
+            PasswordHelper.HashedPassword hp=helper.hashPassword(dto.getPassword());
+            this.passwd_hash=hp.getPasswdhash();
+            this.passwd_salt=hp.getPasswdsalt();
         }
     }
 

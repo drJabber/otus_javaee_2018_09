@@ -6,10 +6,11 @@ import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import rnk.l08.client.ServiceAsync;
-import rnk.l08.shared.GwtServiceException;
+import rnk.l08.shared.dto.StaffDTO;
+
+import java.util.List;
 
 import static rnk.l08.client.gin.SvcInjector.injector;
 
@@ -29,7 +30,7 @@ public class RnkAdminPanel extends Composite {
     public void reloadData() {
         try{
             String session= Cookies.getCookie("sid");
-            service.getStaff(session, new AsyncCallback< List<StaffDTO>>() {
+            service.getStaff(session, new AsyncCallback<List<StaffDTO>>() {
                 @Override
                 public void onFailure(Throwable caught) {
                     Window.alert(caught.getLocalizedMessage());

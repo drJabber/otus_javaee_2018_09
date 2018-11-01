@@ -1,5 +1,7 @@
 package rnk.l08.utils;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import rnk.l08.entities.AuthorityEntity;
 import rnk.l08.entities.DepartamentEntity;
 import rnk.l08.entities.PositionEntity;
@@ -16,8 +18,8 @@ public class PasswordHelper {
     @Data
     @AllArgsConstructor
     public class HashedPassword{
-        private String passwd_hash;
-        private String passwd_salt;
+        private String passwdhash;
+        private String passwdsalt;
     }
 
     public static final String PERSISTENCE_UNIT_NAME="rnk-jpa";
@@ -35,7 +37,7 @@ public class PasswordHelper {
                     .registerStoredProcedureParameter("o_passwd_hash", String.class, ParameterMode.OUT)
                     .registerStoredProcedureParameter("o_passwd_salt", String.class, ParameterMode.OUT);
 
-            q.setParameter("p_password",session);
+            q.setParameter("p_password",password);
             q.execute();
 
             Object p_hash=q.getOutputParameterValue("o_passwd_hash");

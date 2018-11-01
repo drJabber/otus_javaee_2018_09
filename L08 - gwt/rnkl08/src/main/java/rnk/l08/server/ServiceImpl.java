@@ -15,6 +15,7 @@ import rnk.l08.client.Service;
 import rnk.l08.entities.StaffEntity;
 import rnk.l08.shared.GwtServiceException;
 import rnk.l08.shared.dto.SessionInfo;
+import rnk.l08.shared.dto.StaffDTO;
 import rnk.l08.shared.dto.User;
 
 import javax.json.bind.Jsonb;
@@ -37,6 +38,7 @@ import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathFactory;
 import java.io.InputStream;
 import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ServiceImpl extends RemoteServiceServlet implements Service {
@@ -143,8 +145,9 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
     }
 
     private List<StaffDTO> createStaffListDTO(List<StaffEntity> list){
-        List<StaffDTO> result=new ArrayList<StaffDTO>();
+        List<StaffDTO> result=new ArrayList<>();
         list.stream().forEach(e->result.add(createStaffDTO(e)));
+        return result;
     }
 
     private StaffDTO createStaffDTO(StaffEntity staff){
@@ -155,7 +158,7 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
                            ,staff.getRole().getRole()
                            ,staff.getSalary()
                            ,staff.getLogin()
-                           ,'password hashed'
+                           ,"password hashed"
                            ,0);
     }
 
