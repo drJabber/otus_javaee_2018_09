@@ -57,7 +57,10 @@
 }
 
 .mainDeckPanel {
-    min-height: 400pt;
+    min-height: 500pt;
+    max-width: 600pt;
+    margin: 5px 5px 5px 5px;
+
 }
 
 

@@ -3,13 +3,17 @@ package rnk.l08.server;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import org.apache.log4j.Logger;
 import rnk.l08.client.LoginService;
+import rnk.l08.entities.HashedPasswordEntity;
 import rnk.l08.shared.GwtServiceException;
+import rnk.l08.shared.dto.HashedPasswordDTO;
 import rnk.l08.shared.dto.SessionInfo;
 import rnk.l08.shared.dto.User;
 import rnk.l08.shared.validation.ValidationRule;
+import rnk.l08.utils.PasswordHelper;
 
 import javax.persistence.*;
 import javax.persistence.criteria.CriteriaBuilder;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.sql.Timestamp;
@@ -187,6 +191,17 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
         }else
         {
             throw new GwtServiceException("ошибка входа");
+        }
+    }
+
+    @Override
+    public HashedPasswordDTO hash_password(String password) throws GwtServiceException{
+        try{
+            PasswordHelper helper=new PasswordHelper();
+            HashedPasswordEntity hp= helper.hashPassword(password);
+            return new HashedPasswordDTO(hp.getPasswdhash(),hp.getPasswdsalt());
+        }catch(Exception ex){
+            throw new GwtServiceException("ошика получения данных");
         }
     }
 }

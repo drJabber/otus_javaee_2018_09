@@ -2,7 +2,10 @@ package rnk.l08.utils;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import rnk.l08.entities.*;
+import rnk.l08.entities.AuthorityEntity;
+import rnk.l08.entities.DepartamentEntity;
+import rnk.l08.entities.PositionEntity;
+import rnk.l08.entities.RoleEntity;
 
 import javax.persistence.*;
 import javax.servlet.ServletException;
@@ -12,11 +15,17 @@ import java.util.Set;
 
 public class PasswordHelper {
 
+    @Data
+    @AllArgsConstructor
+    public class HashedPassword{
+        private String passwdhash;
+        private String passwdsalt;
+    }
 
     public static final String PERSISTENCE_UNIT_NAME="rnk-jpa";
     private static final EntityManagerFactory emf= Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME); //tomcat, see
 
-    public HashedPasswordEntity hashPassword(String password) throws ServletException{
+    public HashedPassword hashPassword(String password) throws ServletException{
         EntityManager em = emf.createEntityManager(); // for Tomcat
         EntityTransaction transaction = em.getTransaction();
         try{
@@ -36,7 +45,7 @@ public class PasswordHelper {
             
             transaction.commit();
             
-            return new HashedPasswordEntity((String)p_hash,(String)p_salt);
+            return new HashedPassword((String)p_hash,(String)p_salt);
         }catch(Exception ex){
             transaction.rollback();
             throw new ServletException();

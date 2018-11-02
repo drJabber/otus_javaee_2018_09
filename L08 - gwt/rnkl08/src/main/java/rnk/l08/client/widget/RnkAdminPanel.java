@@ -39,6 +39,10 @@ public class RnkAdminPanel extends Composite {
     interface RnkAdminPanelUiBinder extends UiBinder<FlowPanel, RnkAdminPanel> {
     }
 
+    private static interface GetValue<C> {
+        C getValue(StaffDTO o);
+    }
+
     private static RnkAdminPanelUiBinder ourUiBinder = GWT.create(RnkAdminPanelUiBinder.class);
 
     public RnkAdminPanel(GwtUI parent) {
@@ -70,6 +74,7 @@ public class RnkAdminPanel extends Composite {
         StaffGridHelper.get().addDisplay(grid);
 
     }
+
 
     private void initColumns(final SelectionModel<StaffDTO> selectionModel, ColumnSortEvent.ListHandler<StaffDTO> listHandler){
         //checkBox column for selection
@@ -254,10 +259,10 @@ public class RnkAdminPanel extends Composite {
 
         // password
         Column<StaffDTO, String> passwordColumn =
-            new Column<StaffDTO, String>(new TextCell()) {
+            new Column<StaffDTO, String>(new EditTextCell()) {
                 @Override
                 public String getValue(StaffDTO object) {
-                    return "hashed";
+                    return object.getPassword();
                 }
             };
         passwordColumn.setSortable(true);
@@ -268,34 +273,66 @@ public class RnkAdminPanel extends Composite {
             }
         });
         grid.addColumn(passwordColumn, injector.getConstants().password_caption());
-//        passwordColumn.setFieldUpdater(new FieldUpdater<StaffDTO, String>() {
-//            @Override
-//            public void update(int index, StaffDTO object, String value) {
-//                object.setPassword(value);
-//                StaffGridHelper.get().refreshDisplays();
-//            }
-//        });
-        grid.setColumnWidth(passwordColumn, 8, Style.Unit.PCT);
-
-        //checkBox column for create password
-        Column<StaffDTO, Boolean> createPasswordColumn =
-            new Column<StaffDTO, Boolean>(new CheckboxCell(true, false)) {
-                @Override
-                public Boolean getValue(StaffDTO object) {
-                    // Get the value from the selection model.
-                    return object.getCreatePassword()==1;
-                }
-            };
-
-        grid.addColumn(createPasswordColumn, injector.getConstants().create_password_caption());
-        createPasswordColumn.setFieldUpdater(new FieldUpdater<StaffDTO, Boolean>() {
+        passwordColumn.setFieldUpdater(new FieldUpdater<StaffDTO, String>() {
             @Override
-            public void update(int index, StaffDTO object, Boolean value) {
-                object.setCreatePassword(value?1:0);
+            public void update(int index, StaffDTO object, String value) {
+                object.setPassword(value);
                 StaffGridHelper.get().refreshDisplays();
             }
         });
-        grid.setColumnWidth(createPasswordColumn, 5, Style.Unit.PCT);
+        grid.setColumnWidth(passwordColumn, 8, Style.Unit.PCT);
+
+        // save
+        ActionCell saveCell=new ActionCell<StaffDTO>("save", new ActionCell.Delegate<StaffDTO>() {
+            @Override
+            public void execute(StaffDTO object) {
+                String session= Cookies.getCookie("sid");
+                service.saveStaff(session, new AsyncCallback<Void>(){
+                    @Override
+                    public void onFailure(Throwable caught) {
+                        Window.alert(caught.getLocalizedMessage());
+                    }
+
+                    @Override
+                    public void onSuccess( Void  result) {
+                        List<StaffDTO> list=StaffGridHelper.get().getDataProvider().getList();
+                        result.stream().forEach(r->list.add(r));
+                        StaffGridHelper.get().refreshDisplays();
+                    }
+
+                });
+            }
+        });
+
+        Column<StaffDTO,StaffDTO> saveColumn=addColumn(saveCell,"save",new GetValue<StaffDTO>(){
+
+            @Override
+            public StaffDTO getValue(StaffDTO o) {
+                return null;
+            }
+        },null);
+
+        grid.setColumnWidth(saveColumn, 5, Style.Unit.PCT);
+
+
+        // save
+        ActionCell passCell=new ActionCell<StaffDTO>("cp", new ActionCell.Delegate<StaffDTO>() {
+            @Override
+            public void execute(StaffDTO object) {
+
+                object.setCreatePassword(1);
+            }
+        });
+
+        Column<StaffDTO,StaffDTO> passColumn=addColumn(passCell,"cp",new GetValue<StaffDTO>(){
+
+            @Override
+            public StaffDTO getValue(StaffDTO o) {
+                return null;
+            }
+        },null);
+
+        grid.setColumnWidth(passColumn, 5, Style.Unit.PCT);
     }
 
     public void reloadData() {
@@ -317,5 +354,19 @@ public class RnkAdminPanel extends Composite {
         }catch(Exception e){
             Window.alert(e.getLocalizedMessage());
         }
+    }
+
+
+    private <C> Column<StaffDTO, C> addColumn(Cell<C> cell, String headerText,
+                                                 final GetValue<C> getter, FieldUpdater<StaffDTO, C> fieldUpdater) {
+        Column<StaffDTO, C> column = new Column<StaffDTO, C>(cell) {
+            @Override
+            public C getValue(StaffDTO object) {
+                return getter.getValue(object);
+            }
+        };
+        column.setFieldUpdater(fieldUpdater);
+        grid.addColumn(column, headerText);
+        return column;
     }
 }

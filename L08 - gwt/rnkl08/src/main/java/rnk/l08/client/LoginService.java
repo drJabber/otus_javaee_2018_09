@@ -5,6 +5,7 @@ import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.google.gwt.core.client.GWT;
 import rnk.l08.shared.GwtServiceException;
+import rnk.l08.shared.dto.HashedPasswordDTO;
 import rnk.l08.shared.dto.User;
 
 @RemoteServiceRelativePath("LoginService")
@@ -15,6 +16,7 @@ public interface LoginService extends RemoteService {
     User get_user_from_session() throws GwtServiceException;
     Void save_user_in_session(User user) throws GwtServiceException;
     Void remove_user_from_session() throws GwtServiceException;
+    HashedPasswordDTO hash_password(String password) throws GwtServiceException;
 
     /**
      * Utility/Convenience class.

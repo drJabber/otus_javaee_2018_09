@@ -12,7 +12,6 @@ import rnk.l08.shared.dto.StaffDTO;
 import rnk.l08.utils.Finder;
 import rnk.l08.utils.PasswordHelper;
 
-import javax.json.bind.annotation.JsonbProperty;
 import javax.json.bind.annotation.JsonbTransient;
 import javax.json.bind.annotation.JsonbTypeAdapter;
 import javax.persistence.*;
@@ -107,7 +106,7 @@ public class StaffEntity {
         this.login=dto.getLogin();
         if (dto.getCreatePassword()==1){
             PasswordHelper helper=new PasswordHelper();
-            PasswordHelper.HashedPassword hp=helper.hashPassword(dto.getPassword());
+            HashedPasswordEntity hp=helper.hashPassword(dto.getPassword());
             this.passwd_hash=hp.getPasswdhash();
             this.passwd_salt=hp.getPasswdsalt();
         }

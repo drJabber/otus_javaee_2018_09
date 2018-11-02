@@ -12,4 +12,6 @@ public interface ServiceAsync {
     void getNews(AsyncCallback<String> async) throws GwtServiceException;
 
     void getStaff(String session, AsyncCallback<List<StaffDTO>> async) throws GwtServiceException;
+
+    void saveStaff(String session, StaffDTO staff, AsyncCallback<Void> async) throws  GwtServiceException;
 }

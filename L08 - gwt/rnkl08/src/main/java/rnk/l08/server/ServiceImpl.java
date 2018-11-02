@@ -16,15 +16,8 @@ import rnk.l08.entities.StaffEntity;
 import rnk.l08.shared.GwtServiceException;
 import rnk.l08.shared.dto.SessionInfo;
 import rnk.l08.shared.dto.StaffDTO;
-import rnk.l08.shared.dto.User;
 
-import javax.json.bind.Jsonb;
-import javax.json.bind.JsonbBuilder;
-import javax.json.bind.JsonbConfig;
-import javax.json.bind.config.PropertyNamingStrategy;
 import javax.persistence.*;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.OutputKeys;
@@ -111,7 +104,7 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
         return "Hello from server news!";
     }
 
-    private List<StaffDTO> makeStaffJson() throws GwtServiceException{
+    private List<StaffDTO> makeStaff() throws GwtServiceException{
         EntityManager em = emf.createEntityManager();
         EntityTransaction transaction = em.getTransaction();
         try {
@@ -128,15 +121,29 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 
             return createStaffListDTO(result);
 
-            // JsonbConfig jsoncfg=new JsonbConfig()
-            //         .withFormatting(Boolean.TRUE)
-            //         .withPropertyNamingStrategy(PropertyNamingStrategy.LOWER_CASE_WITH_UNDERSCORES);
-            // Jsonb jsonb= JsonbBuilder.create(jsoncfg);
-
-            // return jsonb.toJson(result);
         }
         catch (Exception e){
             transaction.rollback();
+            throw new GwtServiceException(e);
+        }
+        finally {
+            em.close();
+        }
+    }
+
+    private void persistStaff(StaffDTO staff) throws GwtServiceException{
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction transaction = em.getTransaction();
+        try {
+            StaffEntity se=new StaffEntity(staff);
+            transaction.begin();
+            em.persist(se);
+            transaction.commit();
+        }
+        catch (Exception e){
+            if (transaction.isActive()){
+                transaction.rollback();
+            }
             throw new GwtServiceException(e);
         }
         finally {
@@ -166,7 +173,7 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
     public  List<StaffDTO>  getStaff(String session) throws GwtServiceException{
         SessionInfo si =getLoginSvcInstance().get_user_from_session(session);
         if (si!=null && si.getIsValid()==1){
-            return makeStaffJson();
+            return makeStaff();
 
         }else{
             throw new GwtServiceException("ошибка входа");
@@ -174,6 +181,15 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 
     }
 
+    @Override
+    public void saveStaff(String session, StaffDTO staff) throws GwtServiceException{
+        SessionInfo si =getLoginSvcInstance().get_user_from_session(session);
+        if (si!=null && si.getIsValid()==1){
+            persistStaff(staff);
 
+        }else{
+            throw new GwtServiceException("ошибка входа");
+        }
+    }
 
 }
