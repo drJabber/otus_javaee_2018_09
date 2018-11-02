@@ -8,6 +8,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -40,6 +41,7 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
     private static LoginServiceImpl loginSvc=null;
     private static final String PERSISTENCE_UNIT_NAME="rnk-jpa";
     private static final EntityManagerFactory emf= Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME); //tomcat, see
+    private static final Logger logger = Logger.getLogger(ServiceImpl.class.getName());
 
     private static final LoginServiceImpl getLoginSvcInstance(){
         if (loginSvc==null){
@@ -95,7 +97,9 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
             }
 
         }catch(Exception ex){
-            throw new GwtServiceException(ex);
+            logger.error("currencies error:",ex);
+            return "";
+//            throw new GwtServiceException(ex);
         }
     }
 
@@ -123,8 +127,10 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 
         }
         catch (Exception e){
+            logger.error("news error:",e);
             transaction.rollback();
-            throw new GwtServiceException(e);
+//            throw new GwtServiceException(e);
+            return null;
         }
         finally {
             em.close();
@@ -137,14 +143,15 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
         try {
             StaffEntity se=new StaffEntity(staff);
             transaction.begin();
-            em.persist(se);
+            em.merge(se);
             transaction.commit();
         }
         catch (Exception e){
+            logger.error("staff error:",e);
             if (transaction.isActive()){
                 transaction.rollback();
             }
-            throw new GwtServiceException(e);
+//            throw new GwtServiceException(e);
         }
         finally {
             em.close();
@@ -159,14 +166,16 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 
     private StaffDTO createStaffDTO(StaffEntity staff){
         return new StaffDTO(staff.getId()
-                           ,staff.getFio()
-                           ,staff.getPosition().getPosition()
-                           ,staff.getDepartament().getDepartament()
-                           ,staff.getRole().getRole()
-                           ,staff.getSalary()
-                           ,staff.getLogin()
-                           ,"password hashed"
-                           ,0);
+                    ,staff.getFio()
+                    ,staff.getPosition().getPosition()
+                    ,staff.getDepartament().getDepartament()
+                    ,staff.getRole().getRole()
+                    ,staff.getSalary()
+                    ,staff.getLogin()
+                    ,"hashed"
+                    ,staff.getPasswd_hash()
+                    ,staff.getPasswd_salt()
+                    ,0);
     }
 
     @Override

@@ -6,7 +6,14 @@
     <ui:with field="txt" type="rnk.l08.client.bundle.TextResources" />
 
     <g:FlowPanel addStyleNames="{res.style.adminpanel}">
-        <g:Label text="{txt.adminPanelLabelText}"></g:Label>
+        <g:HorizontalPanel>
+            <g:FlowPanel addStyleNames="{res.style.panelmargins}">
+                <g:Label text="{txt.adminPanelLabelText}" ></g:Label>
+            </g:FlowPanel>
+            <g:FlowPanel addStyleNames="{res.style.panelmargins}">
+                <g:Button text="Добавить" ui:field="adminaddbutton"></g:Button>
+            </g:FlowPanel>
+        </g:HorizontalPanel>
         <g:HTMLPanel>
             <c:DataGrid ui:field="grid" rowCount="20" pageSize="20" addStyleNames="{res.style.admingrid}"/>
             <c:SimplePager ui:field="pager"></c:SimplePager>

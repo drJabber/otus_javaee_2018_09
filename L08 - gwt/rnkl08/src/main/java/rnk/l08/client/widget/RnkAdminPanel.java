@@ -3,9 +3,11 @@ package rnk.l08.client.widget;
 import com.google.gwt.cell.client.*;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style;
+import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.ColumnSortEvent;
 import com.google.gwt.user.cellview.client.DataGrid;
@@ -18,6 +20,7 @@ import com.google.gwt.view.client.DefaultSelectionEventManager;
 import com.google.gwt.view.client.MultiSelectionModel;
 import com.google.gwt.view.client.SelectionModel;
 import rnk.l08.client.ServiceAsync;
+import rnk.l08.shared.GwtServiceException;
 import rnk.l08.shared.dto.StaffDTO;
 import rnk.l08.shared.util.StaffGridHelper;
 
@@ -51,32 +54,36 @@ public class RnkAdminPanel extends Composite {
     }
 
 
-    private void initGrid(){
-        grid=new DataGrid<StaffDTO>( StaffGridHelper.KEY_PROVIDER);
-        grid.setWidth("100%");
-        grid.setAutoHeaderRefreshDisabled(true);
-        grid.setEmptyTableWidget(new Label(injector.getConstants().no_data_to_display()));
+    private void initGrid() {
+        try{
+            grid=new DataGrid<StaffDTO>( StaffGridHelper.KEY_PROVIDER);
+            grid.setWidth("100%");
+            grid.setAutoHeaderRefreshDisabled(true);
+            grid.setEmptyTableWidget(new Label(injector.getConstants().no_data_to_display()));
 
-        ColumnSortEvent.ListHandler<StaffDTO> listHandler = new ColumnSortEvent.ListHandler<StaffDTO>(StaffGridHelper.get().getDataProvider().getList());
-        grid.addColumnSortHandler(listHandler);
+            ColumnSortEvent.ListHandler<StaffDTO> listHandler = new ColumnSortEvent.ListHandler<StaffDTO>(StaffGridHelper.get().getDataProvider().getList());
+            grid.addColumnSortHandler(listHandler);
 
 
-        // SimplePager.Resources pagerResources = GWT.create(SimplePager.Resources.class);
-        SimplePager.Resources pagerResources = GWT.create(SimplePager.Resources.class);
-        pager = new SimplePager(SimplePager.TextLocation.CENTER, pagerResources, false, 0, true);
-        pager.setDisplay(grid);
+            // SimplePager.Resources pagerResources = GWT.create(SimplePager.Resources.class);
+            SimplePager.Resources pagerResources = GWT.create(SimplePager.Resources.class);
+            pager = new SimplePager(SimplePager.TextLocation.CENTER, pagerResources, false, 0, true);
+            pager.setDisplay(grid);
 
-        final SelectionModel<StaffDTO> selectionModel = new MultiSelectionModel<StaffDTO>(StaffGridHelper.KEY_PROVIDER);
-        grid.setSelectionModel(selectionModel, DefaultSelectionEventManager.<StaffDTO> createCheckboxManager());
+            final SelectionModel<StaffDTO> selectionModel = new MultiSelectionModel<StaffDTO>(StaffGridHelper.KEY_PROVIDER);
+            grid.setSelectionModel(selectionModel, DefaultSelectionEventManager.<StaffDTO> createCheckboxManager());
 
-        initColumns(selectionModel, listHandler);
+            initColumns(selectionModel, listHandler);
 
-        StaffGridHelper.get().addDisplay(grid);
+            StaffGridHelper.get().addDisplay(grid);
 
+        }catch(Exception ex){
+            Window.alert(ex.getLocalizedMessage());
+        }
     }
 
 
-    private void initColumns(final SelectionModel<StaffDTO> selectionModel, ColumnSortEvent.ListHandler<StaffDTO> listHandler){
+    private void initColumns(final SelectionModel<StaffDTO> selectionModel, ColumnSortEvent.ListHandler<StaffDTO> listHandler) throws GwtServiceException{
         //checkBox column for selection
         Column<StaffDTO, Boolean> checkColumn =
             new Column<StaffDTO, Boolean>(new CheckboxCell(true, false)) {
@@ -283,24 +290,27 @@ public class RnkAdminPanel extends Composite {
         grid.setColumnWidth(passwordColumn, 8, Style.Unit.PCT);
 
         // save
-        ActionCell saveCell=new ActionCell<StaffDTO>("save", new ActionCell.Delegate<StaffDTO>() {
+        ActionCell saveCell=new ActionCell<StaffDTO>("S", new ActionCell.Delegate<StaffDTO>() {
             @Override
             public void execute(StaffDTO object) {
+                object.setCreatePassword(0);
                 String session= Cookies.getCookie("sid");
-                service.saveStaff(session, new AsyncCallback<Void>(){
-                    @Override
-                    public void onFailure(Throwable caught) {
-                        Window.alert(caught.getLocalizedMessage());
-                    }
+                try{
+                    service.saveStaff(session, object, new AsyncCallback<Void>(){
+                        @Override
+                        public void onFailure(Throwable caught) {
+                            Window.alert(caught.getLocalizedMessage());
+                        }
 
-                    @Override
-                    public void onSuccess( Void  result) {
-                        List<StaffDTO> list=StaffGridHelper.get().getDataProvider().getList();
-                        result.stream().forEach(r->list.add(r));
-                        StaffGridHelper.get().refreshDisplays();
-                    }
+                        @Override
+                        public void onSuccess( Void  result) {
+                            Window.alert(object.getFio()+"сохранен");
+                        }
 
-                });
+                    });
+                }catch(Exception ex){
+                    Window.alert(ex.getLocalizedMessage());
+                }
             }
         });
 
@@ -308,7 +318,7 @@ public class RnkAdminPanel extends Composite {
 
             @Override
             public StaffDTO getValue(StaffDTO o) {
-                return null;
+                return o;
             }
         },null);
 
@@ -316,11 +326,27 @@ public class RnkAdminPanel extends Composite {
 
 
         // save
-        ActionCell passCell=new ActionCell<StaffDTO>("cp", new ActionCell.Delegate<StaffDTO>() {
+        ActionCell passCell=new ActionCell<StaffDTO>("P", new ActionCell.Delegate<StaffDTO>() {
             @Override
             public void execute(StaffDTO object) {
+                try{
+                    String session= Cookies.getCookie("sid");
+                    object.setCreatePassword(1);
+                    service.saveStaff(session, object,  new AsyncCallback<Void>(){
+                        @Override
+                        public void onFailure(Throwable caught) {
+                            Window.alert(caught.getLocalizedMessage());
+                        }
 
-                object.setCreatePassword(1);
+                        @Override
+                        public void onSuccess( Void  result) {
+                            Window.alert(object.getFio()+"сохранен");
+                        }
+
+                    });
+                }catch(Exception ex){
+                    Window.alert(ex.getLocalizedMessage());
+                }
             }
         });
 
@@ -328,7 +354,7 @@ public class RnkAdminPanel extends Composite {
 
             @Override
             public StaffDTO getValue(StaffDTO o) {
-                return null;
+                return o;
             }
         },null);
 
@@ -347,6 +373,7 @@ public class RnkAdminPanel extends Composite {
                 @Override
                 public void onSuccess( List<StaffDTO>  result) {
                     List<StaffDTO> list=StaffGridHelper.get().getDataProvider().getList();
+                    list.clear();
                     result.stream().forEach(r->list.add(r));
                     StaffGridHelper.get().refreshDisplays();
                 }
@@ -369,4 +396,15 @@ public class RnkAdminPanel extends Composite {
         grid.addColumn(column, headerText);
         return column;
     }
+
+
+    @UiHandler("adminaddbutton")
+    void addButtonClick(ClickEvent e){
+        List<StaffDTO> list=StaffGridHelper.get().getDataProvider().getList();
+        if (list.stream().filter(i->i.getId()==null).count()==0) {
+            list.add(new StaffDTO());
+            StaffGridHelper.get().refreshDisplays();
+        }
+    }
+
 }

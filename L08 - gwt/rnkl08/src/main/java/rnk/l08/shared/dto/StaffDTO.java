@@ -20,6 +20,8 @@ public class StaffDTO implements IsSerializable,Comparable<StaffDTO> {
     private Integer salary;
     private String login;
     private String password;
+    private String passwd_hash;
+    private String passwd_salt;
     private Integer createPassword;
 
     @Override

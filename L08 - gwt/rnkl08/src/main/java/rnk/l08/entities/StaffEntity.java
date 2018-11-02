@@ -109,6 +109,9 @@ public class StaffEntity {
             HashedPasswordEntity hp=helper.hashPassword(dto.getPassword());
             this.passwd_hash=hp.getPasswdhash();
             this.passwd_salt=hp.getPasswdsalt();
+        }else{
+            this.passwd_hash=dto.getPasswd_hash();
+            this.passwd_salt=dto.getPasswd_salt();
         }
     }
 
