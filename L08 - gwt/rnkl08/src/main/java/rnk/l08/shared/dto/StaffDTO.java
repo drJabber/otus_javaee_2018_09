@@ -1,28 +1,38 @@
 package rnk.l08.shared.dto;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
-import com.google.gwt.view.client.ProvidesKey;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldNameConstants;
 
+import javax.validation.constraints.*;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+
 @FieldNameConstants(prefix="")
 public class StaffDTO implements IsSerializable,Comparable<StaffDTO> {
-    private Integer id;
-    private String fio;
-    private String position;
-    private String departament;
-    private String role;
-    private Integer salary;
-    private String login;
-    private String password;
-    private String passwd_hash;
-    private String passwd_salt;
-    private Integer createPassword;
+    @NotNull
+    private Integer id=-1;
+    @NotNull(message="Поле не должно быть пустым")
+    private String fio="";
+    @NotNull(message="Поле не должно быть пустым")
+    private String position="";
+    @NotNull(message="Поле не должно быть пустым")
+    private String departament="";
+    @NotNull(message="Поле не должно быть пустым")
+    private String role="";
+    @Min(value = 0,message="Поле должно быть больше 0")
+    private Integer salary=1;
+    @NotNull(message="Поле не должно быть пустым")
+    private String login="";
+    @NotNull(message="Поле не должно быть пустым")
+    private String password="hashed";
+    private String passwd_hash="";
+    private String passwd_salt="";
+    private Integer createPassword=0;
 
     @Override
     public int compareTo(StaffDTO o) {

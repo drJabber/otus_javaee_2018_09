@@ -39,6 +39,7 @@
     <postgresql.jdbc.version>42.2.5</postgresql.jdbc.version>
     <hibernate.version>5.3.6.Final</hibernate.version>
     <hibernate-validator.version>4.1.0.Final</hibernate-validator.version>
+    <hibernate-validator-sources.version>4.1.0.Final-sources</hibernate-validator-sources.version>
     <!-- https://huangp.wordpress.com/2012/05/09/lombok-for-java-and-gwt-project/ -->
     <lombok.lib>/home/djabber/.m2/repository/org/projectlombok/lombok/1.18.0/lombok-1.18.0.jar</lombok.lib>
 
@@ -196,6 +197,12 @@
       <!--<scope>provided</scope>-->
     </dependency>
     <dependency>
+      <groupId>javax.validation</groupId>
+      <artifactId>validation-api</artifactId>
+      <classifier>sources</classifier>
+      <!--<scope>provided</scope>-->
+    </dependency>
+    <dependency>
       <groupId>org.hibernate</groupId>
       <artifactId>hibernate-validator</artifactId>
       <version>${hibernate-validator.version}</version>
@@ -218,7 +225,7 @@
       <version>${hibernate-validator.version}</version>
       <classifier>sources</classifier>
       <!-- "provided" so that we don't deploy -->
-      <scope>provided</scope>
+      <scope>compile</scope>
       <exclusions>
         <exclusion>
           <groupId>javax.xml.bind</groupId>

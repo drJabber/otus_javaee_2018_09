@@ -151,7 +151,28 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
             if (transaction.isActive()){
                 transaction.rollback();
             }
-//            throw new GwtServiceException(e);
+        }
+        finally {
+            em.close();
+        }
+    }
+
+    private void deleteStaff(StaffDTO staff) throws GwtServiceException{
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction transaction = em.getTransaction();
+        try {
+            StaffEntity se=new StaffEntity(staff);
+
+            transaction.begin();
+            se=em.merge(se);
+            em.remove(se);
+            transaction.commit();
+        }
+        catch (Exception e){
+            logger.error("staff error:",e);
+            if (transaction.isActive()){
+                transaction.rollback();
+            }
         }
         finally {
             em.close();
@@ -195,6 +216,17 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
         SessionInfo si =getLoginSvcInstance().get_user_from_session(session);
         if (si!=null && si.getIsValid()==1){
             persistStaff(staff);
+
+        }else{
+            throw new GwtServiceException("ошибка входа");
+        }
+    }
+
+    @Override
+    public void removeStaff(String session, StaffDTO staff) throws GwtServiceException{
+        SessionInfo si =getLoginSvcInstance().get_user_from_session(session);
+        if (si!=null && si.getIsValid()==1){
+            deleteStaff(staff);
 
         }else{
             throw new GwtServiceException("ошибка входа");

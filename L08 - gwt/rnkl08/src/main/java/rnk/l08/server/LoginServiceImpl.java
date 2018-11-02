@@ -8,12 +8,10 @@ import rnk.l08.shared.GwtServiceException;
 import rnk.l08.shared.dto.HashedPasswordDTO;
 import rnk.l08.shared.dto.SessionInfo;
 import rnk.l08.shared.dto.User;
-import rnk.l08.shared.validation.ValidationRule;
+import rnk.l08.shared.validation.UserValidationRule;
 import rnk.l08.utils.PasswordHelper;
 
 import javax.persistence.*;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.sql.Timestamp;
@@ -148,7 +146,7 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
 
     @Override
     public User authorize(User user) throws GwtServiceException {
-        if (ValidationRule.isValid(user)){
+        if (UserValidationRule.isValid(user)){
             EntityManager em = emf.createEntityManager(); 
             EntityTransaction transaction = em.getTransaction();
             try {

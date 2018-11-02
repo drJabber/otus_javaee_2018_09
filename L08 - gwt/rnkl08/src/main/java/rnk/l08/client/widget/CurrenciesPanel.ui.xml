@@ -14,9 +14,9 @@
                     <tr><th>Код</th><th>Курс</th></tr>
                 </thead>
                 <tbody>
-                    <tr><td>qwqw</td><td>11</td></tr>
-                    <tr><td>twtw</td><td>22</td></tr>
-                    <tr><td>zwzw</td><td>33</td></tr>
+                    <tr><td> </td><td> </td></tr>
+                    <tr><td> </td><td> </td></tr>
+                    <tr><td> </td><td> </td></tr>
                 </tbody>
             </table>
         </g:HTMLPanel>

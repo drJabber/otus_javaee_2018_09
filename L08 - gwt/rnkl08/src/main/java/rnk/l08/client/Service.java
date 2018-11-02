@@ -16,6 +16,7 @@ public interface Service extends RemoteService {
     String getNews() throws GwtServiceException;
      List<StaffDTO> getStaff(String session) throws GwtServiceException;
     void saveStaff(String session, StaffDTO staff) throws GwtServiceException;
+    void removeStaff(String session, StaffDTO staff) throws GwtServiceException;
 
     /**
      * Utility/Convenience class.

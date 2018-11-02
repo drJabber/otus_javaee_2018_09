@@ -56,6 +56,15 @@ public interface TextResources  extends Constants {
     @Key("admin.grid.password.create.caption")
     String create_password_caption();
 
+    @Key("agmin.grid.save.column.caption")
+    String save_column_caption();
+
+    @Key("agmin.grid.save.password.column.caption")
+    String save_password_column_caption();
+
+    @Key("agmin.grid.remove.column.caption")
+    String remove_column_caption();
+
 //    @Key("newsapi.key")
 //    String newsapi_key();
 

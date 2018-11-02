@@ -4,7 +4,6 @@ import com.google.gwt.cell.client.*;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -23,9 +22,14 @@ import rnk.l08.client.ServiceAsync;
 import rnk.l08.shared.GwtServiceException;
 import rnk.l08.shared.dto.StaffDTO;
 import rnk.l08.shared.util.StaffGridHelper;
+import rnk.l08.shared.validation.StaffValidationRule;
+import rnk.l08.shared.validation.UserValidationRule;
 
+import javax.validation.ConstraintViolation;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import static rnk.l08.client.gin.SvcInjector.injector;
 
@@ -84,36 +88,36 @@ public class RnkAdminPanel extends Composite {
 
 
     private void initColumns(final SelectionModel<StaffDTO> selectionModel, ColumnSortEvent.ListHandler<StaffDTO> listHandler) throws GwtServiceException{
-        //checkBox column for selection
-        Column<StaffDTO, Boolean> checkColumn =
-            new Column<StaffDTO, Boolean>(new CheckboxCell(true, false)) {
-                @Override
-                public Boolean getValue(StaffDTO object) {
-                    // Get the value from the selection model.
-                    return selectionModel.isSelected(object);
-                }
-            };
-
-        grid.addColumn(checkColumn, SafeHtmlUtils.fromSafeConstant("<br/>"));
-        grid.setColumnWidth(checkColumn, 5, Style.Unit.PCT);
-
-        // Id
-        Column<StaffDTO, Number> idColumn = new Column<StaffDTO, Number>(new NumberCell()) {
-            @Override
-            public Integer getValue(StaffDTO object) {
-                return object.getId();
-            }
-        };
-        idColumn.setSortable(true);
-        listHandler.setComparator(idColumn, new Comparator<StaffDTO>() {
-            @Override
-            public int compare(StaffDTO o1, StaffDTO o2) {
-                return o1.getId().compareTo(o2.getId());
-            }
-        });
-        grid.addColumn(idColumn, "id");
-        grid.setColumnWidth(idColumn, 4, Style.Unit.EM);
-
+//        //checkBox column for selection
+//        Column<StaffDTO, Boolean> checkColumn =
+//            new Column<StaffDTO, Boolean>(new CheckboxCell(true, false)) {
+//                @Override
+//                public Boolean getValue(StaffDTO object) {
+//                    // Get the value from the selection model.
+//                    return selectionModel.isSelected(object);
+//                }
+//            };
+//
+//        grid.addColumn(checkColumn, SafeHtmlUtils.fromSafeConstant("<br/>"));
+//        grid.setColumnWidth(checkColumn, 5, Style.Unit.PCT);
+//
+//        // Id
+//        Column<StaffDTO, Number> idColumn = new Column<StaffDTO, Number>(new NumberCell()) {
+//            @Override
+//            public Integer getValue(StaffDTO object) {
+//                return object.getId();
+//            }
+//        };
+//        idColumn.setSortable(true);
+//        listHandler.setComparator(idColumn, new Comparator<StaffDTO>() {
+//            @Override
+//            public int compare(StaffDTO o1, StaffDTO o2) {
+//                return o1.getId().compareTo(o2.getId());
+//            }
+//        });
+//        grid.addColumn(idColumn, "id");
+//        grid.setColumnWidth(idColumn, 4, Style.Unit.EM);
+//
         // Fio
         Column<StaffDTO, String> fioColumn =
             new Column<StaffDTO, String>(new EditTextCell()) {
@@ -293,35 +297,39 @@ public class RnkAdminPanel extends Composite {
         ActionCell saveCell=new ActionCell<StaffDTO>("S", new ActionCell.Delegate<StaffDTO>() {
             @Override
             public void execute(StaffDTO object) {
-                object.setCreatePassword(0);
-                String session= Cookies.getCookie("sid");
-                try{
-                    service.saveStaff(session, object, new AsyncCallback<Void>(){
-                        @Override
-                        public void onFailure(Throwable caught) {
-                            Window.alert(caught.getLocalizedMessage());
-                        }
+                Set<ConstraintViolation<StaffDTO>> errors= StaffValidationRule.getErrors(object);
+                if (errors.isEmpty()){
+                    object.setCreatePassword(0);
+                    String session= Cookies.getCookie("sid");
+                    try{
+                        service.saveStaff(session, object, new AsyncCallback<Void>(){
+                            @Override
+                            public void onFailure(Throwable caught) {
+                                Window.alert(caught.getLocalizedMessage());
+                            }
 
-                        @Override
-                        public void onSuccess( Void  result) {
-                            Window.alert(object.getFio()+"сохранен");
-                        }
+                            @Override
+                            public void onSuccess( Void  result) {
+                                Window.alert(object.getFio()+"сохранен");
+                            }
 
-                    });
-                }catch(Exception ex){
-                    Window.alert(ex.getLocalizedMessage());
+                        });
+                    }catch(Exception ex){
+                        Window.alert(ex.getLocalizedMessage());
+                    }
+                }else{
+                    Window.alert(errors.stream ().map (i -> i.toString ()).collect (Collectors.joining ("\n")));
                 }
             }
         });
 
-        Column<StaffDTO,StaffDTO> saveColumn=addColumn(saveCell,"save",new GetValue<StaffDTO>(){
+        Column<StaffDTO,StaffDTO> saveColumn=addColumn(saveCell,injector.getConstants().save_column_caption(),new GetValue<StaffDTO>(){
 
             @Override
             public StaffDTO getValue(StaffDTO o) {
                 return o;
             }
         },null);
-
         grid.setColumnWidth(saveColumn, 5, Style.Unit.PCT);
 
 
@@ -329,10 +337,50 @@ public class RnkAdminPanel extends Composite {
         ActionCell passCell=new ActionCell<StaffDTO>("P", new ActionCell.Delegate<StaffDTO>() {
             @Override
             public void execute(StaffDTO object) {
+                Set<ConstraintViolation<StaffDTO>> errors= StaffValidationRule.getErrors(object);
+                if (errors.isEmpty()){
+                    try{
+                        String session= Cookies.getCookie("sid");
+                        object.setCreatePassword(1);
+                        service.saveStaff(session, object,  new AsyncCallback<Void>(){
+                            @Override
+                            public void onFailure(Throwable caught) {
+                                Window.alert(caught.getLocalizedMessage());
+                            }
+
+                            @Override
+                            public void onSuccess( Void  result) {
+                                Window.alert(object.getFio()+"сохранен");
+                            }
+
+                        });
+                    }catch(Exception ex){
+                        Window.alert(ex.getLocalizedMessage());
+                    }
+                }else{
+                    Window.alert(errors.stream ().map (i -> i.toString ()).collect (Collectors.joining ("\n")));
+                }
+            }
+        });
+
+        Column<StaffDTO,StaffDTO> passColumn=addColumn(passCell,injector.getConstants().save_password_column_caption(),
+                new GetValue<StaffDTO>(){
+                    @Override
+                    public StaffDTO getValue(StaffDTO o) {
+                        return o;
+                    }
+        },null);
+
+        grid.setColumnWidth(passColumn, 5, Style.Unit.PCT);
+
+        // delete
+        ActionCell delCell=new ActionCell<StaffDTO>("R", new ActionCell.Delegate<StaffDTO>() {
+            @Override
+            public void execute(StaffDTO object) {
                 try{
                     String session= Cookies.getCookie("sid");
-                    object.setCreatePassword(1);
-                    service.saveStaff(session, object,  new AsyncCallback<Void>(){
+                    object.setCreatePassword(0);
+                    service.removeStaff(session, object,  new AsyncCallback<Void>(){
                         @Override
                         public void onFailure(Throwable caught) {
                             Window.alert(caught.getLocalizedMessage());
@@ -340,17 +388,18 @@ public class RnkAdminPanel extends Composite {
 
                         @Override
                         public void onSuccess( Void  result) {
-                            Window.alert(object.getFio()+"сохранен");
+                            StaffGridHelper.get().getDataProvider().getList().remove(object);
                         }
 
                     });
+
                 }catch(Exception ex){
                     Window.alert(ex.getLocalizedMessage());
                 }
             }
         });
 
-        Column<StaffDTO,StaffDTO> passColumn=addColumn(passCell,"cp",new GetValue<StaffDTO>(){
+        Column<StaffDTO,StaffDTO> removeColumn=addColumn(delCell,injector.getConstants().remove_column_caption(),new GetValue<StaffDTO>(){
 
             @Override
             public StaffDTO getValue(StaffDTO o) {
@@ -358,7 +407,7 @@ public class RnkAdminPanel extends Composite {
             }
         },null);
 
-        grid.setColumnWidth(passColumn, 5, Style.Unit.PCT);
+        grid.setColumnWidth(removeColumn, 5, Style.Unit.PCT);
     }
 
     public void reloadData() {
@@ -403,6 +452,8 @@ public class RnkAdminPanel extends Composite {
         List<StaffDTO> list=StaffGridHelper.get().getDataProvider().getList();
         if (list.stream().filter(i->i.getId()==null).count()==0) {
             list.add(new StaffDTO());
+            grid.setRowCount(list.size());
+            grid.setRowData(list);
             StaffGridHelper.get().refreshDisplays();
         }
     }
