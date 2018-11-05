@@ -199,7 +199,7 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
             HashedPasswordEntity hp= helper.hashPassword(password);
             return new HashedPasswordDTO(hp.getPasswdhash(),hp.getPasswdsalt());
         }catch(Exception ex){
-            throw new GwtServiceException("ошика получения данных");
+            throw new GwtServiceException("ошибка получения данных");
         }
     }
 }
