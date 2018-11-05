@@ -62,6 +62,9 @@ CREATE TABLE public.positions
     head_id integer,
     default_role_id integer,
     default_salary integer NOT NULL,
+    default_dept_id0 integer,
+    default_role_id0 integer,
+    head_id0 integer,
     CONSTRAINT positions_pkey PRIMARY KEY (id),
     CONSTRAINT fk_position_dept FOREIGN KEY (default_dept_id)
         REFERENCES public.departaments (id) MATCH SIMPLE
@@ -77,7 +80,6 @@ CREATE TABLE public.positions
         ON DELETE SET NULL
 );
 
-
 -- Table: public.departaments
 
 CREATE TABLE public.departaments
@@ -87,6 +89,9 @@ CREATE TABLE public.departaments
     head_dept_id integer,
     head_of_dept_id integer,
     town character varying(200) COLLATE pg_catalog."default" NOT NULL,
+    default_salary integer,
+    head_dept_id0 integer,
+    head_of_dept_id0 integer,
     CONSTRAINT departaments_pkey PRIMARY KEY (id),
     CONSTRAINT fk_dept_head_dept FOREIGN KEY (head_dept_id)
         REFERENCES public.departaments (id) MATCH SIMPLE
@@ -101,6 +106,7 @@ CREATE TABLE public.departaments
 
 -- Table: public.staff
 
+
 CREATE TABLE public.staff
 (
     id integer NOT NULL DEFAULT nextval('staff_id_seq'::regclass),
@@ -112,6 +118,9 @@ CREATE TABLE public.staff
     login character varying(200) COLLATE pg_catalog."default" NOT NULL,
     passwd_hash character varying(500) COLLATE pg_catalog."default" NOT NULL,
     passwd_salt character varying(100) COLLATE pg_catalog."default" NOT NULL,
+    departament_id0 integer,
+    position_id0 integer,
+    role_id0 integer,
     CONSTRAINT staff_pkey PRIMARY KEY (id),
     CONSTRAINT fk_staff_dept FOREIGN KEY (departament_id)
         REFERENCES public.departaments (id) MATCH SIMPLE
@@ -127,6 +136,22 @@ CREATE TABLE public.staff
         ON DELETE CASCADE
 );
 
+
+-- Table: public.session
+
+
+CREATE TABLE public.session
+(
+    id character varying(60) COLLATE pg_catalog."default" NOT NULL,
+    staff_id integer NOT NULL,
+    started timestamp without time zone NOT NULL,
+    expire timestamp without time zone NOT NULL,
+    CONSTRAINT session_pkey PRIMARY KEY (id),
+    CONSTRAINT fk_session_staff FOREIGN KEY (staff_id)
+        REFERENCES public.staff (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE
+);
 
 -- FUNCTION: public.get_max_salary_fio()
 
@@ -188,6 +213,7 @@ end
 
 $BODY$;
 
+
 -- FUNCTION: public.logout(character varying, character varying)
 
 -- DROP FUNCTION public.logout(character varying, character varying);
@@ -235,6 +261,10 @@ end
 
 $BODY$;
 
+
+-- FUNCTION: public.session_is_valid(character varying)
+
+-- DROP FUNCTION public.session_is_valid(character varying);
 
 CREATE OR REPLACE FUNCTION public.session_is_valid(
 	p_session_id character varying DEFAULT ''::character varying)

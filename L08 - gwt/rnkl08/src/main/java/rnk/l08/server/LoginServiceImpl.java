@@ -8,7 +8,7 @@ import rnk.l08.shared.GwtServiceException;
 import rnk.l08.shared.dto.HashedPasswordDTO;
 import rnk.l08.shared.dto.SessionInfo;
 import rnk.l08.shared.dto.User;
-import rnk.l08.shared.validation.UserValidationRule;
+import rnk.l08.shared.validation.ValidationRule;
 import rnk.l08.utils.PasswordHelper;
 
 import javax.persistence.*;
@@ -30,7 +30,7 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
     };
 
     @Override
-    public Void logout() throws GwtServiceException {
+    public void logout() throws GwtServiceException {
         EntityManager em = emf.createEntityManager(); 
         EntityTransaction transaction = em.getTransaction();
         try {
@@ -64,7 +64,7 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
             remove_user_from_session();
         }
         
-        return null;
+        return ;
     };
 
 
@@ -129,24 +129,24 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
     };
 
     @Override
-    public Void save_user_in_session(User user) throws GwtServiceException{
+    public void save_user_in_session(User user) throws GwtServiceException{
         HttpServletRequest rq=getThreadLocalRequest();
         HttpSession session=rq.getSession();
         session.setAttribute("user", user);
-        return null;
+        return;
     };
 
     @Override
-    public Void remove_user_from_session() throws GwtServiceException{
+    public void remove_user_from_session() throws GwtServiceException{
         HttpServletRequest rq=getThreadLocalRequest();
         HttpSession session=rq.getSession();
         session.removeAttribute("user");
-        return null;
+        return ;
     };
 
     @Override
     public User authorize(User user) throws GwtServiceException {
-        if (UserValidationRule.isValid(user)){
+        if (ValidationRule.isValid(user)){
             EntityManager em = emf.createEntityManager(); 
             EntityTransaction transaction = em.getTransaction();
             try {

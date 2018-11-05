@@ -11,8 +11,8 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
 import rnk.l08.client.LoginServiceAsync;
-import rnk.l08.shared.validation.UserValidationRule;
 import rnk.l08.shared.dto.User;
+import rnk.l08.shared.validation.ValidationRule;
 
 import javax.validation.ConstraintViolation;
 import java.util.Set;
@@ -53,7 +53,7 @@ public class RnkLoginPanel extends Composite {
     @UiHandler("loginsubmit")
     public void loginSubmitHandler(ClickEvent event){
         User user=new User(login.getValue(),password.getValue(),null,null);
-        Set<ConstraintViolation<User>> errors= UserValidationRule.getErrors(user);
+        Set<ConstraintViolation<User>> errors= ValidationRule.getErrors(user);
         clearErrors();
         if (errors.isEmpty()) {
             try{

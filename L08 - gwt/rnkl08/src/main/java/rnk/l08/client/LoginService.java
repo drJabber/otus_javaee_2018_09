@@ -12,21 +12,9 @@ import rnk.l08.shared.dto.User;
 public interface LoginService extends RemoteService {
     User authorize(User user) throws GwtServiceException;
     User authorize_from_session() throws GwtServiceException;
-    Void logout() throws GwtServiceException;
+    void logout() throws GwtServiceException;
     User get_user_from_session() throws GwtServiceException;
-    Void save_user_in_session(User user) throws GwtServiceException;
-    Void remove_user_from_session() throws GwtServiceException;
+    void save_user_in_session(User user) throws GwtServiceException;
+    void remove_user_from_session() throws GwtServiceException;
     HashedPasswordDTO hash_password(String password) throws GwtServiceException;
-
-    /**
-     * Utility/Convenience class.
-     * Use LoginService.App.getInstance() to access static instance of LoginServiceAsync
-     */
-    public static class App {
-        private static final LoginServiceAsync ourInstance = (LoginServiceAsync) GWT.create(LoginService.class);
-
-        public static LoginServiceAsync getInstance() {
-            return ourInstance;
-        }
-    }
 }

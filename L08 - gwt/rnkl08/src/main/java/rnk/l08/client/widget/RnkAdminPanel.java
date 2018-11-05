@@ -22,8 +22,7 @@ import rnk.l08.client.ServiceAsync;
 import rnk.l08.shared.GwtServiceException;
 import rnk.l08.shared.dto.StaffDTO;
 import rnk.l08.shared.util.StaffGridHelper;
-import rnk.l08.shared.validation.StaffValidationRule;
-import rnk.l08.shared.validation.UserValidationRule;
+import rnk.l08.shared.validation.ValidationRule;
 
 import javax.validation.ConstraintViolation;
 import java.util.Comparator;
@@ -297,7 +296,7 @@ public class RnkAdminPanel extends Composite {
         ActionCell saveCell=new ActionCell<StaffDTO>("S", new ActionCell.Delegate<StaffDTO>() {
             @Override
             public void execute(StaffDTO object) {
-                Set<ConstraintViolation<StaffDTO>> errors= StaffValidationRule.getErrors(object);
+                Set<ConstraintViolation<StaffDTO>> errors= ValidationRule.getErrors(object);
                 if (errors.isEmpty()){
                     object.setCreatePassword(0);
                     String session= Cookies.getCookie("sid");
@@ -337,7 +336,7 @@ public class RnkAdminPanel extends Composite {
         ActionCell passCell=new ActionCell<StaffDTO>("P", new ActionCell.Delegate<StaffDTO>() {
             @Override
             public void execute(StaffDTO object) {
-                Set<ConstraintViolation<StaffDTO>> errors= StaffValidationRule.getErrors(object);
+                Set<ConstraintViolation<StaffDTO>> errors= ValidationRule.getErrors(object);
                 if (errors.isEmpty()){
                     try{
                         String session= Cookies.getCookie("sid");

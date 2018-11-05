@@ -18,16 +18,4 @@ public interface Service extends RemoteService {
     void saveStaff(String session, StaffDTO staff) throws GwtServiceException;
     void removeStaff(String session, StaffDTO staff) throws GwtServiceException;
 
-    /**
-     * Utility/Convenience class.
-     * Use Service.App.getInstance() to access static instance of ServiceAsync
-     */
-    class App {
-        private static final ServiceAsync ourInstance = (ServiceAsync) GWT.create(Service.class);
-
-        public static ServiceAsync getInstance() {
-            return ourInstance;
-        }
-
-    }
 }
