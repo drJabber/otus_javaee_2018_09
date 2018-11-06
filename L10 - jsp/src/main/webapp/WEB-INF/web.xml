@@ -26,6 +26,12 @@
     <servlet>
         <servlet-name>Startup-servlet</servlet-name>
         <servlet-class>rnk.l10.startup.StartupServlet</servlet-class>
+
+        <init-param>
+            <param-name>restore-at-startup</param-name>
+            <param-value>Y</param-value>
+        </init-param>
+
     </servlet>
     <servlet-mapping>
         <servlet-name>Startup-servlet</servlet-name>

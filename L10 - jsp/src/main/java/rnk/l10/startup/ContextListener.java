@@ -3,6 +3,8 @@ package rnk.l10.startup;
 import org.apache.log4j.Logger;
 import rnk.l10.entities.xml.StaffEntitiesList;
 
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.persistence.*;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -39,10 +41,11 @@ public class ContextListener implements ServletContextListener{
       try{
           ServletContext context=sce.getServletContext();
           Object o=context.getAttribute("startup");
+          logger.info("check startup object");
           if ((o!=null) && (o instanceof Startup)){
               Startup startup=(Startup)o;
               if (startup.getInitialized()==1){
-                  make_xml(get_filename(context));
+                  store_staff_data_and_remove_from_db(get_filename(context));
               }
           }
       }catch(Exception ex){
@@ -51,29 +54,20 @@ public class ContextListener implements ServletContextListener{
 
     }
 
-    private String get_filename(ServletContext context){
-        return context.getAttribute(ServletContext.TEMPDIR)+"/xml/employees.xml";
+    private String get_filename(ServletContext context)throws NamingException {
+        return System.getProperty("catalina.base")+"/bin/xml/staff.xml";
     }
 
-    private void make_xml(String filename) throws ServletException {
+    private void store_staff_data_and_remove_from_db(String filename) throws ServletException{
         EntityManager em=emf.createEntityManager();
         EntityTransaction et=em.getTransaction();
         try{
             et.begin();
-            Query q = em.createQuery(
-                    "select staff "+
-                            "from StaffEntity staff "+
-                            "order by staff.id desc");
-            StaffEntitiesList sl=new StaffEntitiesList();
-            sl.setStaff_list(q.getResultList());
-
-            JAXBContext jc=JAXBContext.newInstance(sl.getClass());
-            Marshaller m=jc.createMarshaller();
-            m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT,Boolean.TRUE);
-            Path path= Paths.get(filename);
-            Files.createDirectories(path.getParent());
-            m.marshal(sl, path.toFile());
-
+            logger.info("store data in XML:"+filename);
+            make_xml(filename,em);
+            logger.info("remove data from DB");
+            remove_staff_data_from_db(em);
+            logger.info("after remove data finished");
             et.commit();
         }catch(Exception ex){
             et.rollback();
@@ -81,6 +75,30 @@ public class ContextListener implements ServletContextListener{
         }
         finally{
             em.close();
+        }
+    }
+
+    private void remove_staff_data_from_db(EntityManager em){
+        em.createQuery("delete from  StaffEntity s").executeUpdate();
+    }
+
+    private void make_xml(String filename, EntityManager em) throws ServletException {
+        try {
+            Query q = em.createQuery(
+                    "select staff " +
+                            "from StaffEntity staff " +
+                            "order by staff.id desc");
+            StaffEntitiesList sl = new StaffEntitiesList();
+            sl.setStaff_list(q.getResultList());
+
+            JAXBContext jc = JAXBContext.newInstance(sl.getClass());
+            Marshaller m = jc.createMarshaller();
+            m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+            Path path = Paths.get(filename);
+            Files.createDirectories(path.getParent());
+            m.marshal(sl, path.toFile());
+        }catch(Exception ex){
+            throw new ServletException("could not marchal staff list into file");
         }
     }
 

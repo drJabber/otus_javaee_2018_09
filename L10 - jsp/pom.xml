@@ -42,8 +42,6 @@
     <mavencompiler.version>3.5.1</mavencompiler.version>
     <mavenbuilder.version>3.0.0</mavenbuilder.version>
     <mavendeploy.version>2.2</mavendeploy.version>
-    <maven.compiler.source>1.8</maven.compiler.source>
-    <maven.compiler.target>1.8</maven.compiler.target>
   </properties>
 
   <dependencies>
