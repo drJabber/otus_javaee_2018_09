@@ -1,5 +1,0 @@
-
-@XmlRootElement(name="Valute")
-class CurrencyEntity{
-
-}
