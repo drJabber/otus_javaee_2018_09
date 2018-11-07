@@ -1,15 +1,3 @@
-var updateLoginButton= function(){
-    if ( ("status" in sessionStorage) && (sessionStorage.getItem("status")==="true")){
-        document.getElementById("login-logout-button").innerText="Выход";
-        document.getElementById("login-logout-button").href="logout";
-
-    }else
-    {
-        document.getElementById("login-logout-button").innerText="";
-        document.getElementById("login-logout-button").href="";
-    }
-}
-
 var checkLoginForm = function() {
     var checked = document.getElementById('login').value != ''
         && document.getElementById('password').value != '';
@@ -59,17 +47,3 @@ var blurListener = function(event) {
     checkLoginForm();
 };
 
-var evalServerScript=function(){
-  jQuery.post(
-      "js"   ,
-      {"text" : $("#admin-script-memo").val()},
-      function(data){
-          var items=[];
-          items.push("<p>"+data+"</p>");
-          $("<div/>",{html : items.join("") }).appendTo("#admin-script-response");
-      }
-  );
-
-  return false;
-
-}

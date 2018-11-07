@@ -3,6 +3,8 @@
 <html lang="ru">
     <head>
         <% String context_path=request.getContextPath(); %>
+        <% Integer is_logged_in=getServletcontext().getAttribute("is_logged_in"); %>
+        
         <%@include file="main-head.jsp"%>
     </head>
     <body id="body">
