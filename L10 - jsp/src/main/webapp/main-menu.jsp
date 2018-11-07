@@ -5,11 +5,12 @@
   Time: 7:01
   To change this template use File | Settings | File Templates.
 --%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
         <header class="main-header">
             <div class="head-container">
                 <div class="head-logo-container" style="top:15px;">
-                    <div class="logo"><a href="${context_path}/"><img alt="Шарабан - гаражный кооператив" src="static/img/logo.png"></a>
+                    <div class="logo"><a href="${context_path}/main"><img alt="Шарабан - гаражный кооператив" src="${context_path}/static/img/logo.png"></a>
                     </div>
                 </div>
                 <div class="head-right-container">
@@ -38,15 +39,18 @@
                     <li><a class="root-menuitem" href="${context_path}/main/members">Участники</a></li>
                     <li><a class="root-menuitem" href="${context_path}/main/faq">Вопрос-ответ</a></li>
                     <li><a class="root-menuitem" href="${context_path}/main/admin">Админка</a></li>
-<% if (is_logged_in==0) { %>                    
-                    <li><a class="root-menuitem" href=""></a></li>
-<% } else { %>                    
-                    <li><a class="root-menuitem" href="${context_path}/main/logout">Выход</a></li>
-<% } %>                    
+<c:choose>
+    <c:when test="${applicationScope['is_loggend_in']==null}">
+        <li><a class="root-menuitem" href=""></a></li>
+    </c:when>
+    <c:when test="${applicationScope['is_loggend_in']=='N'}">
+        <li><a class="root-menuitem" href=""></a></li>
+    </c:when>
+    <c:otherwise>
+        <li><a class="root-menuitem" href="${context_path}/main/logout">Выход</a></li>
+    </c:otherwise>
+</c:choose>
                 </ul>
 
-                <script>
-                    updateLoginButton();
-                </script>
             </nav>
         </header>

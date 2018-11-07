@@ -10,7 +10,7 @@ var checkLoginForm = function() {
 };
 
 var getCBCurrencies=function(){
-    jQuery.get("cbcurr", function(data){
+    jQuery.get("/cbcurr", function(data){
         var items = [];
         items.push("<table><tr><th>Валюта</th><th>Курс</th></tr>");
         jQuery.each(data, function(key, val){
@@ -25,7 +25,7 @@ var getCBCurrencies=function(){
 }
 
 var getNews=function(){
-    jQuery.get("news", function(data){
+    jQuery.get("/news", function(data){
         var items = [];
         jQuery.each(data, function(key, val){
             items.push("<tr>");
