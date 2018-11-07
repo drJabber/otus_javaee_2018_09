@@ -64,7 +64,9 @@ public class StartupServlet extends HttpServlet {
         private void save_data_to_db(StaffEntitiesList sl, EntityManager em){
             if (sl.getStaff_list()!=null){
                 for (StaffEntity staff: sl.getStaff_list()) {
-                    em.merge(staff);
+                    if (staff.getId()>=0){
+                        em.merge(staff);
+                    }
                 }
             }
         }
