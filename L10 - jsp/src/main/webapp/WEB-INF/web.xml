@@ -15,15 +15,6 @@
     </context-param>
 
     <servlet>
-        <servlet-name>Main-servlet</servlet-name>
-        <servlet-class>rnk.l10.MainServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>Main-servlet</servlet-name>
-        <url-pattern>/rnk</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
         <servlet-name>Invalid browser</servlet-name>
         <jsp-file>/WEB-INF/browser-invalid.jsp</jsp-file>
     </servlet>
@@ -74,7 +65,7 @@
 
     <filter-mapping>
         <filter-name>User-Agent filter</filter-name>
-        <servlet-name>Main-servlet</servlet-name>
+        <servlet-name>Main page</servlet-name>
     </filter-mapping>
 
 

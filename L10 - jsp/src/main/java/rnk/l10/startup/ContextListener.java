@@ -79,7 +79,7 @@ public class ContextListener implements ServletContextListener{
     }
 
     private void remove_staff_data_from_db(EntityManager em){
-        em.createQuery("delete from  StaffEntity s").executeUpdate();
+        em.createQuery("delete from  StaffEntity s where s.id<>-1 ").executeUpdate();
     }
 
     private void make_xml(String filename, EntityManager em) throws ServletException {
