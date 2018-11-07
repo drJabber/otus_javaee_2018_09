@@ -1,5 +1,4 @@
 import com.google.gson.JsonArray;
-import entities.ArticleEntity;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -28,6 +27,7 @@ import java.util.List;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import rnk.l10.entities.ArticleEntity;
 
 @WebServlet("/news")
 public class NewsServlet extends HttpServlet {
