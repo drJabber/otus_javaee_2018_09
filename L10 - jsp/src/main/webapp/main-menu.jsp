@@ -41,9 +41,8 @@
 <% if (is_logged_in==0) { %>                    
                     <li><a class="root-menuitem" href=""></a></li>
 <% } else { %>                    
-                    <li><a class="root-menuitem" href="${context_path}/logout">Выход</a></li>
+                    <li><a class="root-menuitem" href="${context_path}/main/logout">Выход</a></li>
 <% } %>                    
-                    <!-- <li><a id="login-logout-button" class="root-menuitem" href=""></a></li> -->
                 </ul>
 
                 <script>
