@@ -289,7 +289,7 @@
           <configuration>
             <url>${tomcat.deploymentPath}</url>
             <server>TomcatServerRNK</server>
-            <path>/rnk</path>
+            <path>/gwt</path>
           </configuration>
         </plugin>
 

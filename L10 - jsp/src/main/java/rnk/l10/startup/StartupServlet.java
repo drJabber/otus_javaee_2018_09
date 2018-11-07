@@ -33,9 +33,7 @@ public class StartupServlet extends HttpServlet {
     public void init(ServletConfig config)  {
         ServletContext context=config.getServletContext();
         try{
-            String param=config.getInitParameter("restore-at-startup");
-            logger.info("check restore at startup parameter: "+param);
-            if (param=="Y") {
+            if (context.getInitParameter("restore-at-startup").equals("Y")) {
                 logger.info("before reading startup data");
                 restore_staff_data_and_save_to_DB(get_filename(context));
             }
@@ -46,7 +44,7 @@ public class StartupServlet extends HttpServlet {
     }
 
         private String get_filename(ServletContext context) throws NamingException {
-            return System.getProperty("catalina.base")+"/bin/xml/staff.xml";
+            return context.getInitParameter("rnk-storage-path")+"/staff.xml";
         }
 
         private StaffEntitiesList restore_staff_data(String filename) throws JAXBException, IOException{
@@ -54,13 +52,20 @@ public class StartupServlet extends HttpServlet {
             Unmarshaller m=jc.createUnmarshaller();
 
             Path xml_path= Paths.get(filename);
-            Files.createDirectories(xml_path.getParent());
-            return (StaffEntitiesList)m.unmarshal(xml_path.toFile());
+            if (xml_path.toFile().exists()){
+                Files.createDirectories(xml_path.getParent());
+                return (StaffEntitiesList)m.unmarshal(xml_path.toFile());
+            }else{
+                return null;
+            }
+
         }
 
         private void save_data_to_db(StaffEntitiesList sl, EntityManager em){
-            for (StaffEntity staff: sl.getStaff_list()) {
-                em.persist(staff);
+            if (sl.getStaff_list()!=null){
+                for (StaffEntity staff: sl.getStaff_list()) {
+                    em.merge(staff);
+                }
             }
         }
 
@@ -71,10 +76,13 @@ public class StartupServlet extends HttpServlet {
                 et.begin();
 
                 StaffEntitiesList sl=restore_staff_data(filename);
-                logger.info("after restore from xml");
-                save_data_to_db(sl,em);
-                logger.info("after save to DB");
-
+                if (sl!=null){
+                    logger.info("after restore from xml");
+                    save_data_to_db(sl,em);
+                    logger.info("after save to DB");
+                }else{
+                    logger.info("no saved staff");
+                }
                 et.commit();
             }catch(Exception ex){
                 et.rollback();;

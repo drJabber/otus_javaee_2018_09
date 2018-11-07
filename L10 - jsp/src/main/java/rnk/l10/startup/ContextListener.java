@@ -55,7 +55,7 @@ public class ContextListener implements ServletContextListener{
     }
 
     private String get_filename(ServletContext context)throws NamingException {
-        return System.getProperty("catalina.base")+"/bin/xml/staff.xml";
+        return context.getInitParameter("rnk-storage-path")+"/staff.xml";
     }
 
     private void store_staff_data_and_remove_from_db(String filename) throws ServletException{

@@ -5,6 +5,15 @@
          version="3.1">
     <display-name>RnK</display-name>
 
+    <context-param>
+        <param-name>rnk-storage-path</param-name>
+        <param-value>/opt/tomcat/bin/xml</param-value>
+    </context-param>
+    <context-param>
+        <param-name>restore-at-startup</param-name>
+        <param-value>Y</param-value>
+    </context-param>
+
     <servlet>
         <servlet-name>Main-servlet</servlet-name>
         <servlet-class>rnk.l10.MainServlet</servlet-class>
@@ -26,12 +35,6 @@
     <servlet>
         <servlet-name>Startup-servlet</servlet-name>
         <servlet-class>rnk.l10.startup.StartupServlet</servlet-class>
-
-        <init-param>
-            <param-name>restore-at-startup</param-name>
-            <param-value>Y</param-value>
-        </init-param>
-
     </servlet>
     <servlet-mapping>
         <servlet-name>Startup-servlet</servlet-name>
