@@ -33,11 +33,11 @@
             </div>
             <nav class="menubar"   style="background-image:  url(${context_path}/static/img/bg-menubar.png);" >
                 <ul>
-                    <li><a class="root-menuitem" href="${context_path}/html/index.html">Главная</a></li>
-                    <li><a class="root-menuitem" href="${context_path}/html/contact.html">Контакты</a></li>
-                    <li><a class="root-menuitem" href="${context_path}/html/members.html">Участники</a></li>
-                    <li><a class="root-menuitem" href="${context_path}/html/faq.html">Вопрос-ответ</a></li>
-                    <li><a class="root-menuitem" href="${context_path}/html/admin.html">Админка</a></li>
+                    <li><a class="root-menuitem" href="${context_path}/html/main">Главная</a></li>
+                    <li><a class="root-menuitem" href="${context_path}/html/main?contact">Контакты</a></li>
+                    <li><a class="root-menuitem" href="${context_path}/html/main?members">Участники</a></li>
+                    <li><a class="root-menuitem" href="${context_path}/html/main?faq">Вопрос-ответ</a></li>
+                    <li><a class="root-menuitem" href="${context_path}/html/main?admin">Админка</a></li>
                     <li><a id="login-logout-button" class="root-menuitem" href=""></a></li>
                 </ul>
 
