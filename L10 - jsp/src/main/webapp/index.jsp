@@ -31,17 +31,20 @@
                 <jsp:include page="admin-body.jsp" />
             </c:when>
             <c:when test="${body_parameter.equals('login')}">
-                <jsp:include page="WEB-INF/login-body.jsp" />
+                <jsp:include page="login-body.jsp" />
             </c:when>
             <c:when test="${body_parameter.equals('loginerror')}">
-                <jsp:include page="WEB-INF/loginerror-body.jsp" />
+                <jsp:include page="loginerror-body.jsp" />
+
             </c:when>
             <c:when test="${body_parameter.equals('logout')}">
-<%              ServletContext sc=getServletContext();
-                RequestDispatcher rd=sc.getRequestDispatcher("main");
-                sc.setAttribute("is_logged_in", "N");
-                rd.forward(request,response);
-%>
+                <%
+                    request.getSession().invalidate();
+                    request.logout();
+                    ServletContext sc=getServletContext();
+                    RequestDispatcher rd=sc.getRequestDispatcher("/main");
+                    rd.forward(request,response);
+                %>
             </c:when>
             <c:otherwise>
                 <jsp:include page="main-body.jsp" />

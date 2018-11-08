@@ -40,10 +40,7 @@
                     <li><a class="root-menuitem" href="${context_path}/main/faq">Вопрос-ответ</a></li>
                     <li><a class="root-menuitem" href="${context_path}/main/admin">Админка</a></li>
 <c:choose>
-    <c:when test="${applicationScope['is_loggend_in']==null}">
-        <li><a class="root-menuitem" href=""></a></li>
-    </c:when>
-    <c:when test="${applicationScope['is_loggend_in']=='N'}">
+    <c:when test="${empty pageContext.request.userPrincipal}">
         <li><a class="root-menuitem" href=""></a></li>
     </c:when>
     <c:otherwise>

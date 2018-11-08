@@ -68,6 +68,10 @@
         <servlet-name>Main page</servlet-name>
     </filter-mapping>
 
+    <security-role>
+        <role-name>*</role-name>
+    </security-role>
+
 
     <security-constraint>
         <web-resource-collection>
@@ -75,7 +79,7 @@
         	<url-pattern>/main/admin</url-pattern>
         </web-resource-collection>
         <auth-constraint>
-	        <role-name>*</role-name>
+	        <role-name>admin</role-name>
         </auth-constraint>
     </security-constraint>
 
@@ -85,23 +89,8 @@
         	<form-login-page>/main/login</form-login-page>
 	        <form-error-page>/main/loginerror</form-error-page>
         </form-login-config>
-        <realm-name>Admin</realm-name>
+        <!--<realm-name>Admin</realm-name>-->
     </login-config>
-
-   <security-role>
-       <description>
-           Common role
-       </description>
-       <role-name>Common</role-name>
-   </security-role>
-
-   <security-role>
-       <description>
-           Admin role
-       </description>
-       <role-name>admin</role-name>
-   </security-role>
-
 
     <jsp-config>
         <jsp-property-group>

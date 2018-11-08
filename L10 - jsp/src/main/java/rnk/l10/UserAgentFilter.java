@@ -1,5 +1,6 @@
 package rnk.l10;
 
+import org.apache.http.HttpStatus;
 import ua_parser.Client;
 import ua_parser.Parser;
 

@@ -26,16 +26,14 @@
 
     <ResourceLink name="jdbc/rnkl10_db" global="jdbc/rnk_db" type="javax.sql.DataSource" />
 
-    <!--<Realm className ="com.sid.realm.NewRealm"/>-->
 
-    <Realm className="org.apache.catalina.realm.DataSourceRealm"  dataSourceName="jdbc/rnk_db"
+    <Realm className="org.apache.catalina.realm.DataSourceRealm"  dataSourceName="jdbc/rnkl10_db"
     userTable="staff_login" userNameCol="login" userCredCol="passwd_hash"
     userRoleTable="staff_roles" roleNameCol="role">
-    <!--userRoleTable="staff_roles" roleNameCol="role">-->
         <CredentialHandler className="org.apache.catalina.realm.MessageDigestCredentialHandler" algorithm="SHA1" />
     </Realm>
-
-     <!--Uncomment this to disable session persistence across Tomcat restarts -->
+   
+    <!-- Uncomment this to disable session persistence across Tomcat restarts -->
     <!--
     <Manager pathname="" />
     -->
