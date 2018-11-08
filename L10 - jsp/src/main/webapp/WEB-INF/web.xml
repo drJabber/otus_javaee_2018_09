@@ -85,6 +85,7 @@
         <form-login-page>/main/login</form-login-page>
         <form-error-page>/main/loginerror</form-error-page>
         </form-login-config>
+        <realm-name>Admin</realm-name>
     </login-config>
 
 
