@@ -41,11 +41,13 @@ public class UserAgentFilter extends HttpFilter {
 
     @Override
     protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
+        super.doFilter(req, res, chain);
+
         boolean browser_invalid=false;
         List<Cookie> found_cookies=(req.getCookies()==null)?
                 null:
-                Arrays.stream(req.getCookies()).filter(c->c.getName()=="valid-browser").collect(Collectors.toList()) ;
-        if ((found_cookies==null) || (found_cookies.size()==0) || (found_cookies.get(0).getValue()!="Y")){
+                Arrays.stream(req.getCookies()).filter(c->c.getName().equals("valid-browser")).collect(Collectors.toList()) ;
+        if ((found_cookies==null) || (found_cookies.size()==0) || (!found_cookies.get(0).getValue().equals("Y"))){
             String agent=req.getHeader("User-Agent");
             Map<String, Integer> limits=(Map<String, Integer>)context.getAttribute("user-agent-limits") ;
             Parser parser=new Parser();
@@ -57,11 +59,10 @@ public class UserAgentFilter extends HttpFilter {
                 if (Integer.parseInt(parsed.userAgent.major)<limit){
                     res.sendRedirect("browser-invalid");
                 }else{
-                    res.addCookie(new Cookie("valid-browser","true"));
+                    res.addCookie(new Cookie("valid-browser","Y"));
                 }
 
             }
         }
-        super.doFilter(req, res, chain);
     }
 }
