@@ -35,6 +35,11 @@ public class UserAgentFilter extends HttpFilter {
     }
 
     @Override
+    public void destroy() {
+
+    }
+
+    @Override
     protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
         boolean browser_invalid=false;
         List<Cookie> found_cookies=(req.getCookies()==null)?

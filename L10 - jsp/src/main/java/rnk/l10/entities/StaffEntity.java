@@ -8,18 +8,16 @@ import rnk.l10.entities.json.RoleEntityJsonAdapter;
 import rnk.l10.entities.xml.DepartamentEntityAdapter;
 import rnk.l10.entities.xml.PositionEntityAdapter;
 import rnk.l10.entities.xml.RoleEntityAdapter;
-//import rnk.l10.shared.dto.StaffDTO;
 import rnk.l10.utils.Finder;
-//import rnk.l10.utils.PasswordHelper;
 
 import javax.json.bind.annotation.JsonbTransient;
 import javax.json.bind.annotation.JsonbTypeAdapter;
 import javax.persistence.*;
-import javax.servlet.ServletException;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.*;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import java.util.Date;
 import java.util.Set;
 
 @Data
@@ -73,6 +71,17 @@ public class StaffEntity {
     @Column(name="login")
     @XmlElement(required = true)
     private String login;
+
+    @NotNull
+    @Column(name = "birth_date", columnDefinition = "TIMESTAMP")
+    @Temporal(TemporalType.TIMESTAMP)
+    @XmlAttribute(required = true)
+    private Date birthDate;
+
+    @NotNull
+    @Column(name = "gender")
+    @XmlAttribute(required = true)
+    private String gender;
 
     @NotNull
     @Size(max=500)

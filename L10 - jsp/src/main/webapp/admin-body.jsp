@@ -6,15 +6,15 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-        <main class="main-container">
-            <div class="admin-form-container">
-                <form id="admin-script-form" class="admin-script-form" onsubmit="return evalServerScript();">
-                    <p>Скрипт</p>
-                    <textarea id="admin-script-memo" name="text" cols="40" rows="2"></textarea>
-                    <input type="submit" value="Выполнить" onsubmit="evalServerScript()">
-                </form>
-            </div>
-            <div class="admin-script-response-container">
-                <div class="admin-script-response" id="admin-script-response">Look at server JS output:</div>
+        <main class="admin-container">
+
+
+            <%@include file="admin-search-body.jsp"%>
+
+            <div class="admin-form-response-container">
+                <div class="admin-form-response" id="admin-form-response">Результаты поиска:<br/>
+                    <jsp:include page="WEB-INF/admin-search-results.jsp" />
+                </div>
+                <%--<div>Сессия : ${sessionScope.search}</div>--%>
             </div>
         </main>

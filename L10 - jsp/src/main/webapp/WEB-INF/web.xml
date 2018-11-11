@@ -68,6 +68,21 @@
         <servlet-name>Main page</servlet-name>
     </filter-mapping>
 
+    <!--tomcat filter to use UTF-8 in request parameters-->
+    <filter>
+        <filter-name>Character Encoding Filter</filter-name>
+        <filter-class>org.apache.catalina.filters.SetCharacterEncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>Character Encoding Filter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+
     <security-role>
         <role-name>*</role-name>
     </security-role>
@@ -76,7 +91,7 @@
     <security-constraint>
         <web-resource-collection>
 	        <web-resource-name>Админка</web-resource-name>
-        	<url-pattern>/main/admin</url-pattern>
+        	<url-pattern>/main/admin/*</url-pattern>
         </web-resource-collection>
         <auth-constraint>
 	        <role-name>admin</role-name>

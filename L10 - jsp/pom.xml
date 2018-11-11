@@ -166,16 +166,16 @@
 
     <!-- Required by Hibernate validator because slf4j-log4j is
          optional in the hibernate-validator POM -->
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-log4j12</artifactId>
-      <version>${slf4j.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-api</artifactId>
-      <version>${slf4j.version}</version>
-    </dependency>
+    <!--<dependency>-->
+      <!--<groupId>org.slf4j</groupId>-->
+      <!--<artifactId>slf4j-log4j12</artifactId>-->
+      <!--<version>${slf4j.version}</version>-->
+    <!--</dependency>-->
+    <!--<dependency>-->
+      <!--<groupId>org.slf4j</groupId>-->
+      <!--<artifactId>slf4j-api</artifactId>-->
+      <!--<version>${slf4j.version}</version>-->
+    <!--</dependency>-->
 
     <!-- https://mvnrepository.com/artifact/com.github.ua-parser/uap-java -->
     <dependency>
@@ -202,6 +202,14 @@
         </exclusion>
       </exclusions>
     </dependency>
+
+    <!-- https://mvnrepository.com/artifact/displaytag/displaytag -->
+    <dependency>
+      <groupId>displaytag</groupId>
+      <artifactId>displaytag</artifactId>
+      <version>1.2</version>
+    </dependency>
+
   </dependencies>
 
   <build>

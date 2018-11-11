@@ -230,12 +230,12 @@ form.login-form{
 
 .admin-form-container{
   width:400px;
-  height:150px;
+  height:300px;
 }
 
 .admin-script-response-container{
   width:400px;
-  height:150px;
+  height:500px;
 }
 
 .b-rigth-sidebar .b-right-sidebar-item {
@@ -275,3 +275,43 @@ form.login-form{
   margin: 0 auto;
   width:100%;
 }
+
+.display-search {
+  border: 1px solid #666;
+  width: 80%;
+  table-layout: fixed;
+  /*margin: 5px 0 5px 0 !important;*/
+}
+
+.display-search-header {
+  background-color: #666;
+  width:20%;
+}
+
+/*th.sorted {*/
+  /*background-color: #CCCCCC;*/
+/*}*/
+/*th a,th a:visited {*/
+  /*color: black;*/
+/*}*/
+/*th a:hover {*/
+  /*text-decoration: underline;*/
+  /*color: black;*/
+/*}*/
+/*th.sorted a,th.sortable a {*/
+  /*background-position: right;*/
+  /*display: block;*/
+  /*width: 100%;*/
+/*}*/
+
+.odd .display-search-column {
+  background-color: #AAA
+}
+
+.even .display-search-column {
+  background-color: #DDD
+}
+
+/*.even.display-search-column {*/
+  /*background-color: #CCCCCC*/
+/*}*/

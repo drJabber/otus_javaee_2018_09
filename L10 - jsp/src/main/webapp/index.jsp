@@ -1,22 +1,19 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <!doctype html>
 <html lang="ru">
     <head>
-        <% String context_path=request.getContextPath(); %>
-
+        <%@include file="WEB-INF/main-process-request.jsp"%>
         <%@include file="main-head.jsp"%>
     </head>
     <body id="body">
         <%@include file="main-menu.jsp"%>
         <%@include file="main-right-sidebar.jsp"%>
 
-
-<% pageContext.setAttribute("path_info",request.getPathInfo()); %>
 <%   String page_name=""; %>
 <c:choose>
     <c:when test="${(path_info!=null) && (!path_info.isEmpty())}">
-        <% pageContext.setAttribute("body_parameter", ((String)pageContext.getAttribute("path_info")).replaceAll("/","").toLowerCase()); %>
+        <% pageContext.setAttribute("body_parameter", ((String)pageContext.getAttribute("path_info")).substring(1).toLowerCase()); %>
         <c:choose>
             <c:when test="${body_parameter.equals('contact')}">
                 <jsp:include page="contact-body.jsp" />
@@ -28,6 +25,9 @@
                 <jsp:include page="faq-body.jsp" />
             </c:when>
             <c:when test="${body_parameter.equals('admin')}">
+                <jsp:include page="admin-body.jsp" />
+            </c:when>
+            <c:when test="${body_parameter.equals('admin/search')}">
                 <jsp:include page="admin-body.jsp" />
             </c:when>
             <c:when test="${body_parameter.equals('login')}">
