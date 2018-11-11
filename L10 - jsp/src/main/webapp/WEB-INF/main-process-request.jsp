@@ -9,10 +9,10 @@
 <div>
     <% String context_path=request.getContextPath(); %>
     <% pageContext.setAttribute("path_info",request.getPathInfo()); %>
-    Login:<br/>
-    ${!empty paramValues.login[0]}<br/>
-    ${paramValues.login[0]}
-    <jsp:useBean id="search" class="rnk.l10.entities.beans.StaffSearchBean" scope="session" />
+    <%--Login:<br/>--%>
+    <%--${!empty paramValues.login[0]}<br/>--%>
+    <%--${paramValues.login[0]}--%>
+    <jsp:useBean id="search" class="rnk.l10.entities.beans.StaffSearchBean" scope="request" />
     <c:choose>
         <c:when test="${!empty paramValues.login[0]}">
             <jsp:setProperty property="login" name="search" param="login"/>

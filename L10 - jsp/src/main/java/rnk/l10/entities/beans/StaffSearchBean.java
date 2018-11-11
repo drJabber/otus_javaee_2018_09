@@ -1,11 +1,14 @@
 package rnk.l10.entities.beans;
 
 import lombok.Data;
+import org.apache.http.HttpRequest;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import rnk.l10.entities.StaffEntity;
 
 import javax.persistence.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.PageContext;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -57,7 +60,7 @@ public class StaffSearchBean {
                 (ageMax==null || ageMax==0) && (ageMin==null || ageMin==0);
     }
 
-    public List<StaffEntity> find(){
+    public List<StaffEntity> find(PageContext context){
         if (!isEmpty()){
             EntityManager em=emf.createEntityManager();
             EntityTransaction et=em.getTransaction();
@@ -101,17 +104,27 @@ public class StaffSearchBean {
                 if (!likes.isEmpty() && !has_period){
                     likes=likes.substring(0,likes.length()-4);
                 }
-
-                logger.info(String.format(query_string, joins, likes));
                 if (likes.isEmpty()){
                     et.rollback();
                     return null;
                 }else{
-                    Query q = em.createQuery(String.format(query_string, joins, likes));
+                    logger.info(String.format(query_string, joins, likes));
+                    String final_jpql=String.format(query_string, joins, likes);
+
+                    SearchResultCache cache= (SearchResultCache) context.getServletContext().getAttribute("admin-search-cache");
+                    if (cache!=null){
+                        List<StaffEntity> result=cache.getQueryResult(final_jpql);
+                        if (result!=null){
+                            return result;
+                        }
+                    }
+
+                    Query q = em.createQuery(final_jpql);
 
                     List<StaffEntity> l=q.getResultList();
                     et.commit();
 
+                    context.getRequest().setAttribute("admin-search-result",new SearchResultCacheItem(final_jpql,l));
                     return l;
                 }
             }catch (Exception ex){
