@@ -12,7 +12,8 @@
     <%--Login:<br/>--%>
     <%--${!empty paramValues.login[0]}<br/>--%>
     <%--${paramValues.login[0]}--%>
-    <jsp:useBean id="search" class="rnk.l10.entities.beans.StaffSearchBean" scope="request" />
+    <%--${paramValues.login}--%>
+    <jsp:useBean id="search" class="rnk.l10.entities.beans.StaffSearchBean" scope="session" />
     <c:choose>
         <c:when test="${!empty paramValues.login[0]}">
             <jsp:setProperty property="login" name="search" param="login"/>

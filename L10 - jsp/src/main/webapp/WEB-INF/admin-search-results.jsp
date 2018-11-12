@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="display" uri="http://displaytag.sf.net" %>
-<jsp:useBean id="search" class="rnk.l10.entities.beans.StaffSearchBean" scope="request" />
+<jsp:useBean id="search" class="rnk.l10.entities.beans.StaffSearchBean" scope="session" />
 <c:if test="${!search.isEmpty()}">
     <display:table requestURI="displaytag.jsp" name="${search.find(pageContext)}" decorator="rnk.l10.entities.decorators.StaffDisplayDecorator" sort="list" pagesize="6" class="display-search" >
         <display:column property="fio" title="Фио"   class="display-search-column" headerClass="display-search-header"/>
