@@ -48,6 +48,7 @@
     <servlet>
         <servlet-name>stats holder</servlet-name>
         <servlet-class>rnk.l12.servlet.AddStatsServlet</servlet-class>
+        <async-supported>true</async-supported>
     </servlet>
     <servlet-mapping>
         <servlet-name>stats holder</servlet-name>
