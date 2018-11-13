@@ -7,7 +7,7 @@
   <groupId>com.rnk.l12</groupId>
   <artifactId>rnk.l12</artifactId>
   <version>1.0-SNAPSHOT</version>
-  <packaging>war</packaging>
+  <!--<packaging>war</packaging>-->
 
   <name>rnk.l12</name>
 
@@ -167,6 +167,20 @@
           <configuration>
             <warSourceDirectory>src/main/webapp</warSourceDirectory>
           </configuration>
+        </plugin>
+
+        <plugin>
+            <!--<groupId>org.apache.maven.plugins</groupId>-->
+            <artifactId>maven-jar-plugin</artifactId>
+            <configuration>
+                <archive>
+                    <manifest>
+                        <addClasspath>true</addClasspath>
+                        <classpathPrefix>${project.build.finalName}.lib/</classpathPrefix>
+                        <!--<mainClass>${.qualified.main.class}</mainClass>-->
+                    </manifest>
+                </archive>
+            </configuration>
         </plugin>
 
         <plugin>

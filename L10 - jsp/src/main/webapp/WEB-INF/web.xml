@@ -13,6 +13,10 @@
         <param-name>restore-at-startup</param-name>
         <param-value>Y</param-value>
     </context-param>
+    <context-param>
+        <param-name>stats-token</param-name>
+        <param-value>rnk.sharaban.17d6f53c215d491babefc51afe085a4a</param-value>
+    </context-param>
 
     <servlet>
         <servlet-name>Invalid browser</servlet-name>
@@ -39,6 +43,15 @@
     <servlet-mapping>
         <servlet-name>Startup-servlet</servlet-name>
         <url-pattern></url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>stats holder</servlet-name>
+        <servlet-class>rnk.l12.servlet.AddStatsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>stats holder</servlet-name>
+        <url-pattern>/stats</url-pattern>
     </servlet-mapping>
 
 

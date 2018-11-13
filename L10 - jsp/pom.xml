@@ -45,6 +45,10 @@
     <mavencompiler.version>3.5.1</mavencompiler.version>
     <mavenbuilder.version>3.0.0</mavenbuilder.version>
     <mavendeploy.version>2.2</mavendeploy.version>
+
+
+    <rnk.stats.version>1.0-SNAPSHOT</rnk.stats.version>
+
   </properties>
 
   <dependencies>
@@ -208,6 +212,12 @@
       <groupId>displaytag</groupId>
       <artifactId>displaytag</artifactId>
       <version>1.2</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.rnk.l12</groupId>
+      <artifactId>rnk.l12</artifactId>
+      <version>${rnk.stats.version}</version>
     </dependency>
 
   </dependencies>
