@@ -9,6 +9,10 @@
   <servlet>
     <servlet-name>collect statistics</servlet-name>
     <servlet-class>rnk.l12.servlet.AddStatsServlet</servlet-class>
+      <init-param>
+          <param-name>stats-control-password</param-name>
+          <param-value>qdvF91w0_</param-value>
+      </init-param>
   </servlet>
   <servlet-mapping>
     <servlet-name>collect statistics</servlet-name>

@@ -42,13 +42,7 @@ public class AddStatsServlet extends HttpServlet {
             rs.setCharacterEncoding("utf-8");
             rs.setHeader("Content-Type","application/json");
 
-            JsonbConfig jsoncfg=new JsonbConfig()
-                    .withFormatting(Boolean.TRUE)
-                    .withPropertyNamingStrategy(PropertyNamingStrategy.LOWER_CASE_WITH_UNDERSCORES);
-            Jsonb jb=JsonbBuilder.create(jsoncfg);
-
-            jb.toJson(stats_id,rs.getWriter());
-
+            rs.getWriter().println(String.format("{\"stats_id\":%d}",stats_id));
             return;
         }catch (Exception e){
             transaction.rollback();
@@ -59,4 +53,98 @@ public class AddStatsServlet extends HttpServlet {
         }
 
     }
+
+    private void switch_stats(String subject, String sw) throws ServletException{
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction transaction = em.getTransaction();
+        try {
+            transaction.begin();
+            StoredProcedureQuery q = em
+                    .createStoredProcedureQuery("switch_stats")
+                    .registerStoredProcedureParameter("p_token",String.class, ParameterMode.IN)
+                    .registerStoredProcedureParameter("p_switch",String.class, ParameterMode.IN)
+                    .registerStoredProcedureParameter("o_result",String.class, ParameterMode.OUT)
+                    ;
+
+            q.setParameter("p_token",subject);
+            q.setParameter("p_switch",sw);
+            q.execute();
+
+            String r= q.getOutputParameterValue("o_result").toString();
+            if (r.equals("fail")){
+                throw new ServletException(String.format("switch % fails", subject));
+            }
+            transaction.commit();
+        }catch(Exception ex){
+            transaction.rollback();
+            throw new ServletException(ex);
+        }finally {
+            em.close();
+        }
+    }
+
+    private String get_stats(String subject) throws ServletException{
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction transaction = em.getTransaction();
+        try {
+            transaction.begin();
+            StoredProcedureQuery q = em
+                    .createStoredProcedureQuery("get_stats_switch")
+                    .registerStoredProcedureParameter("p_token",String.class, ParameterMode.IN)
+                    .registerStoredProcedureParameter("o_switch", String.class, ParameterMode.OUT);
+
+            q.setParameter("p_token",subject);
+            q.execute();
+
+            String sw= q.getOutputParameterValue("o_switch").toString();
+            transaction.commit();
+
+            return sw;
+        }catch(Exception ex){
+            transaction.rollback();
+            throw new ServletException(ex);
+        }finally {
+            em.close();
+        }
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest rq, HttpServletResponse rs) throws  ServletException {
+        try{
+            String service_password=getInitParameter("stats-control-password");
+            String command=rq.getParameter("c");
+            String password=rq.getParameter("p");
+            String subject=rq.getParameter("s");
+            String response;
+            if (password.equals(service_password)){
+                switch (command){
+                    case "stats_on":{
+                        switch_stats(subject,"on");
+                        response="on";
+                        break;
+                    }
+                    case "stats_off":{
+                        switch_stats(subject,"off");
+                        response="off";
+                        break;
+                    }
+                    case "stats_get":{
+                        response=get_stats(subject);
+                        break;
+                    }
+                    default:{
+                        response="fail";
+                        break;
+                    }
+                }
+            }else{
+                response="fail";
+            }
+
+            rs.getWriter().println(String.format("{\"result\":%s}",response));
+        }catch(Exception ex){
+            logger.error("stats control error:",ex);
+        }
+    }
+
 }
