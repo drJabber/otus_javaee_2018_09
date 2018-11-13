@@ -22,7 +22,6 @@ public class UserAgentFilter extends HttpFilter {
     @Override
     public void init(FilterConfig config) throws ServletException {
         Map<String,Integer> limits=new HashMap<String,Integer>();
-        List<String> params= Collections.list(config.getInitParameterNames());
 
         Collections.list(config.getInitParameterNames())
                 .stream()

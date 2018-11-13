@@ -43,7 +43,7 @@ public class StartupServlet extends HttpServlet {
         }
     }
 
-        private String get_filename(ServletContext context) throws NamingException {
+        private String get_filename(ServletContext context)  {
             return context.getInitParameter("rnk-storage-path")+"/staff.xml";
         }
 
