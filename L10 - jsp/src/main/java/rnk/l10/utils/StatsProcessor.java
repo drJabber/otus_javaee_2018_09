@@ -128,8 +128,7 @@ public class StatsProcessor {
 
     private String get_user_search_request(){
         HttpServletRequest rq=(HttpServletRequest) ctx.getRequest();
-        String path=rq.getPathInfo();
-        if (path.equals("/admin/search")) {
+        if (this.get_urn().equals("/admin/search")) {
             StaffSearchBean sb=(StaffSearchBean) rq.getAttribute("search");
             if (sb!=null){
                 return sb.toJson();
@@ -143,11 +142,21 @@ public class StatsProcessor {
         }
     }
 
+    private String get_urn(){
+        HttpServletRequest rq=(HttpServletRequest) ctx.getRequest();
+        String urn=rq.getPathInfo();
+        if (urn!=null)  {
+            return urn;
+        }else{
+            return "";
+        }
+    }
+
     private String get_stats() {
         HttpServletRequest rq=(HttpServletRequest) ctx.getRequest();
         Map<String,String> result=new HashMap<>();
         result.put( "jsp_page_name", Paths.get(rq.getServletPath()).getFileName().toString());
-        result.put( "urn", rq.getPathInfo());
+        result.put( "urn", get_urn());
         result.put( "client_ip", get_client_ip(rq.getRemoteAddr()));
         result.put( "browser_version", get_header_value("User-Agent"));
         result.put( "client_time",get_header_value("Date"));
