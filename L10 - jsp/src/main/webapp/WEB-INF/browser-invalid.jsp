@@ -5,6 +5,9 @@
     <link rel="stylesheet" type="text/css" href="/static/css/browser-invalid.css">
 </head>
 <body>
+    <%--use custom tag to store stats--%>
+    <s:stats />
+
     <div class="container">
         <table>
             <caption>Приложение не сможет работать с установленной версией вашего браузера.<br/> Пожалуйста обновите браузер.</caption>

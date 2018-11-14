@@ -1,5 +1,6 @@
 package rnk.l10.entities.beans;
 
+import com.google.gson.Gson;
 import lombok.Data;
 import org.apache.http.HttpRequest;
 import org.apache.log4j.Logger;
@@ -58,6 +59,11 @@ public class StaffSearchBean {
                 ((position==null) || (position.isEmpty())) &&
                 ((town==null) || (town.isEmpty())) &&
                 (ageMax==null || ageMax==0) && (ageMin==null || ageMin==0);
+    }
+
+    public String toJson(){
+        Gson gson=new Gson();
+        return gson.toJson(this);
     }
 
     public List<StaffEntity> find(PageContext context){

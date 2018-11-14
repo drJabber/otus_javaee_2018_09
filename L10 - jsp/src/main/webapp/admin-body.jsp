@@ -5,9 +5,13 @@
   Time: 7:29
   To change this template use File | Settings | File Templates.
 --%>
+<%@ taglib prefix="s" uri="/stats-collector" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-        <main class="admin-container">
 
+            <%--use custom tag to store stats--%>
+            <s:stats />
+
+            <main class="admin-container">
 
             <%@include file="admin-search-body.jsp"%>
 

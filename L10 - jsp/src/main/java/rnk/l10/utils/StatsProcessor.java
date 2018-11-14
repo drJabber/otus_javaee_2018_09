@@ -1,5 +1,6 @@
 package rnk.l10.utils;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
@@ -10,8 +11,12 @@ import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.EntityBuilder;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.utils.DateUtils;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
+import rnk.l10.entities.beans.SearchResultCacheItem;
+import rnk.l10.entities.beans.StaffSearchBean;
+import rnk.l12.util.StatsUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -21,10 +26,11 @@ import javax.servlet.jsp.PageContext;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.*;
 
 public class StatsProcessor {
 
@@ -87,33 +93,69 @@ public class StatsProcessor {
             throw new ServletException("Необходимо определить маркер статистики");
         }
 
+        StatsUtils utils=new StatsUtils();
+        return utils.store_stats(stats_token,get_stats());
+    }
+
+    private String get_client_ip(String ip)  {
+        String result=ip;
+        try{
+            if (ip.equalsIgnoreCase("0:0:0:0:0:0:0:1")) {
+                InetAddress inetAddress = InetAddress.getLocalHost();
+                String ipAddress = inetAddress.getHostAddress();
+                result = ipAddress;
+            }
+        }catch(Exception ex){
+            result="unknown host";
+        }
+        return result;
+    }
+
+    private String get_header_value(String header){
         HttpServletRequest rq=(HttpServletRequest) ctx.getRequest();
-        HttpPost post=new HttpPost(rq.getContextPath()+"/stats");
+        String value=rq.getHeader(header);
+        return value==null?"unknowwn":value;
+    }
 
-        List<NameValuePair> params=new ArrayList<>();
-        params.add(new BasicNameValuePair("app_token",stats_token));
-        params.add(new BasicNameValuePair("stats",get_stats()));
+    private String get_server_date(){
+        return DateUtils.formatDate(new Date(System.currentTimeMillis()));
+    }
 
-        EntityBuilder builder=EntityBuilder.create();
-        builder.setContentEncoding("UTF-8");
-        builder.setParameters(params);
+    private String get_user_name(){
+        HttpServletRequest rq=(HttpServletRequest) ctx.getRequest();
+        return rq.getRemoteUser();
+    }
 
-        post.setEntity(builder.build());
+    private String get_user_search_request(){
+        HttpServletRequest rq=(HttpServletRequest) ctx.getRequest();
+        String path=rq.getPathInfo();
+        if (path.equals("/admin/search")) {
+            StaffSearchBean sb=(StaffSearchBean) rq.getAttribute("search");
+            if (sb!=null){
+                return sb.toJson();
+            }else{
+                return "";
+            }
 
-        HttpClient httpClient = HttpClients.createDefault();
-        HttpResponse httpResp=httpClient.execute(post);
-
-        int status=httpResp.getStatusLine().getStatusCode();
-        if (status== HttpStatus.SC_OK){
-            return getPrevStatsValue(httpResp);
-        }else{
-            return -1;
+        }else
+        {
+            return "";
         }
     }
 
     private String get_stats() {
-        List<NameValuePair> result=new ArrayList<>();
-        result.add(new BasicNameValuePair("test","value"));
-        return result.toString();
+        HttpServletRequest rq=(HttpServletRequest) ctx.getRequest();
+        Map<String,String> result=new HashMap<>();
+        result.put( "jsp_page_name", Paths.get(rq.getServletPath()).getFileName().toString());
+        result.put( "urn", rq.getPathInfo());
+        result.put( "client_ip", get_client_ip(rq.getRemoteAddr()));
+        result.put( "browser_version", get_header_value("User-Agent"));
+        result.put( "client_time",get_header_value("Date"));
+        result.put( "server_time",get_server_date());
+        result.put( "user_name",get_user_name());
+        result.put( "user_country",rq.getLocale().getCountry());
+        result.put( "user_searched_for",get_user_search_request());
+
+        return new Gson().toJson(result);
     }
 }
