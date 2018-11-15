@@ -9,7 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
             <%--use custom tag to store stats--%>
-            <s:stats />
+            <s:statsx />
 
             <main class="admin-container">
 

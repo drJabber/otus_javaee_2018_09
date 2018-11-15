@@ -15,6 +15,9 @@
         <%   String page_name=""; %>
 
 
+        <%--save response to use in jsp:include --%>
+        <% request.setAttribute("resp", response);%>
+
         <c:choose>
             <c:when test="${(path_info!=null) && (!path_info.isEmpty())}">
                 <% pageContext.setAttribute("body_parameter", ((String)pageContext.getAttribute("path_info")).substring(1).toLowerCase()); %>
@@ -44,7 +47,7 @@
                     <c:when test="${body_parameter.equals('logout')}">
 
                         <%--use custom tag to store stats--%>
-                        <s:stats />
+                        <s:statsx />
 
                         <%
                             request.getSession().invalidate();

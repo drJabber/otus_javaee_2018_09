@@ -1,9 +1,11 @@
 package rnk.l10.utils;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
+import com.google.gwt.user.client.Cookies;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -14,6 +16,8 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.DateUtils;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
+import org.apache.logging.log4j.core.util.IOUtils;
 import rnk.l10.entities.beans.SearchResultCacheItem;
 import rnk.l10.entities.beans.StaffSearchBean;
 import rnk.l12.util.StatsUtils;
@@ -22,6 +26,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.PageContext;
 import java.io.IOException;
 import java.io.InputStream;
@@ -31,6 +36,7 @@ import java.net.UnknownHostException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class StatsProcessor {
 
@@ -55,6 +61,35 @@ public class StatsProcessor {
         return result;
     }
 
+    private String getURL(HttpServletRequest req) {
+
+        String scheme = req.getScheme();             // http
+        String serverName = req.getServerName();     // hostname.com
+        int serverPort = req.getServerPort();        // 80
+//        String contextPath = req.getContextPath();   // /mywebapp
+//        String servletPath = req.getServletPath();   // /servlet/MyServlet
+//        String pathInfo = req.getPathInfo();         // /a/b;c=123
+//        String queryString = req.getQueryString();          // d=789
+
+        // Reconstruct original requesting URL
+        StringBuilder url = new StringBuilder();
+        url.append(scheme).append("://").append(serverName);
+
+        if (serverPort != 80 && serverPort != 443) {
+            url.append(":").append(serverPort);
+        }
+
+//        url.append(contextPath).append(servletPath);
+//
+//        if (pathInfo != null) {
+//            url.append(pathInfo);
+//        }
+//        if (queryString != null) {
+//            url.append("?").append(queryString);
+//        }
+        return url.toString();
+    }
+
     public Integer store_statsx() throws ServletException, IOException{
 
         String stats_token=ctx.getServletContext().getInitParameter("stats-token");
@@ -63,7 +98,7 @@ public class StatsProcessor {
         }
 
         HttpServletRequest rq=(HttpServletRequest) ctx.getRequest();
-        HttpPost post=new HttpPost(rq.getContextPath()+"/stats");
+        HttpPost post=new HttpPost(getURL(rq)+"/stats");
 
         List<NameValuePair> params=new ArrayList<>();
         params.add(new BasicNameValuePair("app_token",stats_token));
@@ -126,19 +161,19 @@ public class StatsProcessor {
         return rq.getRemoteUser();
     }
 
-    private String get_user_search_request(){
-        HttpServletRequest rq=(HttpServletRequest) ctx.getRequest();
+    private JsonElement get_user_search_request(){
+        HttpSession ss=(HttpSession) ctx.getSession();
         if (this.get_urn().equals("/admin/search")) {
-            StaffSearchBean sb=(StaffSearchBean) rq.getAttribute("search");
+            StaffSearchBean sb=(StaffSearchBean) ss.getAttribute("search");
             if (sb!=null){
                 return sb.toJson();
             }else{
-                return "";
+                return null;
             }
 
         }else
         {
-            return "";
+            return null;
         }
     }
 
@@ -152,9 +187,25 @@ public class StatsProcessor {
         }
     }
 
+    private String get_last_tracker_id(){
+        HttpServletRequest rq=(HttpServletRequest) ctx.getRequest();
+        Cookie[] cookies=rq.getCookies();
+        if (cookies!=null){
+            List<Cookie> cookies_list = Arrays.asList(rq.getCookies());
+            List<Cookie> found=cookies_list.stream().filter(cookie->cookie.getName().equals("rnk-stats-tracker")).collect(Collectors.toList());
+            if ((found!=null) && (found.size()>0)){
+                return found.get(0).getValue();
+            }else{
+                return "-1";
+            }
+        }else{
+            return "-1";
+        }
+    }
+
     private String get_stats() {
         HttpServletRequest rq=(HttpServletRequest) ctx.getRequest();
-        Map<String,String> result=new HashMap<>();
+        Map<String,Object> result=new HashMap<>();
         result.put( "jsp_page_name", Paths.get(rq.getServletPath()).getFileName().toString());
         result.put( "urn", get_urn());
         result.put( "client_ip", get_client_ip(rq.getRemoteAddr()));
@@ -164,6 +215,8 @@ public class StatsProcessor {
         result.put( "user_name",get_user_name());
         result.put( "user_country",rq.getLocale().getCountry());
         result.put( "user_searched_for",get_user_search_request());
+        result.put( "last_tracker_id",get_last_tracker_id());
+
 
         return new Gson().toJson(result);
     }

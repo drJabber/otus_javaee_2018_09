@@ -8,7 +8,7 @@
 <%@ taglib prefix="s" uri="/stats-collector" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
         <%--use custom tag to store stats--%>
-        <s:stats />
+        <s:statsx />
 
         <main class="main-container">
             <form method="post" action="j_security_check" class="login-form">

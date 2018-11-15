@@ -20,9 +20,11 @@ public class AddStatsServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest rq, HttpServletResponse rs) throws  ServletException{
         try{
+            logger.info("before store_stats");
             (new AsyncStatsWrapper()).store_stats(rq);
+            logger.info("after store_stats");
         }catch(Exception ex){
-            logger.error("stats error:",ex);
+            logger.error("store stats error:",ex);
         }
     }
 

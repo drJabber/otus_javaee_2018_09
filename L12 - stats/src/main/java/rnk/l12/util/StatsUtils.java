@@ -1,16 +1,21 @@
 package rnk.l12.util;
 
+import org.apache.log4j.Logger;
+import rnk.l12.servlet.AddStatsServlet;
+
 import javax.persistence.*;
 import javax.servlet.ServletException;
 
 public class StatsUtils {
     public static final String PERSISTENCE_UNIT_NAME="rnk-jpa";
     private static final EntityManagerFactory emf= Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME); //tomcat, see
+    private static final Logger logger = Logger.getLogger(StatsUtils.class.getName());
 
     public int store_stats(String token, Object stats) throws ServletException{
         EntityManager em = emf.createEntityManager();
         EntityTransaction transaction = em.getTransaction();
         try {
+            logger.info("before store_stats stores data");
             transaction.begin();
 
             StoredProcedureQuery q = em
@@ -26,6 +31,7 @@ public class StatsUtils {
             Object stats_id=q.getOutputParameterValue("o_id");
             transaction.commit();
 
+            logger.info("after store_stats stores data");
             return Integer.parseInt(stats_id.toString());
         }catch (Exception e){
             transaction.rollback();

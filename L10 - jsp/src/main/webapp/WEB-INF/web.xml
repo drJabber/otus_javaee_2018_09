@@ -21,6 +21,7 @@
     <servlet>
         <servlet-name>Invalid browser</servlet-name>
         <jsp-file>/WEB-INF/browser-invalid.jsp</jsp-file>
+        <async-supported>true</async-supported>
     </servlet>
     <servlet-mapping>
         <servlet-name>Invalid browser</servlet-name>
@@ -30,6 +31,7 @@
     <servlet>
         <servlet-name>Main page</servlet-name>
         <jsp-file>/index.jsp</jsp-file>
+        <async-supported>true</async-supported>
     </servlet>
     <servlet-mapping>
         <servlet-name>Main page</servlet-name>
@@ -48,6 +50,11 @@
     <servlet>
         <servlet-name>stats holder</servlet-name>
         <servlet-class>rnk.l12.servlet.AddStatsServlet</servlet-class>
+        <init-param>
+            <param-name>stats-control-password</param-name>
+            <param-value>qdvF91w0_</param-value>
+        </init-param>
+
         <async-supported>true</async-supported>
     </servlet>
     <servlet-mapping>
@@ -59,6 +66,7 @@
     <filter>
         <filter-name>User-Agent filter</filter-name>
         <filter-class>rnk.l10.UserAgentFilter</filter-class>
+        <async-supported>true</async-supported>
         <init-param>
             <param-name>user-agent-msie</param-name>
             <param-value>10</param-value>
@@ -75,6 +83,7 @@
             <param-name>user-agent-opera</param-name>
             <param-value>38</param-value>
         </init-param>
+
     </filter>
 
     <filter-mapping>
@@ -86,6 +95,7 @@
     <filter>
         <filter-name>Character Encoding Filter</filter-name>
         <filter-class>org.apache.catalina.filters.SetCharacterEncodingFilter</filter-class>
+        <async-supported>true</async-supported>
         <init-param>
             <param-name>encoding</param-name>
             <param-value>UTF-8</param-value>
