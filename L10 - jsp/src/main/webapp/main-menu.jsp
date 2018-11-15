@@ -32,7 +32,7 @@
                     </div>
                 </div>
             </div>
-            <nav class="menubar"   style="background-image:  url(${context_path}/static/img/bg-menubar.png);" >
+            <nav class="menubar"  id="main-menubar" style="background-image:  url(${context_path}/static/img/bg-menubar.png);" >
                 <ul>
                     <li><a class="root-menuitem" href="${context_path}/main">Главная</a></li>
                     <li><a class="root-menuitem" href="${context_path}/main/contact">Контакты</a></li>

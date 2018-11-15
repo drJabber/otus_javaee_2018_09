@@ -47,3 +47,26 @@ var blurListener = function(event) {
     checkLoginForm();
 };
 
+var AjaxContent = function(){
+    return {
+        getContent : function(url){
+            $.ajax({
+                url: url,
+                headers:{"x-rnk-client-time-header":(new Date()).toUTCString()},
+                success: function (data) {
+                    $(body).html(data);
+                },
+                error: function (err) {
+                    alert("fail");
+                    
+                }
+            })
+        },
+        ajaxify_links: function(elements){
+            $(elements).click(function(){
+                AjaxContent.getContent(this.href);
+                return false; //prevents the link from beign followed
+            });
+        }
+    }
+}();
