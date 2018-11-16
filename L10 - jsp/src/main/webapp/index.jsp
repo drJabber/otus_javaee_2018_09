@@ -5,10 +5,10 @@
 <!doctype html>
 <html lang="ru">
     <head>
-        <%@include file="WEB-INF/main-process-request.jsp"%>
         <%@include file="main-head.jsp"%>
     </head>
     <body id="body">
+        <%@include file="WEB-INF/main-process-request.jsp"%>
         <%@include file="main-menu.jsp"%>
         <%@include file="main-right-sidebar.jsp"%>
 
@@ -36,6 +36,11 @@
                     </c:when>
                     <c:when test="${body_parameter.equals('admin/search')}">
                         <jsp:include page="admin-body.jsp" />
+                    </c:when>
+                    <c:when test="${body_parameter.equals('admin/stats')}">
+                        <div id="main-stats-body">
+                        </div>
+                        <script>load_stats()</script>
                     </c:when>
                     <c:when test="${body_parameter.equals('login')}">
                         <jsp:include page="login-body.jsp" />

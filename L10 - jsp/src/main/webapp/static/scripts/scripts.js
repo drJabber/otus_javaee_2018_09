@@ -1,3 +1,21 @@
+Date.prototype.toIsoString = function() {
+    var tzo = -this.getTimezoneOffset(),
+        dif = tzo >= 0 ? '+' : '-',
+        pad = function(num) {
+            var norm = Math.floor(Math.abs(num));
+            return (norm < 10 ? '0' : '') + norm;
+        };
+    return this.getFullYear() +
+        '-' + pad(this.getMonth() + 1) +
+        '-' + pad(this.getDate()) +
+        'T' + pad(this.getHours()) +
+        ':' + pad(this.getMinutes()) +
+        ':' + pad(this.getSeconds()) +
+        dif + pad(tzo / 60) +
+        ':' + pad(tzo % 60);
+};
+
+
 var checkLoginForm = function() {
     var checked = document.getElementById('login').value != ''
         && document.getElementById('password').value != '';
@@ -38,7 +56,11 @@ var getNews=function(){
     });
 }
 
-
+var load_stats=function () {
+    $.get("/stats/report"),function(data){
+        $('#main-stats-body').html(data);
+    }
+}
 var focusListener = function(event) {
     event.target.style.background = "#F9F0DA";
 };
@@ -49,10 +71,11 @@ var blurListener = function(event) {
 
 var AjaxContent = function(){
     return {
-        getContent : function(url){
+        getContent : function(method, url){
             $.ajax({
                 url: url,
-                headers:{"x-rnk-client-time-header":(new Date()).toUTCString()},
+                method:method,
+                headers:{"x-rnk-client-time-header":(new Date()).toIsoString()},
                 success: function (data) {
                     $(body).html(data);
                 },
@@ -64,9 +87,17 @@ var AjaxContent = function(){
         },
         ajaxify_links: function(elements){
             $(elements).click(function(){
-                AjaxContent.getContent(this.href);
+                AjaxContent.getContent('get',this.href);
                 return false; //prevents the link from beign followed
             });
-        }
+        }//,
+        // ajaxify_forms: function(elements){
+        //     $(elements).submit(function(event){
+        //         alert(this.action);
+        //         event.preventDefault();
+        //         AjaxContent.getContent('post',this.action, this.data);
+        //         return false; //prevents the link from beign followed
+        //     });
+        // }
     }
 }();

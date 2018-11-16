@@ -11,7 +11,7 @@
         <s:statsx />
 
         <main class="main-container">
-            <form method="post" action="j_security_check" class="login-form">
+            <form method="post" action="j_security_check" class="login-form" id="login-form">
                 <p><strong>Надо войти:</strong> </p>
                 <div>
                     <label for="login">Login:</label>

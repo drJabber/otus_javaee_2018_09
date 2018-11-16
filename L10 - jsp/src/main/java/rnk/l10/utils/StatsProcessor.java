@@ -35,6 +35,8 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.OffsetDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -140,7 +142,8 @@ public class StatsProcessor {
     }
 
     private String get_server_date(){
-        return DateUtils.formatDate(new Date(System.currentTimeMillis()));
+        DateTimeFormatter dtf=DateTimeFormatter.ISO_OFFSET_DATE_TIME;
+        return OffsetDateTime.now().format(dtf);
     }
 
     private String get_user_name(){

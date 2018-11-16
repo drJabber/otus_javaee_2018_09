@@ -39,14 +39,15 @@
                     <li><a class="root-menuitem" href="${context_path}/main/members">Участники</a></li>
                     <li><a class="root-menuitem" href="${context_path}/main/faq">Вопрос-ответ</a></li>
                     <li><a class="root-menuitem" href="${context_path}/main/admin">Админка</a></li>
-<c:choose>
-    <c:when test="${empty pageContext.request.userPrincipal}">
-        <li><a class="root-menuitem" href=""></a></li>
-    </c:when>
-    <c:otherwise>
-        <li><a class="root-menuitem" href="${context_path}/main/logout">Выход</a></li>
-    </c:otherwise>
-</c:choose>
+                    <c:choose>
+                        <c:when test="${empty pageContext.request.userPrincipal}">
+                            <li><a class="root-menuitem" href=""></a></li>
+                        </c:when>
+                        <c:otherwise>
+                            <li><a class="root-menuitem" href="${context_path}/main/logout">Выход</a></li>
+                            <li><a class="root-menuitem" href="${context_path}/main/admin/stats">Статистика</a></li>
+                        </c:otherwise>
+                    </c:choose>
                 </ul>
 
             </nav>
