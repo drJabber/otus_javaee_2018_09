@@ -1,10 +1,10 @@
-<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+<web-fragment xmlns="http://xmlns.jcp.org/xml/ns/javaee"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
-		 http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+		 http://xmlns.jcp.org/xml/ns/javaee/web-fragment_3_1.xsd"
          version="3.1">
 
-  <display-name>Stats collector</display-name>
+   <!--<name>Stats collector</name> -->
 
   <servlet>
     <servlet-name>collect statistics</servlet-name>
@@ -21,4 +21,4 @@
     <servlet-name>collect statistics</servlet-name>
     <url-pattern>/stats</url-pattern>
   </servlet-mapping>
-</web-app>
+</web-fragment>

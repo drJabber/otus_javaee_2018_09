@@ -47,7 +47,7 @@
         <url-pattern></url-pattern>
     </servlet-mapping>
 
-    <servlet>
+    <!-- <servlet>
         <servlet-name>stats holder</servlet-name>
         <servlet-class>rnk.l12.servlet.AddStatsServlet</servlet-class>
         <init-param>
@@ -62,7 +62,7 @@
         <url-pattern>/stats</url-pattern>
     </servlet-mapping>
 
-
+ -->
     <filter>
         <filter-name>User-Agent filter</filter-name>
         <filter-class>rnk.l10.UserAgentFilter</filter-class>
