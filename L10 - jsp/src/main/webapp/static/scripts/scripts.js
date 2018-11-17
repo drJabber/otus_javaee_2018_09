@@ -57,10 +57,18 @@ var getNews=function(){
 }
 
 var load_stats=function () {
-    $.get("/stats/report"),function(data){
-        $('#main-stats-body').html(data);
-    }
+    $.ajax({
+        url: "/stats/report",
+        success: function (data) {
+            $('#main-stats-body').html(data);
+        },
+        error: function (xhr, err) {
+            $('#main-stats-body').html(xhr.responseText);
+
+        }
+    });
 }
+
 var focusListener = function(event) {
     event.target.style.background = "#F9F0DA";
 };

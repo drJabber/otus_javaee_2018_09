@@ -7,6 +7,7 @@ import org.apache.http.HttpRequest;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import rnk.l10.entities.StaffEntity;
+import rnk.l10.entities.StatsEntity;
 
 import javax.persistence.*;
 import javax.servlet.http.HttpServletRequest;

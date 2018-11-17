@@ -30,7 +30,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>display statistics</servlet-name>
-        <url-pattern>/stats/report</url-pattern>
+        <url-pattern>/stats/report/*</url-pattern>
     </servlet-mapping>
 
 
@@ -44,7 +44,7 @@
         <!-- FreemarkerServlet settings: -->
         <init-param>
             <param-name>TemplatePath</param-name>
-            <param-value>/</param-value>
+            <param-value>classpath:/</param-value>
         </init-param>
         <init-param>
             <param-name>NoCache</param-name>
@@ -107,10 +107,27 @@
     <security-constraint>
         <web-resource-collection>
             <web-resource-name>Админка</web-resource-name>
-            <url-pattern>/stats/report</url-pattern>
+            <url-pattern>/stats/report/*</url-pattern>
         </web-resource-collection>
         <auth-constraint>
             <role-name>admin</role-name>
+        </auth-constraint>
+    </security-constraint>
+
+    <!--
+      Prevent the visiting of MVC Views from outside the servlet container.
+      RequestDispatcher.forward/include should, and will still work.
+      Removing this may open security holes!
+    -->
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>FreeMarker MVC Views</web-resource-name>
+            <url-pattern>*.ftl</url-pattern>
+            <url-pattern>*.ftlh</url-pattern>
+            <url-pattern>*.ftlx</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <!-- Nobody is allowed to visit these directly. -->
         </auth-constraint>
     </security-constraint>
 

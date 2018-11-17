@@ -143,13 +143,16 @@
       <resource>
         <directory>src/main/resources</directory>
       </resource>
+      <resource>
+        <directory>src/main/resources/META-INF/template</directory>
+      </resource>
     </resources>
 
-    <testResources>
-      <testResource>
-        <directory>src/test/resources</directory>
-      </testResource>
-    </testResources>
+    <!--<testResources>-->
+      <!--<testResource>-->
+        <!--<directory>src/test/resources</directory>-->
+      <!--</testResource>-->
+    <!--</testResources>-->
 
     <plugins>
         <plugin>

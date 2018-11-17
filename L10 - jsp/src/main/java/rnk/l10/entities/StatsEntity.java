@@ -1,4 +1,4 @@
-package rnk.l12.entities;
+package rnk.l10.entities;
 
 
 import lombok.Data;

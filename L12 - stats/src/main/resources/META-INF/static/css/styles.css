@@ -1,0 +1,22 @@
+
+
+.display-stats {
+  border: 1px solid #666;
+  width: 80%;
+  table-layout: fixed;
+  /*margin: 5px 0 5px 0 !important;*/
+}
+
+.display-stats-header {
+  background-color: #666;
+  width:20%;
+}
+
+.odd .display-stats-column {
+  background-color: #AAA
+}
+
+.even .display-stats-column {
+  background-color: #DDD
+}
+
