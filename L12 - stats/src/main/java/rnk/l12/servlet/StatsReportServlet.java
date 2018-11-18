@@ -14,6 +14,7 @@ public class StatsReportServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         StatsReportProducer producer=new StatsReportProducer(req);
         resp.setContentType("text/html;charset=UTF-8");
+        resp.setCharacterEncoding("UTF-8");
         RequestDispatcher dispatcher=req.getRequestDispatcher(producer.produce());
         dispatcher.forward(req, resp);
     }

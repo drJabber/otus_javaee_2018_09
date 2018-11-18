@@ -15,7 +15,7 @@ public class StatsEntity {
     @Column(name="id")
     private Integer id;
 
-    @Size(max=500)
+    @Size(max=30)
     @Column(name="token")
     private String token;
 

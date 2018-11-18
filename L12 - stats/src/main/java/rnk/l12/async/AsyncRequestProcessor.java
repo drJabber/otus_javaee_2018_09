@@ -27,7 +27,7 @@ public class AsyncRequestProcessor implements Runnable{
             switch (command){
                 case "store_stats":{
                     try{
-                        logger.info("start async processing of store_stats");
+                        logger.info(String.format("start async processing of store_stats %s", rq.getParameter("stats")));
                         Integer stats_id=(new StatsUtils()).store_stats(rq.getParameter("app_token"),rq.getParameter("stats"));
 
                         rs.setCharacterEncoding("utf-8");

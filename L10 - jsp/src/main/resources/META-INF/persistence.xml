@@ -4,7 +4,7 @@
     <persistence-unit name="rnk-jpa" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <non-jta-data-source>java:comp/env/jdbc/rnkl10_db</non-jta-data-source>
-        <jar-file>lib/rnk.l12-1.0-SNAPCHOT.jpa</jar-file>
+        <jar-file>lib/rnk.l12-1.0-SNAPSHOT.jar</jar-file>
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>

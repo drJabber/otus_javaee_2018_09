@@ -38,6 +38,7 @@
                         <jsp:include page="admin-body.jsp" />
                     </c:when>
                     <c:when test="${body_parameter.equals('admin/stats')}">
+                        <%--<jsp:include  page="${context_path}/stats-report.jsp" />--%>
                         <div id="main-stats-body">
                         </div>
                         <script>load_stats()</script>

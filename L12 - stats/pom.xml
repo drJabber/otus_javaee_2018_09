@@ -146,6 +146,9 @@
       <resource>
         <directory>src/main/resources/META-INF/template</directory>
       </resource>
+      <resource>
+        <directory>src/main/resources/META-INF/resources</directory>
+      </resource>
     </resources>
 
     <!--<testResources>-->
@@ -170,14 +173,6 @@
         </plugin>
 
         <plugin>
-          <artifactId>maven-war-plugin</artifactId>
-          <version>${mavenbuilder.version}</version>
-          <configuration>
-            <warSourceDirectory>src/main/webapp</warSourceDirectory>
-          </configuration>
-        </plugin>
-
-        <plugin>
             <!--<groupId>org.apache.maven.plugins</groupId>-->
             <artifactId>maven-jar-plugin</artifactId>
             <configuration>
@@ -185,20 +180,8 @@
                     <manifest>
                         <addClasspath>true</addClasspath>
                         <classpathPrefix>${project.build.finalName}.lib/</classpathPrefix>
-                        <!--<mainClass>${.qualified.main.class}</mainClass>-->
                     </manifest>
                 </archive>
-            </configuration>
-        </plugin>
-
-        <plugin>
-            <groupId>org.apache.tomcat.maven</groupId>
-            <artifactId>tomcat7-maven-plugin</artifactId>
-            <version>${mavendeploy.version}</version>
-            <configuration>
-                <url>${tomcat.deploymentPath}</url>
-                <server>TomcatServerRNK</server>
-                <path>/rnk</path>
             </configuration>
         </plugin>
 

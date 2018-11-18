@@ -1,9 +1,12 @@
 package rnk.l12.util;
 
 import org.apache.log4j.Logger;
+import rnk.l12.entities.StatsReportColumn;
 
 import javax.persistence.*;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -15,42 +18,52 @@ public class StatsReportProducer {
     private static final Logger logger = Logger.getLogger(StatsReportProducer.class.getName());
 
 
-    private HttpServletRequest rq;
+    private HttpServletRequest request;
+    private HttpServletResponse response;
 
-    public StatsReportProducer(HttpServletRequest rq){
-        this.rq=rq;
+    public void setRequest(HttpServletRequest request){
+        this.request=request;
     }
 
-    private void produceColumns(){
-        List<String> list=new ArrayList<>();
-        list.add("date");
-        list.add("token");
-        list.add("urn");
-        list.add("user");
-        list.add("country");
-        list.add("ip");
-        list.add("searched for");
+    public void setResponse(HttpServletResponse response){
+        this.response=response;
+    }
 
-        rq.setAttribute("statsBodyColumns",list);
+    public StatsReportProducer(HttpServletRequest request){
+        this.request = request;
+    }
+
+
+    private void produceColumns(){
+        List<StatsReportColumn> list=new ArrayList<>();
+        list.add(new StatsReportColumn("date","8%"));
+        list.add(new StatsReportColumn("token","25%"));
+        list.add(new StatsReportColumn("urn","10%"));
+        list.add(new StatsReportColumn("user","7%"));
+        list.add(new StatsReportColumn("country","7%"));
+        list.add(new StatsReportColumn("ip","6%"));
+        list.add(new StatsReportColumn("searched for","37%"));
+
+        request.setAttribute("statsBodyColumns",list);
     }
 
     private void produceEntries(){
         EntityManager em=emf.createEntityManager();
         EntityTransaction et=em.getTransaction();
         try {
-            String date=rq.getParameter("date");
+            String date= request.getParameter("date");
             if (date==null){
                 DateTimeFormatter dtf=DateTimeFormatter.ofPattern("yyyy-MM-dd");
                 date=OffsetDateTime.now().format(dtf);
             }
 
             et.begin();
-//            String query_string = String.format("select s from rnk.l12.entities.StatsEntity s where cast(s.date as date)=cast('%s' as date) order by s.id desc", date);
-            String query_string = "select s from StatsEntity s";
+            String query_string = String.format("select s from StatsEntity s where cast(s.date as date)=cast('%s' as date) order by s.id desc", date);
+//            String query_string = "select s from StatsEntity s";
             logger.info(query_string);
             Query q = em.createQuery(query_string);
             logger.info(String.format("list size: %d",q.getResultList().size()));
-            rq.setAttribute("statsRecords",q.getResultList());
+            request.setAttribute("statsRecords",q.getResultList());
             et.commit();
 
 
@@ -63,14 +76,14 @@ public class StatsReportProducer {
     }
 
     private void produceHead(){
-        String date=rq.getParameter("date");
-        rq.setAttribute("title","RnK statistics");
-        rq.setAttribute("context_path",rq.getContextPath());
+        String date= request.getParameter("date");
+        request.setAttribute("title","RnK статистика");
+        request.setAttribute("context_path", request.getContextPath());
         if ((date==null)||date.isEmpty()){
             DateTimeFormatter dtf=DateTimeFormatter.ofPattern("yyyy-MM-dd");
             date=OffsetDateTime.now().format(dtf);
         }
-        rq.setAttribute("stats_date", date);
+        request.setAttribute("stats_date", date);
     }
 
     public  String produce(){
@@ -80,4 +93,16 @@ public class StatsReportProducer {
         return "/META-INF/template/stats.ftl";
     }
 
+//    public void produceftl(){
+//        try{
+//            response.setContentType("text/html;charset=UTF-8");
+//            response.setCharacterEncoding("UTF-8");
+//            RequestDispatcher dispatcher=request.getRequestDispatcher(this.produce());
+//            dispatcher.include(request,response);
+//        }catch(Exception ex){
+//            logger.error("produce error:",ex);
+//        }
+//
+//
+//    }
 }

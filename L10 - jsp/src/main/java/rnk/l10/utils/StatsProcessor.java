@@ -12,6 +12,7 @@ import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.EntityBuilder;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ContentType;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import rnk.l10.entities.beans.StaffSearchBean;
@@ -86,7 +87,8 @@ public class StatsProcessor {
         params.add(new BasicNameValuePair("stats",get_stats()));
 
         EntityBuilder builder=EntityBuilder.create();
-        builder.setContentEncoding("UTF-8");
+        builder.setContentType(ContentType.APPLICATION_FORM_URLENCODED.withCharset("utf-8"));
+        builder.setContentEncoding("content-type=UTF-8");
         builder.setParameters(params);
 
         post.setEntity(builder.build());
