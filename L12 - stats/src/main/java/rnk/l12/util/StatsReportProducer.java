@@ -93,16 +93,4 @@ public class StatsReportProducer {
         return "/META-INF/template/stats.ftl";
     }
 
-//    public void produceftl(){
-//        try{
-//            response.setContentType("text/html;charset=UTF-8");
-//            response.setCharacterEncoding("UTF-8");
-//            RequestDispatcher dispatcher=request.getRequestDispatcher(this.produce());
-//            dispatcher.include(request,response);
-//        }catch(Exception ex){
-//            logger.error("produce error:",ex);
-//        }
-//
-//
-//    }
 }

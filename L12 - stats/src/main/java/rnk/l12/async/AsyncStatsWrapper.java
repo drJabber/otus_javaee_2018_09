@@ -14,7 +14,7 @@ public class AsyncStatsWrapper {
         AsyncContext ctx=rq.startAsync();
         logger.info("before async call of AsyncRequestProcessor");
         ctx.addListener(new StatsAsyncListener());
-        ctx.setTimeout(30000);
+        ctx.setTimeout(10000);
 
         ThreadPoolExecutor executor=(ThreadPoolExecutor)rq.getServletContext().getAttribute("executor");
         logger.info("immediately before execute(AsyncRequestProcessor)");
