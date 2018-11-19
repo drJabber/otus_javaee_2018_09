@@ -9,13 +9,6 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
 public class StatsTagHandler extends TagSupport {
-
-//    private String time;
-//
-//    void setTime(String time){
-//        this.time=time;
-//    }
-
     @Override
     public int doEndTag() throws JspException {
         try{

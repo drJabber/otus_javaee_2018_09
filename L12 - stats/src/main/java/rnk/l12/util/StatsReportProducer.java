@@ -4,7 +4,6 @@ import org.apache.log4j.Logger;
 import rnk.l12.entities.StatsReportColumn;
 
 import javax.persistence.*;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.time.OffsetDateTime;

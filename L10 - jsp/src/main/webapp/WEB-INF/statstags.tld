@@ -13,19 +13,11 @@
             <name>stats</name>
             <tag-class>rnk.l10.tags.StatsTagHandler</tag-class>
             <body-content>JSP</body-content>
-            <!--<attribute>-->
-                <!--<name>time</name>-->
-                <!--<required>false</required>-->
-            <!--</attribute>-->
         </tag>
         <tag>
             <name>statsx</name>
             <tag-class>rnk.l10.tags.StatsXTagHandler</tag-class>
             <body-content>JSP</body-content>
-            <!--<attribute>-->
-                <!--<name>time</name>-->
-                <!--<required>false</required>-->
-            <!--</attribute>-->
         </tag>
 </taglib>
 
