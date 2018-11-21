@@ -27,35 +27,6 @@ var checkLoginForm = function() {
     }
 };
 
-var getCBCurrencies=function(){
-    jQuery.get("/cbcurr", function(data){
-        var items = [];
-        items.push("<table><tr><th>Валюта</th><th>Курс</th></tr>");
-        jQuery.each(data, function(key, val){
-            items.push("<tr>");
-            items.push("<td id =''"+key+"''>"+val.charCode+"</td>");
-            items.push("<td id =''"+key+"''>"+val.value+"</td>");
-            items.push("</tr>");
-        });
-        items.push("</table>");
-        $("<table/>",{html: items.join("")}).appendTo("#aside-currencies-table");
-    });
-}
-
-var getNews=function(){
-    jQuery.get("/news", function(data){
-        var items = [];
-        jQuery.each(data, function(key, val){
-            items.push("<tr>");
-            items.push("<td id =''"+key+"''>");
-            items.push("<a href='"+val.link+"'>"+val.text+"</a>");
-            items.push("</td>");
-            items.push("</tr>");
-        });
-        $("<table/>",{html: items.join("")}).appendTo("#aside-news-table");
-    });
-}
-
 var load_stats=function () {
     $.ajax({
         url: "/stats/report",
@@ -109,3 +80,71 @@ var AjaxContent = function(){
         // }
     }
 }();
+
+
+// var getCBCurrencies=function(){
+//     jQuery.get("/cbcurr", function(data){
+//         var items = [];
+//         items.push("<table><tr><th>Валюта</th><th>Курс</th></tr>");
+//         jQuery.each(data, function(key, val){
+//             items.push("<tr>");
+//             items.push("<td id =''"+key+"''>"+val.charCode+"</td>");
+//             items.push("<td id =''"+key+"''>"+val.value+"</td>");
+//             items.push("</tr>");
+//         });
+//         items.push("</table>");
+//         $("<table/>",{html: items.join("")}).appendTo("#aside-currencies-table");
+//     });
+// }
+//
+// var getNews=function(){
+//     jQuery.get("/news", function(data){
+//         var items = [];
+//         jQuery.each(data, function(key, val){
+//             items.push("<tr>");
+//             items.push("<td id =''"+key+"''>");
+//             items.push("<a href='"+val.link+"'>"+val.text+"</a>");
+//             items.push("</td>");
+//             items.push("</tr>");
+//         });
+//         $("<table/>",{html: items.join("")}).appendTo("#aside-news-table");
+//     });
+// }
+//
+
+function onNewsMessage(evt) {
+    var items = [];
+    jQuery.each(data, function(key, val){
+        items.push("<tr>");
+        items.push("<td id =''"+key+"''>");
+        items.push("<a href='"+val.link+"'>"+val.text+"</a>");
+        items.push("</td>");
+        items.push("</tr>");
+    });
+    $("<table/>",{html: items.join("")}).appendTo("#aside-news-table");
+}
+
+function onCurrenciesMessage(evt) {
+    var items = [];
+    items.push("<table><tr><th>Валюта</th><th>Курс</th></tr>");
+    jQuery.each(evt.data, function(key, val){
+        items.push("<tr>");
+        items.push("<td id =''"+key+"''>"+val.charCode+"</td>");
+        items.push("<td id =''"+key+"''>"+val.value+"</td>");
+        items.push("</tr>");
+    });
+    items.push("</table>");
+    $("<table/>",{html: items.join("")}).appendTo("#aside-currencies-table");
+}
+
+var ws_news;
+var ws_currencies;
+function ws_connect() {
+    ws_news = new WebSocket("ws://localhost:8080/news");
+    ws_currencies = new WebSocket("ws://localhost:8080/curr");
+    ws_news.onmessage = onNewsMessage;
+    ws_currencies.onmessage = onCurrenciesMessage;
+}
+
+window.addEventListener("load", ws_connect, false);
+

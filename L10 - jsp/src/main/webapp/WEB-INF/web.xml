@@ -65,7 +65,7 @@
  -->
     <filter>
         <filter-name>User-Agent filter</filter-name>
-        <filter-class>rnk.l10.UserAgentFilter</filter-class>
+        <filter-class>rnk.l10.filters.UserAgentFilter</filter-class>
         <async-supported>true</async-supported>
         <init-param>
             <param-name>user-agent-msie</param-name>

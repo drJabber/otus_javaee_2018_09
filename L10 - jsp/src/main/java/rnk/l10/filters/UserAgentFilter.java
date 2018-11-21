@@ -1,4 +1,4 @@
-package rnk.l10;
+package rnk.l10.filters;
 
 import org.apache.http.HttpStatus;
 import ua_parser.Client;
