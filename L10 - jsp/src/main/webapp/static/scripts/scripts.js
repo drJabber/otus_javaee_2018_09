@@ -53,6 +53,10 @@ var ws_news;
 var ws_currencies;
 var ws_stats;
 function ws_connect() {
+    if (ws_news) {ws_news.close()};
+    if (ws_currencies) {ws_currencies.close()};
+    if (ws_stats) {ws_stats.close()};
+
     ws_news = new WebSocket("ws://localhost:8080/news");
     ws_currencies = new WebSocket("ws://localhost:8080/curr");
     ws_news.onmessage = onNewsMessage;
@@ -135,16 +139,39 @@ var AjaxContent = function(){
 //
 
 function onStatsMessage(evt) {
-    alert(evt.data);
-    // var items = [];
-    // jQuery.each(JSON.parse(evt.data), function(key, val){
-    //     items.push("<tr>");
-    //     items.push("<td id =''"+key+"''>");
-    //     items.push("<a href='"+val.link+"'>"+val.text+"</a>");
-    //     items.push("</td>");
-    //     items.push("</tr>");
-    // });
-    // $("<table/>",{html: items.join("")}).appendTo("#aside-news-table");
+    var items = [];
+    var index=0;
+    jQuery.each(JSON.parse(evt.data), function(key, val){
+        var rowclass='odd';
+        if (index%2==0) {rowclass = 'even';}
+        items.push("<tr class='"+rowclass+"'>");
+
+        items.push("<td class='stats-report-column'>");
+        items.push(val.urn);
+        items.push("</td>");
+
+        items.push("<td class='stats-report-column'>");
+        items.push(val.user);
+        items.push("</td>");
+
+        items.push("<td class='stats-report-column'>");
+        items.push(val.country);
+        items.push("</td>");
+
+        items.push("<td class='stats-report-column'>");
+        items.push(val.ip);
+        items.push("</td>");
+
+        items.push("<td class='stats-report-column'>");
+        items.push(val.searchedFor);
+        items.push("</td>");
+
+        items.push("</tr>");
+
+        index+=1;
+    });
+    $("#stats-report-table tbody" ).empty();
+    $("<tbody/>",{html: items.join("")}).appendTo("#stats-report-table");
 }
 
 

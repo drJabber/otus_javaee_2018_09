@@ -1,0 +1,247 @@
+package rnk.l10.servlets.ws;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.config.RequestConfig;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.log4j.Logger;
+import org.json.JSONException;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+import org.skyscreamer.jsonassert.JSONCompare;
+import org.skyscreamer.jsonassert.JSONCompareMode;
+import org.skyscreamer.jsonassert.JSONCompareResult;
+import org.w3c.dom.NodeList;
+import rnk.l10.entities.ArticleEntity;
+import rnk.l10.entities.StatsEntity;
+import rnk.l10.entities.beans.StatsReportProducer;
+
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpSession;
+import javax.websocket.EncodeException;
+import javax.websocket.Session;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpression;
+import javax.xml.xpath.XPathFactory;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
+
+public class WSThread implements Runnable{
+    private static final Logger logger = Logger.getLogger(WSUtils.class.getName());
+
+    private Session session;
+
+    private static final String NEWS_URL="https://m.lenta.ru";
+    private static final int TIMEOUT_VALUE=10; //seconds
+    private static final String CBR_CURRENCIES_URL="http://www.cbr.ru/scripts/XML_daily.asp";
+
+    public static class Cache{
+        private JsonArray news=null;
+        private JsonArray currencies=null;
+        private JsonArray stats=null;
+
+        private void reset(){
+            news=null;
+            currencies=null;
+            stats=null;
+        }
+    }
+
+    private static Cache cache=new Cache();
+
+    public WSThread(Session session){
+        this.session=session;
+    }
+
+    @Override
+    public void run(){
+        try{
+            String endpoint=(String) session.getUserProperties().get("endpoint");
+            if (endpoint!=null){
+                synchronized (cache){
+                    switch (endpoint){
+                        case "news":{
+                            LoadResult r=loadNews(session);
+                            if (r.isResult()){
+                                cache.news=r.getValue();
+                                sendNews(session);
+                            }
+                            break;
+                        }
+                        case "currencies":{
+                            LoadResult r=loadCurrencies(session);
+                            if (r.isResult()){
+                                cache.currencies=r.getValue();
+                                sendCurrencies(session);
+                            }
+                            break;
+                        }
+                        case "stats":{
+                            LoadResult r=loadStats(session);
+                            if (r.isResult()){
+                                cache.stats=r.getValue();
+                                sendStats(session);
+                            }
+                            break;
+                        }
+                        default:{
+                            break;
+                        }
+                    }
+                }
+            }else{
+                logger.error("ws endpoint invalid");
+            }
+        }catch(Exception ex){
+            logger.error("ws load adn sent thread get error:", ex);
+            synchronized (cache){
+                cache.reset();
+            }
+        }
+    }
+
+    private LoadResult update_cached_json_array(Session session, JsonArray source, JsonArray target) throws JSONException {
+        if (source==null){
+            logger.info("ws loaded empty values");
+            return new LoadResult(true,target);
+        }else{
+            String json_string=source.toString();
+            if (target==null){
+                return new LoadResult(true,source);
+            }else{
+                JSONCompareResult r= JSONCompare.compareJSON(target.toString(),json_string, JSONCompareMode.LENIENT);
+                if (r.failed()){
+                    return new LoadResult(true, source);
+                }else
+                {
+                    boolean new_session=session.getUserProperties().get("isnew").equals("Y");
+                    logger.info("ws loaded values equals cached");
+                    return new LoadResult(new_session,target);
+                }
+            }
+        }
+    }
+
+    private LoadResult loadNews(Session session) throws ServletException {
+        try{
+            logger.info("ws before load news");
+            Document document= Jsoup.connect(NEWS_URL).get();
+            Elements list= document.select("a.b-list-item__link");
+
+            int index=0;
+            JsonArray json_nodes=new JsonArray();
+            for (Element element:list) {
+                Element text=element.selectFirst("span.b-list-item__title");
+                if (text!=null){
+                    ArticleEntity article=new ArticleEntity();
+                    article.setLink(NEWS_URL+element.attr("href"));
+                    article.setText(text.text());
+                    json_nodes.add(article.toJson());
+
+                    index++;
+                    if (index==10) {
+                        break;
+                    }
+                }
+            }
+
+            ArticleEntity article=new ArticleEntity();
+            article.setLink(NEWS_URL);
+            article.setText("Все новости...");
+            json_nodes.add(article.toJson());
+
+            return update_cached_json_array(session,json_nodes,cache.news);
+        }catch(Exception ex){
+            throw new ServletException(ex);
+        }
+    }
+
+    private LoadResult loadCurrencies(Session session) throws ServletException{
+        try {
+            logger.info("ws before load currencies");
+            HttpGet get=new HttpGet(CBR_CURRENCIES_URL);
+            HttpClient httpClient = HttpClients.createDefault();
+            // optional configuration
+            RequestConfig config=RequestConfig.custom().setSocketTimeout(TIMEOUT_VALUE * 1000).build();
+            // more configuration
+            get.setConfig(config);
+
+            HttpResponse internResponse = httpClient.execute(get);
+            int status = internResponse.getStatusLine().getStatusCode();
+            if (status== HttpStatus.SC_OK) {
+
+                HttpEntity httpEntity=internResponse.getEntity();
+                try(InputStream respIn = httpEntity.getContent();
+                ){
+                    DocumentBuilderFactory factory=DocumentBuilderFactory.newInstance();
+                    DocumentBuilder builder=factory.newDocumentBuilder();
+                    org.w3c.dom.Document doc=builder.parse(respIn);
+                    XPathFactory xpf=XPathFactory.newInstance();
+                    XPath xpath=xpf.newXPath();
+                    XPathExpression xpe=xpath.compile("/ValCurs/Valute[CharCode='USD' or CharCode='EUR' or CharCode='GBP']");
+
+                    NodeList list= (NodeList) xpe.evaluate(doc, XPathConstants.NODESET);
+                    JsonArray json_nodes=new JsonArray();
+                    for (int index=0;index<list.getLength();index++){
+                        json_nodes.add(entities.CurrencyEntity.fromXML(list.item(index)).toJson() );
+                    }
+
+                    return update_cached_json_array(session,json_nodes,cache.currencies);
+                }
+            }else
+            {
+                throw new ServletException("cant open CB url");
+            }
+        }catch(Exception ex){
+            throw new ServletException(ex);
+        }
+    }
+
+    private LoadResult loadStats(Session session) throws ServletException{
+        try {
+            logger.info("ws before load stats");
+            HttpSession s=(HttpSession)session.getUserProperties().get("http-session");
+            ServletContext ctx=s.getServletContext();
+            List<StatsEntity> list= new StatsReportProducer().produce(ctx);
+            Gson gson=new Gson();
+            JsonArray json_nodes=gson.toJsonTree(list).getAsJsonArray();
+            return update_cached_json_array(session,json_nodes,cache.stats);
+        }catch(Exception ex){
+            throw new ServletException(ex);
+        }
+    }
+
+    private void sendNews(Session session) throws EncodeException, IOException {
+        if (session.isOpen()){
+            session.getBasicRemote().sendObject( cache.news);
+            session.getUserProperties().put("isnew","N");
+        }
+    }
+
+    private void sendCurrencies(Session session) throws EncodeException, IOException {
+        if (session.isOpen()) {
+            session.getBasicRemote().sendObject(cache.currencies);
+            session.getUserProperties().put("isnew", "N");
+        }
+    }
+
+    private void sendStats(Session session) throws EncodeException,IOException {
+        if (session.isOpen()){
+            session.getBasicRemote().sendObject( cache.stats);
+            session.getUserProperties().put("isnew","N");
+        }
+    }
+
+}

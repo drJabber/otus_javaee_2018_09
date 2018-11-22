@@ -21,7 +21,7 @@ public class StatsEndpoint {
     public void message(Session session, String msg) {
         //provided for completeness, in out scenario clients don't send any msg.
         try {
-            logger.info("ws msg (currencies) " + msg + " from " + session.getId());
+            logger.info("ws msg (stats) " + msg + " from " + session.getId());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -33,6 +33,8 @@ public class StatsEndpoint {
         getSessions().add(session);
         session.getUserProperties().put("endpoint","stats");
         session.getUserProperties().put("isnew","Y");
+        session.getUserProperties().put("http-session",config.getUserProperties().get("http-session"));
+        (new WSUtils()).loadAndSend(getSessions());
         logger.info(String.format("ws stats open: sid=%s, q=%s, ", session.getId(), session.getQueryString()) );
     }
 

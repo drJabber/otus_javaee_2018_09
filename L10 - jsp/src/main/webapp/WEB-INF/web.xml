@@ -14,6 +14,10 @@
         <param-value>Y</param-value>
     </context-param>
     <context-param>
+        <param-name>ws-update-timeout</param-name>
+        <param-value>5</param-value>
+    </context-param>
+    <context-param>
         <param-name>stats-token</param-name>
         <param-value>rnk.sharaban.17d6f53c215d491babefc51afe085a4a</param-value>
     </context-param>

@@ -35,6 +35,8 @@ public class NewsEndpoint {
         getSessions().add(session);
         session.getUserProperties().put("endpoint","news");
         session.getUserProperties().put("isnew","Y");
+        session.getUserProperties().put("http-session",config.getUserProperties().get("http-session"));
+        (new WSUtils()).loadAndSend(getSessions());
         logger.info(String.format("ws news open: sid=%s, q=%s, ", session.getId(), session.getQueryString()) );
     }
 

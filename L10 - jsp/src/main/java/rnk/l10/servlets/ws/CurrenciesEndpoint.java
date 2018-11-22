@@ -33,6 +33,8 @@ public class CurrenciesEndpoint {
         getSessions().add(session);
         session.getUserProperties().put("endpoint","currencies");
         session.getUserProperties().put("isnew","Y");
+        session.getUserProperties().put("http-session",config.getUserProperties().get("http-session"));
+        (new WSUtils()).loadAndSend(getSessions());
         logger.info(String.format("ws curr open: sid=%s, q=%s, ", session.getId(), session.getQueryString()) );
     }
 
