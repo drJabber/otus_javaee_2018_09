@@ -69,12 +69,11 @@ public class WSUtils {
                                 break;
                             }
                             case "stats":{
-                                sendStats(session);
-//                                LoadResult r=loadCurrencies(session);
-//                                if (r.isResult()){
-//                                    cached_currencies=r.getValue();
-//                                    sendCurrencies(session);
-//                                }
+                                LoadResult r=loadStats(session);
+                                if (r.isResult()){
+                                    cached_stats=r.getValue();
+                                    sendStats(session);
+                                }
                                 break;
                             }
                             default:{
@@ -94,12 +93,14 @@ public class WSUtils {
             logger.error("ws payload get error:", ex);
             cached_news=null;
             cached_currencies=null;
+            cached_stats=null;
         }
     }
 
     private static final String NEWS_URL="https://m.lenta.ru";
     private static JsonArray cached_news=null;
     private static JsonArray cached_currencies=null;
+    private static JsonArray cached_stats=null;
 
     private static LoadResult update_cached_json_array(Session session,JsonArray source, JsonArray target) throws JSONException {
         if (source==null){
@@ -201,6 +202,15 @@ public class WSUtils {
         }
     }
 
+    private static LoadResult loadStats(Session session) throws ServletException{
+        try {
+            logger.info("ws before load stats");
+            return new LoadResult(false,null);
+        }catch(Exception ex){
+            throw new ServletException(ex);
+        }
+    }
+
     private static void sendNews(Session session) throws EncodeException,IOException {
         session.getBasicRemote().sendObject( cached_news);
         session.getUserProperties().put("isnew","N");
@@ -212,7 +222,7 @@ public class WSUtils {
     }
 
     private static void sendStats(Session session) throws EncodeException,IOException {
-        session.getBasicRemote().sendText( "ok stats");
+        session.getBasicRemote().sendObject( cached_stats);
         session.getUserProperties().put("isnew","N");
     }
 
