@@ -13,21 +13,23 @@ import java.util.concurrent.ConcurrentLinkedDeque;
 public class WSContextListener implements ServletContextListener {
     private static final Logger logger = Logger.getLogger(WSContextListener.class.getName());
     private static Queue<Session> sessions=new ConcurrentLinkedDeque<>();
-    private static final int WSTIMEOUT=50;
+    private static final int WSTIMEOUT=10;
 
     static {
         new Thread(()->{
+            logger.info("ws thread started");
             while (true){
                 if (sessions!=null){
                     WSUtils.loadAndSend(sessions);
                 }
                 try{
                     Thread.sleep(WSTIMEOUT*1000);
+                    logger.info("ws thread after send");
                 }catch(Exception ex){
                     logger.error("ws thread error", ex);
                 }
             }
-        });
+        }).start();
     }
 
     @Override

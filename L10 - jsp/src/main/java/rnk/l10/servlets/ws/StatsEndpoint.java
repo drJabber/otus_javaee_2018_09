@@ -7,8 +7,8 @@ import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 import java.util.Queue;
 
-@ServerEndpoint(value = "/curr",  encoders = {JsonEncoder.class}, configurator = WSConfigurator.class)
-public class CurrenciesEndpoint {
+@ServerEndpoint(value = "/stats",  encoders = {JsonEncoder.class}, configurator = WSConfigurator.class)
+public class StatsEndpoint {
     private static final Logger logger = Logger.getLogger(NewsEndpoint.class.getName());
 
     private EndpointConfig config;
@@ -31,15 +31,15 @@ public class CurrenciesEndpoint {
     public void open(Session session, EndpointConfig config){
         this.config=config;
         getSessions().add(session);
-        session.getUserProperties().put("endpoint","currencies");
+        session.getUserProperties().put("endpoint","stats");
         session.getUserProperties().put("isnew","Y");
-        logger.info(String.format("ws curr open: sid=%s, q=%s, ", session.getId(), session.getQueryString()) );
+        logger.info(String.format("ws stats open: sid=%s, q=%s, ", session.getId(), session.getQueryString()) );
     }
 
     @OnClose
     public void close(Session session){
         getSessions().remove(session);
-        logger.info(String.format("ws curr close: sid=%s, q=%s, ", session.getId(), session.getQueryString()) );
+        logger.info(String.format("ws stats close: sid=%s, q=%s, ", session.getId(), session.getQueryString()) );
     }
 
     @OnError

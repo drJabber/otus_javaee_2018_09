@@ -27,18 +27,19 @@ var checkLoginForm = function() {
     }
 };
 
-var load_stats=function () {
-    $.ajax({
-        url: "/stats/report",
-        success: function (data) {
-            $('#main-stats-body').html(data);
-        },
-        error: function (xhr, err) {
-            $('#main-stats-body').html(xhr.responseText);
-
-        }
-    });
-}
+// var load_stats=function () {
+//     $.ajax({
+//         url: "/stats/report",
+//         success: function (data) {
+//             $('#main-stats-body').html(data);
+//         },
+//         error: function (xhr, err) {
+//             $('#main-stats-body').html(xhr.responseText);
+//
+//         }
+//     });
+// }
+//
 
 var focusListener = function(event) {
     event.target.style.background = "#F9F0DA";
@@ -47,6 +48,26 @@ var blurListener = function(event) {
     event.target.style.background = "";
     checkLoginForm();
 };
+
+var ws_news;
+var ws_currencies;
+var ws_stats;
+function ws_connect() {
+    ws_news = new WebSocket("ws://localhost:8080/news");
+    ws_currencies = new WebSocket("ws://localhost:8080/curr");
+    ws_news.onmessage = onNewsMessage;
+    ws_currencies.onmessage = onCurrenciesMessage;
+    if ($('#stats-report-table').length){
+        ws_stats=new WebSocket("ws://localhost:8080/stats");
+        ws_stats.onmessage=onStatsMessage;
+    }else{
+        ws_stats=null;
+    }
+
+}
+
+window.addEventListener("load", ws_connect, false);
+
 
 var AjaxContent = function(){
     return {
@@ -57,10 +78,11 @@ var AjaxContent = function(){
                 headers:{"x-rnk-client-time-header":(new Date()).toIsoString()},
                 success: function (data) {
                     $(body).html(data);
+                    ws_connect();
                 },
                 error: function (err) {
                     alert("fail");
-                    
+                    ws_connect();
                 }
             })
         },
@@ -112,9 +134,23 @@ var AjaxContent = function(){
 // }
 //
 
+function onStatsMessage(evt) {
+    alert(evt.data);
+    // var items = [];
+    // jQuery.each(JSON.parse(evt.data), function(key, val){
+    //     items.push("<tr>");
+    //     items.push("<td id =''"+key+"''>");
+    //     items.push("<a href='"+val.link+"'>"+val.text+"</a>");
+    //     items.push("</td>");
+    //     items.push("</tr>");
+    // });
+    // $("<table/>",{html: items.join("")}).appendTo("#aside-news-table");
+}
+
+
 function onNewsMessage(evt) {
     var items = [];
-    jQuery.each(data, function(key, val){
+    jQuery.each(JSON.parse(evt.data), function(key, val){
         items.push("<tr>");
         items.push("<td id =''"+key+"''>");
         items.push("<a href='"+val.link+"'>"+val.text+"</a>");
@@ -127,7 +163,7 @@ function onNewsMessage(evt) {
 function onCurrenciesMessage(evt) {
     var items = [];
     items.push("<table><tr><th>Валюта</th><th>Курс</th></tr>");
-    jQuery.each(evt.data, function(key, val){
+    jQuery.each(JSON.parse(evt.data), function(key, val){
         items.push("<tr>");
         items.push("<td id =''"+key+"''>"+val.charCode+"</td>");
         items.push("<td id =''"+key+"''>"+val.value+"</td>");
@@ -136,15 +172,4 @@ function onCurrenciesMessage(evt) {
     items.push("</table>");
     $("<table/>",{html: items.join("")}).appendTo("#aside-currencies-table");
 }
-
-var ws_news;
-var ws_currencies;
-function ws_connect() {
-    ws_news = new WebSocket("ws://localhost:8080/news");
-    ws_currencies = new WebSocket("ws://localhost:8080/curr");
-    ws_news.onmessage = onNewsMessage;
-    ws_currencies.onmessage = onCurrenciesMessage;
-}
-
-window.addEventListener("load", ws_connect, false);
 

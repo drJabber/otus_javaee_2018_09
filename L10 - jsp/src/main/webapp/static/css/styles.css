@@ -288,22 +288,6 @@ form.login-form{
   width:20%;
 }
 
-/*th.sorted {*/
-  /*background-color: #CCCCCC;*/
-/*}*/
-/*th a,th a:visited {*/
-  /*color: black;*/
-/*}*/
-/*th a:hover {*/
-  /*text-decoration: underline;*/
-  /*color: black;*/
-/*}*/
-/*th.sorted a,th.sortable a {*/
-  /*background-position: right;*/
-  /*display: block;*/
-  /*width: 100%;*/
-/*}*/
-
 .odd .display-search-column {
   background-color: #AAA
 }
@@ -312,6 +296,23 @@ form.login-form{
   background-color: #DDD
 }
 
-/*.even.display-search-column {*/
-  /*background-color: #CCCCCC*/
-/*}*/
+.stats-report {
+  border: 1px solid #666;
+  width: 80%;
+  table-layout: fixed;
+  /*margin: 5px 0 5px 0 !important;*/
+}
+
+.stats-report-header {
+  background-color: #666;
+  width:20%;
+}
+
+.odd .stats-report-column {
+  background-color: #AAA
+}
+
+.even .stats-report-column {
+  background-color: #DDD
+}
+

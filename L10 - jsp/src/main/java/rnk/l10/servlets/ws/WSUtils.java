@@ -9,12 +9,11 @@ import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.log4j.Logger;
-import org.json.JSONArray;
+import org.json.JSONException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompare;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.skyscreamer.jsonassert.JSONCompareResult;
@@ -22,6 +21,7 @@ import org.w3c.dom.NodeList;
 import rnk.l10.entities.ArticleEntity;
 
 import javax.servlet.ServletException;
+import javax.websocket.EncodeException;
 import javax.websocket.Session;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -40,6 +40,10 @@ public class WSUtils {
     public static void loadAndSend(Queue<Session> sessions){
         try{
             ArrayList<Session> closedSessions=new ArrayList<>();
+            if (sessions.size()==0){
+                logger.warn("ws sessions list empty");
+            }
+
             for (Session session: sessions) {
                 if (!session.isOpen()){
                     closedSessions.add(session);
@@ -49,36 +53,79 @@ public class WSUtils {
                     if (endpoint!=null){
                         switch (endpoint){
                             case "news":{
-                                if (loadNews(session)){
+                                LoadResult r=loadNews(session);
+                                if (r.isResult()){
+                                    cached_news=r.getValue();
                                     sendNews(session);
                                 }
                                 break;
                             }
                             case "currencies":{
-                                if (loadCurrencies(session)) {
+                                LoadResult r=loadCurrencies(session);
+                                if (r.isResult()){
+                                    cached_currencies=r.getValue();
                                     sendCurrencies(session);
                                 }
+                                break;
+                            }
+                            case "stats":{
+                                sendStats(session);
+//                                LoadResult r=loadCurrencies(session);
+//                                if (r.isResult()){
+//                                    cached_currencies=r.getValue();
+//                                    sendCurrencies(session);
+//                                }
                                 break;
                             }
                             default:{
                                 break;
                             }
                         }
+                    }else{
+                        logger.error("ws endpoint invalid");
                     }
+
                 }
 
             }
+
+            sessions.removeAll(closedSessions);
         }catch(Exception ex){
             logger.error("ws payload get error:", ex);
+            cached_news=null;
+            cached_currencies=null;
         }
     }
 
     private static final String NEWS_URL="https://m.lenta.ru";
-    private static String cached_news=null;
-    private static String cached_currencies=null;
+    private static JsonArray cached_news=null;
+    private static JsonArray cached_currencies=null;
 
-    private static boolean loadNews(Session session) throws ServletException {
+    private static LoadResult update_cached_json_array(Session session,JsonArray source, JsonArray target) throws JSONException {
+        if (source==null){
+            logger.info("ws loaded empty values");
+            return new LoadResult(true,target);
+        }else{
+            String json_string=source.toString();
+            if (target==null){
+                return new LoadResult(true,source);
+            }else{
+                JSONCompareResult r= JSONCompare.compareJSON(target.toString(),json_string, JSONCompareMode.LENIENT);
+                if (r.failed()){
+                    return new LoadResult(true, source);
+                }else
+                {
+                    boolean new_session=session.getUserProperties().get("isnew").equals("Y");
+                    logger.info("ws loaded values equals cached");
+                    return new LoadResult(new_session,target);
+                }
+            }
+        }
+    }
+
+    private static LoadResult loadNews(Session session) throws ServletException {
         try{
+            logger.info("ws before load news");
             Document document= Jsoup.connect(NEWS_URL).get();
             Elements list= document.select("a.b-list-item__link");
 
@@ -104,16 +151,7 @@ public class WSUtils {
             article.setText("Все новости...");
             json_nodes.add(article.toJson());
 
-            String json_string=json_nodes.getAsString();
-            JSONCompareResult r= JSONCompare.compareJSON(cached_news,json_string, JSONCompareMode.LENIENT);
-            if (r.failed()){
-                cached_news=json_string;
-                return true;
-            }else
-            {
-                logger.info("loaded news equals cached");
-                return false;
-            }
+            return update_cached_json_array(session,json_nodes,cached_news);
         }catch(Exception ex){
             throw new ServletException(ex);
         }
@@ -122,8 +160,9 @@ public class WSUtils {
     private static final int TIMEOUT_VALUE=10; //seconds
     private static final String CBR_CURRENCIES_URL="http://www.cbr.ru/scripts/XML_daily.asp";
 
-    private static boolean loadCurrencies(Session session) throws ServletException{
+    private static LoadResult loadCurrencies(Session session) throws ServletException{
         try {
+            logger.info("ws before load currencies");
             HttpGet get=new HttpGet(CBR_CURRENCIES_URL);
             HttpClient httpClient = HttpClients.createDefault();
             // optional configuration
@@ -151,17 +190,7 @@ public class WSUtils {
                         json_nodes.add(entities.CurrencyEntity.fromXML(list.item(index)).toJson() );
                     }
 
-                    String json_string=json_nodes.getAsString();
-
-                    JSONCompareResult r= JSONCompare.compareJSON(cached_currencies,json_string, JSONCompareMode.LENIENT);
-                    if (r.failed()){
-                        cached_currencies=json_string;
-                        return true;
-                    }else
-                    {
-                        logger.info("loaded currencies equals cached");
-                        return false;
-                    }
+                    return update_cached_json_array(session,json_nodes,cached_currencies);
                 }
             }else
             {
@@ -172,12 +201,19 @@ public class WSUtils {
         }
     }
 
-    private static void sendNews(Session session) throws  IOException{
-        session.getBasicRemote().sendText(cached_news);
+    private static void sendNews(Session session) throws EncodeException,IOException {
+        session.getBasicRemote().sendObject( cached_news);
+        session.getUserProperties().put("isnew","N");
     }
 
-    private static void sendCurrencies(Session session) throws IOException{
-        session.getBasicRemote().sendText(cached_currencies);
-
+    private static void sendCurrencies(Session session) throws EncodeException, IOException {
+        session.getBasicRemote().sendObject(cached_currencies);
+        session.getUserProperties().put("isnew","N");
     }
+
+    private static void sendStats(Session session) throws EncodeException,IOException {
+        session.getBasicRemote().sendText( "ok stats");
+        session.getUserProperties().put("isnew","N");
+    }
+
 }
