@@ -7,7 +7,7 @@ import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 import java.util.Queue;
 
-@ServerEndpoint(value = "/stats",  encoders = {JsonEncoder.class}, configurator = WSConfigurator.class)
+@ServerEndpoint(value = "/stats",  encoders = {JsonEncoder.class}, configurator = Configurer.class)
 public class StatsEndpoint {
     private static final Logger logger = Logger.getLogger(NewsEndpoint.class.getName());
 
@@ -34,7 +34,7 @@ public class StatsEndpoint {
         session.getUserProperties().put("endpoint","stats");
         session.getUserProperties().put("isnew","Y");
         session.getUserProperties().put("http-session",config.getUserProperties().get("http-session"));
-        (new WSUtils()).loadAndSend(getSessions());
+        (new Updater()).loadAndSend(getSessions());
         logger.info(String.format("ws stats open: sid=%s, q=%s, ", session.getId(), session.getQueryString()) );
     }
 

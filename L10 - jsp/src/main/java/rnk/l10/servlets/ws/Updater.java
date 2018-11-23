@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.Queue;
 import java.util.concurrent.ThreadPoolExecutor;
 
-public class WSUtils {
-    private static final Logger logger = Logger.getLogger(WSUtils.class.getName());
+public class Updater {
+    private static final Logger logger = Logger.getLogger(Updater.class.getName());
 
     public void loadAndSend(Queue<Session> sessions){
         try{
@@ -17,6 +17,8 @@ public class WSUtils {
             if (sessions.size()==0){
                 logger.warn("ws sessions list empty");
             }
+
+            UpdaterThread.resetChacheState();
 
             for (Session session: sessions) {
                 if (!session.isOpen()){
@@ -26,7 +28,7 @@ public class WSUtils {
                     HttpSession s=(HttpSession)session.getUserProperties().get("http-session");
                     ServletContext ctx=s.getServletContext();
                     ThreadPoolExecutor executor = (ThreadPoolExecutor )ctx.getAttribute("ws_executor");
-                    Runnable worker=new WSThread(session);
+                    Runnable worker=new UpdaterThread(session);
                     executor.execute(worker);
                 }
             }

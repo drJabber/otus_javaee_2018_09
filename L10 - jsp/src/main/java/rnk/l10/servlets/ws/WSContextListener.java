@@ -22,9 +22,9 @@ public class WSContextListener implements ServletContextListener {
             while (true){
                 try{
                     if (sessions!=null){
-                        (new WSUtils()).loadAndSend(sessions);
+                        (new Updater()).loadAndSend(sessions);
                     }
-                    Thread.sleep(WSTIMEOUT*1000*60);
+                    Thread.sleep(WSTIMEOUT*1000);
                     logger.info("ws thread after send");
                 }catch(Exception ex){
                     logger.error("ws thread error", ex);

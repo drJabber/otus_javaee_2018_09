@@ -15,7 +15,7 @@
     </context-param>
     <context-param>
         <param-name>ws-update-timeout</param-name>
-        <param-value>5</param-value>
+        <param-value>10</param-value>
     </context-param>
     <context-param>
         <param-name>stats-token</param-name>
