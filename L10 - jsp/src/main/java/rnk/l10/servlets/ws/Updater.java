@@ -18,7 +18,7 @@ public class Updater {
                 logger.warn("ws sessions list empty");
             }
 
-            UpdaterThread.resetChacheState();
+            UpdaterThread.resetCacheState();
 
             for (Session session: sessions) {
                 if (!session.isOpen()){
@@ -44,6 +44,7 @@ public class Updater {
             if (!session.isOpen()){
                 logger.error("ws session is closed:"+session.getId());
             }else{
+                UpdaterThread.resetCache();
                 (new UpdaterThread(session)).run();//run synchronously
             }
         }catch(Exception ex){

@@ -55,9 +55,15 @@ public class UpdaterThread implements Runnable{
         this.session=session;
     }
 
-    public static void resetChacheState(){
+    public static void resetCacheState(){
         synchronized (cache){
             cache.resesState();
+        }
+    }
+
+    public static void resetCache(){
+        synchronized (cache){
+            cache.reset();
         }
     }
 
