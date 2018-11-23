@@ -70,6 +70,10 @@ public class UpdaterThread implements Runnable{
 
     @Override
     public void run(){
+        process();
+    }
+
+    public void process(){
         try{
             String endpoint=(String) session.getUserProperties().get("endpoint");
             if (endpoint!=null){
