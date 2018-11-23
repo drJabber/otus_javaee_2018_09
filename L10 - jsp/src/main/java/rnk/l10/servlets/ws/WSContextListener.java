@@ -68,5 +68,6 @@ public class WSContextListener implements ServletContextListener {
         if (executor!=null){
             executor.shutdown();
         }
+        logger.info("ws context destroyed");
     }
 }

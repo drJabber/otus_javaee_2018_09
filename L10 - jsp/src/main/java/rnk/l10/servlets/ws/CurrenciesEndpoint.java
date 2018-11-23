@@ -2,6 +2,7 @@ package rnk.l10.servlets.ws;
 
 import org.apache.log4j.Logger;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
@@ -12,9 +13,17 @@ public class CurrenciesEndpoint {
     private static final Logger logger = Logger.getLogger(NewsEndpoint.class.getName());
 
     private EndpointConfig config;
+
     private Queue<Session> getSessions(){
         HttpSession session = (HttpSession)config.getUserProperties().get("http-session");
-        return (Queue<Session>)session.getServletContext().getAttribute("ws_sessions");
+        if (session!=null){
+            ServletContext ctx=session.getServletContext();
+            if (ctx!=null){
+                return (Queue<Session>)ctx.getAttribute("ws_sessions");
+            }
+        }
+
+        return null;
     }
 
     @OnMessage
@@ -42,14 +51,20 @@ public class CurrenciesEndpoint {
 
     @OnClose
     public void close(Session session){
-        getSessions().remove(session);
+        Queue<Session> sessions=getSessions();
+        if (sessions!=null){
+            getSessions().remove(session);
+        }
         logger.info(String.format("ws curr close: sid=%s, q=%s, ", session.getId(), session.getQueryString()) );
     }
 
     @OnError
     public void error(Session session, Throwable e){
         logger.error("ws error:",e);
-        getSessions().remove(session);
+        Queue<Session> sessions=getSessions();
+        if (sessions!=null){
+            getSessions().remove(session);
+        }
     }
 
 }

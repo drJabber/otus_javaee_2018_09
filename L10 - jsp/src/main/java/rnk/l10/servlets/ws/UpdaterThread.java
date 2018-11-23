@@ -63,7 +63,7 @@ public class UpdaterThread implements Runnable{
 
     public static void resetCache(){
         synchronized (cache){
-            cache.reset();
+            cache.resetCached();
         }
     }
 
@@ -110,7 +110,7 @@ public class UpdaterThread implements Runnable{
         }catch(Exception ex){
             logger.error("ws load and send thread get error:", ex);
             synchronized (cache){
-                cache.reset();
+                cache.resetCached();
             }
         }
     }
@@ -118,11 +118,11 @@ public class UpdaterThread implements Runnable{
     private LoadResult update_cached_json_array(Session session, JsonArray source, JsonArray target) throws JSONException {
         if (!session.isOpen()){
             logger.info("ws session already closed");
-            return new LoadResult(true,target);
+            return new LoadResult(false,target);
         }else{
             if (source==null){
                 logger.info("ws loaded empty cached");
-                return new LoadResult(true,target);
+                return new LoadResult(false,target);
             }else{
                 String json_string=source.toString();
                 if (target==null){

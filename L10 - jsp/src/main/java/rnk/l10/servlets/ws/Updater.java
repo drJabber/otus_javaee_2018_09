@@ -45,6 +45,7 @@ public class Updater {
                 logger.error("ws session is closed:"+session.getId());
             }else{
                 UpdaterThread.resetCache();
+                UpdaterThread.resetCacheState();
                 (new UpdaterThread(session)).run();//run synchronously
             }
         }catch(Exception ex){

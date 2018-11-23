@@ -184,6 +184,7 @@ function onNewsMessage(evt) {
         items.push("</td>");
         items.push("</tr>");
     });
+    $("#aside-news-table").empty();
     $("<table/>",{html: items.join("")}).appendTo("#aside-news-table");
 }
 
@@ -197,6 +198,7 @@ function onCurrenciesMessage(evt) {
         items.push("</tr>");
     });
     items.push("</table>");
+    $("#aside-currencies-table").empty();
     $("<table/>",{html: items.join("")}).appendTo("#aside-currencies-table");
 }
 

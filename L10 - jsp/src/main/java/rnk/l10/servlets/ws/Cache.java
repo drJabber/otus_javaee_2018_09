@@ -38,7 +38,7 @@ public class Cache {
 
     }
 
-    public void reset(){
+    public void resetCached(){
         cached.put("news",null);
         cached.put("currencies",null);
         cached.put("stats",null);
