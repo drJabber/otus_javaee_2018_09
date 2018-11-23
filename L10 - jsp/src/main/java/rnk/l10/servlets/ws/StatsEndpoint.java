@@ -30,11 +30,14 @@ public class StatsEndpoint {
     @OnOpen
     public void open(Session session, EndpointConfig config){
         this.config=config;
-        getSessions().add(session);
+        
+        //configure worker
         session.getUserProperties().put("endpoint","stats");
-        session.getUserProperties().put("isnew","Y");
         session.getUserProperties().put("http-session",config.getUserProperties().get("http-session"));
-        (new Updater()).loadAndSend(getSessions());
+	
+        (new Updater()).loadAndSend(session);//imediately update and send data to clients
+
+        getSessions().add(session);//add session to worker list
         logger.info(String.format("ws stats open: sid=%s, q=%s, ", session.getId(), session.getQueryString()) );
     }
 

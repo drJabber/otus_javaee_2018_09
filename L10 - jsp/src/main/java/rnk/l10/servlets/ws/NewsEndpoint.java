@@ -31,11 +31,13 @@ public class NewsEndpoint {
     @OnOpen
     public void open(Session session, EndpointConfig config){
         this.config=config;
-        getSessions().add(session);
+	//configure worker
         session.getUserProperties().put("endpoint","news");
-        session.getUserProperties().put("isnew","Y");
         session.getUserProperties().put("http-session",config.getUserProperties().get("http-session"));
-        (new Updater()).loadAndSend(getSessions());
+
+        (new Updater()).loadAndSend(session);//immediately update and send data to client
+
+        getSessions().add(session);//add session to worker list
         logger.info(String.format("ws news open: sid=%s, q=%s, ", session.getId(), session.getQueryString()) );
     }
 

@@ -128,9 +128,8 @@ public class UpdaterThread implements Runnable{
                     }else
                     {
                         if (session.isOpen()){
-                            boolean new_session=session.getUserProperties().get("isnew").equals("Y");
                             logger.info("ws loaded cached equals cached");
-                            return new LoadResult(new_session,target);
+                            return new LoadResult(false,target);
                         }else{
                             logger.info("ws session already closed");
                             return new LoadResult(true,target);
@@ -268,21 +267,18 @@ public class UpdaterThread implements Runnable{
     private void sendNews(Session session) throws EncodeException, IOException {
         if (session.isOpen()){
             session.getBasicRemote().sendObject( cache.getCached().get("news"));
-            session.getUserProperties().put("isnew","N");
         }
     }
 
     private void sendCurrencies(Session session) throws EncodeException, IOException {
         if (session.isOpen()) {
             session.getBasicRemote().sendObject( cache.getCached().get("currencies"));
-            session.getUserProperties().put("isnew", "N");
         }
     }
 
     private void sendStats(Session session) throws EncodeException,IOException {
         if (session.isOpen()){
             session.getBasicRemote().sendObject( cache.getCached().get("stats"));
-            session.getUserProperties().put("isnew","N");
         }
     }
 

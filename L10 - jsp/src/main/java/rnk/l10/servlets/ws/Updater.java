@@ -35,7 +35,20 @@ public class Updater {
 
             sessions.removeAll(closedSessions);
         }catch(Exception ex){
-            logger.error("ws payload get error:", ex);
+            logger.error("ws load and send error:", ex);
         }
     }
+
+    public void loadAndSend(Session session){
+        try{
+            if (!session.isOpen()){
+                logger.error("ws session is closed:"+session.getId());
+            }else{
+                (new UpdaterThread(session)).run();//run synchronously
+            }
+        }catch(Exception ex){
+            logger.error("ws (first) load and send error:", ex);
+        }
+    }
+
 }
