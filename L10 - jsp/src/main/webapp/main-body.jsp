@@ -15,12 +15,12 @@
             <p>Это главная страница гаражного кооператива "Шарабан".</p>
             <p>В субботу 20.11.2018 состоится собрание членов кооператива.</p>
 
-            <table>
+            <table class="main-table-class">
                 <tr>
-                    <td>проверка СНИЛС:</td>
-                    <td><input type="text" id="snils-text" placeholder="введите СНИЛС"/></td>
-                    <td><label id="snils-check-result">не проверено</label></td>
-                    <td><button id="snils-btn" onclick="snilsButtonClick($('#snils-text').val(), $('#snils-check-result'))" >проверить</button></td>
+                    <td width="25%">проверка СНИЛС:</td>
+                    <td width="25%"><input type="text" id="snils-text" placeholder="введите СНИЛС"/></td>
+                    <td width="25%"><label id="snils-check-result">не проверено</label></td>
+                    <td width="25%"><button id="snils-btn" onclick="snilsButtonClick($('#snils-text').val(), $('#snils-check-result'))" >проверить</button></td>
                 </tr>
                 <tr>
                     <td colspan="4">
@@ -31,9 +31,9 @@
                 </tr>
                 <tr>
                     <td>Средняя зарплата</td>
-                    <td colspan="2" id="main-avg-salary"></td>
+                    <td id="main-avg-salary"></td>
                     <td>Максимальная зарплата</td>
-                    <td colspan="2" id="main-max-salary"></td>
+                    <td id="main-max-salary"></td>
                 </tr>
                 <tr>
                     <td colspan="2">ФИО работника с максимальной зарплатой</td>

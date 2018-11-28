@@ -316,3 +316,9 @@ form.login-form{
   background-color: #DDD
 }
 
+.main-table-class{
+  border: 1px solid #666;
+  width: 80%;
+  table-layout: fixed;
+}
+

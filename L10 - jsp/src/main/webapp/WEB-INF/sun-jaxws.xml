@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <endpoints xmlns="http://java.sun.com/xml/ns/jax-ws/ri/runtime" version="2.0">
     <endpoint
-            name="PersonServiceImpl"
+            name="SnilsChecker"
             implementation="rnk.l10.soap.SnilsCheckerWebService"
             url-pattern="/snilschecker"  />
+    <endpoint
+            name="StaffUtils"
+            implementation="rnk.l10.soap.StaffUtilsWebService"
+            url-pattern="/staffutils"  />
 </endpoints>

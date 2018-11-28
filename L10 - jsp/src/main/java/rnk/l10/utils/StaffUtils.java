@@ -1,10 +1,15 @@
 package rnk.l10.utils;
 
+import rnk.l10.soap.RnkWebServiceException;
+
+import javax.persistence.*;
+import javax.servlet.ServletException;
+
 public class StaffUtils{
     public static final String PERSISTENCE_UNIT_NAME="rnk-jpa";
     private static final EntityManagerFactory emf= Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME); //tomcat, see
     
-    Double getMaxSalary() throws RnkWebServiceException{
+    public Double getMaxSalary() throws RnkWebServiceException {
         EntityManager em = emf.createEntityManager(); // for Tomcat
         EntityTransaction transaction = em.getTransaction();
         try {
@@ -12,37 +17,44 @@ public class StaffUtils{
 
             Query q = em.createQuery("select max(staff.salary) from StaffEntity staff ");
 
+            double result=1.0*(Integer)(q.getResultList()).get(0);
+
             transaction.commit();
-        }catch(Exeption ex){
+
+            return result;
+        }catch(Exception ex){
             transaction.rollback();
-            throw new ServletException(e);
+            throw new RnkWebServiceException(ex);
         }
         finally {
             em.close();
         }
     };
 
-    Double getAvgSalary() throws RnkWebServiceException{
+    public Double getAvgSalary() throws RnkWebServiceException{
         EntityManager em = emf.createEntityManager(); // for Tomcat
         EntityTransaction transaction = em.getTransaction();
         try {
             transaction.begin();
 
             Query q = em.createQuery("select avg(staff.salary) from StaffEntity staff ");
-            
-            return q.getResultList();
+
+            double result=(Double)(q.getResultList()).get(0);
 
             transaction.commit();
-        }catch(Exeption ex){
+
+            return result;
+
+        }catch(Exception ex){
             transaction.rollback();
-            throw new ServletException(e);
+            throw new RnkWebServiceException(ex);
         }
         finally {
             em.close();
         }
     };
 
-    String getPersonWithMaxSalary()throws RnkWebServiceException{
+    public String getPersonWithMaxSalary()throws RnkWebServiceException{
         EntityManager em = emf.createEntityManager(); // for Tomcat
         EntityTransaction transaction = em.getTransaction();
         try {
@@ -56,12 +68,12 @@ public class StaffUtils{
 
             String mx= q.getOutputParameterValue(0).toString();
 
-            return mx;
-
             transaction.commit();
-        }catch(Exeption ex){
+
+            return mx;
+        }catch(Exception ex){
             transaction.rollback();
-            throw new ServletException(e);
+            throw new RnkWebServiceException(ex);
         }
         finally {
             em.close();
@@ -69,66 +81,3 @@ public class StaffUtils{
     };
 }
 
-public static final String PERSISTENCE_UNIT_NAME="rnk-jpa";
-    private static final EntityManagerFactory emf= Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME); //tomcat, see
-
-
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        EntityManager em = emf.createEntityManager(); // for Tomcat
-        EntityTransaction transaction = em.getTransaction();
-        try {
-            transaction.begin();
-
-            if (request.getParameterMap().containsKey("get_max_salary_fio")){
-                StoredProcedureQuery q = em
-                        .createStoredProcedureQuery("get_max_salary_fio")
-                        .registerStoredProcedureParameter(0,
-                                String.class, ParameterMode.OUT);
-                q.execute();
-
-                String mx= q.getOutputParameterValue(0).toString();
-
-                response.setCharacterEncoding("utf-8");
-                response.getWriter().println(mx.split(" ")[0]);
-
-
-            }else
-            {
-                Query q = em.createQuery(
-                        "select staff "+
-                                "from StaffEntity staff "+
-                                "order by staff.id desc");
-                List<StaffEntity> result = q.getResultList();
-
-                response.setCharacterEncoding("utf-8");
-                try (PrintWriter pw = response.getWriter()){
-                    for (StaffEntity e : result){
-                        String s="";
-                        RoleEntity role=e.getRole();
-                        Set<AuthorityEntity> auths=role.getAuthorities();
-                        for (AuthorityEntity auth: auths) {
-                            s=s+auth.getAuthority()+", ";
-                        }
-                        if (!s.isEmpty())
-                        {
-                            s=s.substring(0,s.length()-2);
-                        }
-                        pw.println(String.format("%d - %s: %s at %s; role: %s(%s)",e.getId(),e.getFio(),e.getPosition().getPosition(),e.getDepartament().getDepartament(),role.getRole(),s));
-                    }
-                }
-            }
-            transaction.commit();
-        }
-        catch (Exception e){
-            transaction.rollback();
-            throw new ServletException(e);
-        }
-        finally {
-            em.close();
-        }
-    }
-
-    private byte[] get_salt() throws NoSuchAlgorithmException {
-        return SecureRandom.getInstance("SHA1PRNG").generateSeed(32);
-    }

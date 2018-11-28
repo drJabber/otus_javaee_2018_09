@@ -231,10 +231,12 @@ function computeSalaryButtonClick(elt_avg, elt_max, elt_fio){
         namespaceQualifier: 'ns2',
         namespaceURL: 'urn://rnk.l10.soap',
         method:'',
+        params:{},
         element:null,
         async:false,
         // noPrefix:true,
         appendMethodToURL:false,
+        element:null,
         // params:{'snils':$('#snils-text').val()},
         // data:xml.join(''),
         error: function (soapResponse) {
@@ -246,21 +248,21 @@ function computeSalaryButtonClick(elt_avg, elt_max, elt_fio){
     data.method='getAvgSalary';
     data.element=elt_avg;
     data.success=function(soapResponse){
-            element.text(soapResponse.toJSON().Body.getAvgSalaryResponse.result);
+            data.element.text(soapResponse.toJSON().Body.getAvgSalaryResponse.result);
         }
     $.soap(data);
 
     data.method='getMaxSalary';
     data.element=elt_max;
     data.success=function(soapResponse){
-            element.text(soapResponse.toJSON().Body.getMaxSalaryResponse.result);
+            data.element.text(soapResponse.toJSON().Body.getMaxSalaryResponse.result);
         }
     $.soap(data);
 
     data.method='getPersonWithMaxSalary';
     data.element=elt_fio;
     data.success=function(soapResponse){
-            element.text(soapResponse.toJSON().Body.getPersonWithMaxSalaryResponse.result);
+            data.element.text(soapResponse.toJSON().Body.getPersonWithMaxSalaryResponse.result);
         }
     $.soap(data);
 }
