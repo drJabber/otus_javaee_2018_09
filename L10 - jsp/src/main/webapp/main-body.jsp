@@ -14,31 +14,34 @@
         <main class="main-container">
             <p>Это главная страница гаражного кооператива "Шарабан".</p>
             <p>В субботу 20.11.2018 состоится собрание членов кооператива.</p>
-            <p>проверка СНИЛС:</p>
-            <input type="text" id="snils-text" placeholder="введите СНИЛС"/><label id="snils-check-result">не проверено</label>
-            <button id="snils-btn" onclick="snilsButtonClick($('#snils-text').val(), $('#snils-check-result'))" >проверить</button>
 
-            <script>
-                function snilsButtonClick(text, element){
-                    var xml=['<ns2:check xmlns:ns2="urn://rnk.l10.soap"><snils>', text, '</snils></ns2:check>'];
-                    $.soap({
-                        url: 'http://localhost:8080/snilschecker',
-                        namespaceQualifier: 'ns2',
-                        namespaceURL: 'urn://rnk.l10.soap',
-                        method:'check',
-                        async:false,
-                        // noPrefix:true,
-                        appendMethodToURL:false,
-                        params:xml.join(''),
-                        // params:{'snils':$('#snils-text').val()},
-                        // data:xml.join(''),
-                        error: function (soapResponse) {
-                            alert(soapResponse.httpText);
-                        },
-                        success: function(soapResponse){
-                            element.text(soapResponse.toJSON().Body.checkResponse.result=="true"?"верный СНИЛС":"неверный СНИЛС");
-                        }
-                    });
-                }
-            </script>
+            <table>
+                <tr>
+                    <td>проверка СНИЛС:</td>
+                    <td><input type="text" id="snils-text" placeholder="введите СНИЛС"/></td>
+                    <td><label id="snils-check-result">не проверено</label></td>
+                    <td><button id="snils-btn" onclick="snilsButtonClick($('#snils-text').val(), $('#snils-check-result'))" >проверить</button></td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <button id="main-salary-btn" onclick="computeSalaryButtonClick($('#main-avg-salary'),$('#main-max-salary'),$('#main-person-with-max-salary'))" >
+                            рассчитать показатели
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Средняя зарплата</td>
+                    <td colspan="2" id="main-avg-salary"></td>
+                    <td>Максимальная зарплата</td>
+                    <td colspan="2" id="main-max-salary"></td>
+                </tr>
+                <tr>
+                    <td colspan="2">ФИО работника с максимальной зарплатой</td>
+                    <td colspan="2" id="main-person-with-max-salary"></td>
+                </tr>
+            </table>
+            <p></p>
+            
+            
+
         </main>

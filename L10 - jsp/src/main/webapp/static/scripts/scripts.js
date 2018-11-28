@@ -202,3 +202,65 @@ function onCurrenciesMessage(evt) {
     $("<table/>",{html: items.join("")}).appendTo("#aside-currencies-table");
 }
 
+
+function snilsButtonClick(text, element){
+    var xml=['<ns2:check xmlns:ns2="urn://rnk.l10.soap"><snils>', text, '</snils></ns2:check>'];
+    $.soap({
+        url: 'http://localhost:8080/snilschecker',
+        namespaceQualifier: 'ns2',
+        namespaceURL: 'urn://rnk.l10.soap',
+        method:'check',
+        async:false,
+        // noPrefix:true,
+        appendMethodToURL:false,
+        params:xml.join(''),
+        // params:{'snils':$('#snils-text').val()},
+        // data:xml.join(''),
+        error: function (soapResponse) {
+            alert(soapResponse.httpText);
+        },
+        success: function(soapResponse){
+            element.text(soapResponse.toJSON().Body.checkResponse.result=="true"?"верный СНИЛС":"неверный СНИЛС");
+        }
+    });
+}
+
+function computeSalaryButtonClick(elt_avg, elt_max, elt_fio){
+    var data={
+        url: 'http://localhost:8080/staffutils',
+        namespaceQualifier: 'ns2',
+        namespaceURL: 'urn://rnk.l10.soap',
+        method:'',
+        element:null,
+        async:false,
+        // noPrefix:true,
+        appendMethodToURL:false,
+        // params:{'snils':$('#snils-text').val()},
+        // data:xml.join(''),
+        error: function (soapResponse) {
+            alert(soapResponse.httpText);
+        },
+        success: null
+    }
+
+    data.method='getAvgSalary';
+    data.element=elt_avg;
+    data.success=function(soapResponse){
+            element.text(soapResponse.toJSON().Body.getAvgSalaryResponse.result);
+        }
+    $.soap(data);
+
+    data.method='getMaxSalary';
+    data.element=elt_max;
+    data.success=function(soapResponse){
+            element.text(soapResponse.toJSON().Body.getMaxSalaryResponse.result);
+        }
+    $.soap(data);
+
+    data.method='getPersonWithMaxSalary';
+    data.element=elt_fio;
+    data.success=function(soapResponse){
+            element.text(soapResponse.toJSON().Body.getPersonWithMaxSalaryResponse.result);
+        }
+    $.soap(data);
+}
