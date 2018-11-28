@@ -6,7 +6,7 @@ import javax.servlet.AsyncEvent;
 import javax.servlet.annotation.WebListener;
 import java.io.IOException;
 
-@WebListener
+//@WebListener
 public class StatsAsyncListener implements javax.servlet.AsyncListener {
     private static final Logger logger = Logger.getLogger(StatsAsyncListener.class.getName());
     @Override

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE resources PUBLIC "-//GlassFish.org//DTD GlassFish Application Server 3.1 Resource Definitions//EN" "http://glassfish.org/dtds/glassfish-resources_1_5.dtd">
+
+<!--<resources>-->
+    <!--<jdbc-resource pool-name="jdbc/PGPool" jndi-name="jdbc/rnk_db" />-->
+    <!--<jdbc-connection-pool driver-classname="" datasource-classname="org.postgresql.ds.PGSimpleDataSource" name="jdbc/PGPool" res-type="javax.sql.DataSource">-->
+        <!--<property name="user" value="postgres" />-->
+        <!--<property name="password" value="postgres" />-->
+        <!--<property name="url" value="jdbc:postgresql://127.0.0.1:5432/rnk_db" />-->
+        <!--<property name="DatabaseName" values="rnk_db" />-->
+        <!--<property name="driverClass" value="org.postgresql.Driver">-->
+    <!--</jdbc-connection-pool>-->
+<!--</resources>-->
+
+<!--<resources>-->
+
+    <!--&lt;!&ndash; Default set of monitored resources. If one of these changes, the    &ndash;&gt;-->
+    <!--&lt;!&ndash; web application will be reloaded.                                   &ndash;&gt;-->
+    <!--<WatchedResource>WEB-INF/web.xml</WatchedResource>-->
+    <!--<WatchedResource>WEB-INF/tomcat-web.xml</WatchedResource>-->
+    <!--<WatchedResource>${catalina.base}/conf/web.xml</WatchedResource>-->
+
+    <!--<ResourceLink name="jdbc/rnkl14_db" global="jdbc/rnk_db" type="javax.sql.DataSource" />-->
+
+    <!--&lt;!&ndash;<Realm className ="com.sid.realm.NewRealm"/>&ndash;&gt;-->
+
+    <!--<Realm className="org.apache.catalina.realm.DataSourceRealm"  dataSourceName="jdbc/rnk_db"-->
+    <!--userTable="staff_login" userNameCol="login" userCredCol="passwd_hash"-->
+    <!--userRoleTable="staff_roles" roleNameCol="role">-->
+    <!--&lt;!&ndash;userRoleTable="staff_roles" roleNameCol="role">&ndash;&gt;-->
+        <!--<CredentialHandler className="org.apache.catalina.realm.MessageDigestCredentialHandler" algorithm="SHA1" />-->
+    <!--</Realm>-->
+
+     <!--&lt;!&ndash;Uncomment this to disable session persistence across Tomcat restarts &ndash;&gt;-->
+    <!--&lt;!&ndash;-->
+    <!--<Manager pathname="" />-->
+    <!--&ndash;&gt;-->
+<!--</resources>-->

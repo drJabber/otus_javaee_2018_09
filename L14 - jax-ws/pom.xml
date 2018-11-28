@@ -4,12 +4,12 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.rnk.l10</groupId>
-  <artifactId>rnk.l10</artifactId>
+  <groupId>com.rnk.l14</groupId>
+  <artifactId>rnk.l14</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>war</packaging>
 
-  <name>rnk.l10 Maven Webapp</name>
+  <name>rnk.l14 Maven Webapp</name>
   <!-- FIXME change it to the project's website -->
   <url>http://www.example.com</url>
 
@@ -18,12 +18,15 @@
 
     <javaee.version>8.0</javaee.version>
     <servlet.version>4.0.0</servlet.version>
+
+    <glassfish.version>5.0</glassfish.version>
+    <tmocat.version>9.0.13</tmocat.version>
+
     <lombok.version>1.18.2</lombok.version>
     <hibernate.version>5.3.6.Final</hibernate.version>
     <junit.version>4.11</junit.version>
     <jaxb-api.version>2.3.1</jaxb-api.version>
     <jaxb-runtime.version>2.3.0</jaxb-runtime.version>
-    <jaxws.version>2.3.1</jaxws.version>
     <javax.jsonb.version>1.0</javax.jsonb.version>
     <javax.json.version>1.1</javax.json.version>
     <gson.version>2.8.5</gson.version>
@@ -40,6 +43,8 @@
     <slf4j.version>1.7.21</slf4j.version>
 
     <tomcat.deploymentPath>http://localhost:8080/manager/text</tomcat.deploymentPath>
+    <glassfish.location>/opt/glassfish5</glassfish.location>
+
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
 
@@ -47,6 +52,7 @@
     <mavenbuilder.version>3.0.0</mavenbuilder.version>
     <mavendeploy.version>2.2</mavendeploy.version>
 
+    <cargo.version>1.6.10</cargo.version>
 
     <rnk.stats.version>1.0-SNAPSHOT</rnk.stats.version>
 
@@ -130,6 +136,7 @@
       <artifactId>yasson</artifactId>
       <version>${javax.jsonb.version}</version>
     </dependency>
+
     <dependency>
       <groupId>org.glassfish</groupId>
       <artifactId>javax.json</artifactId>
@@ -236,19 +243,10 @@
       <version>${rnk.stats.version}</version>
     </dependency>
 
-    <!-- https://mvnrepository.com/artifact/com.sun.xml.ws/jaxws-rt -->
-    <dependency>
-      <groupId>com.sun.xml.ws</groupId>
-      <artifactId>jaxws-rt</artifactId>
-      <version>${jaxws.version}</version>
-      <!--<scope>compile</scope>-->
-    </dependency>
-
-
   </dependencies>
 
   <build>
-    <finalName>rnk.l10</finalName>
+    <finalName>rnk.l14</finalName>
 
     <sourceDirectory>src/main/java</sourceDirectory>
 
@@ -284,15 +282,34 @@
           <warSourceDirectory>src/main/webapp</warSourceDirectory>
         </configuration>
       </plugin>
+
       <plugin>
-        <groupId>org.apache.tomcat.maven</groupId>
-        <artifactId>tomcat7-maven-plugin</artifactId>
-        <version>${mavendeploy.version}</version>
+        <groupId>org.codehaus.cargo</groupId>
+        <artifactId>cargo-maven2-plugin</artifactId>
+        <version>${cargo.version}</version>
         <configuration>
-          <url>${tomcat.deploymentPath}</url>
-          <server>TomcatServerRNK</server>
-          <path>/rnk</path>
+          <container>
+            <containerId>glassfish5x</containerId>
+            <type>remote</type>
+          </container>
+          <configuration>
+            <type>runtime</type>
+            <properties>
+              <cargo.hostname>RnKHome</cargo.hostname>
+              <cargo.glassfish.admin.port>4848</cargo.glassfish.admin.port>
+              <cargo.remote.username>admin</cargo.remote.username>
+              <cargo.remote.password></cargo.remote.password>
+            </properties>
+          </configuration>
         </configuration>
+        <dependencies>
+          <dependency>
+            <groupId>org.glassfish.main.deployment</groupId>
+            <artifactId>deployment</artifactId>
+            <version>${glassfish.version}</version>
+            <type>pom</type>
+          </dependency>
+        </dependencies>
       </plugin>
 
       <!-- see http://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_war_packaging -->

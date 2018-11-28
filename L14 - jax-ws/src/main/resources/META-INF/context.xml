@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<!-- The contents of this file will be loaded for each web application -->
+<Context path="/rnkl14">
+
+    <!-- Default set of monitored resources. If one of these changes, the    -->
+    <!-- web application will be reloaded.                                   -->
+    <!--<WatchedResource>WEB-INF/web.xml</WatchedResource>-->
+    <!--<WatchedResource>WEB-INF/tomcat-web.xml</WatchedResource>-->
+    <!--<WatchedResource>${catalina.base}/conf/web.xml</WatchedResource>-->
+
+    <!--<ResourceLink name="jdbc/rnkl14_db" global="jdbc/rnk_db" type="javax.sql.DataSource" />-->
+
+
+    <!--<security-service>-->
+        <!--<auth-realm classname="com.sun.enterprise.security.auth.realm.jdbc.JDBCRealm" name="rnk-realm">-->
+            <!--<property name="jaas-context" value="jdbcRealm"></property>-->
+            <!--<property name="encoding" value="HEX"></property>-->
+            <!--<property name="password-column" value="passwd_hash"></property>-->
+            <!--<property name="datasource-jndi" value="jdbc/rnk_db"></property>-->
+            <!--<property name="group-table" value="staff_roles"></property>-->
+            <!--<property name="charset" value="UTF-8"></property>-->
+            <!--<property name="user-table" value="staff_login"></property>-->
+            <!--<property name="group-name-column" value="login"></property>-->
+            <!--<property name="digestrealm-password-enc-algorithm" value="SHA1"></property>-->
+            <!--<property name="group-table-user-name-column" value="role"></property>-->
+            <!--<property name="db-password" value="postgres"></property>-->
+            <!--<property name="digest-algorithm" value="SHA1"></property>-->
+            <!--<property name="db-user" value="postgres"></property>-->
+            <!--<property name="user-name-column" value="login"></property>-->
+        <!--</auth-realm>-->
+    <!--</security-service>-->
+
+    <!--<Realm className="org.apache.catalina.realm.DataSourceRealm"  dataSourceName="jdbc/rnkl14_db"-->
+    <!--userTable="staff_login" userNameCol="login" userCredCol="passwd_hash"-->
+    <!--userRoleTable="staff_roles" roleNameCol="role">-->
+        <!--<CredentialHandler className="org.apache.catalina.realm.MessageDigestCredentialHandler" algorithm="SHA1" />-->
+    <!--</Realm>-->
+   
+    <!-- Uncomment this to disable session persistence across Tomcat restarts -->
+    <!--
+    <Manager pathname="" />
+    -->
+</Context>

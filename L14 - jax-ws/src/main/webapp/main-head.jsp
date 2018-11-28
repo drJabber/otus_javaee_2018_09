@@ -11,9 +11,6 @@
         <link rel="stylesheet" type="text/css" href="${context_path}/static/css/styles.css" />
         <script type="text/javascript" src="${context_path}/static/scripts/jquery-3.3.1.slim.min.js"></script>
         <script src="${context_path}/static/scripts/scripts.js" ></script>
-        <%--<script src="${context_path}/static/scripts/prototype.js"></script>--%>
-        <script src="${context_path}/static/scripts/jquery.soap.js"></script>
-        <script src="${context_path}/static/scripts/jquery.xml2json.js"></script>
         <script type="text/javascript">
             $(function(){
                 AjaxContent.ajaxify_links("#main-menubar ul li a");

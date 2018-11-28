@@ -1,0 +1,10 @@
+
+.container{
+    width:100%;
+}
+
+.container table {
+    /*align:center;*/
+    margin:100px auto;
+    font-size: 18pt;
+}
