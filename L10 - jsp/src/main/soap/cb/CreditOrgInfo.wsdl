@@ -1,0 +1,2662 @@
+﻿<wsdl:definitions xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:tns="http://web.cbr.ru/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://web.cbr.ru/">
+  <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Справочник по кредитным организациям, ver - 07.03.2017</wsdl:documentation>
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://web.cbr.ru/">
+      <s:element name="EnumBIC_XML">
+        <s:complexType></s:complexType>
+      </s:element>
+      <s:element name="EnumBIC_XMLResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="EnumBIC_XMLResult">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any></s:any>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetFormsMaxDate">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="1" name="code" type="s:int"></s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetFormsMaxDateResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="1" name="GetFormsMaxDateResult" type="s:dateTime"></s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="LastUpdate">
+        <s:complexType></s:complexType>
+      </s:element>
+      <s:element name="LastUpdateResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="1" name="LastUpdateResult" type="s:dateTime"></s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="EnumBIC">
+        <s:complexType></s:complexType>
+      </s:element>
+      <s:element name="EnumBICResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="EnumBICResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema"></s:element>
+                  <s:any></s:any>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Data101FormExXML">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="CredorgNumbers" type="tns:ArrayOfAnyType"></s:element>
+            <s:element maxOccurs="1" minOccurs="1" name="IndID" type="s:int"></s:element>
+            <s:element maxOccurs="1" minOccurs="1" name="DateFrom" type="s:dateTime"></s:element>
+            <s:element maxOccurs="1" minOccurs="1" name="DateTo" type="s:dateTime"></s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfAnyType">
+        <s:sequence>
+          <s:element maxOccurs="unbounded" minOccurs="0" name="anyType" nillable="true"></s:element>
+        </s:sequence>
+      </s:complexType>
+      <s:element name="Data101FormExXMLResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="Data101FormExXMLResult">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any></s:any>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Data101FormEx">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="CredorgNumbers" type="tns:ArrayOfAnyType"></s:element>
+            <s:element maxOccurs="1" minOccurs="1" name="IndID" type="s:int"></s:element>
+            <s:element maxOccurs="1" minOccurs="1" name="DateFrom" type="s:dateTime"></s:element>
+            <s:element maxOccurs="1" minOccurs="1" name="DateTo" type="s:dateTime"></s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Data101FormExResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="Data101FormExResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema"></s:element>
+                  <s:any></s:any>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Data101FormXML">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="1" name="CredorgNumber" type="s:int"></s:element>
+            <s:element maxOccurs="1" minOccurs="1" name="IndID" type="s:int"></s:element>
+            <s:element maxOccurs="1" minOccurs="1" name="DateFrom" type="s:dateTime"></s:element>
+            <s:element maxOccurs="1" minOccurs="1" name="DateTo" type="s:dateTime"></s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Data101FormXMLResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="Data101FormXMLResult">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any></s:any>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Data101Form">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="1" name="CredorgNumber" type="s:int"></s:element>
+            <s:element maxOccurs="1" minOccurs="1" name="IndID" type="s:int"></s:element>
+            <s:element maxOccurs="1" minOccurs="1" name="DateFrom" type="s:dateTime"></s:element>
+            <s:element maxOccurs="1" minOccurs="1" name="DateTo" type="s:dateTime"></s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Data101FormResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="Data101FormResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema"></s:element>
+                  <s:any></s:any>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Data101FullXML">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="1" name="CredorgNumber" type="s:int"></s:element>
+            <s:element maxOccurs="1" minOccurs="1" name="IndCode" type="s:int"></s:element>
+            <s:element maxOccurs="1" minOccurs="1" name="DateFrom" type="s:dateTime"></s:element>
+            <s:element maxOccurs="1" minOccurs="1" name="DateTo" type="s:dateTime"></s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Data101FullXMLResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="Data101FullXMLResult">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any></s:any>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Data101FullExXML">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="CredorgNumbers" type="tns:ArrayOfAnyType"></s:element>
+            <s:element maxOccurs="1" minOccurs="1" name="IndCode" type="s:int"></s:element>
+            <s:element maxOccurs="1" minOccurs="1" name="DateFrom" type="s:dateTime"></s:element>
+            <s:element maxOccurs="1" minOccurs="1" name="DateTo" type="s:dateTime"></s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Data101FullExXMLResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="Data101FullExXMLResult">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any></s:any>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Data101FullEx">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="CredorgNumbers" type="tns:ArrayOfAnyType"></s:element>
+            <s:element maxOccurs="1" minOccurs="1" name="IndCode" type="s:int"></s:element>
+            <s:element maxOccurs="1" minOccurs="1" name="DateFrom" type="s:dateTime"></s:element>
+            <s:element maxOccurs="1" minOccurs="1" name="DateTo" type="s:dateTime"></s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Data101FullExResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="Data101FullExResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema"></s:element>
+                  <s:any></s:any>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Data101FullExV2XML">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="CredorgNumbers" type="tns:ArrayOfAnyType"></s:element>
+            <s:element maxOccurs="1" minOccurs="0" name="IndCode" type="s:string"></s:element>
+            <s:element maxOccurs="1" minOccurs="1" name="DateFrom" type="s:dateTime"></s:element>
+            <s:element maxOccurs="1" minOccurs="1" name="DateTo" type="s:dateTime"></s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Data101FullExV2XMLResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="Data101FullExV2XMLResult">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any></s:any>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Data101FullExV2">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="CredorgNumbers" type="tns:ArrayOfAnyType"></s:element>
+            <s:element maxOccurs="1" minOccurs="0" name="IndCode" type="s:string"></s:element>
+            <s:element maxOccurs="1" minOccurs="1" name="DateFrom" type="s:dateTime"></s:element>
+            <s:element maxOccurs="1" minOccurs="1" name="DateTo" type="s:dateTime"></s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Data101FullExV2Response">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="Data101FullExV2Result">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema"></s:element>
+                  <s:any></s:any>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Data101Full">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="1" name="CredorgNumber" type="s:int"></s:element>
+            <s:element maxOccurs="1" minOccurs="1" name="IndCode" type="s:int"></s:element>
+            <s:element maxOccurs="1" minOccurs="1" name="DateFrom" type="s:dateTime"></s:element>
+            <s:element maxOccurs="1" minOccurs="1" name="DateTo" type="s:dateTime"></s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Data101FullResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="Data101FullResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema"></s:element>
+                  <s:any></s:any>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Data101FullV2XML">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="1" name="CredorgNumber" type="s:int"></s:element>
+            <s:element maxOccurs="1" minOccurs="0" name="IndCode" type="s:string"></s:element>
+            <s:element maxOccurs="1" minOccurs="1" name="DateFrom" type="s:dateTime"></s:element>
+            <s:element maxOccurs="1" minOccurs="1" name="DateTo" type="s:dateTime"></s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Data101FullV2XMLResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="Data101FullV2XMLResult">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any></s:any>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Data101FullV2">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="1" name="CredorgNumber" type="s:int"></s:element>
+            <s:element maxOccurs="1" minOccurs="0" name="IndCode" type="s:string"></s:element>
+            <s:element maxOccurs="1" minOccurs="1" name="DateFrom" type="s:dateTime"></s:element>
+            <s:element maxOccurs="1" minOccurs="1" name="DateTo" type="s:dateTime"></s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Data101FullV2Response">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="Data101FullV2Result">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema"></s:element>
+                  <s:any></s:any>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Data102FormExXML">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="CredorgNumbers" type="tns:ArrayOfAnyType"></s:element>
+            <s:element maxOccurs="1" minOccurs="1" name="SymbCode" type="s:int"></s:element>
+            <s:element maxOccurs="1" minOccurs="1" name="DateFrom" type="s:dateTime"></s:element>
+            <s:element maxOccurs="1" minOccurs="1" name="DateTo" type="s:dateTime"></s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Data102FormExXMLResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="Data102FormExXMLResult">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any></s:any>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Data102FormEx">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="CredorgNumbers" type="tns:ArrayOfAnyType"></s:element>
+            <s:element maxOccurs="1" minOccurs="1" name="SymbCode" type="s:int"></s:element>
+            <s:element maxOccurs="1" minOccurs="1" name="DateFrom" type="s:dateTime"></s:element>
+            <s:element maxOccurs="1" minOccurs="1" name="DateTo" type="s:dateTime"></s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Data102FormExResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="Data102FormExResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema"></s:element>
+                  <s:any></s:any>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Data102FormXML">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="1" name="CredorgNumber" type="s:int"></s:element>
+            <s:element maxOccurs="1" minOccurs="1" name="SymbCode" type="s:int"></s:element>
+            <s:element maxOccurs="1" minOccurs="1" name="DateFrom" type="s:dateTime"></s:element>
+            <s:element maxOccurs="1" minOccurs="1" name="DateTo" type="s:dateTime"></s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Data102FormXMLResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="Data102FormXMLResult">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any></s:any>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Data102Form">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="1" name="CredorgNumber" type="s:int"></s:element>
+            <s:element maxOccurs="1" minOccurs="1" name="SymbCode" type="s:int"></s:element>
+            <s:element maxOccurs="1" minOccurs="1" name="DateFrom" type="s:dateTime"></s:element>
+            <s:element maxOccurs="1" minOccurs="1" name="DateTo" type="s:dateTime"></s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Data102FormResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="Data102FormResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema"></s:element>
+                  <s:any></s:any>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Form102IndicatorsEnumXML">
+        <s:complexType></s:complexType>
+      </s:element>
+      <s:element name="Form102IndicatorsEnumXMLResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="Form102IndicatorsEnumXMLResult">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any></s:any>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Form102IndicatorsEnum">
+        <s:complexType></s:complexType>
+      </s:element>
+      <s:element name="Form102IndicatorsEnumResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="Form102IndicatorsEnumResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema"></s:element>
+                  <s:any></s:any>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Form101IndicatorsEnumXML">
+        <s:complexType></s:complexType>
+      </s:element>
+      <s:element name="Form101IndicatorsEnumXMLResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="Form101IndicatorsEnumXMLResult">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any></s:any>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Form101IndicatorsEnum">
+        <s:complexType></s:complexType>
+      </s:element>
+      <s:element name="Form101IndicatorsEnumResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="Form101IndicatorsEnumResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema"></s:element>
+                  <s:any></s:any>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RegNumToIntCode">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="1" name="RegNumber" type="s:double"></s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RegNumToIntCodeResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="1" name="RegNumToIntCodeResult" type="s:double"></s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="IntCodeToRegNum">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="1" name="IntNumber" type="s:double"></s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="IntCodeToRegNumResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="1" name="IntCodeToRegNumResult" type="s:double"></s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="BicToIntCode">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="BicCode" type="s:string"></s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="BicToIntCodeResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="1" name="BicToIntCodeResult" type="s:double"></s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="BicToRegNumber">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="BicCode" type="s:string"></s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="BicToRegNumberResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="1" name="BicToRegNumberResult" type="s:int"></s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RegionsEnum">
+        <s:complexType></s:complexType>
+      </s:element>
+      <s:element name="RegionsEnumResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="RegionsEnumResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema"></s:element>
+                  <s:any></s:any>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RegionsEnumXML">
+        <s:complexType></s:complexType>
+      </s:element>
+      <s:element name="RegionsEnumXMLResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="RegionsEnumXMLResult">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any></s:any>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SearchByRegionCode">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="1" name="RegCode" type="s:int"></s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SearchByRegionCodeResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="SearchByRegionCodeResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema"></s:element>
+                  <s:any></s:any>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SearchByRegionCodeXML">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="1" name="RegCode" type="s:int"></s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SearchByRegionCodeXMLResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="SearchByRegionCodeXMLResult">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any></s:any>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SearchByNameXML">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="NamePart" type="s:string"></s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SearchByNameXMLResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="SearchByNameXMLResult">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any></s:any>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SearchByName">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="NamePart" type="s:string"></s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SearchByNameResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="SearchByNameResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema"></s:element>
+                  <s:any></s:any>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CreditInfoByIntCodeXML">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="1" name="InternalCode" type="s:double"></s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CreditInfoByIntCodeXMLResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="CreditInfoByIntCodeXMLResult">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any></s:any>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CreditInfoByIntCodeExXML">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="InternalCodes" type="tns:ArrayOfDouble"></s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfDouble">
+        <s:sequence>
+          <s:element maxOccurs="unbounded" minOccurs="0" name="double" type="s:double"></s:element>
+        </s:sequence>
+      </s:complexType>
+      <s:element name="CreditInfoByIntCodeExXMLResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="CreditInfoByIntCodeExXMLResult">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any></s:any>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CreditInfoByIntCodeEx">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="InternalCodes" type="tns:ArrayOfDouble"></s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CreditInfoByIntCodeExResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="CreditInfoByIntCodeExResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema"></s:element>
+                  <s:any></s:any>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CreditInfoByIntCode">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="1" name="InternalCode" type="s:double"></s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CreditInfoByIntCodeResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="CreditInfoByIntCodeResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema"></s:element>
+                  <s:any></s:any>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOffices">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="1" name="IntCode" type="s:double"></s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOfficesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="GetOfficesResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema"></s:element>
+                  <s:any></s:any>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOfficesByRegion">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="1" name="RegCode" type="s:int"></s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOfficesByRegionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="GetOfficesByRegionResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema"></s:element>
+                  <s:any></s:any>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOfficesXML">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="1" name="IntCode" type="s:double"></s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOfficesXMLResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="GetOfficesXMLResult">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any></s:any>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOfficesByRegionXML">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="1" name="RegCode" type="s:int"></s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOfficesByRegionXMLResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="GetOfficesByRegionXMLResult">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any></s:any>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Data134FormFullXML">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="1" name="CredorgNumber" type="s:int"></s:element>
+            <s:element maxOccurs="1" minOccurs="1" name="OnDate" type="s:dateTime"></s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Data134FormFullXMLResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="Data134FormFullXMLResult">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any></s:any>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Olap134Form">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="Code" type="s:string"></s:element>
+            <s:element maxOccurs="1" minOccurs="1" name="CredorgNumber" type="s:int"></s:element>
+            <s:element maxOccurs="1" minOccurs="1" name="FromDate" type="s:dateTime"></s:element>
+            <s:element maxOccurs="1" minOccurs="1" name="ToDate" type="s:dateTime"></s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Olap134FormResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="Olap134FormResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema"></s:element>
+                  <s:any></s:any>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Data135FormFull">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="1" name="CredorgNumber" type="s:int"></s:element>
+            <s:element maxOccurs="1" minOccurs="1" name="OnDate" type="s:dateTime"></s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Data135FormFullResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="Data135FormFullResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema"></s:element>
+                  <s:any></s:any>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Data135FormFullXML">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="1" name="CredorgNumber" type="s:int"></s:element>
+            <s:element maxOccurs="1" minOccurs="1" name="OnDate" type="s:dateTime"></s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Data135FormFullXMLResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="Data135FormFullXMLResult">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any></s:any>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Data123FormFull">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="1" name="CredorgNumber" type="s:int"></s:element>
+            <s:element maxOccurs="1" minOccurs="1" name="OnDate" type="s:dateTime"></s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Data123FormFullResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="Data123FormFullResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema"></s:element>
+                  <s:any></s:any>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Data123FormFullXML">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="1" name="CredorgNumber" type="s:int"></s:element>
+            <s:element maxOccurs="1" minOccurs="1" name="OnDate" type="s:dateTime"></s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Data123FormFullXMLResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="Data123FormFullXMLResult">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any></s:any>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDatesForF123">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="1" name="CredprgNumber" type="s:int"></s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfDateTime">
+        <s:sequence>
+          <s:element maxOccurs="unbounded" minOccurs="0" name="dateTime" type="s:dateTime"></s:element>
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetDatesForF123Response">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="GetDatesForF123Result" type="tns:ArrayOfDateTime"></s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDatesForF101">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="1" name="CredprgNumber" type="s:int"></s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDatesForF101Response">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="GetDatesForF101Result" type="tns:ArrayOfDateTime"></s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDatesForF102">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="1" name="CredprgNumber" type="s:int"></s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDatesForF102Response">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="GetDatesForF102Result" type="tns:ArrayOfDateTime"></s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDatesForF134">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="1" name="CredprgNumber" type="s:int"></s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDatesForF134Response">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="GetDatesForF134Result" type="tns:ArrayOfDateTime"></s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDatesForF135">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="1" name="CredprgNumber" type="s:int"></s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDatesForF135Response">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="GetDatesForF135Result" type="tns:ArrayOfDateTime"></s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Data134FormFull">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="1" name="CredorgNumber" type="s:int"></s:element>
+            <s:element maxOccurs="1" minOccurs="1" name="OnDate" type="s:dateTime"></s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Data134FormFullResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="Data134FormFullResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema"></s:element>
+                  <s:any></s:any>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="EnumBIC_XMLSoapIn">
+    <wsdl:part element="tns:EnumBIC_XML" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="EnumBIC_XMLSoapOut">
+    <wsdl:part element="tns:EnumBIC_XMLResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetFormsMaxDateSoapIn">
+    <wsdl:part element="tns:GetFormsMaxDate" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetFormsMaxDateSoapOut">
+    <wsdl:part element="tns:GetFormsMaxDateResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="LastUpdateSoapIn">
+    <wsdl:part element="tns:LastUpdate" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="LastUpdateSoapOut">
+    <wsdl:part element="tns:LastUpdateResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="EnumBICSoapIn">
+    <wsdl:part element="tns:EnumBIC" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="EnumBICSoapOut">
+    <wsdl:part element="tns:EnumBICResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="Data101FormExXMLSoapIn">
+    <wsdl:part element="tns:Data101FormExXML" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="Data101FormExXMLSoapOut">
+    <wsdl:part element="tns:Data101FormExXMLResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="Data101FormExSoapIn">
+    <wsdl:part element="tns:Data101FormEx" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="Data101FormExSoapOut">
+    <wsdl:part element="tns:Data101FormExResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="Data101FormXMLSoapIn">
+    <wsdl:part element="tns:Data101FormXML" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="Data101FormXMLSoapOut">
+    <wsdl:part element="tns:Data101FormXMLResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="Data101FormSoapIn">
+    <wsdl:part element="tns:Data101Form" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="Data101FormSoapOut">
+    <wsdl:part element="tns:Data101FormResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="Data101FullXMLSoapIn">
+    <wsdl:part element="tns:Data101FullXML" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="Data101FullXMLSoapOut">
+    <wsdl:part element="tns:Data101FullXMLResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="Data101FullExXMLSoapIn">
+    <wsdl:part element="tns:Data101FullExXML" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="Data101FullExXMLSoapOut">
+    <wsdl:part element="tns:Data101FullExXMLResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="Data101FullExSoapIn">
+    <wsdl:part element="tns:Data101FullEx" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="Data101FullExSoapOut">
+    <wsdl:part element="tns:Data101FullExResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="Data101FullExV2XMLSoapIn">
+    <wsdl:part element="tns:Data101FullExV2XML" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="Data101FullExV2XMLSoapOut">
+    <wsdl:part element="tns:Data101FullExV2XMLResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="Data101FullExV2SoapIn">
+    <wsdl:part element="tns:Data101FullExV2" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="Data101FullExV2SoapOut">
+    <wsdl:part element="tns:Data101FullExV2Response" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="Data101FullSoapIn">
+    <wsdl:part element="tns:Data101Full" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="Data101FullSoapOut">
+    <wsdl:part element="tns:Data101FullResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="Data101FullV2XMLSoapIn">
+    <wsdl:part element="tns:Data101FullV2XML" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="Data101FullV2XMLSoapOut">
+    <wsdl:part element="tns:Data101FullV2XMLResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="Data101FullV2SoapIn">
+    <wsdl:part element="tns:Data101FullV2" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="Data101FullV2SoapOut">
+    <wsdl:part element="tns:Data101FullV2Response" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="Data102FormExXMLSoapIn">
+    <wsdl:part element="tns:Data102FormExXML" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="Data102FormExXMLSoapOut">
+    <wsdl:part element="tns:Data102FormExXMLResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="Data102FormExSoapIn">
+    <wsdl:part element="tns:Data102FormEx" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="Data102FormExSoapOut">
+    <wsdl:part element="tns:Data102FormExResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="Data102FormXMLSoapIn">
+    <wsdl:part element="tns:Data102FormXML" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="Data102FormXMLSoapOut">
+    <wsdl:part element="tns:Data102FormXMLResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="Data102FormSoapIn">
+    <wsdl:part element="tns:Data102Form" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="Data102FormSoapOut">
+    <wsdl:part element="tns:Data102FormResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="Form102IndicatorsEnumXMLSoapIn">
+    <wsdl:part element="tns:Form102IndicatorsEnumXML" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="Form102IndicatorsEnumXMLSoapOut">
+    <wsdl:part element="tns:Form102IndicatorsEnumXMLResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="Form102IndicatorsEnumSoapIn">
+    <wsdl:part element="tns:Form102IndicatorsEnum" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="Form102IndicatorsEnumSoapOut">
+    <wsdl:part element="tns:Form102IndicatorsEnumResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="Form101IndicatorsEnumXMLSoapIn">
+    <wsdl:part element="tns:Form101IndicatorsEnumXML" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="Form101IndicatorsEnumXMLSoapOut">
+    <wsdl:part element="tns:Form101IndicatorsEnumXMLResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="Form101IndicatorsEnumSoapIn">
+    <wsdl:part element="tns:Form101IndicatorsEnum" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="Form101IndicatorsEnumSoapOut">
+    <wsdl:part element="tns:Form101IndicatorsEnumResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="RegNumToIntCodeSoapIn">
+    <wsdl:part element="tns:RegNumToIntCode" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="RegNumToIntCodeSoapOut">
+    <wsdl:part element="tns:RegNumToIntCodeResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="IntCodeToRegNumSoapIn">
+    <wsdl:part element="tns:IntCodeToRegNum" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="IntCodeToRegNumSoapOut">
+    <wsdl:part element="tns:IntCodeToRegNumResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="BicToIntCodeSoapIn">
+    <wsdl:part element="tns:BicToIntCode" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="BicToIntCodeSoapOut">
+    <wsdl:part element="tns:BicToIntCodeResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="BicToRegNumberSoapIn">
+    <wsdl:part element="tns:BicToRegNumber" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="BicToRegNumberSoapOut">
+    <wsdl:part element="tns:BicToRegNumberResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="RegionsEnumSoapIn">
+    <wsdl:part element="tns:RegionsEnum" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="RegionsEnumSoapOut">
+    <wsdl:part element="tns:RegionsEnumResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="RegionsEnumXMLSoapIn">
+    <wsdl:part element="tns:RegionsEnumXML" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="RegionsEnumXMLSoapOut">
+    <wsdl:part element="tns:RegionsEnumXMLResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="SearchByRegionCodeSoapIn">
+    <wsdl:part element="tns:SearchByRegionCode" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="SearchByRegionCodeSoapOut">
+    <wsdl:part element="tns:SearchByRegionCodeResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="SearchByRegionCodeXMLSoapIn">
+    <wsdl:part element="tns:SearchByRegionCodeXML" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="SearchByRegionCodeXMLSoapOut">
+    <wsdl:part element="tns:SearchByRegionCodeXMLResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="SearchByNameXMLSoapIn">
+    <wsdl:part element="tns:SearchByNameXML" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="SearchByNameXMLSoapOut">
+    <wsdl:part element="tns:SearchByNameXMLResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="SearchByNameSoapIn">
+    <wsdl:part element="tns:SearchByName" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="SearchByNameSoapOut">
+    <wsdl:part element="tns:SearchByNameResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="CreditInfoByIntCodeXMLSoapIn">
+    <wsdl:part element="tns:CreditInfoByIntCodeXML" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="CreditInfoByIntCodeXMLSoapOut">
+    <wsdl:part element="tns:CreditInfoByIntCodeXMLResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="CreditInfoByIntCodeExXMLSoapIn">
+    <wsdl:part element="tns:CreditInfoByIntCodeExXML" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="CreditInfoByIntCodeExXMLSoapOut">
+    <wsdl:part element="tns:CreditInfoByIntCodeExXMLResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="CreditInfoByIntCodeExSoapIn">
+    <wsdl:part element="tns:CreditInfoByIntCodeEx" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="CreditInfoByIntCodeExSoapOut">
+    <wsdl:part element="tns:CreditInfoByIntCodeExResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="CreditInfoByIntCodeSoapIn">
+    <wsdl:part element="tns:CreditInfoByIntCode" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="CreditInfoByIntCodeSoapOut">
+    <wsdl:part element="tns:CreditInfoByIntCodeResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetOfficesSoapIn">
+    <wsdl:part element="tns:GetOffices" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetOfficesSoapOut">
+    <wsdl:part element="tns:GetOfficesResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetOfficesByRegionSoapIn">
+    <wsdl:part element="tns:GetOfficesByRegion" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetOfficesByRegionSoapOut">
+    <wsdl:part element="tns:GetOfficesByRegionResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetOfficesXMLSoapIn">
+    <wsdl:part element="tns:GetOfficesXML" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetOfficesXMLSoapOut">
+    <wsdl:part element="tns:GetOfficesXMLResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetOfficesByRegionXMLSoapIn">
+    <wsdl:part element="tns:GetOfficesByRegionXML" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetOfficesByRegionXMLSoapOut">
+    <wsdl:part element="tns:GetOfficesByRegionXMLResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="Data134FormFullXMLSoapIn">
+    <wsdl:part element="tns:Data134FormFullXML" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="Data134FormFullXMLSoapOut">
+    <wsdl:part element="tns:Data134FormFullXMLResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="Olap134FormSoapIn">
+    <wsdl:part element="tns:Olap134Form" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="Olap134FormSoapOut">
+    <wsdl:part element="tns:Olap134FormResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="Data135FormFullSoapIn">
+    <wsdl:part element="tns:Data135FormFull" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="Data135FormFullSoapOut">
+    <wsdl:part element="tns:Data135FormFullResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="Data135FormFullXMLSoapIn">
+    <wsdl:part element="tns:Data135FormFullXML" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="Data135FormFullXMLSoapOut">
+    <wsdl:part element="tns:Data135FormFullXMLResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="Data123FormFullSoapIn">
+    <wsdl:part element="tns:Data123FormFull" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="Data123FormFullSoapOut">
+    <wsdl:part element="tns:Data123FormFullResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="Data123FormFullXMLSoapIn">
+    <wsdl:part element="tns:Data123FormFullXML" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="Data123FormFullXMLSoapOut">
+    <wsdl:part element="tns:Data123FormFullXMLResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetDatesForF123SoapIn">
+    <wsdl:part element="tns:GetDatesForF123" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetDatesForF123SoapOut">
+    <wsdl:part element="tns:GetDatesForF123Response" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetDatesForF101SoapIn">
+    <wsdl:part element="tns:GetDatesForF101" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetDatesForF101SoapOut">
+    <wsdl:part element="tns:GetDatesForF101Response" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetDatesForF102SoapIn">
+    <wsdl:part element="tns:GetDatesForF102" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetDatesForF102SoapOut">
+    <wsdl:part element="tns:GetDatesForF102Response" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetDatesForF134SoapIn">
+    <wsdl:part element="tns:GetDatesForF134" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetDatesForF134SoapOut">
+    <wsdl:part element="tns:GetDatesForF134Response" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetDatesForF135SoapIn">
+    <wsdl:part element="tns:GetDatesForF135" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetDatesForF135SoapOut">
+    <wsdl:part element="tns:GetDatesForF135Response" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="Data134FormFullSoapIn">
+    <wsdl:part element="tns:Data134FormFull" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="Data134FormFullSoapOut">
+    <wsdl:part element="tns:Data134FormFullResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="CreditOrgInfoSoap">
+    <wsdl:operation name="EnumBIC_XML">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Данные по BIC кодам КО (как XMLDocument), без филиалов,  ver: 04.07.2007</wsdl:documentation>
+      <wsdl:input message="tns:EnumBIC_XMLSoapIn"></wsdl:input>
+      <wsdl:output message="tns:EnumBIC_XMLSoapOut"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFormsMaxDate">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Получение максимальной даты отчетов по формам, ver: 22.04.2015</wsdl:documentation>
+      <wsdl:input message="tns:GetFormsMaxDateSoapIn"></wsdl:input>
+      <wsdl:output message="tns:GetFormsMaxDateSoapOut"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LastUpdate">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Получение даты последнего обновления базы по КО</wsdl:documentation>
+      <wsdl:input message="tns:LastUpdateSoapIn"></wsdl:input>
+      <wsdl:output message="tns:LastUpdateSoapOut"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EnumBIC">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Данные по BIC кодам КО (как DataSet), без филиалов, ver: 17.03.2015</wsdl:documentation>
+      <wsdl:input message="tns:EnumBICSoapIn"></wsdl:input>
+      <wsdl:output message="tns:EnumBICSoapOut"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Data101FormExXML">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Данные КО. формы 101 (как XMLDocument) по нескольким КО</wsdl:documentation>
+      <wsdl:input message="tns:Data101FormExXMLSoapIn"></wsdl:input>
+      <wsdl:output message="tns:Data101FormExXMLSoapOut"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Data101FormEx">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Данные КО. формы 101, без оборотов (как DataSet) по нескольким КО ver 07.03.2017</wsdl:documentation>
+      <wsdl:input message="tns:Data101FormExSoapIn"></wsdl:input>
+      <wsdl:output message="tns:Data101FormExSoapOut"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Data101FormXML">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Данные КО. формы 101, без оборотов (как XMLDocument)</wsdl:documentation>
+      <wsdl:input message="tns:Data101FormXMLSoapIn"></wsdl:input>
+      <wsdl:output message="tns:Data101FormXMLSoapOut"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Data101Form">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Данные КО. формы 101, без оборотов (как DataSet)</wsdl:documentation>
+      <wsdl:input message="tns:Data101FormSoapIn"></wsdl:input>
+      <wsdl:output message="tns:Data101FormSoapOut"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Data101FullXML">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Данные КО. формы 101, полностью (как XMLDocument)</wsdl:documentation>
+      <wsdl:input message="tns:Data101FullXMLSoapIn"></wsdl:input>
+      <wsdl:output message="tns:Data101FullXMLSoapOut"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Data101FullExXML">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Данные КО. формы 101,полностью  (Внимание, метод устарел, используйте v2) (как XMLDocument) по нескольким КО. ver 17.03.2015</wsdl:documentation>
+      <wsdl:input message="tns:Data101FullExXMLSoapIn"></wsdl:input>
+      <wsdl:output message="tns:Data101FullExXMLSoapOut"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Data101FullEx">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Данные КО. формы 101,полностью (Внимание, метод устарел, используйте v2) (как DataSet) ver 17.03.2015</wsdl:documentation>
+      <wsdl:input message="tns:Data101FullExSoapIn"></wsdl:input>
+      <wsdl:output message="tns:Data101FullExSoapOut"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Data101FullExV2XML">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Данные КО. формы 101,полностью (как XML) ver 07.03.2017</wsdl:documentation>
+      <wsdl:input message="tns:Data101FullExV2XMLSoapIn"></wsdl:input>
+      <wsdl:output message="tns:Data101FullExV2XMLSoapOut"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Data101FullExV2">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Данные КО. формы 101,полностью (как DataSet) ver 07.03.2017</wsdl:documentation>
+      <wsdl:input message="tns:Data101FullExV2SoapIn"></wsdl:input>
+      <wsdl:output message="tns:Data101FullExV2SoapOut"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Data101Full">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Данные КО. формы 101,полностью (Устарел, используйте v2) (как DataSet)</wsdl:documentation>
+      <wsdl:input message="tns:Data101FullSoapIn"></wsdl:input>
+      <wsdl:output message="tns:Data101FullSoapOut"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Data101FullV2XML">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Данные КО. формы 101,полностью (как XML) mod 07.03.2017</wsdl:documentation>
+      <wsdl:input message="tns:Data101FullV2XMLSoapIn"></wsdl:input>
+      <wsdl:output message="tns:Data101FullV2XMLSoapOut"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Data101FullV2">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Данные КО. формы 101,полностью (как DataSet) mod 07.03.2017</wsdl:documentation>
+      <wsdl:input message="tns:Data101FullV2SoapIn"></wsdl:input>
+      <wsdl:output message="tns:Data101FullV2SoapOut"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Data102FormExXML">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Данные КО. формы 102, кратко (как XMLDocument) по нескольким КО.</wsdl:documentation>
+      <wsdl:input message="tns:Data102FormExXMLSoapIn"></wsdl:input>
+      <wsdl:output message="tns:Data102FormExXMLSoapOut"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Data102FormEx">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Данные КО. формы 102 (как DataSet) по нескольким КО. ver 24.06.2014</wsdl:documentation>
+      <wsdl:input message="tns:Data102FormExSoapIn"></wsdl:input>
+      <wsdl:output message="tns:Data102FormExSoapOut"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Data102FormXML">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Данные КО. формы 102, кратко (как XMLDocument)</wsdl:documentation>
+      <wsdl:input message="tns:Data102FormXMLSoapIn"></wsdl:input>
+      <wsdl:output message="tns:Data102FormXMLSoapOut"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Data102Form">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Данные КО. формы 102 (как DataSet)</wsdl:documentation>
+      <wsdl:input message="tns:Data102FormSoapIn"></wsdl:input>
+      <wsdl:output message="tns:Data102FormSoapOut"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Form102IndicatorsEnumXML">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Справочник символов для формы 102 (как XMLDocument)</wsdl:documentation>
+      <wsdl:input message="tns:Form102IndicatorsEnumXMLSoapIn"></wsdl:input>
+      <wsdl:output message="tns:Form102IndicatorsEnumXMLSoapOut"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Form102IndicatorsEnum">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Справочник символов для формы 102 (как DataSet)</wsdl:documentation>
+      <wsdl:input message="tns:Form102IndicatorsEnumSoapIn"></wsdl:input>
+      <wsdl:output message="tns:Form102IndicatorsEnumSoapOut"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Form101IndicatorsEnumXML">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Справочник индикаторов для формы 101 (как XMLDocument)</wsdl:documentation>
+      <wsdl:input message="tns:Form101IndicatorsEnumXMLSoapIn"></wsdl:input>
+      <wsdl:output message="tns:Form101IndicatorsEnumXMLSoapOut"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Form101IndicatorsEnum">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Справочник индикаторов для формы 101 (как DataSet)</wsdl:documentation>
+      <wsdl:input message="tns:Form101IndicatorsEnumSoapIn"></wsdl:input>
+      <wsdl:output message="tns:Form101IndicatorsEnumSoapOut"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RegNumToIntCode">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Регистрационный номер во внутренний код КО.</wsdl:documentation>
+      <wsdl:input message="tns:RegNumToIntCodeSoapIn"></wsdl:input>
+      <wsdl:output message="tns:RegNumToIntCodeSoapOut"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IntCodeToRegNum">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">внутренний код кред.орг. в регистрационный номер КО.</wsdl:documentation>
+      <wsdl:input message="tns:IntCodeToRegNumSoapIn"></wsdl:input>
+      <wsdl:output message="tns:IntCodeToRegNumSoapOut"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BicToIntCode">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Bic код во внутренний код кред.орг.</wsdl:documentation>
+      <wsdl:input message="tns:BicToIntCodeSoapIn"></wsdl:input>
+      <wsdl:output message="tns:BicToIntCodeSoapOut"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BicToRegNumber">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Bic код в регистрационный номер кред.орг.</wsdl:documentation>
+      <wsdl:input message="tns:BicToRegNumberSoapIn"></wsdl:input>
+      <wsdl:output message="tns:BicToRegNumberSoapOut"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RegionsEnum">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Справочник регионов (как DataSet)</wsdl:documentation>
+      <wsdl:input message="tns:RegionsEnumSoapIn"></wsdl:input>
+      <wsdl:output message="tns:RegionsEnumSoapOut"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RegionsEnumXML">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Справочник регионов (как XMLDocument), ver- 18.01.2007</wsdl:documentation>
+      <wsdl:input message="tns:RegionsEnumXMLSoapIn"></wsdl:input>
+      <wsdl:output message="tns:RegionsEnumXMLSoapOut"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchByRegionCode">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Поиск кредитных орг. по региону(коду) (как DataSet)</wsdl:documentation>
+      <wsdl:input message="tns:SearchByRegionCodeSoapIn"></wsdl:input>
+      <wsdl:output message="tns:SearchByRegionCodeSoapOut"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchByRegionCodeXML">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Поиск кредитных орг. по региону(коду) (как XML)</wsdl:documentation>
+      <wsdl:input message="tns:SearchByRegionCodeXMLSoapIn"></wsdl:input>
+      <wsdl:output message="tns:SearchByRegionCodeXMLSoapOut"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchByNameXML">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Поиск кредитных орг. по названию (как XML)</wsdl:documentation>
+      <wsdl:input message="tns:SearchByNameXMLSoapIn"></wsdl:input>
+      <wsdl:output message="tns:SearchByNameXMLSoapOut"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchByName">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Поиск кредитных орг. по названию (как DataSet)</wsdl:documentation>
+      <wsdl:input message="tns:SearchByNameSoapIn"></wsdl:input>
+      <wsdl:output message="tns:SearchByNameSoapOut"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreditInfoByIntCodeXML">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Информация о кредитной орг. по вн.коду (как XMLDocument)</wsdl:documentation>
+      <wsdl:input message="tns:CreditInfoByIntCodeXMLSoapIn"></wsdl:input>
+      <wsdl:output message="tns:CreditInfoByIntCodeXMLSoapOut"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreditInfoByIntCodeExXML">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Информация о кредитной орг. по вн.коду (как XML Document) ver- 26.02.2015</wsdl:documentation>
+      <wsdl:input message="tns:CreditInfoByIntCodeExXMLSoapIn"></wsdl:input>
+      <wsdl:output message="tns:CreditInfoByIntCodeExXMLSoapOut"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreditInfoByIntCodeEx">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Информация о кредитной орг. по вн.коду (как DataSet) ver- 03.03.2015</wsdl:documentation>
+      <wsdl:input message="tns:CreditInfoByIntCodeExSoapIn"></wsdl:input>
+      <wsdl:output message="tns:CreditInfoByIntCodeExSoapOut"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreditInfoByIntCode">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Информация о кредитной орг. по вн.коду (как DataSet) ver- 11.01.2007</wsdl:documentation>
+      <wsdl:input message="tns:CreditInfoByIntCodeSoapIn"></wsdl:input>
+      <wsdl:output message="tns:CreditInfoByIntCodeSoapOut"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOffices">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Информация по филиальной сети кредитной орг. по вн.коду (как DataSet), ver- 18.01.2007</wsdl:documentation>
+      <wsdl:input message="tns:GetOfficesSoapIn"></wsdl:input>
+      <wsdl:output message="tns:GetOfficesSoapOut"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOfficesByRegion">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Информация по филиальной сети кредитной орг. по региону (коду) (как DataSet), ver- 18.01.2007</wsdl:documentation>
+      <wsdl:input message="tns:GetOfficesByRegionSoapIn"></wsdl:input>
+      <wsdl:output message="tns:GetOfficesByRegionSoapOut"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOfficesXML">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Информация по филиальной сети кредитной орг. по вн.коду (как XML)</wsdl:documentation>
+      <wsdl:input message="tns:GetOfficesXMLSoapIn"></wsdl:input>
+      <wsdl:output message="tns:GetOfficesXMLSoapOut"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOfficesByRegionXML">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Информация по филиальной сети кредитной орг. по региону (коду) (как XML), ver- 18.01.2007</wsdl:documentation>
+      <wsdl:input message="tns:GetOfficesByRegionXMLSoapIn"></wsdl:input>
+      <wsdl:output message="tns:GetOfficesByRegionXMLSoapOut"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Data134FormFullXML">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Данные по форме 134 (как XML)</wsdl:documentation>
+      <wsdl:input message="tns:Data134FormFullXMLSoapIn"></wsdl:input>
+      <wsdl:output message="tns:Data134FormFullXMLSoapOut"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Olap134Form">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Данные по форме 134, OLAP, (как DataSet)</wsdl:documentation>
+      <wsdl:input message="tns:Olap134FormSoapIn"></wsdl:input>
+      <wsdl:output message="tns:Olap134FormSoapOut"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Data135FormFull">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Данные по форме 135 (как DataSet) ver 05.06.2014</wsdl:documentation>
+      <wsdl:input message="tns:Data135FormFullSoapIn"></wsdl:input>
+      <wsdl:output message="tns:Data135FormFullSoapOut"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Data135FormFullXML">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Данные по форме 135 (как XML)</wsdl:documentation>
+      <wsdl:input message="tns:Data135FormFullXMLSoapIn"></wsdl:input>
+      <wsdl:output message="tns:Data135FormFullXMLSoapOut"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Data123FormFull">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Данные по форме 123 (как DataSet)</wsdl:documentation>
+      <wsdl:input message="tns:Data123FormFullSoapIn"></wsdl:input>
+      <wsdl:output message="tns:Data123FormFullSoapOut"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Data123FormFullXML">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Данные по форме 123 (как XML)</wsdl:documentation>
+      <wsdl:input message="tns:Data123FormFullXMLSoapIn"></wsdl:input>
+      <wsdl:output message="tns:Data123FormFullXMLSoapOut"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDatesForF123">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Список дат для формы 123</wsdl:documentation>
+      <wsdl:input message="tns:GetDatesForF123SoapIn"></wsdl:input>
+      <wsdl:output message="tns:GetDatesForF123SoapOut"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDatesForF101">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Список дат для формы 101</wsdl:documentation>
+      <wsdl:input message="tns:GetDatesForF101SoapIn"></wsdl:input>
+      <wsdl:output message="tns:GetDatesForF101SoapOut"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDatesForF102">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Список дат для формы 102</wsdl:documentation>
+      <wsdl:input message="tns:GetDatesForF102SoapIn"></wsdl:input>
+      <wsdl:output message="tns:GetDatesForF102SoapOut"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDatesForF134">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Список дат для формы 134</wsdl:documentation>
+      <wsdl:input message="tns:GetDatesForF134SoapIn"></wsdl:input>
+      <wsdl:output message="tns:GetDatesForF134SoapOut"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDatesForF135">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Список дат для формы 135</wsdl:documentation>
+      <wsdl:input message="tns:GetDatesForF135SoapIn"></wsdl:input>
+      <wsdl:output message="tns:GetDatesForF135SoapOut"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Data134FormFull">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Данные по форме 134 - устаревшие, данные до 2015 г. (как DataSet)</wsdl:documentation>
+      <wsdl:input message="tns:Data134FormFullSoapIn"></wsdl:input>
+      <wsdl:output message="tns:Data134FormFullSoapOut"></wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="CreditOrgInfoSoap" type="tns:CreditOrgInfoSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http"></soap:binding>
+    <wsdl:operation name="EnumBIC_XML">
+      <soap:operation soapAction="http://web.cbr.ru/EnumBIC_XML" style="document"></soap:operation>
+      <wsdl:input>
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFormsMaxDate">
+      <soap:operation soapAction="http://web.cbr.ru/GetFormsMaxDate" style="document"></soap:operation>
+      <wsdl:input>
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LastUpdate">
+      <soap:operation soapAction="http://web.cbr.ru/LastUpdate" style="document"></soap:operation>
+      <wsdl:input>
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EnumBIC">
+      <soap:operation soapAction="http://web.cbr.ru/EnumBIC" style="document"></soap:operation>
+      <wsdl:input>
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Data101FormExXML">
+      <soap:operation soapAction="http://web.cbr.ru/Data101FormExXML" style="document"></soap:operation>
+      <wsdl:input>
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Data101FormEx">
+      <soap:operation soapAction="http://web.cbr.ru/Data101FormEx" style="document"></soap:operation>
+      <wsdl:input>
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Data101FormXML">
+      <soap:operation soapAction="http://web.cbr.ru/Data101FormXML" style="document"></soap:operation>
+      <wsdl:input>
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Data101Form">
+      <soap:operation soapAction="http://web.cbr.ru/Data101Form" style="document"></soap:operation>
+      <wsdl:input>
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Data101FullXML">
+      <soap:operation soapAction="http://web.cbr.ru/Data101FullXML" style="document"></soap:operation>
+      <wsdl:input>
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Data101FullExXML">
+      <soap:operation soapAction="http://web.cbr.ru/Data101FullExXML" style="document"></soap:operation>
+      <wsdl:input>
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Data101FullEx">
+      <soap:operation soapAction="http://web.cbr.ru/Data101FullEx" style="document"></soap:operation>
+      <wsdl:input>
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Data101FullExV2XML">
+      <soap:operation soapAction="http://web.cbr.ru/Data101FullExV2XML" style="document"></soap:operation>
+      <wsdl:input>
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Data101FullExV2">
+      <soap:operation soapAction="http://web.cbr.ru/Data101FullExV2" style="document"></soap:operation>
+      <wsdl:input>
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Data101Full">
+      <soap:operation soapAction="http://web.cbr.ru/Data101Full" style="document"></soap:operation>
+      <wsdl:input>
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Data101FullV2XML">
+      <soap:operation soapAction="http://web.cbr.ru/Data101FullV2XML" style="document"></soap:operation>
+      <wsdl:input>
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Data101FullV2">
+      <soap:operation soapAction="http://web.cbr.ru/Data101FullV2" style="document"></soap:operation>
+      <wsdl:input>
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Data102FormExXML">
+      <soap:operation soapAction="http://web.cbr.ru/Data102FormExXML" style="document"></soap:operation>
+      <wsdl:input>
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Data102FormEx">
+      <soap:operation soapAction="http://web.cbr.ru/Data102FormEx" style="document"></soap:operation>
+      <wsdl:input>
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Data102FormXML">
+      <soap:operation soapAction="http://web.cbr.ru/Data102FormXML" style="document"></soap:operation>
+      <wsdl:input>
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Data102Form">
+      <soap:operation soapAction="http://web.cbr.ru/Data102Form" style="document"></soap:operation>
+      <wsdl:input>
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Form102IndicatorsEnumXML">
+      <soap:operation soapAction="http://web.cbr.ru/Form102IndicatorsEnumXML" style="document"></soap:operation>
+      <wsdl:input>
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Form102IndicatorsEnum">
+      <soap:operation soapAction="http://web.cbr.ru/Form102IndicatorsEnum" style="document"></soap:operation>
+      <wsdl:input>
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Form101IndicatorsEnumXML">
+      <soap:operation soapAction="http://web.cbr.ru/Form101IndicatorsEnumXML" style="document"></soap:operation>
+      <wsdl:input>
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Form101IndicatorsEnum">
+      <soap:operation soapAction="http://web.cbr.ru/Form101IndicatorsEnum" style="document"></soap:operation>
+      <wsdl:input>
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RegNumToIntCode">
+      <soap:operation soapAction="http://web.cbr.ru/RegNumToIntCode" style="document"></soap:operation>
+      <wsdl:input>
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IntCodeToRegNum">
+      <soap:operation soapAction="http://web.cbr.ru/IntCodeToRegNum" style="document"></soap:operation>
+      <wsdl:input>
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BicToIntCode">
+      <soap:operation soapAction="http://web.cbr.ru/BicToIntCode" style="document"></soap:operation>
+      <wsdl:input>
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BicToRegNumber">
+      <soap:operation soapAction="http://web.cbr.ru/BicToRegNumber" style="document"></soap:operation>
+      <wsdl:input>
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RegionsEnum">
+      <soap:operation soapAction="http://web.cbr.ru/RegionsEnum" style="document"></soap:operation>
+      <wsdl:input>
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RegionsEnumXML">
+      <soap:operation soapAction="http://web.cbr.ru/RegionsEnumXML" style="document"></soap:operation>
+      <wsdl:input>
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchByRegionCode">
+      <soap:operation soapAction="http://web.cbr.ru/SearchByRegionCode" style="document"></soap:operation>
+      <wsdl:input>
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchByRegionCodeXML">
+      <soap:operation soapAction="http://web.cbr.ru/SearchByRegionCodeXML" style="document"></soap:operation>
+      <wsdl:input>
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchByNameXML">
+      <soap:operation soapAction="http://web.cbr.ru/SearchByNameXML" style="document"></soap:operation>
+      <wsdl:input>
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchByName">
+      <soap:operation soapAction="http://web.cbr.ru/SearchByName" style="document"></soap:operation>
+      <wsdl:input>
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreditInfoByIntCodeXML">
+      <soap:operation soapAction="http://web.cbr.ru/CreditInfoByIntCodeXML" style="document"></soap:operation>
+      <wsdl:input>
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreditInfoByIntCodeExXML">
+      <soap:operation soapAction="http://web.cbr.ru/CreditInfoByIntCodeExXML" style="document"></soap:operation>
+      <wsdl:input>
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreditInfoByIntCodeEx">
+      <soap:operation soapAction="http://web.cbr.ru/CreditInfoByIntCodeEx" style="document"></soap:operation>
+      <wsdl:input>
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreditInfoByIntCode">
+      <soap:operation soapAction="http://web.cbr.ru/CreditInfoByIntCode" style="document"></soap:operation>
+      <wsdl:input>
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOffices">
+      <soap:operation soapAction="http://web.cbr.ru/GetOffices" style="document"></soap:operation>
+      <wsdl:input>
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOfficesByRegion">
+      <soap:operation soapAction="http://web.cbr.ru/GetOfficesByRegion" style="document"></soap:operation>
+      <wsdl:input>
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOfficesXML">
+      <soap:operation soapAction="http://web.cbr.ru/GetOfficesXML" style="document"></soap:operation>
+      <wsdl:input>
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOfficesByRegionXML">
+      <soap:operation soapAction="http://web.cbr.ru/GetOfficesByRegionXML" style="document"></soap:operation>
+      <wsdl:input>
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Data134FormFullXML">
+      <soap:operation soapAction="http://web.cbr.ru/Data134FormFullXML" style="document"></soap:operation>
+      <wsdl:input>
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Olap134Form">
+      <soap:operation soapAction="http://web.cbr.ru/Olap134Form" style="document"></soap:operation>
+      <wsdl:input>
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Data135FormFull">
+      <soap:operation soapAction="http://web.cbr.ru/Data135FormFull" style="document"></soap:operation>
+      <wsdl:input>
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Data135FormFullXML">
+      <soap:operation soapAction="http://web.cbr.ru/Data135FormFullXML" style="document"></soap:operation>
+      <wsdl:input>
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Data123FormFull">
+      <soap:operation soapAction="http://web.cbr.ru/Data123FormFull" style="document"></soap:operation>
+      <wsdl:input>
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Data123FormFullXML">
+      <soap:operation soapAction="http://web.cbr.ru/Data123FormFullXML" style="document"></soap:operation>
+      <wsdl:input>
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDatesForF123">
+      <soap:operation soapAction="http://web.cbr.ru/GetDatesForF123" style="document"></soap:operation>
+      <wsdl:input>
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDatesForF101">
+      <soap:operation soapAction="http://web.cbr.ru/GetDatesForF101" style="document"></soap:operation>
+      <wsdl:input>
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDatesForF102">
+      <soap:operation soapAction="http://web.cbr.ru/GetDatesForF102" style="document"></soap:operation>
+      <wsdl:input>
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDatesForF134">
+      <soap:operation soapAction="http://web.cbr.ru/GetDatesForF134" style="document"></soap:operation>
+      <wsdl:input>
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDatesForF135">
+      <soap:operation soapAction="http://web.cbr.ru/GetDatesForF135" style="document"></soap:operation>
+      <wsdl:input>
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Data134FormFull">
+      <soap:operation soapAction="http://web.cbr.ru/Data134FormFull" style="document"></soap:operation>
+      <wsdl:input>
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="CreditOrgInfoSoap12" type="tns:CreditOrgInfoSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http"></soap12:binding>
+    <wsdl:operation name="EnumBIC_XML">
+      <soap12:operation soapAction="http://web.cbr.ru/EnumBIC_XML" style="document"></soap12:operation>
+      <wsdl:input>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFormsMaxDate">
+      <soap12:operation soapAction="http://web.cbr.ru/GetFormsMaxDate" style="document"></soap12:operation>
+      <wsdl:input>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LastUpdate">
+      <soap12:operation soapAction="http://web.cbr.ru/LastUpdate" style="document"></soap12:operation>
+      <wsdl:input>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EnumBIC">
+      <soap12:operation soapAction="http://web.cbr.ru/EnumBIC" style="document"></soap12:operation>
+      <wsdl:input>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Data101FormExXML">
+      <soap12:operation soapAction="http://web.cbr.ru/Data101FormExXML" style="document"></soap12:operation>
+      <wsdl:input>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Data101FormEx">
+      <soap12:operation soapAction="http://web.cbr.ru/Data101FormEx" style="document"></soap12:operation>
+      <wsdl:input>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Data101FormXML">
+      <soap12:operation soapAction="http://web.cbr.ru/Data101FormXML" style="document"></soap12:operation>
+      <wsdl:input>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Data101Form">
+      <soap12:operation soapAction="http://web.cbr.ru/Data101Form" style="document"></soap12:operation>
+      <wsdl:input>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Data101FullXML">
+      <soap12:operation soapAction="http://web.cbr.ru/Data101FullXML" style="document"></soap12:operation>
+      <wsdl:input>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Data101FullExXML">
+      <soap12:operation soapAction="http://web.cbr.ru/Data101FullExXML" style="document"></soap12:operation>
+      <wsdl:input>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Data101FullEx">
+      <soap12:operation soapAction="http://web.cbr.ru/Data101FullEx" style="document"></soap12:operation>
+      <wsdl:input>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Data101FullExV2XML">
+      <soap12:operation soapAction="http://web.cbr.ru/Data101FullExV2XML" style="document"></soap12:operation>
+      <wsdl:input>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Data101FullExV2">
+      <soap12:operation soapAction="http://web.cbr.ru/Data101FullExV2" style="document"></soap12:operation>
+      <wsdl:input>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Data101Full">
+      <soap12:operation soapAction="http://web.cbr.ru/Data101Full" style="document"></soap12:operation>
+      <wsdl:input>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Data101FullV2XML">
+      <soap12:operation soapAction="http://web.cbr.ru/Data101FullV2XML" style="document"></soap12:operation>
+      <wsdl:input>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Data101FullV2">
+      <soap12:operation soapAction="http://web.cbr.ru/Data101FullV2" style="document"></soap12:operation>
+      <wsdl:input>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Data102FormExXML">
+      <soap12:operation soapAction="http://web.cbr.ru/Data102FormExXML" style="document"></soap12:operation>
+      <wsdl:input>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Data102FormEx">
+      <soap12:operation soapAction="http://web.cbr.ru/Data102FormEx" style="document"></soap12:operation>
+      <wsdl:input>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Data102FormXML">
+      <soap12:operation soapAction="http://web.cbr.ru/Data102FormXML" style="document"></soap12:operation>
+      <wsdl:input>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Data102Form">
+      <soap12:operation soapAction="http://web.cbr.ru/Data102Form" style="document"></soap12:operation>
+      <wsdl:input>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Form102IndicatorsEnumXML">
+      <soap12:operation soapAction="http://web.cbr.ru/Form102IndicatorsEnumXML" style="document"></soap12:operation>
+      <wsdl:input>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Form102IndicatorsEnum">
+      <soap12:operation soapAction="http://web.cbr.ru/Form102IndicatorsEnum" style="document"></soap12:operation>
+      <wsdl:input>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Form101IndicatorsEnumXML">
+      <soap12:operation soapAction="http://web.cbr.ru/Form101IndicatorsEnumXML" style="document"></soap12:operation>
+      <wsdl:input>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Form101IndicatorsEnum">
+      <soap12:operation soapAction="http://web.cbr.ru/Form101IndicatorsEnum" style="document"></soap12:operation>
+      <wsdl:input>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RegNumToIntCode">
+      <soap12:operation soapAction="http://web.cbr.ru/RegNumToIntCode" style="document"></soap12:operation>
+      <wsdl:input>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IntCodeToRegNum">
+      <soap12:operation soapAction="http://web.cbr.ru/IntCodeToRegNum" style="document"></soap12:operation>
+      <wsdl:input>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BicToIntCode">
+      <soap12:operation soapAction="http://web.cbr.ru/BicToIntCode" style="document"></soap12:operation>
+      <wsdl:input>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BicToRegNumber">
+      <soap12:operation soapAction="http://web.cbr.ru/BicToRegNumber" style="document"></soap12:operation>
+      <wsdl:input>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RegionsEnum">
+      <soap12:operation soapAction="http://web.cbr.ru/RegionsEnum" style="document"></soap12:operation>
+      <wsdl:input>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RegionsEnumXML">
+      <soap12:operation soapAction="http://web.cbr.ru/RegionsEnumXML" style="document"></soap12:operation>
+      <wsdl:input>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchByRegionCode">
+      <soap12:operation soapAction="http://web.cbr.ru/SearchByRegionCode" style="document"></soap12:operation>
+      <wsdl:input>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchByRegionCodeXML">
+      <soap12:operation soapAction="http://web.cbr.ru/SearchByRegionCodeXML" style="document"></soap12:operation>
+      <wsdl:input>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchByNameXML">
+      <soap12:operation soapAction="http://web.cbr.ru/SearchByNameXML" style="document"></soap12:operation>
+      <wsdl:input>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchByName">
+      <soap12:operation soapAction="http://web.cbr.ru/SearchByName" style="document"></soap12:operation>
+      <wsdl:input>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreditInfoByIntCodeXML">
+      <soap12:operation soapAction="http://web.cbr.ru/CreditInfoByIntCodeXML" style="document"></soap12:operation>
+      <wsdl:input>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreditInfoByIntCodeExXML">
+      <soap12:operation soapAction="http://web.cbr.ru/CreditInfoByIntCodeExXML" style="document"></soap12:operation>
+      <wsdl:input>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreditInfoByIntCodeEx">
+      <soap12:operation soapAction="http://web.cbr.ru/CreditInfoByIntCodeEx" style="document"></soap12:operation>
+      <wsdl:input>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreditInfoByIntCode">
+      <soap12:operation soapAction="http://web.cbr.ru/CreditInfoByIntCode" style="document"></soap12:operation>
+      <wsdl:input>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOffices">
+      <soap12:operation soapAction="http://web.cbr.ru/GetOffices" style="document"></soap12:operation>
+      <wsdl:input>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOfficesByRegion">
+      <soap12:operation soapAction="http://web.cbr.ru/GetOfficesByRegion" style="document"></soap12:operation>
+      <wsdl:input>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOfficesXML">
+      <soap12:operation soapAction="http://web.cbr.ru/GetOfficesXML" style="document"></soap12:operation>
+      <wsdl:input>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOfficesByRegionXML">
+      <soap12:operation soapAction="http://web.cbr.ru/GetOfficesByRegionXML" style="document"></soap12:operation>
+      <wsdl:input>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Data134FormFullXML">
+      <soap12:operation soapAction="http://web.cbr.ru/Data134FormFullXML" style="document"></soap12:operation>
+      <wsdl:input>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Olap134Form">
+      <soap12:operation soapAction="http://web.cbr.ru/Olap134Form" style="document"></soap12:operation>
+      <wsdl:input>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Data135FormFull">
+      <soap12:operation soapAction="http://web.cbr.ru/Data135FormFull" style="document"></soap12:operation>
+      <wsdl:input>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Data135FormFullXML">
+      <soap12:operation soapAction="http://web.cbr.ru/Data135FormFullXML" style="document"></soap12:operation>
+      <wsdl:input>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Data123FormFull">
+      <soap12:operation soapAction="http://web.cbr.ru/Data123FormFull" style="document"></soap12:operation>
+      <wsdl:input>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Data123FormFullXML">
+      <soap12:operation soapAction="http://web.cbr.ru/Data123FormFullXML" style="document"></soap12:operation>
+      <wsdl:input>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDatesForF123">
+      <soap12:operation soapAction="http://web.cbr.ru/GetDatesForF123" style="document"></soap12:operation>
+      <wsdl:input>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDatesForF101">
+      <soap12:operation soapAction="http://web.cbr.ru/GetDatesForF101" style="document"></soap12:operation>
+      <wsdl:input>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDatesForF102">
+      <soap12:operation soapAction="http://web.cbr.ru/GetDatesForF102" style="document"></soap12:operation>
+      <wsdl:input>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDatesForF134">
+      <soap12:operation soapAction="http://web.cbr.ru/GetDatesForF134" style="document"></soap12:operation>
+      <wsdl:input>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDatesForF135">
+      <soap12:operation soapAction="http://web.cbr.ru/GetDatesForF135" style="document"></soap12:operation>
+      <wsdl:input>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Data134FormFull">
+      <soap12:operation soapAction="http://web.cbr.ru/Data134FormFull" style="document"></soap12:operation>
+      <wsdl:input>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"></soap12:body>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="CreditOrgInfo">
+    <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Справочник по кредитным организациям, ver - 07.03.2017</wsdl:documentation>
+    <wsdl:port binding="tns:CreditOrgInfoSoap" name="CreditOrgInfoSoap">
+      <soap:address location="http://www.cbr.ru/CreditInfoWebServ/CreditOrgInfo.asmx"></soap:address>
+    </wsdl:port>
+    <wsdl:port binding="tns:CreditOrgInfoSoap12" name="CreditOrgInfoSoap12">
+      <soap12:address location="http://www.cbr.ru/CreditInfoWebServ/CreditOrgInfo.asmx"></soap12:address>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
