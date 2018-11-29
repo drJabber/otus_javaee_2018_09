@@ -43,6 +43,12 @@
                     </td>
                 </tr>
                 <tr>
+                    <td>Минимальная зарплата</td>
+                    <td>
+                        ${staffsalaries.getMinSalary()}
+                    </td>
+                </tr>
+                <tr>
                     <td colspan="2">ФИО работника с максимальной зарплатой</td>
                     <td colspan="2" id="main-person-with-max-salary"></td>
                 </tr>
