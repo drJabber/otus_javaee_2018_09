@@ -8,7 +8,7 @@ import javax.servlet.ServletException;
 public class StaffUtils{
     public static final String PERSISTENCE_UNIT_NAME="rnk-jpa";
     private static final EntityManagerFactory emf= Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME); //tomcat, see
-    
+
     public Double getMaxSalary() throws RnkWebServiceException {
         EntityManager em = emf.createEntityManager(); // for Tomcat
         EntityTransaction transaction = em.getTransaction();
@@ -16,6 +16,28 @@ public class StaffUtils{
             transaction.begin();
 
             Query q = em.createQuery("select max(staff.salary) from StaffEntity staff ");
+
+            double result=1.0*(Integer)(q.getResultList()).get(0);
+
+            transaction.commit();
+
+            return result;
+        }catch(Exception ex){
+            transaction.rollback();
+            throw new RnkWebServiceException(ex);
+        }
+        finally {
+            em.close();
+        }
+    };
+
+    public Double getMinSalary() throws RnkWebServiceException {
+        EntityManager em = emf.createEntityManager(); // for Tomcat
+        EntityTransaction transaction = em.getTransaction();
+        try {
+            transaction.begin();
+
+            Query q = em.createQuery("select min(staff.salary) from StaffEntity staff ");
 
             double result=1.0*(Integer)(q.getResultList()).get(0);
 

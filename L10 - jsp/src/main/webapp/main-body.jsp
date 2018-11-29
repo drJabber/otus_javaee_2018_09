@@ -8,6 +8,7 @@
 <%@ taglib prefix="s" uri="/stats-collector" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<jsp:useBean id="staffsalaries" class="rnk.l10.entities.beans.StaffUtilsWrapper" scope="session" />
         <%--use custom tag to store stats--%>
         <s:statsx />
 
@@ -34,6 +35,12 @@
                     <td id="main-avg-salary"></td>
                     <td>Максимальная зарплата</td>
                     <td id="main-max-salary"></td>
+                </tr>
+                <tr>
+                    <td>Минимальная зарплата</td>
+                    <td>
+                        ${staffsalaries.getMinSalary()}
+                    </td>
                 </tr>
                 <tr>
                     <td colspan="2">ФИО работника с максимальной зарплатой</td>

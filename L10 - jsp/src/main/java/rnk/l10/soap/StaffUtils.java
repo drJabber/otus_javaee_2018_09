@@ -10,8 +10,11 @@ import javax.jws.soap.SOAPBinding;
 public interface StaffUtils {
     @WebMethod @WebResult(name="result") 
     Double getMaxSalary() throws RnkWebServiceException;
-    
-    @WebMethod @WebResult(name="result") 
+
+    @WebMethod @WebResult(name="result")
+    Double getMinSalary() throws RnkWebServiceException;
+
+    @WebMethod @WebResult(name="result")
     Double getAvgSalary() throws RnkWebServiceException;
 
     @WebMethod @WebResult(name="result") 

@@ -16,7 +16,12 @@ public class StaffUtilsWebService implements StaffUtils{
     public Double getMaxSalary() throws RnkWebServiceException{
         return (new rnk.l10.utils.StaffUtils()).getMaxSalary();
     };
-    
+
+    @WebMethod @WebResult(name="result")
+    public Double getMinSalary() throws RnkWebServiceException{
+        return (new rnk.l10.utils.StaffUtils()).getMinSalary();
+    };
+
     @WebMethod @WebResult(name="result")
     public Double getAvgSalary() throws RnkWebServiceException{
         return (new rnk.l10.utils.StaffUtils()).getAvgSalary();
