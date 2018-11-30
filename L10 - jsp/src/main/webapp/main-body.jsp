@@ -52,6 +52,19 @@
                     <td colspan="2">ФИО работника с максимальной зарплатой</td>
                     <td colspan="2" id="main-person-with-max-salary"></td>
                 </tr>
+                <tr>
+                    <td colspan="4">
+                        <button id="main-cbr-services" onclick="getCbrData($('#main-cbr-lastupdate'))" >
+                            получить данные ЦБ по кредитным организациям
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Дата последнего обновления</td>
+                    <td id="main-cbr-lastupdate"></td>
+                    <td></td>
+                    <td></td>
+                </tr>
             </table>
             <p></p>
             

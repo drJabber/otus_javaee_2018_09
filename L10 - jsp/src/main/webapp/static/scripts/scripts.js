@@ -266,3 +266,36 @@ function computeSalaryButtonClick(elt_avg, elt_max, elt_fio){
         }
     $.soap(data);
 }
+
+function getCbrData(text, element){
+    $.ajax({
+        url: 'http://localhost:8080/cbr/lastupdate',
+        method:'get',
+        success: function (data) {
+            alert(data);
+        },
+        error: function (err) {
+            alert("fail");
+        }
+    })
+
+    // $.soap({
+    //     url: 'http://localhost:9999/cbr/lastupdate',
+    //     namespaceQualifier: 'ns2',
+    //     namespaceURL: 'urn://rnk.l10.soap',
+    //     method:'check',
+    //     async:false,
+    //     // noPrefix:true,
+    //     appendMethodToURL:false,
+    //     params:xml.join(''),
+    //     // params:{'snils':$('#snils-text').val()},
+    //     // data:xml.join(''),
+    //     error: function (soapResponse) {
+    //         alert(soapResponse.httpText);
+    //     },
+    //     success: function(soapResponse){
+    //         element.text(soapResponse.toJSON().Body.checkResponse.result=="true"?"верный СНИЛС":"неверный СНИЛС");
+    //     }
+    // });
+}
+

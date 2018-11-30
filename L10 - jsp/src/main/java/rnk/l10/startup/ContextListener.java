@@ -2,6 +2,7 @@ package rnk.l10.startup;
 
 import org.apache.log4j.Logger;
 import rnk.l10.entities.xml.StaffEntitiesList;
+import rnk.l10.soap.CbrKoInfo;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -13,6 +14,7 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebListener;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
+import javax.xml.ws.Endpoint;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -27,10 +29,13 @@ public class ContextListener implements ServletContextListener{
     // ServletContextListener implementation
     // -------------------------------------------------------
     public void contextInitialized(ServletContextEvent sce) {
-      /* This method is called when the servlet context is
-         initialized(when the Web application is deployed). 
-         You can initialize servlet context related data here.
-      */
+        try {
+            String webServiceUrl = "http://localhost:9999" + sce.getServletContext().getContextPath() + "/cbr";
+            Endpoint.publish(webServiceUrl, new CbrKoInfo());
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     public void contextDestroyed(ServletContextEvent sce) {

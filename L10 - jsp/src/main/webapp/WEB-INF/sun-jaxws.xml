@@ -8,4 +8,8 @@
             name="StaffUtils"
             implementation="rnk.l10.soap.StaffUtilsWebService"
             url-pattern="/staffutils"  />
+    <endpoint
+            name="StaffUtils"
+            implementation="rnk.l10.soap.StaffUtilsWebService"
+            url-pattern="/staffutils"  />
 </endpoints>
