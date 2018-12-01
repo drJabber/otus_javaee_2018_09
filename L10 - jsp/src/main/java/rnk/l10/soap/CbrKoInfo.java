@@ -1,18 +1,17 @@
 package rnk.l10.soap;
 
 import com.google.gson.*;
+import com.sun.org.apache.xerces.internal.dom.ElementNSImpl;
 import org.apache.log4j.Logger;
-import rnk.l10.soap.cbko.CreditOrgInfo;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import rnk.l10.soap.cbko.*;
 import rnk.l10.utils.CbrHelper;
 
 import javax.annotation.Resource;
-import javax.jws.HandlerChain;
 import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.soap.*;
-import javax.xml.transform.Source;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
@@ -30,19 +29,18 @@ import java.util.List;
 
 import static javax.xml.ws.handler.MessageContext.HTTP_REQUEST_METHOD;
 import static javax.xml.ws.handler.MessageContext.QUERY_STRING;
+
 import static javax.xml.ws.handler.MessageContext.PATH_INFO;
 
-//see about CORS https://stackoverflow.com/questions/28434969/using-cors-filter-for-soap-service
-@WebServiceProvider
-@ServiceMode(value = Service.Mode.MESSAGE)
+@ServiceMode(value = Service.Mode.PAYLOAD)
+@WebServiceProvider(portName="cbr")
 @BindingType(value=HTTPBinding.HTTP_BINDING)
-@HandlerChain(file="rnk-soap-handler.xml")
 public class CbrKoInfo implements Provider<Source> {
     private static final Logger logger = Logger.getLogger(CbrKoInfo.class.getName());
 
     private static String HTTP_METHOD_GET="GET";
 
-    private static CreditOrgInfo ws=new CreditOrgInfo();
+    private static CreditOrgInfoSoap cbr=(new CreditOrgInfo()).getCreditOrgInfoSoap();
 
     @Resource
     private WebServiceContext wsCtx;
@@ -98,13 +96,11 @@ public class CbrKoInfo implements Provider<Source> {
 
 
     private SOAPMessage cbrLastUpdate(MessageContext ctx) throws SOAPException {
-        Gson gson=new Gson();
-        XMLGregorianCalendar calendar=ws.getCreditOrgInfoSoap().lastUpdate();
+        XMLGregorianCalendar calendar=cbr.lastUpdate();
         LocalDateTime dt=calendar.toGregorianCalendar().toZonedDateTime().toLocalDateTime();
         DateTimeFormatter fmt=DateTimeFormatter.ofPattern("dd.MM.yyyy");
         String result=fmt.format(dt);
 
-        SOAPFactory sf=SOAPFactory.newInstance();
         MessageFactory mf= MessageFactory.newInstance();
         SOAPMessage response=mf.createMessage();
         SOAPBody body=response.getSOAPBody();
@@ -116,10 +112,49 @@ public class CbrKoInfo implements Provider<Source> {
 
     }
 
+    private SOAPMessage cbrListOfBanks(MessageContext ctx) throws SOAPException{
+        try {
+            CreditOrgInfoSoap cbr=(new CreditOrgInfo()).getCreditOrgInfoSoap();
+            EnumBICXMLResponse.EnumBICXMLResult bics=cbr.enumBICXML();
+
+            StringWriter writer = new StringWriter();
+            Transformer transformer = TransformerFactory.newInstance().newTransformer();
+            String output = writer.toString();
+
+            List<Object> content=bics.getContent();
+            ElementNSImpl root=(ElementNSImpl)content.get(0);
+            NodeList nodes=root.getChildNodes();
+//            DOMSource dom=new DOMSource();
+//            Node domroot=dom.getNode();
+
+            MessageFactory mf= MessageFactory.newInstance();
+            SOAPMessage response=mf.createMessage();
+            SOAPBody body=response.getSOAPBody();
+            SOAPElement result=body.addChildElement("result");
+
+            for(int i=0; i<nodes.getLength();i++){
+                Node node=nodes.item(i).cloneNode(true);
+                body.getOwnerDocument().adoptNode(node);
+                result.appendChild(node);
+                logger.info(node.getTextContent());
+            }
+
+//            result.setValue(writer.toString());
+            response.saveChanges();
+
+            return response;
+        }catch(Exception ex){
+            throw new SOAPException(ex);
+        }
+    }
+
     private SOAPMessage dispatchQuery(MessageContext ctx, CbrHelper query) throws SOAPException{
         switch(query.getMethod().toLowerCase()){
             case "lastupdate":{
                 return cbrLastUpdate(ctx);
+            }
+            case "listofbanks":{
+                return cbrListOfBanks(ctx);
             }
             default:{
                 throw new UnsupportedOperationException("cbr service function not implemented yet");

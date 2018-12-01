@@ -30,11 +30,11 @@ public class ContextListener implements ServletContextListener{
     // -------------------------------------------------------
     public void contextInitialized(ServletContextEvent sce) {
         try {
-            String webServiceUrl = "http://localhost:9999" + sce.getServletContext().getContextPath() + "/cbr";
-            Endpoint.publish(webServiceUrl, new CbrKoInfo());
+//            String webServiceUrl = "http://localhost:9999" + sce.getServletContext().getContextPath() + "/cbr";
+//            Endpoint.publish(webServiceUrl, new CbrKoInfo());
         }
         catch (Exception e){
-            e.printStackTrace();
+            logger.error(e);
         }
     }
 

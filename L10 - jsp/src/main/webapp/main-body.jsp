@@ -43,18 +43,12 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>Минимальная зарплата</td>
-                    <td>
-                        ${staffsalaries.getMinSalary()}
-                    </td>
-                </tr>
-                <tr>
                     <td colspan="2">ФИО работника с максимальной зарплатой</td>
                     <td colspan="2" id="main-person-with-max-salary"></td>
                 </tr>
                 <tr>
                     <td colspan="4">
-                        <button id="main-cbr-services" onclick="getCbrData($('#main-cbr-lastupdate'))" >
+                        <button id="main-cbr-services" onclick="updateCbrInfo()" >
                             получить данные ЦБ по кредитным организациям
                         </button>
                     </td>
@@ -64,6 +58,21 @@
                     <td id="main-cbr-lastupdate"></td>
                     <td></td>
                     <td></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <label for="main_bank_input">Банк</label>
+                        <input type="text" id="main_bank_input" list="main-bank-list" placeholder="Выбрать банк..." onselect="">
+                        <datalist id="main-bank-list">
+                        </datalist>
+                    </td>
+                    <td colspan="2">
+
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                    </td>
                 </tr>
             </table>
             <p></p>

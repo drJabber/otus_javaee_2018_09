@@ -244,9 +244,15 @@
       <!--<scope>compile</scope>-->
     </dependency>
 
+      <!-- https://mvnrepository.com/artifact/xerces/xercesImpl -->
+      <!-- https://mvnrepository.com/artifact/activesoap/jaxb-xercesImpl -->
+      <dependency>
+          <groupId>activesoap</groupId>
+          <artifactId>jaxb-xercesImpl</artifactId>
+          <version>1.5</version>
+      </dependency>
 
   </dependencies>
-
   <build>
     <finalName>rnk.l10</finalName>
 

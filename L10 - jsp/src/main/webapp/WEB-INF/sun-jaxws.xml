@@ -10,6 +10,6 @@
             url-pattern="/staffutils"  />
     <endpoint
             name="StaffUtils"
-            implementation="rnk.l10.soap.StaffUtilsWebService"
-            url-pattern="/staffutils"  />
+            implementation="rnk.l10.soap.CbrKoInfo"
+            url-pattern="/cbr/*"  />
 </endpoints>

@@ -151,6 +151,16 @@
         <res-auth>Container</res-auth>
     </resource-ref>
 
+    <filter>
+        <filter-name>CorsFilter</filter-name>
+        <filter-class>org.apache.catalina.filters.CorsFilter</filter-class>
+        <async-supported>true</async-supported>
+    </filter>
+    <filter-mapping>
+        <filter-name>CorsFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
     <!--<service-ref>-->
         <!--<service-ref-name>services/staffutils</service-ref-name>-->
         <!--<service-interface>rnk.l10.soap.StaffUtils</service-interface>-->
