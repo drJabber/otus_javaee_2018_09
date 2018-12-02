@@ -61,17 +61,23 @@
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <label for="main_bank_input">Банк</label>
-                        <input type="text" id="main_bank_input" list="main-bank-list" placeholder="Выбрать банк..." onselect="">
+                        <label for="main-bank-input">Банк</label>
+                        <input type="text" id="main-bank-input" list="main-bank-list" placeholder="Выбрать банк..." oninput="updateCoInfo()">
                         <datalist id="main-bank-list">
                         </datalist>
                     </td>
                     <td colspan="2">
-
+                        <label for="main-bank-input">Банк</label>
+                        <input type="text" id="main-bank-input2" list="main-bank-list" placeholder="Введите название банка...">
+                        <button id="main-cbr-find-bank" onclick="updateCoInfo2()" >
+                            найти банк
+                        </button>
                     </td>
                 </tr>
                 <tr>
                     <td colspan="4">
+                        <div id="main-bank-info">
+                        </div>
                     </td>
                 </tr>
             </table>

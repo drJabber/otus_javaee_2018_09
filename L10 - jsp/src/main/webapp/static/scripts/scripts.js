@@ -274,8 +274,40 @@ var cbrLastUpdate = function (element,data){
 var cbrGetListOfBanks=function (element,data){
     var json=$.xml2json(data).Body.result.BIC;
     $.each(json,function(i,item){
-        element.append($('<option></option>').attr('data-value',item.BIC).attr('value',item.NM));
+        element.append($('<option></option>').attr('data-value',item.intCode).attr('value',item.NM));
     })
+}
+
+var cbrGetCO=function (element,data){
+    var json=$.xml2json(data).Body.result.CO;
+    $.each(json,function(i,item){
+        element.append($('<div></div>').text(i+": "+item));
+    });
+    element.append($('<hr></hr>'));
+}
+
+var cbrGetCO2=function (element,data){
+    element.text("");
+    var json=$.xml2json(data).Body.result.EnumCredits;
+    if (Array.isArray(json)){
+        $.each(json,function(i,item){
+            getCbrData(
+                {
+                    url:'http://localhost:8080/cbr/co/'+item.IntCode,
+                    element:$('#main-bank-info'),
+                    onSuccess:cbrGetCO
+                }
+            )
+        })
+    }else{
+        getCbrData(
+            {
+                url:'http://localhost:8080/cbr/co/'+json.IntCode,
+                element:$('#main-bank-info'),
+                onSuccess:cbrGetCO
+            }
+        )
+    }
 }
 
 function updateCbrInfo(){
@@ -294,6 +326,33 @@ function updateCbrInfo(){
         }
     )
 }
+
+function updateCoInfo(){
+    var bank=$('#main-bank-input').val();
+    var option=$("#main-bank-list option[value='"+bank+"']");
+    var data_value=option.data('value');
+    $('#main-bank-info').text("");
+    getCbrData(
+        {
+            url:'http://localhost:8080/cbr/co/'+data_value,
+            element:$('#main-bank-info'),
+            onSuccess:cbrGetCO
+        }
+    )
+}
+
+function updateCoInfo2(){
+    var bank=$('#main-bank-input2').val();
+    $('#main-bank-info').text("");
+    getCbrData(
+        {
+            url:'http://localhost:8080/cbr/co2/'+bank,
+            element:$('#main-bank-info'),
+            onSuccess:cbrGetCO2
+        }
+    )
+}
+
 function getCbrData(mydata){
     $.ajax({
         url: mydata.url,
