@@ -35,7 +35,6 @@
     <servlet>
         <servlet-name>Main page</servlet-name>
         <jsp-file>/index.jsp</jsp-file>
-        <!--<async-supported>true</async-supported>-->
     </servlet>
     <servlet-mapping>
         <servlet-name>Main page</servlet-name>

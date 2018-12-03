@@ -32,16 +32,28 @@
                         <jsp:include page="faq-body.jsp" />
                     </c:when>
                     <c:when test="${body_parameter.equals('admin')}">
-                        <jsp:include page="admin-body.jsp" />
+                        <jsp:include page="WEB-INF/admin-search-body.jsp" />
                     </c:when>
                     <c:when test="${body_parameter.equals('admin/search')}">
-                        <jsp:include page="admin-body.jsp" />
+                        <jsp:include page="WEB-INF/admin-search-body.jsp" />
+                    </c:when>
+                    <c:when test="${body_parameter.equals('admin/staff')}">
+                        <jsp:include page="WEB-INF/admin-staff-body.jsp" />
+                    </c:when>
+                    <c:when test="${body_parameter.equals('admin/positions')}">
+                        <jsp:include page="WEB-INF/admin-positions-body.jsp" />
+                    </c:when>
+                    <c:when test="${body_parameter.equals('admin/depts')}">
+                        <jsp:include page="WEB-INF/admin-depts-body.jsp" />
+                    </c:when>
+                    <c:when test="${body_parameter.equals('admin/roles')}">
+                        <jsp:include page="WEB-INF/admin-roles-body.jsp" />
+                    </c:when>
+                    <c:when test="${body_parameter.equals('admin/authorities')}">
+                        <jsp:include page="WEB-INF/admin-authorities-body.jsp" />
                     </c:when>
                     <c:when test="${body_parameter.equals('admin/stats')}">
                         <jsp:include  page="WEB-INF/stats-report.jsp" />
-                        <%--<div id="main-stats-body">--%>
-                        <%--</div>--%>
-                        <%--<script>load_stats()</script>--%>
                     </c:when>
                     <c:when test="${body_parameter.equals('login')}">
                         <jsp:include page="login-body.jsp" />
