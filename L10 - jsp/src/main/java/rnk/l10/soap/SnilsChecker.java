@@ -1,5 +1,7 @@
 package rnk.l10.soap;
 
+import rnk.l10.exception.RnkWebServiceException;
+
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebResult;

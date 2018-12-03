@@ -45,7 +45,6 @@
                         </c:when>
                         <c:otherwise>
                             <li><a class="root-menuitem" href="${context_path}/main/logout">Выход</a></li>
-                            <li><a class="root-menuitem" href="${context_path}/main/admin/stats">Статистика</a></li>
                         </c:otherwise>
                     </c:choose>
                 </ul>

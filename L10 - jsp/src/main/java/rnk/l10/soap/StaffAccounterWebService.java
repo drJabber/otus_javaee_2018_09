@@ -1,34 +1,35 @@
 package rnk.l10.soap;
 
+import rnk.l10.exception.RnkWebServiceException;
+import rnk.l10.utils.StaffUtils;
+
 import javax.jws.WebMethod;
-import javax.jws.WebParam;
 import javax.jws.WebResult;
 import javax.jws.WebService;
-import javax.jws.soap.SOAPBinding;
 
-@WebService(serviceName="StaffUtilsWebService",
-        name="StaffUtils",
-        endpointInterface = "rnk.l10.soap.StaffUtils",
+@WebService(serviceName="StaffAccounterWebService",
+        name="StaffAccounter",
+        endpointInterface = "rnk.l10.soap.StaffAccounter",
         portName="staffutils",
         targetNamespace = "urn://rnk.l10.soap")
-public class StaffUtilsWebService implements StaffUtils{
+public class StaffAccounterWebService implements StaffAccounter {
     @WebMethod @WebResult(name="result")
-    public Double getMaxSalary() throws RnkWebServiceException{
-        return (new rnk.l10.utils.StaffUtils()).getMaxSalary();
+    public Double getMaxSalary() throws RnkWebServiceException {
+        return StaffUtils.getMaxSalary();
     };
 
     @WebMethod @WebResult(name="result")
     public Double getMinSalary() throws RnkWebServiceException{
-        return (new rnk.l10.utils.StaffUtils()).getMinSalary();
+        return StaffUtils.getMinSalary();
     };
 
     @WebMethod @WebResult(name="result")
     public Double getAvgSalary() throws RnkWebServiceException{
-        return (new rnk.l10.utils.StaffUtils()).getAvgSalary();
+        return StaffUtils.getAvgSalary();
     };
 
     @WebMethod @WebResult(name="result")
     public String getPersonWithMaxSalary()throws RnkWebServiceException{
-        return (new rnk.l10.utils.StaffUtils()).getPersonWithMaxSalary();
+        return StaffUtils.getPersonWithMaxSalary();
     };
 }

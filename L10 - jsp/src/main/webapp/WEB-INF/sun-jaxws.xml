@@ -6,7 +6,7 @@
             url-pattern="/snilschecker"  />
     <endpoint
             name="StaffUtils"
-            implementation="rnk.l10.soap.StaffUtilsWebService"
+            implementation="rnk.l10.soap.StaffAccounterWebService"
             url-pattern="/staffutils"  />
     <endpoint
             name="StaffUtils"

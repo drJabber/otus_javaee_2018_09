@@ -1,4 +1,4 @@
-package rnk.l10.soap;
+package rnk.l10.exception;
 
 import javax.xml.ws.WebFault;
 

@@ -35,7 +35,6 @@
     <servlet>
         <servlet-name>Main page</servlet-name>
         <jsp-file>/index.jsp</jsp-file>
-        <!--<async-supported>true</async-supported>-->
     </servlet>
     <servlet-mapping>
         <servlet-name>Main page</servlet-name>
@@ -163,7 +162,7 @@
 
     <!--<service-ref>-->
         <!--<service-ref-name>services/staffutils</service-ref-name>-->
-        <!--<service-interface>rnk.l10.soap.StaffUtils</service-interface>-->
+        <!--<service-interface>rnk.l10.soap.StaffAccounter</service-interface>-->
         <!--<wsdl-file>http://locathost:8080/staffutils?wsdl</wsdl-file>-->
     <!--</service-ref>-->
 </web-app>

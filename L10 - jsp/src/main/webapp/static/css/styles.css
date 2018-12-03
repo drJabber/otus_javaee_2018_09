@@ -288,6 +288,11 @@ form.login-form{
   width:20%;
 }
 
+.display-search-header-narrow {
+  background-color: #666;
+  width:8%;
+}
+
 .odd .display-search-column {
   background-color: #AAA
 }

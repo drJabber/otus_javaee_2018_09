@@ -9,6 +9,7 @@
 <div>
     <% String context_path=request.getContextPath(); %>
     <% pageContext.setAttribute("path_info",request.getPathInfo()); %>
+
     <jsp:useBean id="search" class="rnk.l10.entities.beans.StaffSearchBean" scope="session" />
     <c:choose>
         <c:when test="${!empty paramValues.login[0]}">
