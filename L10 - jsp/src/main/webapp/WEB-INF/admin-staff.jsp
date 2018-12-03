@@ -13,7 +13,7 @@
 
         <main class="admin-container">
 
-            <%@include file="WEB-INF/admin-menu.jsp"%>
+            <%@include file="admin-menu.jsp"%>
 
             <div>
                 <jsp:useBean id="staff" class="rnk.l10.entities.beans.StaffDisplayBean" scope="session" />

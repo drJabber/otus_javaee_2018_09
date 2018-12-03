@@ -28,6 +28,12 @@
                     <c:when test="${body_parameter.equals('members')}">
                         <jsp:include page="members-body.jsp" />
                     </c:when>
+                    <c:when test="${body_parameter.equals('main/soap')}">
+                        <jsp:include page="main-soap-body.jsp" />
+                    </c:when>
+                    <c:when test="${body_parameter.equals('main/rest')}">
+                        <jsp:include page="main-rest-body.jsp" />
+                    </c:when>
                     <c:when test="${body_parameter.equals('faq')}">
                         <jsp:include page="faq-body.jsp" />
                     </c:when>

@@ -13,7 +13,7 @@
 
         <main class="admin-container">
 
-            <%@include file="WEB-INF/admin-menu.jsp"%>
+            <%@include file="admin-menu.jsp"%>
 
             <div class="admin-form-container">
                 <form id="admin-form" class="admin-form" action="${context_path}/main/admin/search" method="post" accept-charset="UTF-8">

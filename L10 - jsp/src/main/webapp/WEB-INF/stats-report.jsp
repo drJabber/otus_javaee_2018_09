@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="display" uri="http://displaytag.sf.net" %>
+
 <jsp:useBean id="statsReportProducer" class="rnk.l10.entities.beans.StatsReportProducer" scope="session" />
     <display:table requestURI="admin/stats" htmlId="stats-report-table" name="${statsReportProducer.produce(pageContext)}"  sort="list" pagesize="20" class="stats-report" >
         <display:column property="urn" title="urn"   class="stats-report-column" headerClass="stats-report-header"/>

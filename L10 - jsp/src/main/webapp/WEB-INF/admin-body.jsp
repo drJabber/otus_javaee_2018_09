@@ -12,7 +12,7 @@
 
         <main class="admin-container">
 
-            <%@include file="WEB-INF/admin-menu.jsp"%>
+            <%@include file="admin-menu.jsp"%>
 
             <div>
                 <p>Это админка</p>
