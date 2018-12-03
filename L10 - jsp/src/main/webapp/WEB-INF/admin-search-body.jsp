@@ -59,7 +59,7 @@
             
             <div class="admin-form-response-container">
                 <div class="admin-form-response" id="admin-form-response">Результаты поиска:<br/>
-                    <jsp:include page="WEB-INF/admin-search-results.jsp" />
+                    <jsp:include page="admin-search-results.jsp" />
                 </div>
             </div>
         </main>

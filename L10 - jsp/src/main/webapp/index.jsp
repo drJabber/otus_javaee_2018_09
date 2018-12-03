@@ -28,10 +28,10 @@
                     <c:when test="${body_parameter.equals('members')}">
                         <jsp:include page="members-body.jsp" />
                     </c:when>
-                    <c:when test="${body_parameter.equals('main/soap')}">
+                    <c:when test="${body_parameter.equals('soap')}">
                         <jsp:include page="main-soap-body.jsp" />
                     </c:when>
-                    <c:when test="${body_parameter.equals('main/rest')}">
+                    <c:when test="${body_parameter.equals('rest')}">
                         <jsp:include page="main-rest-body.jsp" />
                     </c:when>
                     <c:when test="${body_parameter.equals('faq')}">
@@ -44,7 +44,7 @@
                         <jsp:include page="WEB-INF/admin-search-body.jsp" />
                     </c:when>
                     <c:when test="${body_parameter.equals('admin/staff')}">
-                        <jsp:include page="WEB-INF/admin-staff-body.jsp" />
+                        <jsp:include page="WEB-INF/admin-staff.jsp" />
                     </c:when>
                     <c:when test="${body_parameter.equals('admin/positions')}">
                         <jsp:include page="WEB-INF/admin-positions-body.jsp" />

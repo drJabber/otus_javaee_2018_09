@@ -13,6 +13,8 @@
         <s:statsx />
 
         <main class="main-container">
+            <%@include file="main-body-menu.jsp"%>
+
             <p>SOAP сервисы</p>
 
             <table class="main-table-class">

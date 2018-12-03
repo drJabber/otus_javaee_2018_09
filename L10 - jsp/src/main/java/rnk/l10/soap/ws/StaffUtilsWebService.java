@@ -17,14 +17,14 @@ import javax.xml.ws.WebServiceFeature;
  * Generated source version: 2.2
  * 
  */
-@WebServiceClient(name = "StaffUtilsWebService", targetNamespace = "urn://rnk.l10.soap", wsdlLocation = "http://localhost:8080/staffutils?wsdl")
+@WebServiceClient(name = "StaffAccounterWebService", targetNamespace = "urn://rnk.l10.soap", wsdlLocation = "http://localhost:8080/staffutils?wsdl")
 public class StaffUtilsWebService
     extends Service
 {
 
     private final static URL STAFFUTILSWEBSERVICE_WSDL_LOCATION;
     private final static WebServiceException STAFFUTILSWEBSERVICE_EXCEPTION;
-    private final static QName STAFFUTILSWEBSERVICE_QNAME = new QName("urn://rnk.l10.soap", "StaffUtilsWebService");
+    private final static QName STAFFUTILSWEBSERVICE_QNAME = new QName("urn://rnk.l10.soap", "StaffAccounterWebService");
 
     static {
         URL url = null;
@@ -65,7 +65,7 @@ public class StaffUtilsWebService
     /**
      * 
      * @return
-     *     returns StaffUtils
+     *     returns StaffAccounter
      */
     @WebEndpoint(name = "staffutils")
     public StaffUtils getStaffutils() {
@@ -77,7 +77,7 @@ public class StaffUtilsWebService
      * @param features
      *     A list of {@link javax.xml.ws.WebServiceFeature} to configure on the proxy.  Supported features not in the <code>features</code> parameter will have their default values.
      * @return
-     *     returns StaffUtils
+     *     returns StaffAccounter
      */
     @WebEndpoint(name = "staffutils")
     public StaffUtils getStaffutils(WebServiceFeature... features) {

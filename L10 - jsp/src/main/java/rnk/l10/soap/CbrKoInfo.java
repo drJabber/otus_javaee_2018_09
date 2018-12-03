@@ -78,7 +78,6 @@ public class CbrKoInfo implements Provider<Source> {
             throw new UnsupportedOperationException("cbr service nothing to query");
         }
 
-        Gson gson=new Gson();
         switch (size){
             case 1: return new CbrHelper(tokens.get(0),null,null) ;
             case 2: return new CbrHelper(tokens.get(0), tokens.get(1), null);

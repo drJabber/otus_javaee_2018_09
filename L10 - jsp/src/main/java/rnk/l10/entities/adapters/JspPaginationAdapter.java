@@ -1,27 +1,30 @@
+package rnk.l10.entities.adapters;
+
 import org.displaytag.pagination.PaginatedList;
 import org.displaytag.properties.SortOrderEnum;
 
 import java.util.List;
 
-class JspPaginatorAdapter implements PaginatedList{
+public class JspPaginationAdapter implements PaginatedList{
     private final List<Object> list;
-    private int page;
-    private int page_size;
-    private int full_size;
+    private Integer page;
+    private Integer page_size;
+    private Integer full_size;
+    private String sort;
+    private String direction;
 
-    public JspPaginatorAdapter(List<Object> list, Long page, Long page_size, Long full_size, sort : String; direction : String){
+
+    public JspPaginationAdapter(List list, Integer page, Integer page_size, Integer full_size, String sort, String direction){
         this.list=list;
         this.page=page;
         this.page_size=page_size;
         this.full_size=full_size;
-        this.sort=sort;
-        this.direction=direction.toLowerCase();
+        this.sort=sort==null?"":sort;
+        this.direction=direction==null?"":direction.toLowerCase();
     }
 
     public List<Object> getList(){
-        int ofs = this.page_size * (this.page - 1);
-        List<Object> sublist = this.list.subList(ofs, Math.min(this.full_size, ofs + this.page_size));
-        return sublist;
+        return list;
     }
 
     public int getPageNumber(){

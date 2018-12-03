@@ -13,8 +13,8 @@
         <main class="main-container">
             <p>Это главная страница гаражного кооператива "Шарабан".</p>
             <p>В субботу 20.11.2018 состоится собрание членов кооператива.</p>
-            
-            <a class="root-menuitem" href="${context_path}/main/soap">Сервисы SOAP | </a>
-            <a class="root-menuitem" href="${context_path}/main/rest">Сервисы REST</a>
+
+            <%@include file="main-body-menu.jsp"%>
+
         </main>
 

@@ -2,27 +2,24 @@ package rnk.l10.entities.beans;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
-import lombok.Data;
-import org.apache.http.HttpRequest;
 import org.apache.log4j.Logger;
-import org.hibernate.Session;
 import rnk.l10.entities.StaffEntity;
-import rnk.l10.entities.StatsEntity;
 
 import javax.persistence.*;
-import javax.servlet.http.HttpServletRequest;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import javax.servlet.jsp.PageContext;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.*;
 import org.displaytag.pagination.PaginatedList;
+import rnk.l10.entities.adapters.JspPaginationAdapter;
 
 //@Data
 public class StaffDisplayBean{
     private static final Logger logger = Logger.getLogger(StaffDisplayBean.class.getName());
     public static final String PERSISTENCE_UNIT_NAME="rnk-jpa";
     private static final EntityManagerFactory emf= Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME); //tomcat, see
-    private static final int PAGE_SIZE=10;
+    private static final Integer PAGE_SIZE=10;
 
     private String login;
     private String fio;
@@ -47,7 +44,7 @@ public class StaffDisplayBean{
         return gson.toJsonTree(this);
     }
 
-    public Integet getPageSize(){
+    public Integer getPageSize(){
         return PAGE_SIZE;
     }
 
@@ -61,16 +58,25 @@ public class StaffDisplayBean{
             CriteriaQuery<Long> qc=cb.createQuery(Long.class);
             qc.select(cb.count(qc.from(StaffEntity.class)));
 
-            Long full_size=em.createQuery(qc).getSingleResult();
-            Long page_size=getPageSize();
-            Long page_number=context.getRequest().getParameter("page");
+            Integer full_size=em.createQuery(qc).getSingleResult().intValue();
+            Integer page_size=getPageSize().intValue();
+
+
+
+            Integer page_number;
+            try{
+                page_number=Integer.parseInt(context.getRequest().getParameter("page"));
+            }catch(Exception ex){
+                page_number=1;
+            }
+
             String sort=context.getRequest().getParameter("sort");
             String dir=context.getRequest().getParameter("dir");
 
             CriteriaQuery<StaffEntity> q=cb.createQuery(StaffEntity.class);
             Root<StaffEntity> from=q.from(StaffEntity.class);
             CriteriaQuery<StaffEntity> qe=q.select(from);
-            TypedQuery<StaffEntity> typedQuery=em.createQuery(select).setFirstResult((page_number-1)*page_size).setMaxResults(page_size);;
+            TypedQuery<StaffEntity> typedQuery=em.createQuery(qe).setFirstResult((page_number-1)*page_size).setMaxResults(page_size);;
 
             List<StaffEntity> l=typedQuery.getResultList();
 
@@ -86,48 +92,4 @@ public class StaffDisplayBean{
         }
     }
     
-    public List<StaffEntity> find(PageContext context){
-        if (!isEmpty()){
-            EntityManager em=emf.createEntityManager();
-            EntityTransaction et=em.getTransaction();
-            try{
-                et.begin();
-                String query_string="select s from StaffEntity s %s where %s order by s.id desc";
-                String likes="";
-                String joins="";
-                boolean has_period=false;
-
-                }else{
-                    logger.info(String.format(query_string, joins, likes));
-                    String final_jpql=String.format(query_string, joins, likes);
-
-                    SearchResultCache cache= (SearchResultCache) context.getServletContext().getAttribute("admin-search-cache");
-                    if (cache!=null){
-                        List<StaffEntity> result=cache.getQueryResult(final_jpql);
-                        if (result!=null){
-                            return result;
-                        }
-                    }
-
-                    Query q = em.createQuery(final_jpql);
-
-                    List<StaffEntity> l=q.getResultList();
-                    et.commit();
-
-                    context.getRequest().setAttribute("admin-search-result",new SearchResultCacheItem(final_jpql,l));
-                    return l;
-                }
-            }catch (Exception ex){
-                logger.error("error:",ex);
-                et.rollback();
-                return null;
-            }finally{
-                em.close();
-            }
-
-        }
-
-        return null;
-
-    }
 }
