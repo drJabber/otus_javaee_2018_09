@@ -17,7 +17,7 @@
 
             <div>
                 <jsp:useBean id="staff" class="rnk.l10.entities.beans.StaffDisplayBean" scope="session" />
-                <display:table requestURI="displaytag.jsp" name="${staff.get(pageContext)}" decorator="rnk.l10.entities.decorators.StaffDisplayDecorator" sort="list" pagesize="10" class="display-search" >
+                <display:table sort="list" pagesize="${staff.getPageSize()}" requestURI="displaytag.jsp" name="${staff.get(pageContext)}" decorator="rnk.l10.entities.decorators.StaffDisplayDecorator" class="display-search" >
                     <display:column property="fio" title="Фио"   class="display-search-column" headerClass="display-search-header"/>
                     <display:column property="login" title="Login"  class="display-search-column" headerClass="display-search-header"/>
                     <display:column property="position" title="Должность"   class="display-search-column" headerClass="display-search-header" />

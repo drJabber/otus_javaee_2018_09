@@ -22,6 +22,7 @@ public class StaffDisplayBean{
     private static final Logger logger = Logger.getLogger(StaffDisplayBean.class.getName());
     public static final String PERSISTENCE_UNIT_NAME="rnk-jpa";
     private static final EntityManagerFactory emf= Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME); //tomcat, see
+    private static final int PAGE_SIZE=10;
 
     private String login;
     private String fio;
@@ -46,7 +47,43 @@ public class StaffDisplayBean{
         return gson.toJsonTree(this);
     }
 
+    public Integet getPageSize(){
+        return PAGE_SIZE;
+    }
+
     public PaginatedList get(PageContext context){
+        EntityManager em=emf.createEntityManager();
+        EntityTransaction et=em.getTransaction();
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        try{
+            et.begin();
+
+            CriteriaQuery<Long> qc=cb.createQuery(Long.class);
+            qc.select(cb.count(qc.from(StaffEntity.class)));
+
+            Long full_size=em.createQuery(qc).getSingleResult();
+            Long page_size=getPageSize();
+            Long page_number=context.getRequest().getParameter("page");
+            String sort=context.getRequest().getParameter("sort");
+            String dir=context.getRequest().getParameter("dir");
+
+            CriteriaQuery<StaffEntity> q=cb.createQuery(StaffEntity.class);
+            Root<StaffEntity> from=q.from(StaffEntity.class);
+            CriteriaQuery<StaffEntity> qe=q.select(from);
+            TypedQuery<StaffEntity> typedQuery=em.createQuery(select).setFirstResult((page_number-1)*page_size).setMaxResults(page_size);;
+
+            List<StaffEntity> l=typedQuery.getResultList();
+
+            et.commit();
+
+            return new JspPaginationAdapter(l,page_number,page_size,full_size,sort,dir);
+        }catch (Exception ex){
+            logger.error("error:",ex);
+            et.rollback();
+            return null;
+        }finally{
+            em.close();
+        }
     }
     
     public List<StaffEntity> find(PageContext context){
@@ -60,42 +97,6 @@ public class StaffDisplayBean{
                 String joins="";
                 boolean has_period=false;
 
-                if ((login!=null)&&(!login.isEmpty())) {
-                    likes=likes.concat("(s.login like '%").concat(login).concat("%') and ");
-                }
-                if ((fio!=null)&&(!fio.isEmpty())) {
-                    likes=likes.concat("(s.fio like '%").concat(fio).concat("%') and ");
-                }
-                if ((position!=null)&&(!position.isEmpty())) {
-//                    likes=likes.concat(" 1=1 and ");
-                    likes=likes.concat("(p.position like '%").concat(position).concat("%') and ");
-                    joins=joins.concat("join fetch s.position p ");
-                }
-                if ((town!=null)&&(!town.isEmpty())) {
-                    likes=likes.concat("(d.town like '%").concat(town).concat("%') and ");
-                    joins=joins.concat("join fetch s.departament d ");
-                }
-                if ((ageMin!=null)&&(ageMax!=null)&&(ageMin>0)&&(ageMax>0)&&(ageMax>ageMin)) {
-                    has_period=true;
-                    Calendar calendar=new GregorianCalendar();
-                    calendar.setTimeZone(TimeZone.getTimeZone("UTC+3"));
-                    calendar.setTime(new Date());
-                    calendar.add(Calendar.YEAR,-ageMin);
-                    Date bdMax=calendar.getTime();
-
-                    calendar.setTime(new Date());
-                    calendar.add(Calendar.YEAR,-ageMax);
-                    Date bdMin=calendar.getTime();
-                    DateFormat fmt=new SimpleDateFormat("yyyy-MM-dd");
-
-                    likes=likes.concat("(birth_date between '").concat(fmt.format(bdMin)).concat("' and '").concat(fmt.format(bdMax)).concat("') ");
-                }
-                if (!likes.isEmpty() && !has_period){
-                    likes=likes.substring(0,likes.length()-4);
-                }
-                if (likes.isEmpty()){
-                    et.rollback();
-                    return null;
                 }else{
                     logger.info(String.format(query_string, joins, likes));
                     String final_jpql=String.format(query_string, joins, likes);
