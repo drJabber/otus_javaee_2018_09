@@ -327,3 +327,32 @@ form.login-form{
   table-layout: fixed;
 }
 
+.split-content-left {
+    float: left;
+    width: 49%;
+}
+
+.split-content-right {
+    float: right;
+    width: 49%;
+}
+
+.box {
+    padding: 6px;
+    margin-bottom: 10px;
+    background-color: #f6f6f6;
+    color: #505050;
+    line-height: 1.5em;
+    border: 1px solid #e4e4e4;
+    word-wrap: break-word;
+    border-radius: 3px;
+}
+
+.tabular p {
+    margin: 0;
+    padding: 3px 0 3px 0;
+        padding-left: 0px;
+    padding-left: 180px;
+    min-height: 1.8em;
+    clear: left;
+}

@@ -5,7 +5,7 @@
   Time: 7:29
   To change this template use File | Settings | File Templates.
 --%>
-<%@ taglib prefix="s" uri="/stats-collector" %>
+<%@ taglib prefix="s" uri="/rnk-tags" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean id="staffsalaries" class="rnk.l10.entities.beans.StaffUtilsWrapper" scope="session" />
