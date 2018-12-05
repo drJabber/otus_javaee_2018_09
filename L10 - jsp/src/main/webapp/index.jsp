@@ -46,12 +46,10 @@
                     <c:when test="${body_parameter.equals('admin/staff')}">
                         <jsp:include page="WEB-INF/admin-staff.jsp" />
                     </c:when>
-                    <!-- add staff -->
                     <c:when test="${body_parameter.equals('admin/staffeditor')}">
                         <jsp:include page="WEB-INF/admin-staff-editor.jsp" />
                     </c:when>
-                    <!-- staff staff -->
-                     <c:when test="${s:matches('admin/staffeditor/d+',body_parameter)}"> 
+                     <c:when test="${s:matches('admin/staffeditor/d+',body_parameter)}">
                         <jsp:include page="WEB-INF/admin-staff-editor.jsp" />
                     </c:when>
                     <c:when test="${body_parameter.equals('admin/positions')}">

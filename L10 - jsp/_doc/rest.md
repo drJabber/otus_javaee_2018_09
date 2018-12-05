@@ -1,0 +1,1 @@
+Help for credit calculator API
