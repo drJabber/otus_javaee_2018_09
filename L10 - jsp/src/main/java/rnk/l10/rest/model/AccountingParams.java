@@ -11,22 +11,23 @@ import javax.ws.rs.QueryParam;
 
 @Data
 @FieldNameConstants
-
 public class AccountingParams {
-    @NotNull(message = "Credit term should not be empty")
-    @DecimalMin(value = "1",message = "Credti term should be greater than 0")
+    @NotNull(message = "Укажите срок кредита")
+    @DecimalMin(value = "1",message = "Срок кредита - положительное число")
+    @DecimalMax(value = "99",message = "Скрок кредита - не более 99 лет")
     @QueryParam(value="t")
-    private int numberOfPeriods;
+    private Integer numberOfPeriods;
 
-    @NotNull(message = "Credit amount should not be empty")
-    @Positive(message = "Credit amount shold be greater than 0")
-
+    @NotNull(message = "Укажите сумму кредита")
+    @Positive(message = "Сумма кредита - положительное число")
+    @Max(value = 1000000000,message = "Скрок кредита - не более 99 лет")
     @QueryParam(value="cr")
-    private double amountOfCredit;
+    private Double amountOfCredit;
 
-    @NotNull(message = "Credit rate shoul not be empty")
-    @Positive(message = "Credit rate should be greater than 0")
-    @Max(value = 1,message = "Credit rate should be less than 1")
+    @NotNull(message = "Укажите кредитную ставку")
+    @Positive(message = "Кредитная ставка - положительное число")
+    @Max(value = 1,message = "Кредитная ставка не должна быть больше 1")
+    @DecimalMin(value = "0.001",message = "Кредитная ставка должна быть больше 0")
     @QueryParam(value="r")
-    private double rate;
+    private Double rate;
 }

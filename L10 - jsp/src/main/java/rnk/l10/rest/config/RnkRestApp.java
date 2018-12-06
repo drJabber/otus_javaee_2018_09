@@ -5,8 +5,9 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.glassfish.jersey.jackson.internal.jackson.jaxrs.json.JacksonJaxbJsonProvider;
 import org.glassfish.jersey.server.ResourceConfig;
+import rnk.l10.exception.ConstraintViolationExceptionMapper;
+import rnk.l10.exception.QueryParamExceptionMapper;
 import rnk.l10.exception.RnkExceptionMapper;
-import rnk.l10.rest.RnkAccounterParameterFilter;
 import rnk.l10.rest.RnkAnnuitetCreditAccounterImpl;
 import rnk.l10.rest.RnkDifferentialCreditAccounterImpl;
 
@@ -43,11 +44,11 @@ public class RnkRestApp extends ResourceConfig {
 
 
     private void registerExceptionMapperClasses(){
-        register(RnkExceptionMapper.class);
+        register(ConstraintViolationExceptionMapper.class);
+        register(QueryParamExceptionMapper.class);
     }
 
     private void registerFilterClasses(){
-        register(RnkAccounterParameterFilter.class);
 //        register(RnkCorsFilter.class);
     }
 
