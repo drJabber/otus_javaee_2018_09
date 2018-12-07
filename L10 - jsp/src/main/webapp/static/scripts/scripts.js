@@ -1,3 +1,12 @@
+String.prototype.format = function() {
+    var str = this;
+    for (var i = 0; i < arguments.length; i++) {
+        var reg = new RegExp("\\{" + i + "\\}", "gm");
+        str = str.replace(reg, arguments[i]);
+    }
+    return str;
+}
+
 Date.prototype.toIsoString = function() {
     var tzo = -this.getTimezoneOffset(),
         dif = tzo >= 0 ? '+' : '-',

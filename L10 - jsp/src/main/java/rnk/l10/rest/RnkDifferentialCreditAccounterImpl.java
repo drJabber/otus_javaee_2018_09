@@ -1,6 +1,10 @@
 package rnk.l10.rest;
 
 //import io.swagger.annotations.*;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.apache.log4j.Logger;
 import rnk.l10.rest.model.AccountingParams;
 
@@ -72,6 +76,16 @@ public class RnkDifferentialCreditAccounterImpl implements  RnkCreditAccounter {
 //            @ApiImplicitParam(name = "amountOfCredit", value = "Размер кредита", dataType = "double", paramType = "query"),
 //            @ApiImplicitParam(name = "rate", value = "Ставка по кредиту за период (0.05=5%)", dataType = "double", paramType = "query")
 //    })
+
+    @Operation(
+            summary="Расчет дифференцированного платежа по кредиту",
+            tags = {"Расчет","Кредит","График"},
+            description="Расчет дифференцированного платежа по кредиту",
+            responses = {@ApiResponse(description = "Список сумм платежей", content = @Content(schema = @Schema(implementation = List.class))),
+                    @ApiResponse(responseCode = "400", description = "Ошибка в параметрах запроса"),
+                    @ApiResponse(responseCode = "404", description = "Параметр не найден")
+            }
+    )
     public List<Double> computePayment(@Valid @BeanParam AccountingParams params) {
         List<Double> result=new ArrayList<>();
         int T=params.getNumberOfPeriods();

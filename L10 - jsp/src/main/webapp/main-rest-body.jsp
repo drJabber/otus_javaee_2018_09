@@ -45,25 +45,65 @@
                 </tr>
                 <tr>
                     <td width="25%"><label id="credit-rate-diff-label">Годовая ставка</label></td>
-                    <td width="25%"><input type="text" id="credit-rate-diff-text" placeholder="Ставка, %"/></td>
+                    <td width="25%"><input type="text" id="credit-rate-diff-text" placeholder="Ставка, %" /></td>
                     <td width="25%"><label id="credit-rate-ann-label">Годовая ставка</label></td>
                     <td width="25%"><input type="text" id="credit-rate-ann-text" placeholder="Ставка, %"/></td>
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <button id="main-salary-btn" onclick="" >
+                        <button id="main-salary-btn1" onclick="payment_click({
+                            version:'v1',
+                            T : $('#credit-period-diff-text'),
+                            S : $('#credit-sum-diff-text'),
+                            R : $('#credit-rate-diff-text'),
+                            result:$('#credit-rate-diff-result')
+                        })" >
                             рассчитать дифференцированный платеж
                         </button>
                     </td>
                     <td colspan="2">
-                        <button id="main-salary-btn" onclick="" >
+                        <button id="main-salary-btn2" onclick="payment_click({
+                            version:'v2',
+                            T : $('#credit-period-ann-text'),
+                            S : $('#credit-sum-ann-text'),
+                            R : $('#credit-rate-ann-text'),
+                            result:$('#credit-rate-ann-result')
+                        })" >
                             рассчитать аннуитетный платеж
                         </button>
                     </td>
+                    <script>
+                        function render_result(data, result){
+                            $.each(data,function(i,item){
+                                result.append($('<div></div>').text(item));
+                            });
+                        }
+
+                        function render_error(data, result){
+                            $.each(data.errors,function(i,item){
+                                result.append($('<div></div>').text(item.message));
+                            });
+                        }
+
+                        function payment_click(data){
+                            var url="http://localhost:8080/api/{0}/accounter/compute?t={1}&cr={2}&r={3}"
+                                         .format(data.version,data.T.val(),data.S.val(),data.R.val());
+                            $.ajax({
+                                url: url,
+                                method:'get',
+                                success: function (d) {
+                                    render_result(d,data.result);
+                                },
+                                error: function (err) {
+                                    render_error(err,data.result);
+                                }
+                            })
+                        }
+                    </script>
                 </tr>
                 <tr>
-                    <td colspan="2">результаты расчета</td>
-                    <td colspan="2">результаты расчета</td>
+                    <td colspan="2" id="credit-rate-diff-result">результаты расчета</td>
+                    <td colspan="2" id="credit-rate-ann-result">результаты расчета</td>
                 </tr>
             </table>
         </main>
