@@ -17,9 +17,19 @@ public class StaffDisplayDecorator extends TableDecorator {
     }
 
     public String getEdit(){
-        return String.format("<a href='/main/admin/staffeditor/%d'>edit</a>", ((StaffEntity) getCurrentRowObject()).getId());
+        int id=((StaffEntity) getCurrentRowObject()).getId();
+        if (id>=0){
+            return String.format("<a href='/api/v2/staff/editor/%d'>edit</a>", id);
+        }else{
+            return "";
+        }
     }
     public String getRemove(){
-        return String.format("<a href='/main/admin/staffremover/%d'>del</a>", ((StaffEntity) getCurrentRowObject()).getId());
+        int id=((StaffEntity) getCurrentRowObject()).getId();
+        if (id>=0) {
+            return String.format("<a href='/api/v2/staff/remover/%d'>del</a>", ((StaffEntity) getCurrentRowObject()).getId());
+        }else{
+            return "";
+        }
     }
 }

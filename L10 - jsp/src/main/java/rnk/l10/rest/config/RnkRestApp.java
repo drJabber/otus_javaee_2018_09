@@ -5,11 +5,13 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.glassfish.jersey.jackson.internal.jackson.jaxrs.json.JacksonJaxbJsonProvider;
 import org.glassfish.jersey.server.ResourceConfig;
+import org.glassfish.jersey.server.mvc.jsp.JspMvcFeature;
 import rnk.l10.exception.ConstraintViolationExceptionMapper;
 import rnk.l10.exception.QueryParamExceptionMapper;
 import rnk.l10.exception.RnkExceptionMapper;
 import rnk.l10.rest.RnkAnnuitetCreditAccounterImpl;
 import rnk.l10.rest.RnkDifferentialCreditAccounterImpl;
+import rnk.l10.rest.RnkStaffEditorImpl;
 
 import javax.ws.rs.ApplicationPath;
 import java.nio.charset.StandardCharsets;
@@ -19,6 +21,9 @@ public class RnkRestApp extends ResourceConfig {
     private static final String ENCODING_PROPERTY = "encoding";
 
     public RnkRestApp(){
+        property(JspMvcFeature.TEMPLATE_BASE_PATH,"/");
+        register(JspMvcFeature.class);
+
         registerResourceClasses();
         registerExceptionMapperClasses();
         registerValidationClasses();
@@ -40,6 +45,7 @@ public class RnkRestApp extends ResourceConfig {
     private void registerResourceClasses() {
         register(RnkDifferentialCreditAccounterImpl.class);
         register(RnkAnnuitetCreditAccounterImpl.class);
+        register(RnkStaffEditorImpl.class);
     }
 
 
