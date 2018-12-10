@@ -376,5 +376,11 @@ form.login-form{
   font-family: helvetica, serif;
   text-decoration: none;
   vertical-align: middle;
+  cursor:pointer;
   horiz-align: center;
+
+}
+
+.form-button button:hover,input:hover {
+  background: #aaaaaa;
 }

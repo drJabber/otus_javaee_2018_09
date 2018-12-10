@@ -19,7 +19,7 @@
                 </div>
                 <div>
                     <label for="password">Password:</label>
-                    <input type="password" id="password" name="j_password" autocomplete="off" placeholder="Type your password"/>
+                    <input type="password" id="password" name="j_password" autocomplete="off" placeholder="Type your password" class="form-button"/>
                 </div>
                 <input type="submit" id="submit" value="Logon"/>
             </form>

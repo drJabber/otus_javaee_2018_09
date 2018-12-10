@@ -25,7 +25,7 @@
                     <fieldset class="box tabular">
                         <p>Данная операция безвозвратно удалит информацию о сотруднике <em>${it.staff.fio}</em><br></p>
                         <p>
-                            <button type="button" name="user_cancel_button" id="user_remove_button" class="form-button" onclick="removeStaffClick()">Удалить</button>
+                            <button type="button" name="user_куьщму_button" id="user_remove_button" class="form-button" onclick="removeStaffClick()">Удалить</button>
                             <a href="${it.cancelPage}"><button type="button" name="user_cancel_button" id="user_cancel_button" class="form-button">Отменить</button></a>
                             <script>
                                 function removeStaffClick(){

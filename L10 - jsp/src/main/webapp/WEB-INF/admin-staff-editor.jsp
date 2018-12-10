@@ -130,9 +130,28 @@
                         <div class="split-content-full">
                             <fieldset class="box tabular">
 
-                                <p><input type="submit" value="Сохранить" name="user_save_button" id="user_save_button" class="form-button" />
+                                <p>
+                                    <button type="button" name="user_save_button" id="user_save_button" class="form-button" onclick="editStaffClick()">Сохранить</button>
                                     <a href="${it.cancelPage}"><button type="button" name="user_cancel_button" id="user_cancel_button" class="form-button">Отменить</button></a>
                                 </p>
+                                    <script>
+                                        function editStaffClick(){
+                                            var path=$(location).attr('pathname');
+                                            var list=path.split('/');
+                                            var staff_id=list[list.length-1];
+                                            $.ajax({
+                                                url:"/api/v2/staff/"+staff_id,
+                                                method:"DELETE",
+                                                success:function(data){
+                                                    window.location.href="/main/admin/staff"
+                                                },
+                                                error:function(err){
+                                                    alert("error:"+err.status);
+                                                }
+                                            });
+                                        }
+                                    </script>
+                                
                             </fieldset>
                         </div>
                     </div>
