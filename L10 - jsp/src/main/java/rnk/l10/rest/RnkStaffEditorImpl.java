@@ -33,7 +33,19 @@ public class RnkStaffEditorImpl implements RnkStaffEditor {
         model.setPage("WEB-INF/admin-staff-editor.jsp");
 
         model.setSubmitPage("/api/v2/staff/" + id);
-        model.setSubmitMethod("PUT");
+        model.setCancelPage(UrlUtils.getUrl(request) + "/main/admin/staff");
+        return Response.ok(new Viewable("/index.jsp", model)).build();
+    }
+
+    @Override
+    @GET
+    @Produces("text/html;")
+    @Path("/staffeditor")
+    public Response add() throws RnkWebServiceException {
+        StaffEditorModel model = new StaffEditorModel();
+        model.setPage("WEB-INF/admin-staff-editor.jsp");
+
+        model.setSubmitPage("/api/v2/staff");
         model.setCancelPage(UrlUtils.getUrl(request) + "/main/admin/staff");
         return Response.ok(new Viewable("/index.jsp", model)).build();
     }

@@ -131,17 +131,30 @@
                             <fieldset class="box tabular">
 
                                 <p>
-                                    <button type="button" name="user_save_button" id="user_save_button" class="form-button" onclick="editStaffClick()">Сохранить</button>
+                                    <c:choose>
+                                        <c:when test="${it.staff.isNew()}">
+                                            <button type="button" name="user_save_button" id="user_save_button" class="form-button" onclick="editStaffClick('POST')">Добавить</button>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <button type="button" name="user_save_button" id="user_save_button" class="form-button" onclick="editStaffClick('PUT')">Сохранить</button>
+                                        </c:otherwise>
+                                    </c:choose>
                                     <a href="${it.cancelPage}"><button type="button" name="user_cancel_button" id="user_cancel_button" class="form-button">Отменить</button></a>
                                 </p>
                                     <script>
-                                        function editStaffClick(){
-                                            var path=$(location).attr('pathname');
-                                            var list=path.split('/');
-                                            var staff_id=list[list.length-1];
+                                        function editStaffClick(method){
+                                            var url="/api/v2/staff";
+                                            if (method=="PUT"){
+                                                var path=$(location).attr('pathname');
+                                                var list=path.split('/');
+                                                url="/api/v2/staff/"+list[list.length-1];
+                                            }
+
                                             $.ajax({
-                                                url:"/api/v2/staff/"+staff_id,
-                                                method:"DELETE",
+                                                url:url,
+                                                method:method,
+
+                                                data:$('#admin-staff-edit-form').serializeArray(),
                                                 success:function(data){
                                                     window.location.href="/main/admin/staff"
                                                 },

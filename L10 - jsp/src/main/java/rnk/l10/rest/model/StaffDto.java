@@ -8,6 +8,7 @@ import rnk.l10.utils.StaffUtils;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.PathParam;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class StaffDto {
     private StaffEntity staff;
@@ -157,7 +158,13 @@ public class StaffDto {
     public String getBirthDate(){
         if (staff!=null){
             SimpleDateFormat fmt=new SimpleDateFormat("yyyy-MM-dd");
-            return fmt.format(staff.getBirthDate());
+            Date bd=staff.getBirthDate();
+            if (bd!=null){
+                return fmt.format(staff.getBirthDate());
+            }else{
+                return "";
+            }
+
         }else{
             return null;
         }

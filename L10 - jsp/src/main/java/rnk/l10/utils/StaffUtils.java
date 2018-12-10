@@ -114,7 +114,7 @@ public class StaffUtils {
     private static HashedPassword hashPassword(String password, EntityManager em){
             StoredProcedureQuery q = em
                     .createStoredProcedureQuery("hash_password")
-                    .registerStoredProcedureParameter("p_pasword",String.class, ParameterMode.IN)
+                    .registerStoredProcedureParameter("p_password",String.class, ParameterMode.IN)
                     .registerStoredProcedureParameter("o_passwd_hash", String.class, ParameterMode.OUT)
                     .registerStoredProcedureParameter("o_passwd_salt", String.class, ParameterMode.OUT);
 

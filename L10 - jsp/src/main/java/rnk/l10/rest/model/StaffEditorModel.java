@@ -66,4 +66,8 @@ public class StaffEditorModel {
     public StaffEditorModel(String id) throws RnkWebServiceException {
         this.staff=new StaffDto(id);
     }
+
+    public StaffEditorModel() throws RnkWebServiceException {
+        this.staff=new StaffDto();
+    }
 }

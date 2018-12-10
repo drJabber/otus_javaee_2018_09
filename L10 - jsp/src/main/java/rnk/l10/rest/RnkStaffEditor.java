@@ -11,6 +11,9 @@ public interface RnkStaffEditor {
     @Path("/staffeditor/{id}")
     public Response edit(@PathParam("id") String id)throws RnkWebServiceException;
 
+    @Path("/staffeditor")
+    public Response add()throws RnkWebServiceException;
+
     @Path("/staffremover/{id}")
     public Response remove(@PathParam("id") String id) throws RnkWebServiceException;
 }
