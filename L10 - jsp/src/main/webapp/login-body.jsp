@@ -19,9 +19,9 @@
                 </div>
                 <div>
                     <label for="password">Password:</label>
-                    <input type="password" id="password" name="j_password" autocomplete="off" placeholder="Type your password" class="form-button"/>
+                    <input type="password" id="password" name="j_password" autocomplete="off" placeholder="Type your password"/>
                 </div>
-                <input type="submit" id="submit" value="Logon"/>
+                <input type="submit" id="submit" value="Logon" class="form-button"/>
             </form>
 
             <script>
