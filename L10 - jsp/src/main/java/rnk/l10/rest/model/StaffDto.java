@@ -164,10 +164,14 @@ public class StaffDto {
     }
 
     public void save() throws RnkWebServiceException{
-        StaffUtils.saveStaff(staff);
+        if (isNew()){
+            StaffUtils.addStaff(staff);
+        }else{
+            StaffUtils.saveStaff(staff);
+        }
     }
 
     public boolean isNew(){
-        return staff==null;
+        return staff.id==null;
     }
 }

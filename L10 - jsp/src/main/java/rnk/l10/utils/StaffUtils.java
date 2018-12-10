@@ -154,10 +154,35 @@ public class StaffUtils {
         });
     }
 
+    public static void saveStaff(StaffEntity staff) throws  RnkWebServiceException{
+        executeQuery((em)->{
+            PositionEntity position=em.find(PositionEntity.class, staff.getPosition_id0());
+            DepartamentEntity dept=em.find(DepartamentEntity.class, staff.getDepartament_id0());
+            RoleEntity role=em.find(RoleEntity.class, staff.getRole_id0());
+
+            staff.setPosition(position);
+            staff.setDepartament(dept);
+            staff.setRole(role);
+
+            HashedPassword hp=hashPassword(staff.getPasswd_hash(),em);
+
+            staff.setPasswd_hash(hp.getPasswd_hash());
+            staff.setPasswd_salt(hp.getPasswd_salt());
+
+            em.persist(staff);
+
+            return null;
+        });
+    }
+
     public static void removeStaff(Integer id) throws  RnkWebServiceException{
-        return (List<RoleEntity>) executeQuery((em)->{
-            Query q = em.createQuery("select p from RoleEntity p ");
-            return (List<RoleEntity>)q.getResultList();
+        executeQuery((em)->{
+            StaffEntity s=em.find(StaffEntity.class,id);
+            if (s!=null){
+                em.remove(s);
+            }else{
+                throw new RnkWebServiceException("Работник не найден");
+            }
         });
     }
 }

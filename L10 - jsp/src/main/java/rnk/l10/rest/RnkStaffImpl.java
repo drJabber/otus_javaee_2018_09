@@ -18,7 +18,7 @@ public class RnkStaffImpl implements RnkStaff{
     UriInfo uriInfo;
 
     @Override
-    @POST
+    @PUT
     @Path("/staff/{id}")
     public Response edit(@Valid @BeanParam StaffDto staff)throws RnkWebServiceException{
         staff.save();
@@ -27,6 +27,7 @@ public class RnkStaffImpl implements RnkStaff{
         return Response.seeOther(uri).build();
     }
 
+    @Override
     @DELETE
     @Path("/staff/{id}")
     public Response remove(@PathParam(value = "id") Integer id)throws RnkWebServiceException{
@@ -37,6 +38,9 @@ public class RnkStaffImpl implements RnkStaff{
     @POST
     @Path("/staff")
     public Response add( @Valid @BeanParam StaffDto staff) throws RnkWebServiceException {
-        return null;
+        staff.save();
+
+        URI uri=uriInfo.getAbsolutePathBuilder().replacePath("/main/admin/staff").build();
+        return Response.seeOther(uri).build();
     }
 }

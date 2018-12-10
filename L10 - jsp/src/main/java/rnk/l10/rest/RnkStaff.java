@@ -8,7 +8,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 
 public interface RnkStaff {
-    @POST
+    @PUT
     @Path("/staff/{id}")
     public Response edit(@Valid @BeanParam StaffDto staff)throws RnkWebServiceException;
 
