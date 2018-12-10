@@ -24,6 +24,7 @@ public class StaffSearchBean {
 
     private String login;
     private String fio;
+    private String email;
     private String position;
     private String town;
     private Integer ageMin;
@@ -44,6 +45,10 @@ public class StaffSearchBean {
         return fio;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
     public String getPosition() {
         return position;
     }
@@ -58,6 +63,7 @@ public class StaffSearchBean {
     public boolean isEmpty(){
         return ((login==null) || (login.isEmpty())) &&
                 ((fio ==null) || (fio.isEmpty())) &&
+                ((email ==null) || (email.isEmpty())) &&
                 ((position==null) || (position.isEmpty())) &&
                 ((town==null) || (town.isEmpty())) &&
                 (ageMax==null || ageMax==0) && (ageMin==null || ageMin==0);
@@ -84,6 +90,9 @@ public class StaffSearchBean {
                 }
                 if ((fio!=null)&&(!fio.isEmpty())) {
                     likes=likes.concat("(s.fio like '%").concat(fio).concat("%') and ");
+                }
+                if ((email!=null)&&(!email.isEmpty())) {
+                    likes=likes.concat("(s.email like '%").concat(email).concat("%') and ");
                 }
                 if ((position!=null)&&(!position.isEmpty())) {
 //                    likes=likes.concat(" 1=1 and ");

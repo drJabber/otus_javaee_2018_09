@@ -13,6 +13,7 @@
     <display:table requestURI="displaytag.jsp" name="${search.find(pageContext)}" decorator="rnk.l10.entities.decorators.StaffDisplayDecorator" sort="list" pagesize="6" class="display-search" >
         <display:column property="fio" title="Фио"   class="display-search-column" headerClass="display-search-header"/>
         <display:column property="login" title="Login"  class="display-search-column" headerClass="display-search-header"/>
+        <display:column property="email" title="Email"   class="display-search-column" headerClass="display-search-header"/>
         <display:column property="position" title="Должность"   class="display-search-column" headerClass="display-search-header" />
         <display:column property="departament" title="Должность"   class="display-search-column" headerClass="display-search-header" />
         <display:column property="town" title="Город"   class="display-search-column" headerClass="display-search-header"/>

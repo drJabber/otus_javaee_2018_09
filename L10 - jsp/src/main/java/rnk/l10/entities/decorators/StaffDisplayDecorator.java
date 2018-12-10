@@ -19,7 +19,7 @@ public class StaffDisplayDecorator extends TableDecorator {
     public String getEdit(){
         int id=((StaffEntity) getCurrentRowObject()).getId();
         if (id>=0){
-            return String.format("<a href='/api/v2/staff/editor/%d'>edit</a>", id);
+            return String.format("<a href='/api/v2/staffeditor/%d'>edit</a>", id);
         }else{
             return "";
         }
@@ -27,7 +27,7 @@ public class StaffDisplayDecorator extends TableDecorator {
     public String getRemove(){
         int id=((StaffEntity) getCurrentRowObject()).getId();
         if (id>=0) {
-            return String.format("<a href='/api/v2/staff/remover/%d'>del</a>", ((StaffEntity) getCurrentRowObject()).getId());
+            return String.format("<a href='/api/v2/staffremover/%d'>del</a>", ((StaffEntity) getCurrentRowObject()).getId());
         }else{
             return "";
         }

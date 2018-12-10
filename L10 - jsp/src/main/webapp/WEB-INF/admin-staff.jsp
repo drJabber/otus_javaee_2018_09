@@ -21,6 +21,7 @@
                 <display:table sort="list" pagesize="${staff.getPageSize()}" requestURI="${context_path}/main/admin/staff" name="${staff.get(pageContext)}" decorator="rnk.l10.entities.decorators.StaffDisplayDecorator" class="display-search" >
                     <display:column property="fio" title="Фио"   class="display-search-column" headerClass="display-search-header"/>
                     <display:column property="login" title="Login"  class="display-search-column" headerClass="display-search-header"/>
+v                    <display:column property="email" title="Email"   class="display-search-column" headerClass="display-search-header"/>
                     <display:column property="position" title="Должность"   class="display-search-column" headerClass="display-search-header" />
                     <display:column property="departament" title="Отдел"   class="display-search-column" headerClass="display-search-header" />
                     <display:column property="edit" title="edit"   class="display-search-column" headerClass="display-search-header-narrow" />

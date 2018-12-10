@@ -80,7 +80,7 @@
                         }
 
                         function render_error(data, result){
-                            $.each(data.errors,function(i,item){
+                            $.each(data.responseJSON.errors,function(i,item){
                                 result.append($('<div></div>').text(item.message));
                             });
                         }

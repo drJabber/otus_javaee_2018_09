@@ -23,17 +23,21 @@ public class StaffDisplayBean{
 
     private String login;
     private String fio;
+    private String email;
     private String position;
     private String town;
 
     public void setLogin(String login){ this.login=login;}
     public void setFio(String fio){ this.fio=fio;}
+    public void setEmail(String email){ this.email=email;}
     public void setTown(String town){ this.town=town;}
     public void setPosition(String position){ this.position=position;}
 
     public String getLogin() {        return login;    }
 
     public String getFio() {        return fio;    }
+
+    public String getEmail() {        return email;    }
 
     public String getPosition() {        return position;    }
 
@@ -91,5 +95,5 @@ public class StaffDisplayBean{
             em.close();
         }
     }
-    
+
 }

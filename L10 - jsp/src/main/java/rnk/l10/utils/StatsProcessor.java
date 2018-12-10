@@ -56,22 +56,6 @@ public class StatsProcessor {
         return result;
     }
 
-    private String getURL(HttpServletRequest req) {
-
-        String scheme = req.getScheme();             // http
-        String serverName = req.getServerName();     // hostname.com
-        int serverPort = req.getServerPort();        // 80
-
-        StringBuilder url = new StringBuilder();
-        url.append(scheme).append("://").append(serverName);
-
-        if (serverPort != 80 && serverPort != 443) {
-            url.append(":").append(serverPort);
-        }
-
-        return url.toString();
-    }
-
     public Integer store_statsx() throws ServletException, IOException{
 
         String stats_token=ctx.getServletContext().getInitParameter("stats-token");
@@ -80,7 +64,7 @@ public class StatsProcessor {
         }
 
         HttpServletRequest rq=(HttpServletRequest) ctx.getRequest();
-        HttpPost post=new HttpPost(getURL(rq)+"/stats");
+        HttpPost post=new HttpPost(UrlUtils.getUrl(rq)+"/stats");
 
         List<NameValuePair> params=new ArrayList<>();
         params.add(new BasicNameValuePair("app_token",stats_token));

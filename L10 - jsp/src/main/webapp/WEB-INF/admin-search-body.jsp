@@ -29,6 +29,10 @@
                             <td><input type="text" id="id-fio-field"  name="fio" placeholder="ФИО" value="${search.fio}"></td>
                         </tr>
                         <tr>
+                            <td><label for="id-email-field"><em>Email:</em></label></td>
+                            <td><input type="text" id="id-email-field"  name="email" placeholder="Email" value="${search.email}"></td>
+                        </tr>
+                        <tr>
                             <td><label for="id-position-field"><em>Должность:</em></label></td>
                             <td><input type="text" id="id-position-field"  name="position" placeholder="Должность" value="${search.position}"></td>
                         </tr>

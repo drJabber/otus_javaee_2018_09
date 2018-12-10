@@ -278,6 +278,11 @@
       <artifactId>jersey-bean-validation</artifactId>
       <version>2.27</version>
     </dependency>
+    <!--<dependency>-->
+      <!--<groupId>org.glassfish.jersey.ext</groupId>-->
+      <!--<artifactId>jersey-entity-filtering</artifactId>-->
+      <!--<version>2.27</version>-->
+    <!--</dependency>-->
     <dependency>
       <groupId>org.glassfish.jersey.ext</groupId>
       <artifactId>jersey-mvc</artifactId>

@@ -40,6 +40,12 @@ public class StaffEntity {
     @XmlAttribute(required = true)
     private String fio;
 
+    @NotNull
+    @Size(max=200)
+    @Column(name="email")
+    @XmlElement(required = true)
+    private String email;
+
     @ManyToOne
     @JoinColumn(name="position_id")
     @XmlAttribute(required = true)

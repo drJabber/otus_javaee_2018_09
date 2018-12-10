@@ -189,7 +189,9 @@ footer {
 }
 
 .b-contacts-container {
+  float: left;
   margin-top: 5px;
+  width:70%
 }
 
 .b-contacts p, .b-contacts a, .b-contacts {
@@ -201,9 +203,11 @@ footer {
 }
 
 .b-copyright-container {
-  position: absolute;
+  /*position: absolute;*/
+  float: right;
   right: 0px;
   top: 5px;
+  width:30%
 }
 
 .b-copyright {
@@ -337,6 +341,11 @@ form.login-form{
     width: 49%;
 }
 
+.split-content-full {
+  float: left;
+  width: 100%;
+}
+
 .box {
     padding: 6px;
     margin-bottom: 10px;
@@ -355,4 +364,17 @@ form.login-form{
     padding-left: 180px;
     min-height: 1.8em;
     clear: left;
+}
+
+.form-button {
+  border: 1px solid #231f20;
+  background: #ffffff;
+  padding: 10.5px 21px;
+  border-radius: 6px;
+  color: #000000;
+  font-size: 14px;
+  font-family: helvetica, serif;
+  text-decoration: none;
+  vertical-align: middle;
+  horiz-align: center;
 }
