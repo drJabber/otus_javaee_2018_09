@@ -31,7 +31,7 @@
                                 function removeStaffClick(){
                                     var path=$(location).attr('pathname');
                                     var list=path.split('/');
-                                    var staff_id=list.item[list.length-1];
+                                    var staff_id=list[list.length-1];
                                     $(ajax)({
                                        url:"/main/admin/staff/"+staff_id,
                                        method:"DELETE",
