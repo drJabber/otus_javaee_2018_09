@@ -24,8 +24,26 @@
                 <div class="split-content-full">
                     <fieldset class="box tabular">
                         <p>Данная операция безвозвратно удалит информацию о сотруднике <em>${it.staff.fio}</em><br></p>
-                        <p><input type="submit" value="Удалить" name="user_remove_button" id="user_remove_button" class="form-button" />
+                        <p>
+                            <button type="button" name="user_cancel_button" id="user_remove_button" class="form-button" onclick="removeStaffClick()">Удалить</button>
                             <a href="${it.cancelPage}"><button type="button" name="user_cancel_button" id="user_cancel_button" class="form-button">Отменить</button></a>
+                            <script>
+                                function removeStaffClick(){
+                                    var path=$(location).attr('pathname');
+                                    var list=path.split('/');
+                                    var staff_id=list.item[list.length-1];
+                                    $(ajax)({
+                                       url:"/main/admin/staff/"+staff_id,
+                                       method:"DELETE",
+                                       success:function(data){
+
+                                       },
+                                       error:function(err){
+
+                                       }
+                                    });
+                                }
+                            </script>
                         </p>
                     </fieldset>
                 </div>

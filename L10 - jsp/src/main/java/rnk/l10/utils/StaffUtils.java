@@ -141,8 +141,8 @@ public class StaffUtils {
             if ((s.getPasswd_hash()==null)&&(s.getPasswd_hash().isEmpty())){
                 HashedPassword hp=hashPassword(staff.getPasswd_hash(),em);
 
-                staff.setPasswd_hash(s.getPasswd_hash());
-                staff.setPasswd_salt(s.getPasswd_salt());
+                staff.setPasswd_hash(hp.getPasswdhash());
+                staff.setPasswd_salt(hp.getPasswdsalt());
             }else{
                 staff.setPasswd_hash(s.getPasswd_hash());
                 staff.setPasswd_salt(s.getPasswd_salt());
@@ -154,7 +154,7 @@ public class StaffUtils {
         });
     }
 
-    public static void saveStaff(StaffEntity staff) throws  RnkWebServiceException{
+    public static void addStaff(StaffEntity staff) throws  RnkWebServiceException{
         executeQuery((em)->{
             PositionEntity position=em.find(PositionEntity.class, staff.getPosition_id0());
             DepartamentEntity dept=em.find(DepartamentEntity.class, staff.getDepartament_id0());
@@ -165,9 +165,8 @@ public class StaffUtils {
             staff.setRole(role);
 
             HashedPassword hp=hashPassword(staff.getPasswd_hash(),em);
-
-            staff.setPasswd_hash(hp.getPasswd_hash());
-            staff.setPasswd_salt(hp.getPasswd_salt());
+            staff.setPasswd_hash(hp.getPasswdhash());
+            staff.setPasswd_salt(hp.getPasswdsalt());
 
             em.persist(staff);
 
@@ -178,11 +177,8 @@ public class StaffUtils {
     public static void removeStaff(Integer id) throws  RnkWebServiceException{
         executeQuery((em)->{
             StaffEntity s=em.find(StaffEntity.class,id);
-            if (s!=null){
-                em.remove(s);
-            }else{
-                throw new RnkWebServiceException("Работник не найден");
-            }
+            em.remove(s);
+            return null;
         });
     }
 }

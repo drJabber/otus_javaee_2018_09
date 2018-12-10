@@ -32,6 +32,9 @@ public class RnkStaffImpl implements RnkStaff{
     @Path("/staff/{id}")
     public Response remove(@PathParam(value = "id") Integer id)throws RnkWebServiceException{
         StaffUtils.removeStaff(id);
+
+        URI uri=uriInfo.getAbsolutePathBuilder().replacePath("/main/admin/staff").build();
+        return Response.seeOther(uri).build();
     }
 
     @Override

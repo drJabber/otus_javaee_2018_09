@@ -172,6 +172,6 @@ public class StaffDto {
     }
 
     public boolean isNew(){
-        return staff.id==null;
+        return staff.getId()==null;
     }
 }
