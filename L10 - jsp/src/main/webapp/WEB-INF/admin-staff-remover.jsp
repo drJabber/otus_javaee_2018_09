@@ -32,14 +32,14 @@
                                     var path=$(location).attr('pathname');
                                     var list=path.split('/');
                                     var staff_id=list[list.length-1];
-                                    $(ajax)({
-                                       url:"/main/admin/staff/"+staff_id,
+                                    $.ajax({
+                                       url:"/api/v2/staff/"+staff_id,
                                        method:"DELETE",
                                        success:function(data){
-
+                                           window.location.href="/main/admin/staff"
                                        },
                                        error:function(err){
-
+                                           alert("error:"+err.status);
                                        }
                                     });
                                 }
