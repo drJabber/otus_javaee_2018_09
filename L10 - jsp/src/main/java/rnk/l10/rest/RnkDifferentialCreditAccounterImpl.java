@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Path("/v1/accounter")
+@Api("Credit accounter v1")
 @Produces(MediaType.APPLICATION_JSON)
 //@Api(tags="Accounter")
 //@SwaggerDefinition(
