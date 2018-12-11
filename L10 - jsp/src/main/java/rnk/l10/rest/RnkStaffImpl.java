@@ -1,5 +1,8 @@
 package rnk.l10.rest;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import rnk.l10.entities.StaffEntity;
 import rnk.l10.entities.beans.SearchResultCache;
 import rnk.l10.exception.RnkWebServiceException;
@@ -27,7 +30,20 @@ public class RnkStaffImpl implements RnkStaff{
     @Override
     @PUT
     @Path("/staff/{id}")
-    public Response edit(@Valid @BeanParam StaffDto staff)throws RnkWebServiceException{
+    @Operation(
+            summary="изменение данных сотрудников",
+            tags = {"Изменеие","Сотрудник"},
+            description="Изменение данных сотрудника",
+            responses = {@ApiResponse(description = "Изменение"),
+                    @ApiResponse(responseCode = "400", description = "Ошибка в параметрах запроса"),
+                    @ApiResponse(responseCode = "404", description = "Параметр не найден")
+            }
+    )
+    public Response edit(
+            @Parameter(description = "Данные сотрудника", required = true)
+            @Valid
+            @BeanParam StaffDto staff
+    )throws RnkWebServiceException{
         staff.save();
         invalidateCache(staff.getId());
         URI uri=uriInfo.getAbsolutePathBuilder().replacePath("/main/admin/staff").build();
@@ -37,18 +53,37 @@ public class RnkStaffImpl implements RnkStaff{
     @Override
     @DELETE
     @Path("/staff/{id}")
-    public Response remove(@PathParam(value = "id") Integer id)throws RnkWebServiceException{
+    @Operation(
+            summary="удаление данных сотрудников",
+            tags = {"Удаленеие","Сотрудник"},
+            description="Удаление данных сотрудника",
+            responses = {@ApiResponse(description = "Удаление"),
+                    @ApiResponse(responseCode = "400", description = "Ошибка в параметрах запроса"),
+                    @ApiResponse(responseCode = "404", description = "Параметр не найден")
+            }
+    )
+    public Response remove(
+            @Parameter(description = "Идентификатор сотрудника", required = true)
+            @PathParam(value = "id") Integer id
+    )throws RnkWebServiceException{
         StaffUtils.removeStaff(id);
         invalidateCache(id);
 
-//        URI uri=uriInfo.getAbsolutePathBuilder().replacePath("/main/admin/staff").build();
-//        return Response.seeOther(uri).build();
         return Response.ok().build();
     }
 
     @Override
     @POST
     @Path("/staff")
+    @Operation(
+            summary="добавление данных сотрудников",
+            tags = {"Изменеие","Сотрудник"},
+            description="Добавление данных сотрудника",
+            responses = {@ApiResponse(description = "Добавление"),
+                    @ApiResponse(responseCode = "400", description = "Ошибка в параметрах запроса"),
+                    @ApiResponse(responseCode = "404", description = "Параметр не найден")
+            }
+    )
     public Response add( @Valid @BeanParam StaffDto staff) throws RnkWebServiceException {
         staff.save();
         invalidateCache(null);

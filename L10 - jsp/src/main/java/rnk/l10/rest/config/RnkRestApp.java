@@ -3,6 +3,13 @@ package rnk.l10.rest.config;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.swagger.v3.jaxrs2.SwaggerSerializers;
+import io.swagger.v3.jaxrs2.integration.resources.OpenApiResource;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.info.Contact;
+import io.swagger.v3.oas.annotations.info.Info;
+import io.swagger.v3.oas.annotations.info.License;
+import io.swagger.v3.oas.annotations.servers.Server;
 import org.glassfish.jersey.jackson.internal.jackson.jaxrs.json.JacksonJaxbJsonProvider;
 import org.glassfish.jersey.logging.LoggingFeature;
 import org.glassfish.jersey.server.ResourceConfig;
@@ -21,6 +28,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @ApplicationPath("/api")
+@OpenAPIDefinition(
+        info=@Info(title = "RnK rest API", version="V1, v2", contact=@Contact(),license = @License)
+        )
+
 public class RnkRestApp extends ResourceConfig {
     private static final Logger logger = Logger.getLogger(RnkRestApp.class.getName());
     private static final String ENCODING_PROPERTY = "encoding";
@@ -48,10 +59,6 @@ public class RnkRestApp extends ResourceConfig {
         register(new LoggingFeature(logger, Level.INFO, LoggingFeature.Verbosity.HEADERS_ONLY,65536));
 
         property(ENCODING_PROPERTY, StandardCharsets.UTF_8.toString());
-//        property(ServerProperties.MONITORING_ENABLED, Boolean.TRUE);
-//        property(ServerProperties.BV_SEND_ERROR_IN_RESPONSE, Boolean.TRUE);
-//        property(LoggingFeature.LOGGING_FEATURE_LOGGER_LEVEL_SERVER, "DEBUG");
-//        property(LoggingFeature.LOGGING_FEATURE_VERBOSITY_SERVER,LoggingFeature.Verbosity.HEADERS_ONLY);
     }
 
     private void registerResourceClasses() {
@@ -75,8 +82,8 @@ public class RnkRestApp extends ResourceConfig {
 
     }
     private void registerSwaggerClasses() {
-//        register(ApiListingResource.class);
-//        register(SwaggerSerializers.class);
+        register(OpenApiResource.class);
+        register(SwaggerSerializers.class);
     }
 
     public void publishSwaggerDescription(){

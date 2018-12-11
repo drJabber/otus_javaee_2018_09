@@ -1,5 +1,10 @@
 package rnk.l10.rest;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.glassfish.jersey.server.mvc.Viewable;
 import rnk.l10.exception.RnkWebServiceException;
 import rnk.l10.rest.model.StaffDto;
@@ -16,6 +21,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Request;
 import javax.ws.rs.core.Response;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Path("/v2")
@@ -28,7 +34,19 @@ public class RnkStaffEditorImpl implements RnkStaffEditor {
     @GET
     @Produces("text/html;")
     @Path("/staffeditor/{id}")
-    public Response edit(@PathParam("id") String id) throws RnkWebServiceException {
+    @Operation(
+            summary="редактирование сотрудников",
+            tags = {"Редактор","Сотрудник"},
+            description="Представление для изменения данных сотрудника",
+            responses = {@ApiResponse(description = "Представление редактора"),
+                    @ApiResponse(responseCode = "400", description = "Ошибка в параметрах запроса"),
+                    @ApiResponse(responseCode = "404", description = "Параметр не найден")
+            }
+    )
+    public Response edit(
+            @Parameter(description = "Идентификатор сотрудника", required = true)
+            @PathParam("id") String id
+    ) throws RnkWebServiceException {
         StaffEditorModel model = new StaffEditorModel(id);
         model.setPage("WEB-INF/admin-staff-editor.jsp");
 
@@ -41,6 +59,15 @@ public class RnkStaffEditorImpl implements RnkStaffEditor {
     @GET
     @Produces("text/html;")
     @Path("/staffeditor")
+    @Operation(
+            summary="добавление сотрудников",
+            tags = {"Редактор","Сотрудник"},
+            description="Представление создания записи о сотрудник",
+            responses = {@ApiResponse(description = "Представление редактора"),
+                    @ApiResponse(responseCode = "400", description = "Ошибка в параметрах запроса"),
+                    @ApiResponse(responseCode = "404", description = "Параметр не найден")
+            }
+    )
     public Response add() throws RnkWebServiceException {
         StaffEditorModel model = new StaffEditorModel();
         model.setPage("WEB-INF/admin-staff-editor.jsp");
@@ -54,7 +81,19 @@ public class RnkStaffEditorImpl implements RnkStaffEditor {
     @GET
     @Produces("text/html;")
     @Path("/staffremover/{id}")
-    public Response remove(@PathParam("id") String id) throws RnkWebServiceException {
+    @Operation(
+            summary="удаление сотрудников",
+            tags = {"Удаление","Сотрудник"},
+            description="Представление для удаления данных сотрудника",
+            responses = {@ApiResponse(description = "Представление удаления"),
+                    @ApiResponse(responseCode = "400", description = "Ошибка в параметрах запроса"),
+                    @ApiResponse(responseCode = "404", description = "Параметр не найден")
+            }
+    )
+    public Response remove(
+            @Parameter(description = "Идентификатор сотрудника", required = true)
+            @PathParam("id") String id
+    ) throws RnkWebServiceException {
         StaffEditorModel model = new StaffEditorModel(id);
         model.setPage("WEB-INF/admin-staff-remover.jsp");
 

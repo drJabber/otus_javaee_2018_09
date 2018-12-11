@@ -50,36 +50,15 @@
         <url-pattern></url-pattern>
     </servlet-mapping>
 
-    <!--<servlet>-->
-        <!--<servlet-name>RnK RESTful Service</servlet-name>-->
-        <!--<servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>-->
-        <!--<init-param>-->
-            <!--<param-name>javax.ws.rs.Application</param-name>-->
-            <!--&lt;!&ndash; the path of RestConfig &ndash;&gt;-->
-            <!--<param-value>rnk.l10.rest.config.RnkRestApp</param-value>-->
-        <!--</init-param>-->
-        <!--<load-on-startup>1</load-on-startup>-->
-    <!--</servlet>-->
-    <!--<servlet-mapping>-->
-        <!--<servlet-name>RnK RESTful Service</servlet-name>-->
-        <!--<url-pattern>/rest/*</url-pattern>-->
-    <!--</servlet-mapping>-->
-    <!-- <servlet>
-        <servlet-name>stats holder</servlet-name>
-        <servlet-class>rnk.l12.servlet.AddStatsServlet</servlet-class>
-        <init-param>
-            <param-name>stats-control-password</param-name>
-            <param-value>qdvF91w0_</param-value>
-        </init-param>
-
-        <async-supported>true</async-supported>
+    <servlet>
+        <servlet-name>ApiDocs</servlet-name>
+        <jsp-file>/WEB-INF/api-docs.jsp</jsp-file>
     </servlet>
     <servlet-mapping>
-        <servlet-name>stats holder</servlet-name>
-        <url-pattern>/stats</url-pattern>
+        <servlet-name>ApiDocs</servlet-name>
+        <url-pattern>/api-docs</url-pattern>
     </servlet-mapping>
 
- -->
     <filter>
         <filter-name>User-Agent filter</filter-name>
         <filter-class>rnk.l10.filters.UserAgentFilter</filter-class>
