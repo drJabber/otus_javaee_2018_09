@@ -27,4 +27,12 @@ public class SearchResultCache {
     public void removeQueryResult(String query){
         cache.remove(query);
     }
+
+    public void invalidateAll(){
+        cache.clear();
+    }
+
+    public void invalidateStaff(Integer staffId){
+        cache.clear();
+    }
 }

@@ -17,6 +17,8 @@
         <display:column property="position" title="Должность"   class="display-search-column" headerClass="display-search-header" />
         <display:column property="departament" title="Должность"   class="display-search-column" headerClass="display-search-header" />
         <display:column property="town" title="Город"   class="display-search-column" headerClass="display-search-header"/>
+        <display:column property="edit" title="Edit"   class="display-search-column" headerClass="display-search-header"/>
+        <display:column property="remove" title="Del"   class="display-search-column" headerClass="display-search-header"/>
     </display:table>
 </c:if>
 

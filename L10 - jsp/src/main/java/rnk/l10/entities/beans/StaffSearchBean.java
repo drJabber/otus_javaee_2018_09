@@ -32,6 +32,7 @@ public class StaffSearchBean {
 
     public void setLogin(String login){ this.login=login;}
     public void setFio(String fio){ this.fio=fio;}
+    public void setEmail(String email){ this.email=email;}
     public void setTown(String town){ this.town=town;}
     public void setPosition(String position){ this.position=position;}
     public void setAgeMin(Integer ageMin){ this.ageMin=ageMin;}
@@ -131,7 +132,7 @@ public class StaffSearchBean {
                     SearchResultCache cache= (SearchResultCache) context.getServletContext().getAttribute("admin-search-cache");
                     if (cache!=null){
                         List<StaffEntity> result=cache.getQueryResult(final_jpql);
-                        if (result!=null){
+                        if ((result!=null) && (result.size()>0)){
                             return result;
                         }
                     }
