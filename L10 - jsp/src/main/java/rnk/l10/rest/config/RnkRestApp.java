@@ -43,11 +43,10 @@ public class RnkRestApp extends ResourceConfig {
         registerResourceClasses();
         registerExceptionMapperClasses();
         registerValidationClasses();
-        registerFilterClasses();
+//        registerFilterClasses();
 
         // publish swagger doc
         registerSwaggerClasses();
-        publishSwaggerDescription();
 
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -74,9 +73,9 @@ public class RnkRestApp extends ResourceConfig {
         register(QueryParamExceptionMapper.class);
     }
 
-    private void registerFilterClasses(){
-//        register(RnkCorsFilter.class);
-    }
+//    private void registerFilterClasses(){
+////        register(RnkCorsFilter.class);
+//    }
 
     private void registerValidationClasses(){
 
@@ -86,17 +85,4 @@ public class RnkRestApp extends ResourceConfig {
         register(SwaggerSerializers.class);
     }
 
-    public void publishSwaggerDescription(){
-        //SwaggerUI http://localhost:8080/api-docs
-        //Tomcat suitable approach swagger declaration
-//        BeanConfig beanConfig = new BeanConfig();
-//        beanConfig.setTitle("Swagger JAX-RS Integration Example");
-//        beanConfig.setDescription("A simple Maven JAX-RS project.");
-//        beanConfig.setVersion("1.0.0");
-//        beanConfig.setSchemes(new String[]{"http"});
-//        beanConfig.setBasePath("/api");
-////        beanConfig.setResourcePackage(RESOURCE_PACKAGE);
-//        beanConfig.setPrettyPrint(true);
-//        beanConfig.setScan(true);
-    }
 }
