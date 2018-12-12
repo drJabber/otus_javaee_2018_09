@@ -11,6 +11,7 @@ import rnk.l10.rest.model.StaffDto;
 import rnk.l10.rest.model.StaffEditorModel;
 import rnk.l10.utils.UrlUtils;
 
+import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -43,6 +44,7 @@ public class RnkStaffEditorImpl implements RnkStaffEditor {
                     @ApiResponse(responseCode = "404", description = "Параметр не найден")
             }
     )
+    @RolesAllowed("admin")
     public Response edit(
             @Parameter(description = "Идентификатор сотрудника", required = true)
             @PathParam("id") String id
@@ -68,6 +70,7 @@ public class RnkStaffEditorImpl implements RnkStaffEditor {
                     @ApiResponse(responseCode = "404", description = "Параметр не найден")
             }
     )
+    @RolesAllowed("admin")
     public Response add() throws RnkWebServiceException {
         StaffEditorModel model = new StaffEditorModel();
         model.setPage("WEB-INF/admin-staff-editor.jsp");
@@ -90,6 +93,7 @@ public class RnkStaffEditorImpl implements RnkStaffEditor {
                     @ApiResponse(responseCode = "404", description = "Параметр не найден")
             }
     )
+    @RolesAllowed("admin")
     public Response remove(
             @Parameter(description = "Идентификатор сотрудника", required = true)
             @PathParam("id") String id

@@ -78,7 +78,6 @@ public class RnkRestApp extends ResourceConfig {
 //    }
 
     private void registerValidationClasses(){
-
     }
     private void registerSwaggerClasses() {
         register(OpenApiResource.class);

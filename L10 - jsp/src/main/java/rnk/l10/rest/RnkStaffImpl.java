@@ -9,6 +9,7 @@ import rnk.l10.exception.RnkWebServiceException;
 import rnk.l10.rest.model.StaffDto;
 import rnk.l10.utils.StaffUtils;
 
+import javax.annotation.security.RolesAllowed;
 import javax.servlet.ServletContext;
 import javax.validation.Valid;
 import javax.ws.rs.*;
@@ -39,6 +40,7 @@ public class RnkStaffImpl implements RnkStaff{
                     @ApiResponse(responseCode = "404", description = "Параметр не найден")
             }
     )
+    @RolesAllowed("admin")
     public Response edit(
             @Parameter(description = "Данные сотрудника", required = true)
             @Valid
@@ -62,6 +64,7 @@ public class RnkStaffImpl implements RnkStaff{
                     @ApiResponse(responseCode = "404", description = "Параметр не найден")
             }
     )
+    @RolesAllowed("admin")
     public Response remove(
             @Parameter(description = "Идентификатор сотрудника", required = true)
             @PathParam(value = "id") Integer id
@@ -84,6 +87,7 @@ public class RnkStaffImpl implements RnkStaff{
                     @ApiResponse(responseCode = "404", description = "Параметр не найден")
             }
     )
+    @RolesAllowed("admin")
     public Response add( @Valid @BeanParam StaffDto staff) throws RnkWebServiceException {
         staff.save();
         invalidateCache(null);
