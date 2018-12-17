@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE resources PUBLIC "-//GlassFish.org//DTD GlassFish Application Server 3.1 Resource Definitions//EN"
+        "http://glassfish.org/dtds/glassfish-resources_1_5.dtd">
+<resources>
+    <jdbc-connection-pool datasource-classname="org.postgresql.ds.PGConnectionPoolDataSource"
+                          name="jdbc/rnk-pool"
+                          res-type="javax.sql.ConnectionPoolDataSource">
+        <property name="URL" value="jdbc:postgresql://rnk:5432/dbotus"/>
+        <property name="user" value="rnk"/>
+        <property name="password" value="1" />
+        <property name="databaseName" value="dbotus" />
+        <property name="serverName" value="rnk" />
+        <property name="driverClass" value="org.postgresql.Driver"/>
+    </jdbc-connection-pool>
+    <jdbc-resource pool-name="jdbc/rnk-pool" jndi-name="jdbc/rnk-jpa" > </jdbc-resource>
+</resources>

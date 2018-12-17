@@ -1,0 +1,94 @@
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+		 http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+         version="3.1">
+  <display-name>RnK</display-name>
+
+  <context-param>
+    <param-name>rnk-storage-path</param-name>
+    <param-value>/opt/tomcat/bin/xml</param-value>
+  </context-param>
+  <context-param>
+    <param-name>restore-at-startup</param-name>
+    <param-value>Y</param-value>
+  </context-param>
+  <context-param>
+    <param-name>ws-update-timeout</param-name>
+    <param-value>10</param-value>
+  </context-param>
+  <context-param>
+    <param-name>stats-token</param-name>
+    <param-value>rnk.sharaban.17d6f53c215d491babefc51afe085a4a</param-value>
+  </context-param>
+
+  <servlet>
+    <servlet-name>Main page</servlet-name>
+    <jsp-file>/index.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Main page</servlet-name>
+    <url-pattern>/main/*</url-pattern>
+  </servlet-mapping>
+
+  <filter>
+    <filter-name>User-Agent filter</filter-name>
+    <filter-class>rnk.l10.filters.UserAgentFilter</filter-class>
+    <async-supported>true</async-supported>
+    <init-param>
+      <param-name>user-agent-msie</param-name>
+      <param-value>10</param-value>
+    </init-param>
+    <init-param>
+      <param-name>user-agent-firefox</param-name>
+      <param-value>45</param-value>
+    </init-param>
+    <init-param>
+      <param-name>user-agent-chrome</param-name>
+      <param-value>50</param-value>
+    </init-param>
+    <init-param>
+      <param-name>user-agent-opera</param-name>
+      <param-value>38</param-value>
+    </init-param>
+
+  </filter>
+
+  <filter-mapping>
+    <filter-name>User-Agent filter</filter-name>
+    <servlet-name>Main page</servlet-name>
+  </filter-mapping>
+
+
+  <security-role>
+    <role-name>*</role-name>
+  </security-role>
+
+
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>Админка</web-resource-name>
+      <url-pattern>/main/admin/*</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>admin</role-name>
+    </auth-constraint>
+  </security-constraint>
+
+  <login-config>
+    <auth-method>FORM</auth-method>
+    <realm-name>rnk-realm</realm-name>
+    <form-login-config>
+      <form-login-page>/main/login</form-login-page>
+      <form-error-page>/main/loginerror</form-error-page>
+    </form-login-config>
+  </login-config>
+
+  <jsp-config>
+    <jsp-property-group>
+      <url-pattern>*.jsp</url-pattern>
+      <url-pattern>*.html</url-pattern>
+      <page-encoding>UTF-8</page-encoding>
+    </jsp-property-group>
+  </jsp-config>
+</web-app>

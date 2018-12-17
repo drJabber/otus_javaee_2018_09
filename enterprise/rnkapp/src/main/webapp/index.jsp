@@ -1,5 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="s" uri="/rnk-tags" %>
+<%--<%@ taglib prefix="s" uri="/rnk-tags" %>--%>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <!doctype html>
@@ -7,6 +7,7 @@
     <head>
         <%@include file="main-head.jsp"%>
     </head>
+
     <body id="body">
         <%@include file="WEB-INF/main-process-request.jsp"%>
         <%@include file="main-menu.jsp"%>

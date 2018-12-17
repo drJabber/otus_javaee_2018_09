@@ -1,0 +1,29 @@
+version: "3.1"
+services:
+
+  rnk:
+    image: postgres:11.1
+    
+    environment:
+      POSTGRES_PASSWORD: 1
+      POSTGRES_DB: dbotus
+      POSTGRES_USER: rnk
+
+    ports:
+      - "15432:5432"
+    
+  rnk-otus-project:
+    image: rnk-otus-project
+
+    # environment:
+    #   JAVA_TOOL_OPTIONS: -agentlib:jdwp=transport=dt_socket,address=42333,server=y,suspend=n
+
+    ports:
+      - "18080:8080"
+      - "4848:4848"
+      - "8181:8181"
+      - "42333:42333"
+
+    volumes:
+      - ~/projects/otus/rnk/deployments:/opt/payara/deployments
+        
