@@ -47,7 +47,10 @@ public class NewsEndpoint {
 
         (new Updater()).loadAndSend(session);//immediately update and send data to client
 
-        getSessions().add(session);//add session to worker list
+        Queue<Session> sessions=getSessions();
+        if (sessions!=null){
+            sessions.add(session); //add session to sessions list
+        }
         logger.info(String.format("ws news open: sid=%s, q=%s, ", session.getId(), session.getQueryString()) );
     }
 
