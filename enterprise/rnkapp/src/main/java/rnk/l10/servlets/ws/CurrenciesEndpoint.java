@@ -44,8 +44,10 @@ public class CurrenciesEndpoint {
         session.getUserProperties().put("http-session",config.getUserProperties().get("http-session"));
 
         (new Updater()).loadAndSend(session);//immediately send data to client
-
-        getSessions().add(session); //add session to sessions list
+        Queue<Session> sessions=getSessions();
+        if (sessions!=null){
+            sessions.add(session); //add session to sessions list
+        }
         logger.info(String.format("ws curr open: sid=%s, q=%s, ", session.getId(), session.getQueryString()) );
     }
 

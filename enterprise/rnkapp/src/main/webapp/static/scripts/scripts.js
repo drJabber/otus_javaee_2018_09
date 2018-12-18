@@ -218,7 +218,7 @@ function snilsButtonClick(text, element){
         url: 'http://xjabber:18080/rnkapp/SnilsCheckerWebService',
         namespaceQualifier: 'ns2',
         namespaceURL: 'urn://rnk.l10.soap',
-        method:'check',
+        method:'"check"',
         async:false,
         // noPrefix:true,
         appendMethodToURL:false,
