@@ -143,11 +143,11 @@
                                 </p>
                                     <script>
                                         function editStaffClick(method){
-                                            var url="/api/v2/staff";
+                                            var url="/rnkapp/api/v2/staff";
                                             if (method=="PUT"){
                                                 var path=$(location).attr('pathname');
                                                 var list=path.split('/');
-                                                url="/api/v2/staff/"+list[list.length-1];
+                                                url="/rnkapp/api/v2/staff/"+list[list.length-1];
                                             }
 
                                             $.ajax({
@@ -156,7 +156,7 @@
 
                                                 data:$('#admin-staff-edit-form').serializeArray(),
                                                 success:function(data){
-                                                    window.location.href="/main/admin/staff"
+                                                    window.location.href="/rnkapp/main/admin/staff"
                                                 },
                                                 error:function(err){
                                                     alert("error:"+err.status);

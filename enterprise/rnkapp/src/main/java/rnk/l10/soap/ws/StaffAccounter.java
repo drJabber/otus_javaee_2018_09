@@ -21,7 +21,7 @@ import javax.xml.ws.FaultAction;
 @XmlSeeAlso({
     ObjectFactory.class
 })
-public interface StaffUtils {
+public interface StaffAccounter {
 
 
     /**
@@ -36,21 +36,6 @@ public interface StaffUtils {
         @FaultAction(className = RnkWebServiceException_Exception.class, value = "urn://rnk.l10.soap:StaffAccounter:getMinSalary:Fault:RnkWebServiceException")
     })
     public double getMinSalary()
-        throws RnkWebServiceException_Exception
-    ;
-
-    /**
-     * 
-     * @return
-     *     returns double
-     * @throws RnkWebServiceException_Exception
-     */
-    @WebMethod
-    @WebResult(name = "result", partName = "result")
-    @Action(input = "urn://rnk.l10.soap:StaffAccounter:getAvgSalaryRequest", output = "urn://rnk.l10.soap:StaffAccounter:getAvgSalaryResponse", fault = {
-        @FaultAction(className = RnkWebServiceException_Exception.class, value = "urn://rnk.l10.soap:StaffAccounter:getAvgSalary:Fault:RnkWebServiceException")
-    })
-    public double getAvgSalary()
         throws RnkWebServiceException_Exception
     ;
 
@@ -81,6 +66,21 @@ public interface StaffUtils {
         @FaultAction(className = RnkWebServiceException_Exception.class, value = "urn://rnk.l10.soap:StaffAccounter:getPersonWithMaxSalary:Fault:RnkWebServiceException")
     })
     public String getPersonWithMaxSalary()
+        throws RnkWebServiceException_Exception
+    ;
+
+    /**
+     * 
+     * @return
+     *     returns double
+     * @throws RnkWebServiceException_Exception
+     */
+    @WebMethod
+    @WebResult(name = "result", partName = "result")
+    @Action(input = "urn://rnk.l10.soap:StaffAccounter:getAvgSalaryRequest", output = "urn://rnk.l10.soap:StaffAccounter:getAvgSalaryResponse", fault = {
+        @FaultAction(className = RnkWebServiceException_Exception.class, value = "urn://rnk.l10.soap:StaffAccounter:getAvgSalary:Fault:RnkWebServiceException")
+    })
+    public double getAvgSalary()
         throws RnkWebServiceException_Exception
     ;
 

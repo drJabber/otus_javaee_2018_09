@@ -44,7 +44,7 @@ public class RnkStaffEditorImpl implements RnkStaffEditor {
 //                    @ApiResponse(responseCode = "404", description = "Параметр не найден")
 //            }
 //    )
-    @RolesAllowed("admin")
+//    @RolesAllowed("admin")
     public Response edit(
 //            @Parameter(description = "Идентификатор сотрудника", required = true)
             @PathParam("id") String id
@@ -52,8 +52,8 @@ public class RnkStaffEditorImpl implements RnkStaffEditor {
         StaffEditorModel model = new StaffEditorModel(id);
         model.setPage("WEB-INF/admin-staff-editor.jsp");
 
-        model.setSubmitPage("/api/v2/staff/" + id);
-        model.setCancelPage(UrlUtils.getUrl(request) + "/main/admin/staff");
+        model.setSubmitPage("/rnkapp/api/v2/staff/" + id);
+        model.setCancelPage(UrlUtils.getUrl(request) + "/rnkapp/main/admin/staff");
         return Response.ok(new Viewable("/index.jsp", model)).build();
     }
 
@@ -70,13 +70,13 @@ public class RnkStaffEditorImpl implements RnkStaffEditor {
 //                    @ApiResponse(responseCode = "404", description = "Параметр не найден")
 //            }
 //    )
-    @RolesAllowed("admin")
+//    @RolesAllowed("admin")
     public Response add() throws RnkWebServiceException {
         StaffEditorModel model = new StaffEditorModel();
         model.setPage("WEB-INF/admin-staff-editor.jsp");
 
-        model.setSubmitPage("/api/v2/staff");
-        model.setCancelPage(UrlUtils.getUrl(request) + "/main/admin/staff");
+        model.setSubmitPage("/rnkapp/api/v2/staff");
+        model.setCancelPage(UrlUtils.getUrl(request) + "/rnkapp/main/admin/staff");
         return Response.ok(new Viewable("/index.jsp", model)).build();
     }
 
@@ -93,7 +93,7 @@ public class RnkStaffEditorImpl implements RnkStaffEditor {
 //                    @ApiResponse(responseCode = "404", description = "Параметр не найден")
 //            }
 //    )
-    @RolesAllowed("admin")
+//    @RolesAllowed("admin")
     public Response remove(
 //            @Parameter(description = "Идентификатор сотрудника", required = true)
             @PathParam("id") String id
@@ -101,9 +101,9 @@ public class RnkStaffEditorImpl implements RnkStaffEditor {
         StaffEditorModel model = new StaffEditorModel(id);
         model.setPage("WEB-INF/admin-staff-remover.jsp");
 
-        model.setSubmitPage("/api/v2/staff/" + id);
+        model.setSubmitPage("/rnkapp/api/v2/staff/" + id);
         model.setSubmitMethod("DELETE");
-        model.setCancelPage(UrlUtils.getUrl(request) + "/main/admin/staff");
+        model.setCancelPage(UrlUtils.getUrl(request) + "/rnkapp/main/admin/staff");
         return Response.ok(new Viewable("/index.jsp", model)).build();
     }
 

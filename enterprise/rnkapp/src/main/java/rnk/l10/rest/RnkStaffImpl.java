@@ -48,7 +48,7 @@ public class RnkStaffImpl implements RnkStaff{
     )throws RnkWebServiceException{
         staff.save();
         invalidateCache(staff.getId());
-        URI uri=uriInfo.getAbsolutePathBuilder().replacePath("/main/admin/staff").build();
+        URI uri=uriInfo.getAbsolutePathBuilder().replacePath("/rnkapp/main/admin/staff").build();
         return Response.seeOther(uri).build();
     }
 
@@ -92,7 +92,7 @@ public class RnkStaffImpl implements RnkStaff{
         staff.save();
         invalidateCache(null);
 
-        URI uri=uriInfo.getAbsolutePathBuilder().replacePath("/main/admin/staff").build();
+        URI uri=uriInfo.getAbsolutePathBuilder().replacePath("/rnkapp/main/admin/staff").build();
         return Response.seeOther(uri).build();
     }
 

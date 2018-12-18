@@ -86,7 +86,7 @@
                         }
 
                         function payment_click(data){
-                            var url="http://xjabber:18080/api/{0}/accounter/compute?t={1}&cr={2}&r={3}"
+                            var url="http://xjabber:18080/rnkapp/api/{0}/accounter/compute?t={1}&cr={2}&r={3}"
                                          .format(data.version,data.T.val(),data.S.val(),data.R.val());
                             $.ajax({
                                 url: url,

@@ -16,7 +16,7 @@
             <%@include file="admin-menu.jsp"%>
             <div>
                 <div>
-                    <a href="/api/v2/staffeditor"><button type="button" name="user_add_button" id="user_add_button" class="form-button">Добавить</button></a>
+                    <a href="/rnkapp/api/v2/staffeditor"><button type="button" name="user_add_button" id="user_add_button" class="form-button">Добавить</button></a>
                 </div>
                 <jsp:useBean id="staff" class="rnk.l10.entities.beans.StaffDisplayBean" scope="session" />
                 <display:table sort="list" pagesize="${staff.getPageSize()}" requestURI="${pageContext.request.contextPath}/main/admin/staff" name="${staff.get(pageContext)}" decorator="rnk.l10.entities.decorators.StaffDisplayDecorator" class="display-search" >

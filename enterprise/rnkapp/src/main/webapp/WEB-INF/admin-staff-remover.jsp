@@ -33,10 +33,10 @@
                                     var list=path.split('/');
                                     var staff_id=list[list.length-1];
                                     $.ajax({
-                                       url:"/api/v2/staff/"+staff_id,
+                                       url:"/rnkapp/api/v2/staff/"+staff_id,
                                        method:"DELETE",
                                        success:function(data){
-                                           window.location.href="/main/admin/staff"
+                                           window.location.href="/rnkapp/main/admin/staff"
                                        },
                                        error:function(err){
                                            alert("error:"+err.status);
