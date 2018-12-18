@@ -66,12 +66,12 @@ function ws_connect() {
     if (ws_currencies) {ws_currencies.close()};
     if (ws_stats) {ws_stats.close()};
 
-    ws_news = new WebSocket("ws://xjabber:18080/news");
-    ws_currencies = new WebSocket("ws://xjabber:18080/curr");
+    ws_news = new WebSocket("ws://xjabber:18080/rnkapp/news");
+    ws_currencies = new WebSocket("ws://xjabber:18080/rnkapp/curr");
     ws_news.onmessage = onNewsMessage;
     ws_currencies.onmessage = onCurrenciesMessage;
     if ($('#stats-report-table').length){
-        ws_stats=new WebSocket("ws://xjabber:18080/stats");
+        ws_stats=new WebSocket("ws://xjabber:18080/rnkapp/stats");
         ws_stats.onmessage=onStatsMessage;
     }else{
         ws_stats=null;
@@ -215,7 +215,7 @@ function onCurrenciesMessage(evt) {
 function snilsButtonClick(text, element){
     var xml=['<ns2:check xmlns:ns2="urn://rnk.l10.soap"><snils>', text, '</snils></ns2:check>'];
     $.soap({
-        url: 'http://xjabber:18080/snilschecker',
+        url: 'http://xjabber:18080/rnkapp/SnilsCheckerWebService',
         namespaceQualifier: 'ns2',
         namespaceURL: 'urn://rnk.l10.soap',
         method:'check',
@@ -236,7 +236,7 @@ function snilsButtonClick(text, element){
 
 function computeSalaryButtonClick(elt_avg, elt_max, elt_fio){
     var data={
-        url: 'http://xjabber:18080/staffutils',
+        url: 'http://xjabber:18080/rnkapp/staffutils',
         namespaceQualifier: 'ns2',
         namespaceURL: 'urn://rnk.l10.soap',
         method:'',
@@ -302,7 +302,7 @@ var cbrGetCO2=function (element,data){
         $.each(json,function(i,item){
             getCbrData(
                 {
-                    url:'http://xjabber:18080/cbr/co/'+item.IntCode,
+                    url:'http://xjabber:18080/rnkapp/cbr/co/'+item.IntCode,
                     element:$('#main-bank-info'),
                     onSuccess:cbrGetCO
                 }
@@ -311,7 +311,7 @@ var cbrGetCO2=function (element,data){
     }else{
         getCbrData(
             {
-                url:'http://xjabber:18080/cbr/co/'+json.IntCode,
+                url:'http://xjabber:18080/rnkapp/cbr/co/'+json.IntCode,
                 element:$('#main-bank-info'),
                 onSuccess:cbrGetCO
             }
@@ -322,14 +322,14 @@ var cbrGetCO2=function (element,data){
 function updateCbrInfo(){
     getCbrData(
         {
-            url:'http://xjabber:18080/cbr/lastupdate',
+            url:'http://xjabber:18080/rnkapp/cbr/lastupdate',
             element:$('#main-cbr-lastupdate'),
             onSuccess:cbrLastUpdate
         });
 
     getCbrData(
         {
-            url:'http://xjabber:18080/cbr/listofbanks',
+            url:'http://xjabber:18080/rnkapp/cbr/listofbanks',
             element:$('#main-bank-list'),
             onSuccess:cbrGetListOfBanks
         }
@@ -343,7 +343,7 @@ function updateCoInfo(){
     $('#main-bank-info').text("");
     getCbrData(
         {
-            url:'http://xjabber:18080/cbr/co/'+data_value,
+            url:'http://xjabber:18080/rnkapp/cbr/co/'+data_value,
             element:$('#main-bank-info'),
             onSuccess:cbrGetCO
         }
@@ -355,7 +355,7 @@ function updateCoInfo2(){
     $('#main-bank-info').text("");
     getCbrData(
         {
-            url:'http://xjabber:18080/cbr/co2/'+bank,
+            url:'http://xjabber:18080/rnkapp/cbr/co2/'+bank,
             element:$('#main-bank-info'),
             onSuccess:cbrGetCO2
         }

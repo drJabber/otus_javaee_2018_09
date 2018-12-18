@@ -16,7 +16,7 @@ import javax.xml.ws.FaultAction;
  * Generated source version: 2.2
  * 
  */
-@WebService(name = "StaffAccounter", targetNamespace = "urn://rnk.l10.soap")
+@WebService(name = "StaffAccounter", targetNamespace = "http://soap.l10.rnk/")
 @SOAPBinding(style = SOAPBinding.Style.RPC)
 @XmlSeeAlso({
     ObjectFactory.class
@@ -32,8 +32,8 @@ public interface StaffAccounter {
      */
     @WebMethod
     @WebResult(name = "result", partName = "result")
-    @Action(input = "urn://rnk.l10.soap:StaffAccounter:getMinSalaryRequest", output = "urn://rnk.l10.soap:StaffAccounter:getMinSalaryResponse", fault = {
-        @FaultAction(className = RnkWebServiceException_Exception.class, value = "urn://rnk.l10.soap:StaffAccounter:getMinSalary:Fault:RnkWebServiceException")
+    @Action(input = "http://soap.l10.rnk/StaffAccounter/getMinSalaryRequest", output = "http://soap.l10.rnk/StaffAccounter/getMinSalaryResponse", fault = {
+        @FaultAction(className = RnkWebServiceException_Exception.class, value = "http://soap.l10.rnk/StaffAccounter/getMinSalary/Fault/RnkWebServiceException")
     })
     public double getMinSalary()
         throws RnkWebServiceException_Exception
@@ -47,25 +47,10 @@ public interface StaffAccounter {
      */
     @WebMethod
     @WebResult(name = "result", partName = "result")
-    @Action(input = "urn://rnk.l10.soap:StaffAccounter:getMaxSalaryRequest", output = "urn://rnk.l10.soap:StaffAccounter:getMaxSalaryResponse", fault = {
-        @FaultAction(className = RnkWebServiceException_Exception.class, value = "urn://rnk.l10.soap:StaffAccounter:getMaxSalary:Fault:RnkWebServiceException")
+    @Action(input = "http://soap.l10.rnk/StaffAccounter/getMaxSalaryRequest", output = "http://soap.l10.rnk/StaffAccounter/getMaxSalaryResponse", fault = {
+        @FaultAction(className = RnkWebServiceException_Exception.class, value = "http://soap.l10.rnk/StaffAccounter/getMaxSalary/Fault/RnkWebServiceException")
     })
     public double getMaxSalary()
-        throws RnkWebServiceException_Exception
-    ;
-
-    /**
-     * 
-     * @return
-     *     returns java.lang.String
-     * @throws RnkWebServiceException_Exception
-     */
-    @WebMethod
-    @WebResult(name = "result", partName = "result")
-    @Action(input = "urn://rnk.l10.soap:StaffAccounter:getPersonWithMaxSalaryRequest", output = "urn://rnk.l10.soap:StaffAccounter:getPersonWithMaxSalaryResponse", fault = {
-        @FaultAction(className = RnkWebServiceException_Exception.class, value = "urn://rnk.l10.soap:StaffAccounter:getPersonWithMaxSalary:Fault:RnkWebServiceException")
-    })
-    public String getPersonWithMaxSalary()
         throws RnkWebServiceException_Exception
     ;
 
@@ -77,10 +62,25 @@ public interface StaffAccounter {
      */
     @WebMethod
     @WebResult(name = "result", partName = "result")
-    @Action(input = "urn://rnk.l10.soap:StaffAccounter:getAvgSalaryRequest", output = "urn://rnk.l10.soap:StaffAccounter:getAvgSalaryResponse", fault = {
-        @FaultAction(className = RnkWebServiceException_Exception.class, value = "urn://rnk.l10.soap:StaffAccounter:getAvgSalary:Fault:RnkWebServiceException")
+    @Action(input = "http://soap.l10.rnk/StaffAccounter/getAvgSalaryRequest", output = "http://soap.l10.rnk/StaffAccounter/getAvgSalaryResponse", fault = {
+        @FaultAction(className = RnkWebServiceException_Exception.class, value = "http://soap.l10.rnk/StaffAccounter/getAvgSalary/Fault/RnkWebServiceException")
     })
     public double getAvgSalary()
+        throws RnkWebServiceException_Exception
+    ;
+
+    /**
+     * 
+     * @return
+     *     returns java.lang.String
+     * @throws RnkWebServiceException_Exception
+     */
+    @WebMethod
+    @WebResult(name = "result", partName = "result")
+    @Action(input = "http://soap.l10.rnk/StaffAccounter/getPersonWithMaxSalaryRequest", output = "http://soap.l10.rnk/StaffAccounter/getPersonWithMaxSalaryResponse", fault = {
+        @FaultAction(className = RnkWebServiceException_Exception.class, value = "http://soap.l10.rnk/StaffAccounter/getPersonWithMaxSalary/Fault/RnkWebServiceException")
+    })
+    public String getPersonWithMaxSalary()
         throws RnkWebServiceException_Exception
     ;
 

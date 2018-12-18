@@ -10,7 +10,7 @@ import javax.xml.ws.WebFault;
  * Generated source version: 2.2
  * 
  */
-@WebFault(name = "RnkWebServiceException", targetNamespace = "urn://rnk.l10.soap")
+@WebFault(name = "RnkWebServiceException", targetNamespace = "http://soap.l10.rnk/")
 public class RnkWebServiceException_Exception
     extends Exception
 {

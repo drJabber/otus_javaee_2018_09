@@ -24,7 +24,7 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
-    private final static QName _RnkWebServiceException_QNAME = new QName("urn://rnk.l10.soap", "RnkWebServiceException");
+    private final static QName _RnkWebServiceException_QNAME = new QName("http://soap.l10.rnk/", "RnkWebServiceException");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: rnk.l10.soap.ws
@@ -49,7 +49,7 @@ public class ObjectFactory {
      * @return
      *     the new instance of {@link JAXBElement }{@code <}{@link RnkWebServiceException }{@code >}
      */
-    @XmlElementDecl(namespace = "urn://rnk.l10.soap", name = "RnkWebServiceException")
+    @XmlElementDecl(namespace = "http://soap.l10.rnk/", name = "RnkWebServiceException")
     public JAXBElement<RnkWebServiceException> createRnkWebServiceException(RnkWebServiceException value) {
         return new JAXBElement<RnkWebServiceException>(_RnkWebServiceException_QNAME, RnkWebServiceException.class, null, value);
     }

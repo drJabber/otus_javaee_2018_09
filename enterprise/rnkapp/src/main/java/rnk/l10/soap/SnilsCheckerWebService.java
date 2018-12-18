@@ -9,7 +9,7 @@ import javax.jws.WebParam;
 import javax.jws.WebResult;
 import javax.jws.WebService;
 
-@WebService(serviceName="SnilsCheckreWebService",
+@WebService(serviceName="SnilsCheckerWebService",
         name="SnilsChecker",
         endpointInterface = "rnk.l10.soap.SnilsChecker",
         portName="snilschecker",
@@ -17,9 +17,7 @@ import javax.jws.WebService;
 public class SnilsCheckerWebService  implements SnilsChecker {
     private static final Logger logger = Logger.getLogger(SnilsCheckerWebService.class.getName());
 
-    @WebMethod
-    @WebResult(name="result")
-    public boolean check(@WebParam(name="snils", targetNamespace = "urn://rnk.l10.soap")String snils) throws RnkWebServiceException {
+    public boolean check(String snils) throws RnkWebServiceException {
         try {
             return Snils.isValid(snils);
         }catch(Exception ex){

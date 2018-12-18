@@ -1,2 +1,2 @@
-@javax.xml.bind.annotation.XmlSchema(namespace = "urn://rnk.l10.soap")
+@javax.xml.bind.annotation.XmlSchema(namespace = "http://soap.l10.rnk/")
 package rnk.l10.soap.ws;
