@@ -17,7 +17,7 @@ import javax.xml.ws.WebServiceFeature;
  * Generated source version: 2.2
  * 
  */
-@WebServiceClient(name = "StaffAccounterWebService", targetNamespace = "urn://rnk.l10.soap", wsdlLocation = "http://0.0.0.0:18080/rnkapp/StaffAccounterWebService?wsdl")
+@WebServiceClient(name = "StaffAccounterWebService", targetNamespace = "urn://rnk.l10.soap", wsdlLocation = "http://0.0.0.0:8080/rnkapp/StaffAccounterWebService?wsdl")
 public class StaffAccounterWebService
     extends Service
 {
@@ -30,7 +30,7 @@ public class StaffAccounterWebService
         URL url = null;
         WebServiceException e = null;
         try {
-            url = new URL("http://0.0.0.0:18080/rnkapp/StaffAccounterWebService?wsdl");
+            url = new URL("http://0.0.0.0:8080/rnkapp/StaffAccounterWebService?wsdl");
         } catch (MalformedURLException ex) {
             e = new WebServiceException(ex);
         }

@@ -187,6 +187,20 @@
     </form-login-config>
   </login-config>
 
+  <filter>
+    <filter-name>Character Encoding Filter</filter-name>
+    <filter-class>rnk.l10.filters.SetCharacterEncodingFilter</filter-class>
+    <async-supported>true</async-supported>
+    <init-param>
+      <param-name>encoding</param-name>
+      <param-value>UTF-8</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>Character Encoding Filter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
   <jsp-config>
     <jsp-property-group>
       <url-pattern>*.jsp</url-pattern>
