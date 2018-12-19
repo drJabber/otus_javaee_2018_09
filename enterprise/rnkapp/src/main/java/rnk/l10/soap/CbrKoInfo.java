@@ -62,6 +62,9 @@ public class CbrKoInfo implements Provider<Source> {
     }
 
     private CbrHelper parseQuery(String query){
+        if (query==null){
+            query="";
+        }
         List<String> tokens= new ArrayList<>(Arrays.asList(query.split("/")));
         if (tokens.get(0).isEmpty()){
             tokens.remove(0);

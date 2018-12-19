@@ -354,7 +354,7 @@ COMMENT ON EXTENSION pgcrypto IS 'cryptographic functions';
 -- Name: add_stats(character varying, character varying); Type: FUNCTION; Schema: public; Owner: -
 --
 
-CREATE FUNCTION public.add_stats(p_token character varying, p_value character varying) RETURNS TABLE(o_id integer)    LANGUAGE plpgsql    AS $$ declare   stats_switch character varying default null;begin	stats_switch=coalesce((select switch from stats_switches where token=p_token),'on');	if (stats_switch='on') then		return query insert into stats(token,values) values(p_token,cast(p_value as jsonb))				returning id;	else		return query select (-1);	end if;end$$;
+CREATE FUNCTION public.add_stats(p_token character varying, p_value character varying) RETURNS TABLE(o_id integer)    LANGUAGE plpgsql    AS $$ declare   stats_switch character varying default null;begin	stats_switch=coalesce((select switch from public.stats_switches where token=p_token),'on');	if (stats_switch='on') then		return query insert into public.stats(token,values) values(p_token,cast(p_value as jsonb))				returning id;	else		return query select (-1);	end if;end$$;
 
 
 --
@@ -368,14 +368,14 @@ CREATE FUNCTION public.authorize(p_login character varying DEFAULT ''::character
 -- Name: get_max_salary_fio(); Type: FUNCTION; Schema: public; Owner: -
 --
 
-CREATE FUNCTION public.get_max_salary_fio() RETURNS character varying    LANGUAGE plpgsql    AS $$ begin return(select fio          from staff		  order by salary desc		  fetch first row only);end $$;
+CREATE FUNCTION public.get_max_salary_fio() RETURNS character varying    LANGUAGE plpgsql    AS $$ begin return(select fio          from public.staff		  order by salary desc		  fetch first row only);end $$;
 
 
 --
 -- Name: get_stats_switch(character varying); Type: FUNCTION; Schema: public; Owner: -
 --
 
-CREATE FUNCTION public.get_stats_switch(p_token character varying) RETURNS TABLE(o_switch character varying)    LANGUAGE plpgsql    AS $$ begin	if exists (select 1 from stats_switches where token=p_token) then		return query select switch from stats_switches where token=p_token;	else		return query values("on");	end if;end $$;
+CREATE FUNCTION public.get_stats_switch(p_token character varying) RETURNS TABLE(o_switch character varying)    LANGUAGE plpgsql    AS $$ begin	if exists (select 1 from public.stats_switches where token=p_token) then		return query select switch from public.stats_switches where token=p_token;	else		return query values("on");	end if;end $$;
 
 
 --
@@ -403,7 +403,7 @@ CREATE FUNCTION public.session_is_valid(p_session_id character varying DEFAULT '
 -- Name: switch_stats(character varying, character varying); Type: FUNCTION; Schema: public; Owner: -
 --
 
-CREATE FUNCTION public.switch_stats(p_token character varying, p_switch character varying) RETURNS TABLE(o_result character varying)    LANGUAGE plpgsql    AS $$ begin	if exists (select 1 from stats where token=p_token) then		if exists (select 1 from stats_switches where token=p_token) then			update stats_switches set switch=p_switch where token=p_token;		else			insert into stats_switches(token,switch) values(p_token,p_switch);		end if;		return query values(p_switch);	else		return query values("fail");	end if;end $$;
+CREATE FUNCTION public.switch_stats(p_token character varying, p_switch character varying) RETURNS TABLE(o_result character varying)    LANGUAGE plpgsql    AS $$ begin	if exists (select 1 from stats where token=p_token) then		if exists (select 1 from public.stats_switches where token=p_token) then			update public.stats_switches set switch=p_switch where token=p_token;		else			insert into public.stats_switches(token,switch) values(p_token,p_switch);		end if;		return query values(p_switch);	else		return query values("fail");	end if;end $$;
 
 
 SET default_with_oids = false;

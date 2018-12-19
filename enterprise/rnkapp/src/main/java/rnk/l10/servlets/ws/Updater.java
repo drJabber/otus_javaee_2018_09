@@ -26,10 +26,16 @@ public class Updater {
                     logger.error("ws session is closed:"+session.getId());
                 }else{
                     HttpSession s=(HttpSession)session.getUserProperties().get("http-session");
-                    ServletContext ctx=s.getServletContext();
-                    ThreadPoolExecutor executor = (ThreadPoolExecutor )ctx.getAttribute("ws_executor");
-                    Runnable worker=new UpdaterThread(session);
-                    executor.execute(worker);
+                    if (s!=null){
+                        ServletContext ctx=s.getServletContext();
+                        if (ctx!=null){
+                            ThreadPoolExecutor executor = (ThreadPoolExecutor )ctx.getAttribute("ws_executor");
+                            Runnable worker=new UpdaterThread(session);
+                            executor.execute(worker);
+                        }else{
+                            logger.error("ws servlet context is null");
+                        }
+                    }
                 }
             }
 

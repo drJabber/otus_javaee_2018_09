@@ -6,7 +6,7 @@
 </head>
 <body>
     <%--use custom tag to store stats--%>
-    <%--<s:stats />--%>
+    <s:stats />
 
     <div class="container">
         <table>

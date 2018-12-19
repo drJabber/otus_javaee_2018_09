@@ -5,11 +5,11 @@
   Time: 7:29
   To change this template use File | Settings | File Templates.
 --%>
-<%--<%@ taglib prefix="s" uri="/rnk-tags" %>--%>
+<%@ taglib prefix="s" uri="/rnk-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-            <%--<s:statsx />--%>
+            <s:statsx />
 
         <main class="admin-container">
 

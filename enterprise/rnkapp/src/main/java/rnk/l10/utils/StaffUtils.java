@@ -65,7 +65,7 @@ public class StaffUtils {
     public static String getPersonWithMaxSalary()throws RnkWebServiceException{
         return (String) executeQuery((em)->{
             StoredProcedureQuery q = em
-                    .createStoredProcedureQuery("get_max_salary_fio")
+                    .createStoredProcedureQuery("public.get_max_salary_fio")
                     .registerStoredProcedureParameter(0,
                             String.class, ParameterMode.OUT);
             q.execute();

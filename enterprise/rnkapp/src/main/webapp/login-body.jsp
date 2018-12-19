@@ -5,10 +5,10 @@
   Time: 7:29
   To change this template use File | Settings | File Templates.
 --%>
-<%--<%@ taglib prefix="s" uri="/rnk-tags" %>--%>
+<%@ taglib prefix="s" uri="/rnk-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
         <%--use custom tag to store stats--%>
-        <%--<s:statsx />--%>
+        <s:statsx />
 
         <main class="main-container">
             <form method="post" action="j_security_check" class="login-form" id="login-form">

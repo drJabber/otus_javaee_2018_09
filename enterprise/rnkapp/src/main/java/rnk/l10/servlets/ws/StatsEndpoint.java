@@ -8,7 +8,7 @@ import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 import java.util.Queue;
 
-@ServerEndpoint(value = "/stats",  encoders = {JsonEncoder.class}, configurator = Configurer.class)
+@ServerEndpoint(value = "/ws_stats",  encoders = {JsonEncoder.class}, configurator = Configurer.class)
 public class StatsEndpoint {
     private static final Logger logger = Logger.getLogger(NewsEndpoint.class.getName());
 

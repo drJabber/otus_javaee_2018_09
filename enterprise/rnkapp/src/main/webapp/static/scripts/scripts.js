@@ -71,7 +71,7 @@ function ws_connect() {
     ws_news.onmessage = onNewsMessage;
     ws_currencies.onmessage = onCurrenciesMessage;
     if ($('#stats-report-table').length){
-        ws_stats=new WebSocket("ws://xjabber:18080/rnkapp/stats");
+        ws_stats=new WebSocket("ws://xjabber:18080/rnkapp/ws_stats");
         ws_stats.onmessage=onStatsMessage;
     }else{
         ws_stats=null;
@@ -213,11 +213,11 @@ function onCurrenciesMessage(evt) {
 
 
 function snilsButtonClick(text, element){
-    var xml=['<ns2:check xmlns:ns2="urn://rnk.l10.soap"><snils>', text, '</snils></ns2:check>'];
+    var xml=['<ns2:check xmlns:ns2="http://soap.l10.rnk/"><snils>', text, '</snils></ns2:check>'];
     $.soap({
         url: 'http://xjabber:18080/rnkapp/SnilsCheckerWebService',
         namespaceQualifier: 'ns2',
-        namespaceURL: 'urn://rnk.l10.soap',
+        namespaceURL: 'http://soap.l10.rnk/',
         method:'"check"',
         async:false,
         // noPrefix:true,
@@ -236,9 +236,9 @@ function snilsButtonClick(text, element){
 
 function computeSalaryButtonClick(elt_avg, elt_max, elt_fio){
     var data={
-        url: 'http://xjabber:18080/rnkapp/staffutils',
+        url: 'http://xjabber:18080/rnkapp/StaffAccounterWebService',
         namespaceQualifier: 'ns2',
-        namespaceURL: 'urn://rnk.l10.soap',
+        namespaceURL: 'http://soap.l10.rnk/',
         method:'',
         params:{},
         element:null,
