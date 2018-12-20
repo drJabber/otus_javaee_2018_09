@@ -6,6 +6,6 @@ import javax.ejb.Remote;
 import java.util.List;
 
 //@Remote
-public interface RnkCreditAccounterV2 {
+public interface RnkCreditAccounter {
     public List<Double> computePayment(AccountingParams params);
 }

@@ -7,7 +7,7 @@ package rnk.l10.rest;
 //import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.apache.log4j.Logger;
 import rnk.l10.ejb.credits.DifferentialCreditAccouonterBean;
-import rnk.l10.ejb.credits.RnkCreditAccounterV1;
+import rnk.l10.ejb.credits.RnkCreditAccounter;
 import rnk.l10.rest.model.AccountingParams;
 
 //import javax.ejb.EJB;
@@ -32,7 +32,7 @@ public class RnkDifferentialCreditAccounterImpl  {
     private static final Logger logger = Logger.getLogger(RnkDifferentialCreditAccounterImpl.class.getName());
 
    @EJB
-   RnkCreditAccounterV1 bean;
+   RnkCreditAccounter bean;
 
     public RnkDifferentialCreditAccounterImpl(){
         logger.info("rest impl visited");

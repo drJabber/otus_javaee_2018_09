@@ -11,21 +11,18 @@ package rnk.l10.rest;
 import org.apache.log4j.Logger;
 //import rnk.l10.ejb.credits.AnnuitetCreditAccounterBean;
 //import rnk.l10.ejb.credits.RnkCreditAccounterV1;
-import rnk.l10.ejb.credits.RnkCreditAccounterV2;
+import rnk.l10.ejb.credits.RnkCreditAccounter;
 import rnk.l10.rest.model.AccountingParams;
 
 //import javax.ejb.EJB;
 //import javax.enterprise.inject.Default;
 import javax.ejb.EJB;
-import javax.enterprise.inject.Default;
-import javax.inject.Inject;
 import javax.validation.Valid;
 import javax.ws.rs.BeanParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Path("/v2/accounter")
@@ -35,7 +32,7 @@ public class RnkAnnuitetCreditAccounterImpl  {
 
 
    @EJB
-   RnkCreditAccounterV2 bean;
+   RnkCreditAccounter bean;
 
     public RnkAnnuitetCreditAccounterImpl(){
         logger.info("rest impl visited");

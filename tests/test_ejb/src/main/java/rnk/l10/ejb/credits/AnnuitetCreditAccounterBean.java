@@ -2,13 +2,12 @@ package rnk.l10.ejb.credits;
 
 import rnk.l10.rest.model.AccountingParams;
 
-import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import java.util.ArrayList;
 import java.util.List;
 
 @Stateless
-public class AnnuitetCreditAccounterBean implements RnkCreditAccounterV2 {
+public class AnnuitetCreditAccounterBean implements RnkCreditAccounter {
     @Override
     public List<Double> computePayment(AccountingParams params) {
         List<Double> result=new ArrayList<>();
