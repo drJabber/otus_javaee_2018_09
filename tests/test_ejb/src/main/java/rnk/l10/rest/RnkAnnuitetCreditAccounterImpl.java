@@ -16,6 +16,7 @@ import rnk.l10.rest.model.AccountingParams;
 
 //import javax.ejb.EJB;
 //import javax.enterprise.inject.Default;
+import javax.enterprise.inject.Default;
 import javax.inject.Inject;
 import javax.validation.Valid;
 import javax.ws.rs.BeanParam;

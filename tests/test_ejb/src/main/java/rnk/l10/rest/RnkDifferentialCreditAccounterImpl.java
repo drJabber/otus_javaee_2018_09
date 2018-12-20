@@ -12,6 +12,8 @@ import rnk.l10.rest.model.AccountingParams;
 //import javax.ejb.EJB;
 //import javax.enterprise.inject.Default;
 //import javax.inject.Inject;
+import javax.enterprise.inject.Default;
+import javax.inject.Inject;
 import javax.validation.Valid;
 import javax.ws.rs.BeanParam;
 import javax.ws.rs.GET;
@@ -27,7 +29,8 @@ import java.util.List;
 public class RnkDifferentialCreditAccounterImpl  {
     private static final Logger logger = Logger.getLogger(RnkDifferentialCreditAccounterImpl.class.getName());
 
-   @Inject @Default
+   @Inject
+   @Default
    DifferentialCreditAccouonterBean bean;
 
     public RnkDifferentialCreditAccounterImpl(){
