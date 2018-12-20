@@ -27,8 +27,8 @@ import java.util.List;
 public class RnkDifferentialCreditAccounterImpl  {
     private static final Logger logger = Logger.getLogger(RnkDifferentialCreditAccounterImpl.class.getName());
 
-//    @Inject @Default
-//    DifferentialCreditAccouonterBean bean;
+   @Inject @Default
+   DifferentialCreditAccouonterBean bean;
 
     public RnkDifferentialCreditAccounterImpl(){
         logger.info("rest impl visited");
@@ -36,25 +36,23 @@ public class RnkDifferentialCreditAccounterImpl  {
 
     @GET
     @Path("/compute")
-//    @Operation(
-//            summary="Расчет дифференцированного платежа по кредиту",
-//            tags = {"Расчет","Кредит","График"},
-//            description="Расчет дифференцированного платежа по кредиту",
-//            responses = {@ApiResponse(description = "Список сумм платежей", content = @Content(schema = @Schema(implementation = List.class))),
-//                    @ApiResponse(responseCode = "400", description = "Ошибка в параметрах запроса"),
-//                    @ApiResponse(responseCode = "404", description = "Параметр не найден")
-//            }
-//    )
     public List<Double> computePayment(@Valid @BeanParam AccountingParams params) {
-//        return bean.computePayment(params);
-        List<Double> result=new ArrayList<>();
-        int T=params.getNumberOfPeriods();
-        double Kr=params.getAmountOfCredit();
-        double R=params.getRate();
-        for (int i=0; i<T;i++){
-            result.add(Kr*(1+R*(T-i))/T);
-        }
-        return result;
+
+                //если закомментировать этот код,
+                //закомментировать инжект
+                //и раскомментировать то, что ниже,
+                //то все работает
+                // это надо проделать в обоих ресурсах
+                return bean.computePayment(params);
+
+        // List<Double> result=new ArrayList<>();
+        // int T=params.getNumberOfPeriods();
+        // double Kr=params.getAmountOfCredit();
+        // double R=params.getRate();
+        // for (int i=0; i<T;i++){
+        //     result.add(Kr*(1+R*(T-i))/T);
+        // }
+        // return result;
 
     }
 }

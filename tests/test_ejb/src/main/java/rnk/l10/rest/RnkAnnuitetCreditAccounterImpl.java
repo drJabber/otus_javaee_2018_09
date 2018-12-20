@@ -32,8 +32,8 @@ public class RnkAnnuitetCreditAccounterImpl  {
     private static final Logger logger = Logger.getLogger(RnkAnnuitetCreditAccounterImpl.class.getName());
 
 
-//    @Inject @Default
-//    RnkCreditAccounterV2 bean;
+   @Inject @Default
+   RnkCreditAccounterV2 bean;
 
     public RnkAnnuitetCreditAccounterImpl(){
         logger.info("rest impl visited");
@@ -41,28 +41,25 @@ public class RnkAnnuitetCreditAccounterImpl  {
 
     @GET
     @Path("/compute")
-//    @Operation(
-//            summary="Расчет аннуитетного платежа по кредиту",
-//            tags = {"Расчет","Кредит","График"},
-//            description="Расчет аннуитетного платежа по кредиту",
-//            responses = {@ApiResponse(description = "Список сумм платежей", content = @Content(schema = @Schema(implementation = List.class))),
-//                    @ApiResponse(responseCode = "400", description = "Ошибка в параметрах запроса"),
-//                    @ApiResponse(responseCode = "404", description = "Параметр не найден")
-//            }
-//    )
     public List<Double> computePayment(
-//            @Parameter(description = "Параметры расчета", required = true)
             @Valid
             @BeanParam AccountingParams params) {
-//        return bean.computePayment(params);
-        List<Double> result=new ArrayList<>();
-        int T=params.getNumberOfPeriods();
-        double Kr=params.getAmountOfCredit();
-        double R=params.getRate();
-        double P=Kr*R/(1-1/Math.pow((1+R),T));
-        for (int i=0; i<T;i++){
-            result.add(P);
-        }
-        return result;
+
+                //если закомментировать этот код,
+                //закомментировать инжект
+                //и раскомментировать то, что ниже,
+                //то все работает
+                // это надо проделать в обоих ресурсах
+                return bean.computePayment(params);
+                
+        // List<Double> result=new ArrayList<>();
+        // int T=params.getNumberOfPeriods();
+        // double Kr=params.getAmountOfCredit();
+        // double R=params.getRate();
+        // double P=Kr*R/(1-1/Math.pow((1+R),T));
+        // for (int i=0; i<T;i++){
+        //     result.add(P);
+        // }
+        // return result;
     }
 }
