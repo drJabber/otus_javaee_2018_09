@@ -31,7 +31,7 @@ public class RnkAnnuitetCreditAccounterImpl  {
     private static final Logger logger = Logger.getLogger(RnkAnnuitetCreditAccounterImpl.class.getName());
 
 
-   @EJB
+   @EJB(beanName = "AnnuitetCreditAccouonterBean")
    RnkCreditAccounter bean;
 
     public RnkAnnuitetCreditAccounterImpl(){

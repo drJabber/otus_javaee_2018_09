@@ -5,7 +5,7 @@ import rnk.l10.rest.model.AccountingParams;
 import javax.ejb.Remote;
 import java.util.List;
 
-//@Remote
+@Remote
 public interface RnkCreditAccounter {
     public List<Double> computePayment(AccountingParams params);
 }

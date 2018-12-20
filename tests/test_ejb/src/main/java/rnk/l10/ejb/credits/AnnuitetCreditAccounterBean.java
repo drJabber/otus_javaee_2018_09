@@ -6,7 +6,7 @@ import javax.ejb.Stateless;
 import java.util.ArrayList;
 import java.util.List;
 
-@Stateless
+@Stateless(name = "AnnuitetCreditAccounterBean")
 public class AnnuitetCreditAccounterBean implements RnkCreditAccounter {
     @Override
     public List<Double> computePayment(AccountingParams params) {

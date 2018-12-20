@@ -31,7 +31,7 @@ import java.util.List;
 public class RnkDifferentialCreditAccounterImpl  {
     private static final Logger logger = Logger.getLogger(RnkDifferentialCreditAccounterImpl.class.getName());
 
-   @EJB
+   @EJB(beanName = "DifferentialCreditAccouonterBean")
    RnkCreditAccounter bean;
 
     public RnkDifferentialCreditAccounterImpl(){
