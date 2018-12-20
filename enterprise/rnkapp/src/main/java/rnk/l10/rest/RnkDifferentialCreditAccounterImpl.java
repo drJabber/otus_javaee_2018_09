@@ -6,8 +6,12 @@ package rnk.l10.rest;
 //import io.swagger.v3.oas.annotations.media.Schema;
 //import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.apache.log4j.Logger;
+import rnk.l10.ejb.credits.DifferentialCreditAccouonterBean;
 import rnk.l10.rest.model.AccountingParams;
 
+//import javax.ejb.EJB;
+//import javax.enterprise.inject.Default;
+//import javax.inject.Inject;
 import javax.validation.Valid;
 import javax.ws.rs.BeanParam;
 import javax.ws.rs.GET;
@@ -17,16 +21,19 @@ import javax.ws.rs.core.*;
 import java.util.ArrayList;
 import java.util.List;
 
+
 @Path("/v1/accounter")
 @Produces(MediaType.APPLICATION_JSON)
-public class RnkDifferentialCreditAccounterImpl implements  RnkCreditAccounter {
+public class RnkDifferentialCreditAccounterImpl  {
     private static final Logger logger = Logger.getLogger(RnkDifferentialCreditAccounterImpl.class.getName());
+
+//    @Inject @Default
+//    DifferentialCreditAccouonterBean bean;
 
     public RnkDifferentialCreditAccounterImpl(){
         logger.info("rest impl visited");
     }
 
-    @Override
     @GET
     @Path("/compute")
 //    @Operation(
@@ -39,6 +46,7 @@ public class RnkDifferentialCreditAccounterImpl implements  RnkCreditAccounter {
 //            }
 //    )
     public List<Double> computePayment(@Valid @BeanParam AccountingParams params) {
+//        return bean.computePayment(params);
         List<Double> result=new ArrayList<>();
         int T=params.getNumberOfPeriods();
         double Kr=params.getAmountOfCredit();

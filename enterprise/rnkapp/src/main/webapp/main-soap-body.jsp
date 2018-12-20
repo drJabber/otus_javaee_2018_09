@@ -8,7 +8,7 @@
 <%@ taglib prefix="s" uri="/rnk-tags" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<jsp:useBean id="staffsalaries" class="rnk.l10.entities.beans.StaffUtilsWrapper" scope="session" />
+<%--<jsp:useBean id="staffsalaries" class="rnk.l10.entities.beans.StaffUtilsWrapper" scope="session" />--%>
 
         <s:statsx />
 
