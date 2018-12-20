@@ -5,7 +5,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.rnk.app</groupId>
-  <artifactId>rnktest</artifactId>
+  <artifactId>rnkt02</artifactId>
   <version>0.1</version>
   <packaging>war</packaging>
 
@@ -249,7 +249,7 @@
   </dependencies>
 
   <build>
-    <finalName>rnktest</finalName>
+    <finalName>rnkt02</finalName>
 
     <plugins>
       <plugin>

@@ -16,6 +16,7 @@ import rnk.l10.rest.model.AccountingParams;
 
 //import javax.ejb.EJB;
 //import javax.enterprise.inject.Default;
+import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.validation.Valid;
 import javax.ws.rs.BeanParam;
@@ -32,8 +33,8 @@ public class RnkAnnuitetCreditAccounterImpl  {
     private static final Logger logger = Logger.getLogger(RnkAnnuitetCreditAccounterImpl.class.getName());
 
 
-//    @Inject @Default
-//    RnkCreditAccounterV2 bean;
+    @EJB
+    RnkCreditAccounterV2 bean;
 
     public RnkAnnuitetCreditAccounterImpl(){
         logger.info("rest impl visited");
@@ -54,15 +55,15 @@ public class RnkAnnuitetCreditAccounterImpl  {
 //            @Parameter(description = "Параметры расчета", required = true)
             @Valid
             @BeanParam AccountingParams params) {
-//        return bean.computePayment(params);
-        List<Double> result=new ArrayList<>();
-        int T=params.getNumberOfPeriods();
-        double Kr=params.getAmountOfCredit();
-        double R=params.getRate();
-        double P=Kr*R/(1-1/Math.pow((1+R),T));
-        for (int i=0; i<T;i++){
-            result.add(P);
-        }
-        return result;
+        return bean.computePayment(params);
+//        List<Double> result=new ArrayList<>();
+//        int T=params.getNumberOfPeriods();
+//        double Kr=params.getAmountOfCredit();
+//        double R=params.getRate();
+//        double P=Kr*R/(1-1/Math.pow((1+R),T));
+//        for (int i=0; i<T;i++){
+//            result.add(P);
+//        }
+//        return result;
     }
 }

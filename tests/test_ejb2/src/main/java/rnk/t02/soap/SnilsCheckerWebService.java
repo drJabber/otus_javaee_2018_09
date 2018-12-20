@@ -1,8 +1,8 @@
-package rnk.l10.soap;
+package rnk.t02.soap;
 
 import org.apache.log4j.Logger;
-import rnk.l10.exception.RnkWebServiceException;
-import rnk.l10.utils.Snils;
+import rnk.t02.exception.RnkWebServiceException;
+import rnk.t02.utils.Snils;
 
 import javax.ejb.Singleton;
 import javax.jws.WebMethod;
@@ -10,12 +10,12 @@ import javax.jws.WebParam;
 import javax.jws.WebResult;
 import javax.jws.WebService;
 
-@Singleton(mappedName = "ejb/rnk.l10.snilschecker")
+@Singleton
 @WebService(serviceName="SnilsCheckerWebService",
         name="SnilsChecker",
-        endpointInterface = "rnk.l10.soap.SnilsChecker",
+        endpointInterface = "rnk.t02.soap.SnilsChecker",
         portName="snilschecker",
-        targetNamespace = "urn://rnk.l10.soap")
+        targetNamespace = "urn://rnk.t02.soap")
 public class SnilsCheckerWebService  implements SnilsChecker {
     private static final Logger logger = Logger.getLogger(SnilsCheckerWebService.class.getName());
 

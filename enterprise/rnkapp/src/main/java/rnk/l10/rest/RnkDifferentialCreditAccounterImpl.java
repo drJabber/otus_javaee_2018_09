@@ -7,11 +7,13 @@ package rnk.l10.rest;
 //import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.apache.log4j.Logger;
 import rnk.l10.ejb.credits.DifferentialCreditAccouonterBean;
+import rnk.l10.ejb.credits.RnkCreditAccounterV1;
 import rnk.l10.rest.model.AccountingParams;
 
 //import javax.ejb.EJB;
 //import javax.enterprise.inject.Default;
 //import javax.inject.Inject;
+import javax.ejb.EJB;
 import javax.validation.Valid;
 import javax.ws.rs.BeanParam;
 import javax.ws.rs.GET;
@@ -27,8 +29,8 @@ import java.util.List;
 public class RnkDifferentialCreditAccounterImpl  {
     private static final Logger logger = Logger.getLogger(RnkDifferentialCreditAccounterImpl.class.getName());
 
-//    @Inject @Default
-//    DifferentialCreditAccouonterBean bean;
+    @EJB
+    RnkCreditAccounterV1 bean;
 
     public RnkDifferentialCreditAccounterImpl(){
         logger.info("rest impl visited");
@@ -46,15 +48,15 @@ public class RnkDifferentialCreditAccounterImpl  {
 //            }
 //    )
     public List<Double> computePayment(@Valid @BeanParam AccountingParams params) {
-//        return bean.computePayment(params);
-        List<Double> result=new ArrayList<>();
-        int T=params.getNumberOfPeriods();
-        double Kr=params.getAmountOfCredit();
-        double R=params.getRate();
-        for (int i=0; i<T;i++){
-            result.add(Kr*(1+R*(T-i))/T);
-        }
-        return result;
-
+        return bean.computePayment(params);
+//        List<Double> result=new ArrayList<>();
+//        int T=params.getNumberOfPeriods();
+//        double Kr=params.getAmountOfCredit();
+//        double R=params.getRate();
+//        for (int i=0; i<T;i++){
+//            result.add(Kr*(1+R*(T-i))/T);
+//        }
+//        return result;
+//
     }
 }

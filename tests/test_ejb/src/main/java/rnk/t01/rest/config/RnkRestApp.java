@@ -1,24 +1,12 @@
-package rnk.l10.rest.config;
+package rnk.t01.rest.config;
 
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-//import io.swagger.v3.jaxrs2.SwaggerSerializers;
-//import io.swagger.v3.jaxrs2.integration.resources.OpenApiResource;
-//import io.swagger.v3.oas.annotations.OpenAPIDefinition;
-//import io.swagger.v3.oas.annotations.info.Contact;
-//import io.swagger.v3.oas.annotations.info.Info;
-//import io.swagger.v3.oas.annotations.info.License;
-//import io.swagger.v3.oas.annotations.servers.Server;
 import org.glassfish.jersey.jackson.internal.jackson.jaxrs.json.JacksonJaxbJsonProvider;
 import org.glassfish.jersey.logging.LoggingFeature;
 import org.glassfish.jersey.server.ResourceConfig;
-import org.glassfish.jersey.server.ServerProperties;
-import org.glassfish.jersey.server.mvc.jsp.JspMvcFeature;
-import rnk.l10.exception.ConstraintViolationExceptionMapper;
-import rnk.l10.exception.QueryParamExceptionMapper;
-import rnk.l10.rest.RnkAnnuitetCreditAccounterImpl;
-import rnk.l10.rest.RnkDifferentialCreditAccounterImpl;
+import rnk.t01.rest.TestServiceImpl;
 
 import javax.ws.rs.ApplicationPath;
 import java.nio.charset.StandardCharsets;
@@ -32,7 +20,6 @@ public class RnkRestApp extends ResourceConfig {
 
     public RnkRestApp(){
 
-	registerExceptionMapperClasses();
         registerResourceClasses();
 
         ObjectMapper objectMapper = new ObjectMapper();
@@ -48,14 +35,6 @@ public class RnkRestApp extends ResourceConfig {
     }
 
     private void registerResourceClasses() {
-        register(RnkDifferentialCreditAccounterImpl.class);
-        register(RnkAnnuitetCreditAccounterImpl.class);
+        register(TestServiceImpl.class);
     }
-
-
-    private void registerExceptionMapperClasses(){
-        register(ConstraintViolationExceptionMapper.class);
-        register(QueryParamExceptionMapper.class);
-    }
-
 }
