@@ -33,7 +33,7 @@ public class RnkAnnuitetCreditAccounterImpl  {
     private static final Logger logger = Logger.getLogger(RnkAnnuitetCreditAccounterImpl.class.getName());
 
 
-   @Inject @Default
+   @EJB
    RnkCreditAccounterV2 bean;
 
     public RnkAnnuitetCreditAccounterImpl(){

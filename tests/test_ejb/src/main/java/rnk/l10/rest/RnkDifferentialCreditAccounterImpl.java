@@ -29,9 +29,8 @@ import java.util.List;
 public class RnkDifferentialCreditAccounterImpl  {
     private static final Logger logger = Logger.getLogger(RnkDifferentialCreditAccounterImpl.class.getName());
 
-   @Inject
-   @Default
-   DifferentialCreditAccouonterBean bean;
+   @EJB
+   RnkCreditAccounterV1 bean;
 
     public RnkDifferentialCreditAccounterImpl(){
         logger.info("rest impl visited");
