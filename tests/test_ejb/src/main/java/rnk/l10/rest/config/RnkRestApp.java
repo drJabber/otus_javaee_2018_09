@@ -19,8 +19,6 @@ import rnk.l10.exception.ConstraintViolationExceptionMapper;
 import rnk.l10.exception.QueryParamExceptionMapper;
 import rnk.l10.rest.RnkAnnuitetCreditAccounterImpl;
 import rnk.l10.rest.RnkDifferentialCreditAccounterImpl;
-import rnk.l10.rest.RnkStaffEditorImpl;
-import rnk.l10.rest.RnkStaffImpl;
 
 import javax.ws.rs.ApplicationPath;
 import java.nio.charset.StandardCharsets;
