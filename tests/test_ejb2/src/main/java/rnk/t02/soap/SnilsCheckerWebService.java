@@ -10,12 +10,12 @@ import javax.jws.WebParam;
 import javax.jws.WebResult;
 import javax.jws.WebService;
 
-@Singleton
-@WebService(serviceName="SnilsCheckerWebService",
-        name="SnilsChecker",
-        endpointInterface = "rnk.t02.soap.SnilsChecker",
-        portName="snilschecker",
-        targetNamespace = "urn://rnk.t02.soap")
+@Singleton(name = "SnisChecker")
+//@WebService(serviceName="SnilsCheckerWebService",
+//        name="SnilsChecker",
+//        endpointInterface = "rnk.t02.soap.SnilsChecker",
+//        portName="snilschecker",
+//        targetNamespace = "urn://rnk.t02.soap")
 public class SnilsCheckerWebService  implements SnilsChecker {
     private static final Logger logger = Logger.getLogger(SnilsCheckerWebService.class.getName());
 
