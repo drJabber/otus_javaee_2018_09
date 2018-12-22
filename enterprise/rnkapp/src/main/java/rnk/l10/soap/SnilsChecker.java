@@ -11,10 +11,9 @@ import javax.jws.soap.SOAPBinding;
 
 @WebService
 @SOAPBinding(style= SOAPBinding.Style.RPC)
-
-@Remote
 public interface SnilsChecker {
-    @WebMethod @WebResult(name="result") 
-    boolean check(@WebParam(name="snils", targetNamespace = "urn://rnk.l10.soap") 
+    @WebMethod @WebResult(name="result")
+    boolean check(
+            @WebParam(name="snils", targetNamespace = "urn://rnk.l10.soap")
                   String snils) throws RnkWebServiceException;
 }

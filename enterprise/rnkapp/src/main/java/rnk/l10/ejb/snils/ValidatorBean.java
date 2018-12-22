@@ -1,10 +1,15 @@
-package rnk.l10.utils;
+package rnk.l10.ejb.snils;
 
-public class Snils {
+import javax.ejb.Singleton;
+
+@Singleton(name = "SnilsValidator")
+public class ValidatorBean  implements Validator {
     private static int minCheckableNumber = 1001998;
-//used code from here
+
+    //used code from here
 //    https://github.com/diman4ik/rusnaloglib/tree/master/src/main/java/com/rusnalog/rusnaloglib
-    static public boolean isValid( String snils ) {
+   @Override
+    public Boolean check(String snils){
         String[] parts = snils.split("-| ");
 
         String first = parts[0];
@@ -15,19 +20,20 @@ public class Snils {
         int number = Integer.parseInt(first)*1000000 + Integer.parseInt(second)*1000 +
                 Integer.parseInt(third);
 
-        if( number < Snils.minCheckableNumber )
+        if( number < minCheckableNumber )
             return true;
 
-        int control_computed = Snils.computeControlNumber( number );
+        int control_computed = computeControlNumber( number );
 
         int control = Integer.parseInt( fourth );
 
         return control_computed == control;
     }
 
+
     static private int computeControlNumber(long no) {
 
-        if( no < Snils.minCheckableNumber )
+        if( no < minCheckableNumber )
             return 0;
 
         int ret = 0;

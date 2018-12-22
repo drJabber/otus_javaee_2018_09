@@ -81,7 +81,7 @@ public class UpdaterThread implements Runnable{
                     switch (endpoint){
                         case "news":{
                             LoadResult r=loadNews(session);
-                            if (r.isResult()){
+                            if ((r!=null) && r.isResult()){
                                 cache.getCached().put("news",r.getValue());
                                 sendNews(session);
                             }
@@ -89,7 +89,7 @@ public class UpdaterThread implements Runnable{
                         }
                         case "currencies":{
                             LoadResult r=loadCurrencies(session);
-                            if (r.isResult()){
+                            if ((r!=null) && r.isResult()){
                                 cache.getCached().put("currencies",r.getValue());
                                 sendCurrencies(session);
                             }
@@ -97,7 +97,7 @@ public class UpdaterThread implements Runnable{
                         }
                         case "stats":{
                             LoadResult r=loadStats(session);
-                            if (r.isResult()){
+                            if ((r!=null) && r.isResult()){
                                 cache.getCached().put("stats",r.getValue());
                                 sendStats(session);
                             }
@@ -190,7 +190,8 @@ public class UpdaterThread implements Runnable{
 
             return result;
         }catch(Exception ex){
-            throw new ServletException(ex);
+            logger.error(ex);
+            return null;
         }
     }
 
@@ -241,7 +242,8 @@ public class UpdaterThread implements Runnable{
 
             return result;
         }catch(Exception ex){
-            throw new ServletException(ex);
+            logger.error(ex);
+            return null;
         }
     }
 
@@ -270,7 +272,8 @@ public class UpdaterThread implements Runnable{
 
             return result;
         }catch(Exception ex){
-            throw new ServletException(ex);
+            logger.error(ex);
+            return null;
         }
     }
 

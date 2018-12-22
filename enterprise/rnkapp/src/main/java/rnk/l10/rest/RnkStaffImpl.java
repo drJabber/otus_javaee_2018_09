@@ -7,9 +7,9 @@ package rnk.l10.rest;
 import rnk.l10.entities.beans.SearchResultCache;
 import rnk.l10.exception.RnkWebServiceException;
 import rnk.l10.rest.model.StaffDto;
-import rnk.l10.utils.StaffUtils;
+import rnk.l10.ejb.stats.StaffUtils;
 
-import javax.annotation.security.RolesAllowed;
+import javax.ejb.EJB;
 import javax.servlet.ServletContext;
 import javax.validation.Valid;
 import javax.ws.rs.*;
@@ -27,6 +27,9 @@ public class RnkStaffImpl implements RnkStaff{
 
     @Context
     ServletContext context;
+
+    @EJB
+    StaffUtils staffUtils;
 
     @Override
     @PUT
@@ -46,7 +49,7 @@ public class RnkStaffImpl implements RnkStaff{
             @Valid
             @BeanParam StaffDto staff
     )throws RnkWebServiceException{
-        staff.save();
+        staffUtils.save(staff);
         invalidateCache(staff.getId());
         URI uri=uriInfo.getAbsolutePathBuilder().replacePath("/rnkapp/main/admin/staff").build();
         return Response.seeOther(uri).build();
@@ -69,7 +72,7 @@ public class RnkStaffImpl implements RnkStaff{
 //            @Parameter(description = "Идентификатор сотрудника", required = true)
             @PathParam(value = "id") Integer id
     )throws RnkWebServiceException{
-        StaffUtils.removeStaff(id);
+        staffUtils.removeStaff(id);
         invalidateCache(id);
 
         return Response.ok().build();
@@ -89,7 +92,7 @@ public class RnkStaffImpl implements RnkStaff{
 //    )
 //    @RolesAllowed("admin")
     public Response add( @Valid @BeanParam StaffDto staff) throws RnkWebServiceException {
-        staff.save();
+        staffUtils.save(staff);
         invalidateCache(null);
 
         URI uri=uriInfo.getAbsolutePathBuilder().replacePath("/rnkapp/main/admin/staff").build();

@@ -1,7 +1,7 @@
 package rnk.t01.rest;
 
 import org.apache.log4j.Logger;
-import rnk.t02.soap.SnilsChecker;
+import rnk.l10.ejb.snils.Validator;
 
 import javax.ejb.EJB;
 import javax.naming.InitialContext;
@@ -20,8 +20,10 @@ public class TestServiceImpl {
 
     private static InitialContext defaultCtx;
 
-    @EJB(lookup = "java:global/rnkt02/SnisChecker!rnk.t02.soap.SnilsChecker")
-    SnilsChecker snilsChecker;
+//    @EJB(lookup = "java:global/rnkt02/Validator!rnk.t02.soap.Validator")
+//    java:global/rnkapp/SnilsValidator!rnk.l10.ejb.snils.Validator, java:global/rnkapp/SnilsValidator
+    @EJB(lookup = "java:global/rnkapp/SnilsValidator!rnk.l10.ejb.snils.Validator")
+    Validator validator;
 
     static {
         try {
@@ -31,21 +33,13 @@ public class TestServiceImpl {
         }
     }
 
-    public TestServiceImpl(){
-        logger.info("rest impl visited");
-    }
-
     @GET
     @Path("/start")
     public Map<String, String> startTest() throws NamingException{
-//        SnilsChecker snilsChecker=
-//                (SnilsChecker)defaultCtx.lookup(
-//                         "java:global/rnkt02/SnisChecker!rnk.t02.soap.SnilsChecker"
-//                );
         Map<String, String> result=new HashMap<>();
-        Boolean b= snilsChecker.check("001-280-213-70");
+        Boolean b= validator.check("001-280-213-70");
         result.put("snilscherker.check('001-280-213-70')",b.toString());
-        b = snilsChecker.check("001-280-213-74");
+        b = validator.check("001-280-213-74");
         result.put("snilscherker.check('001-280-213-74')",b.toString());
         return result;
     }

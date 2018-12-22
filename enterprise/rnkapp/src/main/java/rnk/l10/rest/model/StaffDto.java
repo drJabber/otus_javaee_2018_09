@@ -4,7 +4,7 @@ package rnk.l10.rest.model;
 //import io.swagger.v3.oas.annotations.media.Schema;
 import rnk.l10.entities.StaffEntity;
 import rnk.l10.exception.RnkWebServiceException;
-import rnk.l10.utils.StaffUtils;
+import rnk.l10.ejb.stats.StaffUtils;
 
 import javax.ws.rs.FormParam;
 import javax.ws.rs.PathParam;
@@ -182,15 +182,11 @@ public class StaffDto {
         }
     }
 
-    public void save() throws RnkWebServiceException{
-        if (isNew()){
-            StaffUtils.addStaff(staff);
-        }else{
-            StaffUtils.saveStaff(staff);
-        }
-    }
-
     public boolean isNew(){
         return staff.getId()==null;
+    }
+
+    public StaffEntity getStaff(){
+        return staff;
     }
 }

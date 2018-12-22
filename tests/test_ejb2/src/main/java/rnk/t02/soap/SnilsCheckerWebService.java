@@ -10,7 +10,7 @@ import javax.jws.WebParam;
 import javax.jws.WebResult;
 import javax.jws.WebService;
 
-@Singleton(name = "SnisChecker")
+@Singleton(name = "SnilsChecker")
 //@WebService(serviceName="SnilsCheckerWebService",
 //        name="SnilsChecker",
 //        endpointInterface = "rnk.t02.soap.SnilsChecker",

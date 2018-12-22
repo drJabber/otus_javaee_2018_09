@@ -8,8 +8,9 @@ import rnk.l10.entities.PositionEntity;
 import rnk.l10.entities.RoleEntity;
 import rnk.l10.exception.RnkWebServiceException;
 //import rnk.l10.startup.StartupServlet;
-import rnk.l10.utils.StaffUtils;
+import rnk.l10.ejb.stats.StaffUtils;
 
+import javax.ejb.EJB;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,16 +29,9 @@ public class StaffEditorModel {
     String submitPage;
     String cancelPage;
 
-    static {
-        try{
-            positions0=StaffUtils.getPositions();
-            departaments0=StaffUtils.getDepartaments();
-            roles0=StaffUtils.getRoles();
-            genders0=makeGenders();
-        }catch (Exception ex){
-            logger.error(ex);
-        }
-    }
+    @EJB
+    private StaffUtils staffUtils;
+
 
     static List<GenderEntity> makeGenders(){
         List<GenderEntity> result=new ArrayList<>();
@@ -48,7 +42,7 @@ public class StaffEditorModel {
 
 
     public List<DepartamentEntity> getDepartaments(){
-        return departaments0;
+        return staffUtils.getDepartaments();
     }
 
     public List<PositionEntity> getPositions(){

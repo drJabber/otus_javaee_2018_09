@@ -33,7 +33,20 @@ public class CbrKoInfo implements Provider<Source> {
 
     private static String HTTP_METHOD_GET="GET";
 
-    private static CbrKoUtils cbr=new CbrKoUtils();
+
+    private static CbrKoUtils cbr=null;
+
+    private static CbrKoUtils getCbr(){
+        if (cbr==null){
+            try{
+                cbr=new CbrKoUtils();
+            }catch(Exception ex){
+                logger.error("cant get cbr info: ", ex);
+            }
+        }
+
+        return cbr;
+    }
 
     @Resource
     private WebServiceContext wsCtx;
@@ -92,22 +105,26 @@ public class CbrKoInfo implements Provider<Source> {
 
 
     private SOAPMessage dispatchQuery(MessageContext ctx, CbrHelper query) throws SOAPException{
-        switch(query.getMethod().toLowerCase()){
-            case "lastupdate":{
-                return cbr.LastUpdate(ctx);
+        if (getCbr()!=null){
+            switch(query.getMethod().toLowerCase()){
+                case "lastupdate":{
+                    return getCbr().LastUpdate(ctx);
+                }
+                case "listofbanks":{
+                    return getCbr().ListOfBanks(ctx);
+                }
+                case "co":{
+                    return getCbr().CreditInfoByIntCode(ctx, Double.parseDouble(query.getParam1()));
+                }
+                case "co2":{
+                    return getCbr().CreditInfoByName(ctx, query.getParam1());
+                }
+                default:{
+                    throw new UnsupportedOperationException("cbr service function not implemented yet");
+                }
             }
-            case "listofbanks":{
-                return cbr.ListOfBanks(ctx);
-            }
-            case "co":{
-                return cbr.CreditInfoByIntCode(ctx, Double.parseDouble(query.getParam1()));
-            }
-            case "co2":{
-                return cbr.CreditInfoByName(ctx, query.getParam1());
-            }
-            default:{
-                throw new UnsupportedOperationException("cbr service function not implemented yet");
-            }
+        }else {
+            throw new SOAPException("cant access cbr data");
         }
     }
 

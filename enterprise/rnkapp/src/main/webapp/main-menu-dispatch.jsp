@@ -67,7 +67,7 @@
             <c:when test="${body_parameter.equals('logout')}">
 
                 <%--use custom tag to store stats--%>
-                <s:statsx />
+                <s:stats />
 
                 <%
                     request.getSession().invalidate();

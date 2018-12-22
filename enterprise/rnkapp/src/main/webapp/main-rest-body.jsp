@@ -10,7 +10,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean id="staffsalaries" class="rnk.l10.entities.beans.StaffUtilsWrapper" scope="session" />
 
-        <s:statsx />
+        <s:stats />
 
         <main class="main-container">
             <%@include file="main-body-menu.jsp"%>

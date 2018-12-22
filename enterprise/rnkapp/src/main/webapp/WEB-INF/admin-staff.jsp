@@ -3,7 +3,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="display" uri="http://displaytag.sf.net" %>
 
-            <s:statsx />
+            <s:stats />
 
         <main class="admin-container">
 

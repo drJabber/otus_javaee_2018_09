@@ -1,12 +1,10 @@
 package rnk.l10.soap;
 
 import rnk.l10.exception.RnkWebServiceException;
-import rnk.l10.utils.StaffUtils;
+import rnk.l10.ejb.stats.StaffUtils;
 
-import javax.jws.WebMethod;
-import javax.jws.WebResult;
+import javax.ejb.EJB;
 import javax.jws.WebService;
-import javax.jws.soap.SOAPBinding;
 
 @WebService(serviceName="StaffAccounterWebService",
         name="StaffAccounter",
@@ -14,19 +12,24 @@ import javax.jws.soap.SOAPBinding;
         portName="staffutils",
         targetNamespace = "urn://rnk.l10.soap")
 public class StaffAccounterWebService implements StaffAccounter {
+
+    @EJB
+    StaffUtils staffUtils;
+
+
     public Double getMaxSalary() throws RnkWebServiceException {
-        return StaffUtils.getMaxSalary();
+        return staffUtils.getMaxSalary();
     };
 
     public Double getMinSalary() throws RnkWebServiceException{
-        return StaffUtils.getMinSalary();
+        return staffUtils.getMinSalary();
     };
 
     public Double getAvgSalary() throws RnkWebServiceException{
-        return StaffUtils.getAvgSalary();
+        return staffUtils.getAvgSalary();
     };
 
     public String getPersonWithMaxSalary()throws RnkWebServiceException{
-        return StaffUtils.getPersonWithMaxSalary();
+        return staffUtils.getPersonWithMaxSalary();
     };
 }
