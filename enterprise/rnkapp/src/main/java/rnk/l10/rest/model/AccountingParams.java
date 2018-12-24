@@ -5,14 +5,16 @@ package rnk.l10.rest.model;
 //import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.FieldNameConstants;
+import java.io.Serializable;
 
 import javax.validation.constraints.*;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.QueryParam;
 
+
 @Data
 @FieldNameConstants
-public class AccountingParams {
+public class AccountingParams implements Serializable{
     @NotNull(message = "Укажите срок кредита")
     @DecimalMin(value = "1",message = "Срок кредита - положительное число")
     @DecimalMax(value = "99",message = "Скрок кредита - не более 99 лет")
