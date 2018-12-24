@@ -1,43 +1,71 @@
-package rnk.l10.ejb.stats;
+package rnk.l10.ejb.staff;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import rnk.l10.entities.DepartamentEntity;
-import rnk.l10.entities.PositionEntity;
-import rnk.l10.entities.RoleEntity;
-import rnk.l10.entities.StaffEntity;
-import rnk.l10.exception.RnkWebServiceException;
+import org.apache.log4j.Logger;
+import rnk.l10.entities.*;
 import rnk.l10.rest.model.StaffDto;
-//import rnk.l10.soap.ws.RnkWebServiceException_Exception;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 
 @Singleton
 @Startup
-public class StaffUtils {
+public class StaffUtils implements IStaffUtils{
+    private static final Logger logger = Logger.getLogger(StaffEditorModel.class.getName());
+
     @PersistenceContext(unitName = "RNK_PU")
     private EntityManager em;
 
+    @PostConstruct
+    public void postConstruct(){
+        try{
+            positions0=makePositions();
+            departaments0=makeDepartaments();
+            roles0=makeRoles();
+            genders0=makeGenders();
+        }catch (Exception ex){
+            logger.error(ex);
+        }
+    }
 
+
+    private List<PositionEntity> positions0=null;
+    private List<DepartamentEntity> departaments0=null;
+    private List<RoleEntity> roles0=null;
+    private List<GenderEntity> genders0=null;
+
+    private List<GenderEntity> makeGenders(){
+        List<GenderEntity> result=new ArrayList<>();
+        result.add(new GenderEntity("М","Мужской"));
+        result.add(new GenderEntity("Ж","Женский"));
+        return result;
+    }
+
+    @Override
     public Double getMaxSalary(){
         Query q = em.createQuery("select max(staff.salary) from StaffEntity staff ");
         return 1.0*(Integer)(q.getResultList()).get(0);
     }
 
+    @Override
     public Double getMinSalary(){
         Query q = em.createQuery("select min(staff.salary) from StaffEntity staff ");
         return 1.0*(Integer)(q.getResultList()).get(0);
     }
 
+    @Override
     public Double getAvgSalary(){
         Query q = em.createQuery("select avg(staff.salary) from StaffEntity staff ");
         return (Double) (q.getResultList()).get(0);
     }
 
+    @Override
     public String getPersonWithMaxSalary(){
             StoredProcedureQuery q = em
                     .createStoredProcedureQuery("public.get_max_salary_fio")
@@ -48,23 +76,18 @@ public class StaffUtils {
             return q.getOutputParameterValue(0).toString();
     }
 
-    public StaffEntity getStaff(Integer id) {
-        Query q = em.createQuery("select s from StaffEntity s where s.id=:id").setParameter("id",id);
-        return (StaffEntity) q.getSingleResult();
-    }
-
-    public List<PositionEntity> getPositions(){
+    private List<PositionEntity> makePositions(){
         Query q = em.createQuery("select p from PositionEntity p ");
         return (List<PositionEntity>)q.getResultList();
     }
 
-    public List<DepartamentEntity> getDepartaments(){
+    private List<DepartamentEntity> makeDepartaments(){
         Query q = em.createQuery("select p from DepartamentEntity p ");
         return (List<DepartamentEntity>)q.getResultList();
     }
 
 
-    public List<RoleEntity> getRoles(){
+    private List<RoleEntity> makeRoles(){
         Query q = em.createQuery("select p from RoleEntity p ");
         return (List<RoleEntity>)q.getResultList();
     }
@@ -77,7 +100,7 @@ public class StaffUtils {
     }
 
 
-    private HashedPassword hashPassword(String password, EntityManager em){
+    private HashedPassword hashPassword(String password){
         StoredProcedureQuery q = em
                 .createStoredProcedureQuery("public.hash_password")
                 .registerStoredProcedureParameter("p_password",String.class, ParameterMode.IN)
@@ -94,6 +117,7 @@ public class StaffUtils {
     }
 
 
+    @Override
     public void saveStaff(StaffEntity staff) {
         StaffEntity s=em.find(StaffEntity.class,staff.getId());
         PositionEntity position=em.find(PositionEntity.class, staff.getPosition_id0());
@@ -103,8 +127,8 @@ public class StaffUtils {
         staff.setPosition(position);
         staff.setDepartament(dept);
         staff.setRole(role);
-        if ((s.getPasswd_hash()==null)&&(s.getPasswd_hash().isEmpty())){
-            HashedPassword hp=hashPassword(staff.getPasswd_hash(),em);
+        if ((staff.getPasswd_hash()!=null)&&(!staff.getPasswd_hash().isEmpty())){
+            HashedPassword hp=hashPassword(staff.getPasswd_hash());
 
             staff.setPasswd_hash(hp.getPasswdhash());
             staff.setPasswd_salt(hp.getPasswdsalt());
@@ -116,6 +140,7 @@ public class StaffUtils {
         em.merge(staff);
     }
 
+    @Override
     public void addStaff(StaffEntity staff) {
         PositionEntity position=em.find(PositionEntity.class, staff.getPosition_id0());
         DepartamentEntity dept=em.find(DepartamentEntity.class, staff.getDepartament_id0());
@@ -125,14 +150,16 @@ public class StaffUtils {
         staff.setDepartament(dept);
         staff.setRole(role);
 
-        HashedPassword hp=hashPassword(staff.getPasswd_hash(),em);
+        HashedPassword hp=hashPassword(staff.getPasswd_hash());
         staff.setPasswd_hash(hp.getPasswdhash());
         staff.setPasswd_salt(hp.getPasswdsalt());
 
         em.persist(staff);
     }
 
+    @Override
     public void save(StaffDto dto){
+        dto.initialize(this);
         if (dto.isNew()){
             addStaff(dto.getStaff());
         }else{
@@ -140,9 +167,37 @@ public class StaffUtils {
         }
     }
 
+    @Override
     public void removeStaff(Integer id) {
         StaffEntity s=em.find(StaffEntity.class,id);
         em.remove(s);
     }
+
+    @Override
+    public StaffEntity getStaff(Integer id) {
+        Query q = em.createQuery("select s from StaffEntity s where s.id=:id").setParameter("id",id);
+        return (StaffEntity) q.getSingleResult();
+    }
+
+    @Override
+    public List<DepartamentEntity> getDepartaments(){
+        return departaments0;
+    }
+
+    @Override
+    public List<PositionEntity> getPositions(){
+        return positions0;
+    }
+
+    @Override
+    public List<RoleEntity> getRoles(){
+        return roles0;
+    }
+
+    @Override
+    public List<GenderEntity> getGenders(){
+        return genders0;
+    }
+
 }
 

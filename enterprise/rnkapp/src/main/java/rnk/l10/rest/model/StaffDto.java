@@ -2,25 +2,37 @@ package rnk.l10.rest.model;
 
 
 //import io.swagger.v3.oas.annotations.media.Schema;
+import org.apache.log4j.Logger;
+import rnk.l10.ejb.staff.IStaffUtils;
 import rnk.l10.entities.StaffEntity;
 import rnk.l10.exception.RnkWebServiceException;
-import rnk.l10.ejb.stats.StaffUtils;
+import rnk.l10.ejb.staff.StaffEditorModel;
 
 import javax.ws.rs.FormParam;
 import javax.ws.rs.PathParam;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+
 public class StaffDto {
+    private static final Logger logger = Logger.getLogger(StaffEditorModel.class.getName());
+
     private StaffEntity staff;
+
+    private IStaffUtils staffUtils;
+
 
     public StaffDto(){
         staff=new StaffEntity();
     }
 
-    public StaffDto(String id)throws RnkWebServiceException {
+    public void initialize(IStaffUtils utils){
+        this.staffUtils=utils;
+    }
+
+    public void initStaff(String id){
         if (id!=null){
-            staff= new StaffUtils().getStaff(Integer.parseInt(id));
+            staff=staffUtils.getStaff(Integer.parseInt(id));
         }
     }
 

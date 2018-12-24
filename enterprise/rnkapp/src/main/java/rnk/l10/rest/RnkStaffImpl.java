@@ -3,11 +3,10 @@ package rnk.l10.rest;
 //import io.swagger.v3.oas.annotations.Operation;
 //import io.swagger.v3.oas.annotations.Parameter;
 //import io.swagger.v3.oas.annotations.responses.ApiResponse;
-//import rnk.l10.entities.StaffEntity;
+import rnk.l10.ejb.staff.IStaffUtils;
 import rnk.l10.entities.beans.SearchResultCache;
 import rnk.l10.exception.RnkWebServiceException;
 import rnk.l10.rest.model.StaffDto;
-import rnk.l10.ejb.stats.StaffUtils;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletContext;
@@ -15,7 +14,6 @@ import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import java.net.URI;
-//import java.util.List;
 
 @Path("/v2")
 @Produces(MediaType.APPLICATION_JSON)
@@ -29,7 +27,7 @@ public class RnkStaffImpl implements RnkStaff{
     ServletContext context;
 
     @EJB
-    StaffUtils staffUtils;
+    IStaffUtils staffUtils;
 
     @Override
     @PUT

@@ -1,7 +1,7 @@
 package rnk.l10.soap;
 
 import rnk.l10.exception.RnkWebServiceException;
-import rnk.l10.ejb.stats.StaffUtils;
+import rnk.l10.ejb.staff.StaffUtils;
 
 import javax.ejb.EJB;
 import javax.jws.WebService;

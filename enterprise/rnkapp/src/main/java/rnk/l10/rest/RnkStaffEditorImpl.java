@@ -6,12 +6,11 @@ package rnk.l10.rest;
 //import io.swagger.v3.oas.annotations.media.Schema;
 //import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.glassfish.jersey.server.mvc.Viewable;
+import rnk.l10.ejb.staff.IStaffEditorModel;
 import rnk.l10.exception.RnkWebServiceException;
-import rnk.l10.rest.model.StaffDto;
-import rnk.l10.rest.model.StaffEditorModel;
 import rnk.l10.utils.UrlUtils;
 
-import javax.annotation.security.RolesAllowed;
+import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -19,17 +18,17 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Request;
 import javax.ws.rs.core.Response;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @Path("/v2")
 @Produces(MediaType.APPLICATION_JSON)
 public class RnkStaffEditorImpl implements RnkStaffEditor {
     @Context
     HttpServletRequest request;
+
+    @EJB
+    IStaffEditorModel model;
+
 
     @Override
     @GET
@@ -49,7 +48,7 @@ public class RnkStaffEditorImpl implements RnkStaffEditor {
 //            @Parameter(description = "Идентификатор сотрудника", required = true)
             @PathParam("id") String id
     ) throws RnkWebServiceException {
-        StaffEditorModel model = new StaffEditorModel(id);
+        model.initialize(id);
         model.setPage("WEB-INF/admin-staff-editor.jsp");
 
         model.setSubmitPage("/rnkapp/api/v2/staff/" + id);
@@ -72,7 +71,8 @@ public class RnkStaffEditorImpl implements RnkStaffEditor {
 //    )
 //    @RolesAllowed("admin")
     public Response add() throws RnkWebServiceException {
-        StaffEditorModel model = new StaffEditorModel();
+        model.initialize(null);
+
         model.setPage("WEB-INF/admin-staff-editor.jsp");
 
         model.setSubmitPage("/rnkapp/api/v2/staff");
@@ -98,7 +98,7 @@ public class RnkStaffEditorImpl implements RnkStaffEditor {
 //            @Parameter(description = "Идентификатор сотрудника", required = true)
             @PathParam("id") String id
     ) throws RnkWebServiceException {
-        StaffEditorModel model = new StaffEditorModel(id);
+        model.initialize(id);
         model.setPage("WEB-INF/admin-staff-remover.jsp");
 
         model.setSubmitPage("/rnkapp/api/v2/staff/" + id);
