@@ -2,6 +2,9 @@ package rnk.t01.rest;
 
 import org.apache.log4j.Logger;
 import rnk.l10.ejb.snils.Validator;
+import rnk.l10.ejb.credits.RnkCreditAccounterV1;
+import rnk.l10.ejb.credits.RnkCreditAccounterV2;
+import rnk.l10.rest.model.AccountingParams;
 
 import javax.ejb.EJB;
 import javax.naming.InitialContext;
@@ -20,10 +23,14 @@ public class TestServiceImpl {
 
     private static InitialContext defaultCtx;
 
-//    @EJB(lookup = "java:global/rnkt02/Validator!rnk.t02.soap.Validator")
-//    java:global/rnkapp/SnilsValidator!rnk.l10.ejb.snils.Validator, java:global/rnkapp/SnilsValidator
     @EJB(lookup = "java:global/rnkapp/SnilsValidator!rnk.l10.ejb.snils.Validator")
     Validator validator;
+
+    @EJB(lookup = "java:global/rnkapp/AnnuitetCreditAccounterBean!rnk.l10.ejb.credits.RnkCreditAccounterV1")
+    RnkCreditAccounterV1 accounter1;
+
+    @EJB(lookup = "java:global/rnkapp/DifferentialCreditAccounterBean!rnk.l10.ejb.credits.RnkCreditAccounterV2")
+    RnkCreditAccounterV2 accounter2;
 
     static {
         try {
@@ -41,6 +48,19 @@ public class TestServiceImpl {
         result.put("snilscherker.check('001-280-213-70')",b.toString());
         b = validator.check("001-280-213-74");
         result.put("snilscherker.check('001-280-213-74')",b.toString());
+
+        AccountingParams p=new AccountingParams();
+        p.numberOfPeriods=12;
+        p.amountOfCredit=5000000;
+        p.rate=0.003;
+
+        Gson gson=new Gson();
+        List<Double> payments1=accounter1.computePayment(p);
+        result.put("DifferentialCreditAccounterBean.computePayment(n=12, cr=5000000, r=0.003)",gson.toJson(payments1));
+
+        List<Double> payments2=accounter2.computePayment(p);
+        result.put("AnnuitetCreditAccounterBean.computePayment(n=12, cr=5000000, r=0.003)",gson.toJson(payments2));
+
         return result;
     }
 }

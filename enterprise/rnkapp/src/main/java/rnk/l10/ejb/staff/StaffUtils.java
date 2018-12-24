@@ -16,6 +16,7 @@ import java.util.List;
 
 @Singleton
 @Startup
+@TransactionManagement(TransactionManagementType.CONTAINER)
 public class StaffUtils implements IStaffUtils{
     private static final Logger logger = Logger.getLogger(StaffEditorModel.class.getName());
 

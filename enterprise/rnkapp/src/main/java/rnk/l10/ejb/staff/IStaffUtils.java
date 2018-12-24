@@ -5,6 +5,7 @@ import rnk.l10.rest.model.StaffDto;
 
 import java.util.List;
 
+@Remote
 public interface IStaffUtils {
     Double getMaxSalary();
     Double getMinSalary();
