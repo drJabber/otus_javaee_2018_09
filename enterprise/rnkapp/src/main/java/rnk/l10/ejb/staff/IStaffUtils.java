@@ -3,6 +3,7 @@ package rnk.l10.ejb.staff;
 import rnk.l10.entities.*;
 import rnk.l10.rest.model.StaffDto;
 
+import javax.ejb.Remote;
 import java.util.List;
 
 @Remote

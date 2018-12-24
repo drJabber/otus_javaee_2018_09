@@ -6,6 +6,7 @@ import rnk.l10.entities.PositionEntity;
 import rnk.l10.entities.RoleEntity;
 import rnk.l10.rest.model.StaffDto;
 
+import javax.ejb.Remote;
 import java.util.List;
 
 @Remote

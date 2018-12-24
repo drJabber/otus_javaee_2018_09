@@ -7,7 +7,7 @@ import javax.ejb.Stateless;
 import java.util.ArrayList;
 import java.util.List;
 
-@Stateless
+@Stateless(name="DifferentialCreditAccouonter")
 public class DifferentialCreditAccouonterBean implements RnkCreditAccounterV1 {
     @Override
     public List<Double> computePayment(AccountingParams params) {

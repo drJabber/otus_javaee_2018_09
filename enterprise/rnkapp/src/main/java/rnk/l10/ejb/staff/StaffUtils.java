@@ -9,6 +9,8 @@ import rnk.l10.rest.model.StaffDto;
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
+import javax.ejb.TransactionManagement;
+import javax.ejb.TransactionManagementType;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
