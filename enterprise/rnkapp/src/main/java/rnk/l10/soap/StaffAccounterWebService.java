@@ -1,5 +1,6 @@
 package rnk.l10.soap;
 
+import rnk.l10.ejb.staff.IStaffUtils;
 import rnk.l10.exception.RnkWebServiceException;
 import rnk.l10.ejb.staff.StaffUtils;
 
@@ -14,7 +15,7 @@ import javax.jws.WebService;
 public class StaffAccounterWebService implements StaffAccounter {
 
     @EJB
-    StaffUtils staffUtils;
+    IStaffUtils staffUtils;
 
 
     public Double getMaxSalary() throws RnkWebServiceException {

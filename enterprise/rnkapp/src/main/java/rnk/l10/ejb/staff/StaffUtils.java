@@ -72,11 +72,11 @@ public class StaffUtils implements IStaffUtils{
     public String getPersonWithMaxSalary(){
             StoredProcedureQuery q = em
                     .createStoredProcedureQuery("public.get_max_salary_fio")
-                    .registerStoredProcedureParameter(0,
+                    .registerStoredProcedureParameter(1,
                             String.class, ParameterMode.OUT);
             q.execute();
 
-            return q.getOutputParameterValue(0).toString();
+            return q.getOutputParameterValue(1).toString();
     }
 
     private List<PositionEntity> makePositions(){
