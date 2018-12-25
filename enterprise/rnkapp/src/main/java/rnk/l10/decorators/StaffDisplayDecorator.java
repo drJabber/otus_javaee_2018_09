@@ -4,20 +4,24 @@ import org.displaytag.decorator.TableDecorator;
 import rnk.l10.entities.StaffEntity;
 
 public class StaffDisplayDecorator extends TableDecorator {
+    private StaffEntity getStaff(){
+        return ((StaffEntity) getCurrentRowObject());
+    }
+
     public String getPosition(){
-        return ((StaffEntity) getCurrentRowObject()).getPosition().getPosition();
+        return getStaff().getPosition().getPosition();
     }
 
     public String getDepartament(){
-        return ((StaffEntity) getCurrentRowObject()).getDepartament().getDepartament();
+        return getStaff().getDepartament().getDepartament();
     }
 
     public String getTown(){
-        return ((StaffEntity) getCurrentRowObject()).getDepartament().getTown();
+        return getStaff().getDepartament().getTown();
     }
 
     public String getEdit(){
-        int id=((StaffEntity) getCurrentRowObject()).getId();
+        int id=getStaff().getId();
         if (id>=0){
             return String.format("<a href='/rnkapp/api/v2/staffeditor/%d'>edit</a>", id);
         }else{
@@ -25,9 +29,9 @@ public class StaffDisplayDecorator extends TableDecorator {
         }
     }
     public String getRemove(){
-        int id=((StaffEntity) getCurrentRowObject()).getId();
+        int id=getStaff().getId();
         if (id>=0) {
-            return String.format("<a href='/rnkapp/api/v2/staffremover/%d'>del</a>", ((StaffEntity) getCurrentRowObject()).getId());
+            return String.format("<a href='/rnkapp/api/v2/staffremover/%d'>del</a>", id);
         }else{
             return "";
         }

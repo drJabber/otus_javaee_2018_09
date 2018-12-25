@@ -24,8 +24,8 @@ public class StaffDisplayServlet extends HttpServlet {
 
         resp.setContentType("text/html;charset=UTF-8");
         resp.setCharacterEncoding("UTF-8");
-	req.getSession().setAttribute("staff",staff);
-        RequestDispatcher dispatcher=req.getRequestDispatcher("/WEB-INF/admin-staff2.jsp");
+	    req.getSession().setAttribute("staff",staff);
+        RequestDispatcher dispatcher=req.getRequestDispatcher("/main/admin/staff2");
         dispatcher.forward(req, resp);
     }
 }

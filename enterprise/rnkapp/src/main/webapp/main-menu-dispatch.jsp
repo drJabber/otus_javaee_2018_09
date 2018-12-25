@@ -39,6 +39,9 @@
             <c:when test="${body_parameter.equals('admin/staff')}">
                 <jsp:include page="WEB-INF/admin-staff.jsp" />
             </c:when>
+            <c:when test="${body_parameter.equals('admin/staff2')}">
+                <jsp:include page="WEB-INF/admin-staff2.jsp" />
+            </c:when>
             <c:when test="${body_parameter.equals('admin/staffeditor')}">
                 <jsp:include page="WEB-INF/admin-staff-editor.jsp" />
             </c:when>

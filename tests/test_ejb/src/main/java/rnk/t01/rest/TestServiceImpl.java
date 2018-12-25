@@ -6,6 +6,7 @@ import rnk.l10.ejb.snils.Validator;
 import rnk.l10.ejb.credits.RnkCreditAccounterV1;
 import rnk.l10.ejb.credits.RnkCreditAccounterV2;
 import rnk.l10.ejb.staff.IStaffUtils;
+import rnk.l10.entities.StaffEntity;
 import rnk.l10.rest.model.AccountingParams;
 
 import javax.ejb.EJB;
@@ -35,7 +36,7 @@ public class TestServiceImpl {
     @EJB(lookup = "java:global/rnkapp/DifferentialCreditAccounter!rnk.l10.ejb.credits.RnkCreditAccounterV1")
     RnkCreditAccounterV1 accounter1;
 
-    @EJB(lookup = "java:global/rnkapp/StaffUtils!rnk.l10.ejb.staff.StaffUtils")
+    @EJB(lookup = "java:global/rnkapp/StaffUtils!rnk.l10.ejb.staff.IStaffUtils")
     IStaffUtils utils;
 
     static {
@@ -66,6 +67,10 @@ public class TestServiceImpl {
 
         List<Double> payments2=accounter2.computePayment(p);
         result.put("AnnuitetCreditAccounterBean.computePayment(n=12, cr=5000000, r=0.003)",gson.toJson(payments2));
+
+
+        StaffEntity entity=utils.getStaff(-1);
+        result.put("StaffUtils.getStaff(-1)",gson.toJson(entity));
 
         return result;
     }
