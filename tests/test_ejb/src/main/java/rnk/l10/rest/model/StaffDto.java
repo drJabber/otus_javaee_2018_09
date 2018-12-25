@@ -6,7 +6,7 @@ import org.apache.log4j.Logger;
 import rnk.l10.ejb.staff.IStaffUtils;
 import rnk.l10.entities.StaffEntity;
 import rnk.l10.exception.RnkWebServiceException;
-import rnk.l10.ejb.staff.StaffEditorModel;
+//import rnk.l10.ejb.staff.StaffEditorModel;
 
 import javax.ws.rs.FormParam;
 import javax.ws.rs.PathParam;
