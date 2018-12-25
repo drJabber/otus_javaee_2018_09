@@ -9,7 +9,7 @@
         <main class="admin-container">
 
             <%@include file="admin-menu.jsp"%>
-	    <%! @EJB
+	    <%! @Inject
         StaffDisplayBean staff; %>
 
 <%
