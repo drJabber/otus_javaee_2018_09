@@ -12,7 +12,7 @@ import java.io.IOException;
 
 
 @WebServlet("/main/admin/staff")
-public class StatsDisplayServlet extends HttpServlet {
+public class StaffDisplayServlet extends HttpServlet {
 
     @EJB
     StaffDisplayBean staff;
