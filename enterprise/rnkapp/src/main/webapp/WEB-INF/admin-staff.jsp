@@ -13,6 +13,7 @@
         StaffDisplayBean staff; %>
 
 <%
+    staff.get(pageContext);
     pageContext.setAttribute("staff", staff);
 %>
             <div>
