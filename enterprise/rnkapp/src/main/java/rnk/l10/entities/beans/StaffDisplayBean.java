@@ -23,7 +23,8 @@ public class StaffDisplayBean{
     private static final Logger logger = Logger.getLogger(StaffDisplayBean.class.getName());
 
     @PersistenceContext(unitName = "RNK_PU")
-    private EntityManager em;
+//    private EntityManager em;
+    private EntityManagerFactory emf;
 
     private static final Integer PAGE_SIZE=10;
 
@@ -59,6 +60,9 @@ public class StaffDisplayBean{
     }
 
     public PaginatedList get(PageContext context){
+
+	EntityManager em=emf.createEntityManager();
+
         CriteriaBuilder cb = em.getCriteriaBuilder();
         try{
             CriteriaQuery<Long> qc=cb.createQuery(Long.class);
