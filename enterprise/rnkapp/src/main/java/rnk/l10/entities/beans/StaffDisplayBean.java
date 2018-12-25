@@ -24,7 +24,7 @@ public class StaffDisplayBean{
 
     @PersistenceContext(unitName = "RNK_PU")
 //    private EntityManager em;
-    private EntityManagerFactory emf;
+    private EntityManager em;
 
     private static final Integer PAGE_SIZE=10;
 
@@ -60,8 +60,6 @@ public class StaffDisplayBean{
     }
 
     public PaginatedList get(PageContext context){
-
-	EntityManager em=emf.createEntityManager();
 
         CriteriaBuilder cb = em.getCriteriaBuilder();
         try{
