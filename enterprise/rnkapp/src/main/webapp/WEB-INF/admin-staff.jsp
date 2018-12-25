@@ -1,5 +1,6 @@
 <%@ page import="rnk.l10.entities.beans.StaffDisplayBean" %>
 <%@ page import="javax.ejb.EJB" %>
+<%@ page import="javax.inject.Inject" %>
 <%@ taglib prefix="s" uri="/rnk-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="display" uri="http://displaytag.sf.net" %>
