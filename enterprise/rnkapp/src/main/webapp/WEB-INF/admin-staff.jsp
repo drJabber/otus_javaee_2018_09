@@ -8,6 +8,11 @@
         <main class="admin-container">
 
             <%@include file="admin-menu.jsp"%>
+	    <%! @EJB StaffDisplayBean staff; %>
+
+<%
+    sessionContext.setAttribute("staff", staff);
+%>
             <div>
                 <div>
                     <a href="/rnkapp/api/v2/staffeditor"><button type="button" name="user_add_button" id="user_add_button" class="form-button">Добавить</button></a>
