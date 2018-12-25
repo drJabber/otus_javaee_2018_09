@@ -1,5 +1,6 @@
 package rnk.l10.ejb.staff;
 
+import rnk.l10.rest.model.StaffDto;
 import rnk.l10.entities.*;
 
 import java.util.List;
@@ -12,7 +13,7 @@ public interface IStaffUtils {
 
     void saveStaff(StaffEntity staff);
     void addStaff(StaffEntity staff);
-//    void save(StaffDto dto);
+    void save(StaffDto dto);
     void removeStaff(Integer id);
 
     StaffEntity getStaff(Integer id);
@@ -22,5 +23,4 @@ public interface IStaffUtils {
 
     List<RoleEntity> getRoles();
     List<GenderEntity> getGenders();
-
 }

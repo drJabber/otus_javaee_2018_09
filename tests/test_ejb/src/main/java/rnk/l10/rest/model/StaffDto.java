@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 import rnk.l10.ejb.staff.IStaffUtils;
 import rnk.l10.entities.StaffEntity;
 import rnk.l10.exception.RnkWebServiceException;
+import rnk.l10.ejb.staff.StaffEditorModel;
 
 import javax.ws.rs.FormParam;
 import javax.ws.rs.PathParam;
@@ -36,8 +37,6 @@ public class StaffDto implements Serializable {
         }
     }
 
-    @PathParam(value="id")
-//    @Schema(description = "Идентификатор сотрудника")
     public void setId(Integer id){
         staff.setId(id);
     }
@@ -50,8 +49,6 @@ public class StaffDto implements Serializable {
         }
     }
 
-    @FormParam(value="user_login")
-//    @Schema(description = "Логин сотрудника", required = true)
     public void setLogin(String login){
         staff.setLogin(login);
     }
@@ -64,8 +61,6 @@ public class StaffDto implements Serializable {
         }
     }
 
-    @FormParam(value="user_fio")
-//    @Schema(description = "ФИО сотрудника", required = true)
     public void setFio(String fio){
         staff.setFio(fio);
     }
@@ -78,8 +73,6 @@ public class StaffDto implements Serializable {
         }
     }
 
-    @FormParam(value="user_email")
-//    @Schema(description = "EMail сотрудника", required = true)
     public void setEmail(String email){
         staff.setEmail(email);
     }
@@ -92,8 +85,6 @@ public class StaffDto implements Serializable {
         }
     }
 
-    @FormParam(value="user_salary")
-//    @Schema(description = "Зар. плата сотрудника", required = true)
     public void setSalary(Integer salary){
         staff.setSalary(salary);
     }
@@ -106,8 +97,6 @@ public class StaffDto implements Serializable {
         }
     }
 
-    @FormParam(value="user_role")
-//    @Schema(description = "Роль сотрудника", required = true, allowableValues = "из списка")
     public void setRole(Integer role){
         staff.setRole_id0(role);
     }
@@ -120,8 +109,6 @@ public class StaffDto implements Serializable {
         }
     }
 
-    @FormParam(value="user_position")
-//    @Schema(description = "Должность сотрудника", required = true, allowableValues = "из списка")
     public void setPosition(Integer position){
         staff.setPosition_id0(position);
     }
@@ -134,8 +121,6 @@ public class StaffDto implements Serializable {
         }
     }
 
-    @FormParam(value="user_dept")
-//    @Schema(description = "Подразделение сотрудника", required = true, allowableValues = "из списка")
     public void setDepartament(Integer departament){
         staff.setDepartament_id0(departament);
     }
@@ -148,8 +133,6 @@ public class StaffDto implements Serializable {
         }
     }
 
-    @FormParam(value="user_gender")
-//    @Schema(description = "Пол сотрудника", required = true, allowableValues = "М, Ж")
     public void setGender(String gender){
         staff.setGender(gender);
     }
@@ -162,14 +145,10 @@ public class StaffDto implements Serializable {
         }
     }
 
-    @FormParam(value="user_password")
-//    @Schema(description = "Пароль сотрудника", required = true, allowableValues = "М, Ж")
     public void setPassword(String password){
         staff.setPasswd_hash(password);
     }
 
-    @FormParam(value="user_birthdate")
-//    @Schema(description = "Дата рождения сотрудника", required = true, format = "дд.ММ.гггг")
     public void setBirthDate(String birthDate) throws RnkWebServiceException{
         try{
             SimpleDateFormat parser=new SimpleDateFormat("yyyy-MM-dd");
