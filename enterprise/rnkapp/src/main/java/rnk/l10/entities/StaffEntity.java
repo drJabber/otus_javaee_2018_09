@@ -17,6 +17,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.*;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 
@@ -26,7 +27,7 @@ import java.util.Set;
 @XmlAccessorType(XmlAccessType.FIELD)
 @Entity
 @Table(name="staff",schema="public")
-public class StaffEntity {
+public class StaffEntity implements Serializable {
     @Id
     @SequenceGenerator(name="staff_id_seq",sequenceName = "staff_id_seq", schema = "public", allocationSize = 1)
     @GeneratedValue(strategy= GenerationType.SEQUENCE, generator="staff_id_seq")

@@ -9,32 +9,12 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 @Data
-@Entity
-@Table(name="positions",schema="public")
-public class PositionEntity implements Serializable {
-    @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE)
-    @Column(name="id")
+public class PositionEntity  implements Serializable {
     private Integer id;
-
-    @NotNull
-    @Size(max=500)
-    @Column(name="position")
     private String position;
-
-    @ManyToOne
-    @JoinColumn(name="default_dept_id")
     private DepartamentEntity default_departament;
-
-    @ManyToOne
-    @JoinColumn(name="head_id")
     private PositionEntity head;
-
-    @ManyToOne
-    @JoinColumn(name="default_role_id")
     private RoleEntity default_role;
-
-    @Column(name="default_salary")
     private Integer default_salary;
 
 

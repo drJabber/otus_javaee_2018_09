@@ -9,10 +9,11 @@ import rnk.l10.rest.model.StaffDto;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
+import java.io.Serializable;
 import java.util.List;
 
 @Stateful
-public class StaffEditorModel implements IStaffEditorModel{
+public class StaffEditorModel implements Serializable,IStaffEditorModel{
 
     @EJB
     private IStaffUtils staffUtils;

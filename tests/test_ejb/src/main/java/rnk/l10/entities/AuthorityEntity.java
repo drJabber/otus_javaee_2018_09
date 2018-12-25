@@ -1,28 +1,22 @@
 package rnk.l10.entities;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
+import javax.json.bind.annotation.JsonbTransient;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity
-@Table(name="authorities",schema="public")
 public class AuthorityEntity  implements Serializable {
-    @Id
-    @Column(name="id")
     private Integer id;
 
-    @NotNull
-    @Size(max=200)
-    @Column(name="authority")
     private String authority;
 
-    @ManyToMany(
-            mappedBy="authorities"
-    )
-    private Set<RoleEntity> roles=new HashSet<>();
+    @JsonIgnoreProperties("authorities")
+    private Set<RoleEntity> roles;
 
     public String toString(){
         return authority;

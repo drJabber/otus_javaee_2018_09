@@ -10,11 +10,12 @@ import rnk.l10.ejb.staff.StaffEditorModel;
 
 import javax.ws.rs.FormParam;
 import javax.ws.rs.PathParam;
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
-public class StaffDto {
+public class StaffDto implements Serializable {
     private static final Logger logger = Logger.getLogger(StaffEditorModel.class.getName());
 
     private StaffEntity staff;

@@ -6,13 +6,9 @@ package rnk.l10.rest;
 //import io.swagger.v3.oas.annotations.media.Schema;
 //import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.apache.log4j.Logger;
-import rnk.l10.ejb.credits.DifferentialCreditAccouonterBean;
 import rnk.l10.ejb.credits.RnkCreditAccounterV1;
 import rnk.l10.rest.model.AccountingParams;
 
-//import javax.ejb.EJB;
-//import javax.enterprise.inject.Default;
-//import javax.inject.Inject;
 import javax.ejb.EJB;
 import javax.validation.Valid;
 import javax.ws.rs.BeanParam;
@@ -20,7 +16,6 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.*;
-import java.util.ArrayList;
 import java.util.List;
 
 
