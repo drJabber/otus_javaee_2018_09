@@ -15,7 +15,7 @@ import javax.ws.rs.QueryParam;
 @Data
 @FieldNameConstants
 //public class AccountingParams implements Serializable{
-public class AccountingParams {
+public class AccountingParams implements Serializable{
     @NotNull(message = "Укажите срок кредита")
     @DecimalMin(value = "1",message = "Срок кредита - положительное число")
     @DecimalMax(value = "99",message = "Скрок кредита - не более 99 лет")

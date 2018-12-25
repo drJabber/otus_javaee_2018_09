@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@Singleton
+@Singleton(name = "StaffUtils")
 @Startup
 @TransactionManagement(TransactionManagementType.CONTAINER)
 public class StaffUtils implements IStaffUtils{

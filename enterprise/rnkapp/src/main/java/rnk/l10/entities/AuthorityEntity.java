@@ -1,5 +1,7 @@
 package rnk.l10.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -22,6 +24,7 @@ public class AuthorityEntity  implements Serializable {
     @ManyToMany(
             mappedBy="authorities"
     )
+    @JsonIgnoreProperties("authorities")
     private Set<RoleEntity> roles=new HashSet<>();
 
     public String toString(){

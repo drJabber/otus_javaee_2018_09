@@ -1,5 +1,7 @@
 package rnk.l10.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -30,6 +32,7 @@ public class RoleEntity  implements Serializable {
     @JoinTable(name="role_auth",
             joinColumns = {@JoinColumn(name="role_id")},
             inverseJoinColumns = {@JoinColumn(name="auth_id")})
+    @JsonIgnoreProperties("roles")
     private Set<AuthorityEntity> authorities=new HashSet<>();
 
     @Override

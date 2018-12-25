@@ -2,6 +2,7 @@ package rnk.l10.entities;
 
 
 import lombok.Data;
+import lombok.experimental.FieldNameConstants;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -9,8 +10,9 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 @Data
+@FieldNameConstants
 @Entity
-@Table(name="positions",schema="public")
+@Table(name="POSITIONS",schema="PUBLIC")
 public class PositionEntity implements Serializable {
     @Id
     @GeneratedValue(strategy=GenerationType.SEQUENCE)
@@ -19,7 +21,7 @@ public class PositionEntity implements Serializable {
 
     @NotNull
     @Size(max=500)
-    @Column(name="position")
+    @Column(name="POSITION")
     private String position;
 
     @ManyToOne

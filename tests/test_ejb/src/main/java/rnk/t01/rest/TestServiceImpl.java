@@ -5,6 +5,7 @@ import org.apache.log4j.Logger;
 import rnk.l10.ejb.snils.Validator;
 import rnk.l10.ejb.credits.RnkCreditAccounterV1;
 import rnk.l10.ejb.credits.RnkCreditAccounterV2;
+import rnk.l10.ejb.staff.IStaffUtils;
 import rnk.l10.rest.model.AccountingParams;
 
 import javax.ejb.EJB;
@@ -28,11 +29,14 @@ public class TestServiceImpl {
     @EJB(lookup = "java:global/rnkapp/SnilsValidator!rnk.l10.ejb.snils.Validator")
     Validator validator;
 
-//    @EJB(lookup = "java:global/rnkapp/AnnuitetCreditAccounterBean!rnk.l10.ejb.credits.RnkCreditAccounterV2")
-//    RnkCreditAccounterV2 accounter2;
-//
-    @EJB(lookup = "java:global/rnkapp/DifferentialCreditAccouonter!rnk.l10.ejb.credits.RnkCreditAccounterV1")
+    @EJB(lookup = "java:global/rnkapp/AnnuitetCreditAccounter!rnk.l10.ejb.credits.RnkCreditAccounterV2")
+    RnkCreditAccounterV2 accounter2;
+
+    @EJB(lookup = "java:global/rnkapp/DifferentialCreditAccounter!rnk.l10.ejb.credits.RnkCreditAccounterV1")
     RnkCreditAccounterV1 accounter1;
+
+    @EJB(lookup = "java:global/rnkapp/StaffUtils!rnk.l10.ejb.staff.StaffUtils")
+    IStaffUtils utils;
 
     static {
         try {
@@ -59,9 +63,9 @@ public class TestServiceImpl {
         Gson gson=new Gson();
         List<Double> payments1=accounter1.computePayment(p);
         result.put("DifferentialCreditAccounterBean.computePayment(n=12, cr=5000000, r=0.003)",gson.toJson(payments1));
-//
-//        List<Double> payments2=accounter2.computePayment(p);
-//        result.put("AnnuitetCreditAccounterBean.computePayment(n=12, cr=5000000, r=0.003)",gson.toJson(payments2));
+
+        List<Double> payments2=accounter2.computePayment(p);
+        result.put("AnnuitetCreditAccounterBean.computePayment(n=12, cr=5000000, r=0.003)",gson.toJson(payments2));
 
         return result;
     }
