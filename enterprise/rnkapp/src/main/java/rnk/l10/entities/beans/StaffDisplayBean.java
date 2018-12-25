@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import rnk.l10.entities.StaffEntity;
 
+import javax.ejb.Stateful;
 import javax.persistence.*;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -17,10 +18,13 @@ import org.displaytag.pagination.PaginatedList;
 import rnk.l10.entities.adapters.JspPaginationAdapter;
 
 //@Data
+@Stateful
 public class StaffDisplayBean{
     private static final Logger logger = Logger.getLogger(StaffDisplayBean.class.getName());
-    public static final String PERSISTENCE_UNIT_NAME="RNK_PU";
-    private static final EntityManagerFactory emf= Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME); //tomcat, see
+
+    @PersistenceContext(unitName = "RNK_PU")
+    private EntityManager em;
+
     private static final Integer PAGE_SIZE=10;
 
     private String login;
@@ -55,12 +59,8 @@ public class StaffDisplayBean{
     }
 
     public PaginatedList get(PageContext context){
-        EntityManager em=emf.createEntityManager();
-        EntityTransaction et=em.getTransaction();
         CriteriaBuilder cb = em.getCriteriaBuilder();
         try{
-            et.begin();
-
             CriteriaQuery<Long> qc=cb.createQuery(Long.class);
             qc.select(cb.count(qc.from(StaffEntity.class)));
 
@@ -86,15 +86,11 @@ public class StaffDisplayBean{
 
             List<StaffEntity> l=typedQuery.getResultList();
 
-            et.commit();
-
             return new JspPaginationAdapter(l,page_number,page_size,full_size,sort,dir);
         }catch (Exception ex){
             logger.log(Level.SEVERE,"error:",ex);
-            et.rollback();
             return null;
         }finally{
-            em.close();
         }
     }
 
