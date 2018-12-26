@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.rnk.app</groupId>
+  <artifactId>ejbgame</artifactId>
+  <version>0.1</version>
+  <packaging>war</packaging>
+
+  <name>rnkapp Maven Webapp</name>
+  <!-- FIXME change it to the project's website -->
+  <url>http://www.example.com</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+
+    <log4j.version>2.9.1</log4j.version>
+
+    <gson.version>2.8.5</gson.version>
+    <javax.json.version>1.1</javax.json.version>
+    <jsoup.version>1.11.3</jsoup.version>
+
+    <javaee.version>8.0</javaee.version>
+    <servlet.version>4.0.0</servlet.version>
+    <hibernate.version>5.3.6.Final</hibernate.version>
+    <hibernate-validator.version>4.1.0.Final</hibernate-validator.version>
+    <lombok.version>1.18.2</lombok.version>
+
+    <apache.http.version>4.5.5</apache.http.version>
+    <uap.version>1.4.0</uap.version>
+
+    <websocket.version>1.1</websocket.version>
+    <websocket.client.version>1.12</websocket.client.version>
+
+    <mavencompiler.version>3.5.1</mavencompiler.version>
+    <mavenbuilder.version>3.0.0</mavenbuilder.version>
+    <mavendeploy.version>2.2</mavendeploy.version>
+
+
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.11</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>${lombok.version}</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+      <version>${servlet.version}</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-core</artifactId>
+      <version>${hibernate.version}</version>
+    </dependency>
+
+      <dependency>
+          <groupId>org.apache.logging.log4j</groupId>
+          <artifactId>log4j-api</artifactId>
+          <version>${log4j.version}</version>
+      </dependency>
+      <dependency>
+          <groupId>org.apache.logging.log4j</groupId>
+          <artifactId>log4j-core</artifactId>
+          <version>${log4j.version}</version>
+      </dependency>
+
+      <dependency>
+          <groupId>org.apache.httpcomponents</groupId>
+          <artifactId>httpclient</artifactId>
+          <version>${apache.http.version}</version>
+      </dependency>
+
+      <!-- JSON-P 1.1 RI -->
+      <dependency>
+          <groupId>javax.json</groupId>
+          <artifactId>javax.json-api</artifactId>
+          <version>${javax.json.version}</version>
+      </dependency>
+
+      <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+      <dependency>
+          <groupId>com.google.code.gson</groupId>
+          <artifactId>gson</artifactId>
+          <version>${gson.version}</version>
+      </dependency>
+
+      <!-- https://mvnrepository.com/artifact/org.jsoup/jsoup -->
+      <dependency>
+          <groupId>org.jsoup</groupId>
+          <artifactId>jsoup</artifactId>
+          <version>${jsoup.version}</version>
+      </dependency>
+
+      <!-- https://mvnrepository.com/artifact/org.skyscreamer/jsonassert -->
+      <dependency>
+          <groupId>org.skyscreamer</groupId>
+          <artifactId> jsonassert</artifactId>
+          <version>1.5.0</version>
+          <scope>compile</scope>
+      </dependency>
+
+
+
+      <!-- https://mvnrepository.com/artifact/displaytag/displaytag -->
+      <dependency>
+          <groupId>displaytag</groupId>
+          <artifactId>displaytag</artifactId>
+          <version>1.2</version>
+      </dependency>
+
+      <!-- https://mvnrepository.com/artifact/com.github.ua-parser/uap-java -->
+      <dependency>
+          <groupId>com.github.ua-parser</groupId>
+          <artifactId>uap-java</artifactId>
+          <version>${uap.version}</version>
+      </dependency>
+
+      <dependency>
+          <groupId>javax.websocket</groupId>
+          <artifactId>javax.websocket-client-api</artifactId>
+          <version>${websocket.version}</version>
+          <scope>test</scope>
+      </dependency>
+
+      <dependency>
+          <groupId>org.glassfish.tyrus.bundles</groupId>
+          <artifactId>tyrus-standalone-client</artifactId>
+          <version>${websocket.client.version}</version>
+          <scope>test</scope>
+      </dependency>
+
+      <dependency>
+          <groupId>javax.websocket</groupId>
+          <artifactId>javax.websocket-api</artifactId>
+          <version>${websocket.version}</version>
+          <scope>provided</scope>
+      </dependency>
+    <!--<dependency>-->
+      <!--<groupId>javax.validation</groupId>-->
+      <!--<artifactId>validation-api</artifactId>-->
+      <!--&lt;!&ndash;<scope>provided</scope>&ndash;&gt;-->
+    <!--</dependency>-->
+    <!--<dependency>-->
+      <!--<groupId>org.hibernate</groupId>-->
+      <!--<artifactId>hibernate-validator</artifactId>-->
+      <!--<version>${hibernate-validator.version}</version>-->
+      <!--<exclusions>-->
+        <!--<exclusion>-->
+          <!--<groupId>javax.xml.bind</groupId>-->
+          <!--<artifactId>jaxb-api</artifactId>-->
+        <!--</exclusion>-->
+        <!--<exclusion>-->
+          <!--<groupId>com.sun.xml.bind</groupId>-->
+          <!--<artifactId>jaxb-impl</artifactId>-->
+        <!--</exclusion>-->
+      <!--</exclusions>-->
+    <!--</dependency>-->
+
+
+      <!-- Jersey 2.27 -->
+      <dependency>
+          <groupId>org.glassfish.jersey.containers</groupId>
+          <artifactId>jersey-container-servlet</artifactId>
+          <version>2.27</version>
+      </dependency>
+      <dependency>
+          <groupId>org.glassfish.jersey.containers</groupId>
+          <artifactId>jersey-container-servlet-core</artifactId>
+          <version>2.27</version>
+      </dependency>
+      <dependency>
+          <groupId>org.glassfish.jersey.core</groupId>
+          <artifactId>jersey-common</artifactId>
+          <version>2.27</version>
+      </dependency>
+      <dependency>
+          <groupId>org.glassfish.jersey.core</groupId>
+          <artifactId>jersey-server</artifactId>
+          <version>2.27</version>
+      </dependency>
+      <dependency>
+          <groupId>org.glassfish.jersey.core</groupId>
+          <artifactId>jersey-client</artifactId>
+          <version>2.27</version>
+      </dependency>
+      <dependency>
+          <groupId>org.glassfish.jersey.ext</groupId>
+          <artifactId>jersey-bean-validation</artifactId>
+          <version>2.27</version>
+      </dependency>
+      <dependency>
+      <groupId>org.glassfish.jersey.ext</groupId>
+      <artifactId>jersey-entity-filtering</artifactId>
+      <version>2.27</version>
+      </dependency>
+      <dependency>
+          <groupId>org.glassfish.jersey.ext</groupId>
+          <artifactId>jersey-mvc</artifactId>
+          <version>2.27</version>
+      </dependency>
+      <dependency>
+          <groupId>org.glassfish.jersey.ext</groupId>
+          <artifactId>jersey-mvc-jsp</artifactId>
+          <version>2.27</version>
+      </dependency>
+      <dependency>
+          <groupId>org.glassfish.jersey.media</groupId>
+          <artifactId>jersey-media-json-jackson</artifactId>
+          <version>2.27</version>
+      </dependency>
+      <dependency>
+          <groupId>org.glassfish.jersey.inject</groupId>
+          <artifactId>jersey-hk2</artifactId>
+          <version>2.27</version>
+      </dependency>
+
+      <!-- https://mvnrepository.com/artifact/org.freemarker/freemarker -->
+      <dependency>
+          <groupId>org.freemarker</groupId>
+          <artifactId>freemarker</artifactId>
+          <version>2.3.28</version>
+      </dependency>
+
+    <dependency>
+      <groupId>javax</groupId>
+      <artifactId>javaee-api</artifactId>
+      <version>${javaee.version}</version>
+      <scope>provided</scope>
+    </dependency>
+
+  </dependencies>
+
+  <build>
+    <finalName>ejbgame</finalName>
+
+    <plugins>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>${mavencompiler.version}</version>
+        <configuration>
+          <source>${maven.compiler.source}</source>
+          <target>${maven.compiler.target}</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-clean-plugin</artifactId>
+        <version>${mavenbuilder.version}</version>
+      </plugin>
+      <plugin>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>${mavenbuilder.version}</version>
+        <configuration>
+          <warSourceDirectory>src/main/webapp</warSourceDirectory>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <artifactId>maven-resources-plugin</artifactId>
+        <version>3.0.2</version>
+      </plugin>
+      <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.20.1</version>
+      </plugin>
+      <plugin>
+        <artifactId>maven-install-plugin</artifactId>
+        <version>2.5.2</version>
+      </plugin>
+      <plugin>
+        <artifactId>maven-deploy-plugin</artifactId>
+        <version>2.8.2</version>
+      </plugin>
+      <plugin>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>3.2.2</version>
+      </plugin>
+
+    </plugins>
+  </build>
+</project>
