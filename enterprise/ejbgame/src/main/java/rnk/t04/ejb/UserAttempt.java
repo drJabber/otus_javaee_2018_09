@@ -10,6 +10,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserAttempt implements Serializable {
+    private Integer id;
     private Integer attemptNumber;
     private Boolean result;
     private Integer secret;

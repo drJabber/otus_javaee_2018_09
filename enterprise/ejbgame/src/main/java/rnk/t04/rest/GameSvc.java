@@ -24,8 +24,8 @@ public class GameSvc {
 
     @POST
     @Path("/")
-    public Response game(@Valid @BeanParam UserData user) throws NamingException{
-        model.initialize(null);
+    public Response game(@Valid @BeanParam UserData user) {
+        model.initialize(user);
 
         return Response.ok(new Viewable("/index.jsp", model)).build();
     }

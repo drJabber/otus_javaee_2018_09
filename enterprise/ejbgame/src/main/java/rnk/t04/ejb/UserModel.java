@@ -23,18 +23,18 @@ public class UserModel implements IUserModel{
     private UserAttempt lastAttempt=null;
     private List<UserAttempt> attempts;
 
-    @PersistenceContext(unitName = "GAME_PU")
-    EntityManager em;
-
     @EJB
     RandomGenerator random;
 
+    @EJB
+    GameController controller;
+
     @Override
     public void initialize(UserData userData) {
-        UserEntity entity=findUserEntity(userData.getLogin());
+        UserEntity entity=controller.getEntity(userData.getLogin());
         attempts=populateAttempts(entity.getAttempts());
         currentUserName=userData.getLogin();
-        currentAttempt=makeNewAttempt();
+        currentAttempt=processAttempt(userData.getValue());
     }
 
     @Override
@@ -52,18 +52,13 @@ public class UserModel implements IUserModel{
         return attempts;
     }
 
-
-    private UserEntity findUserEntity(String login){
-        return null;
-    }
-
     private List<UserAttempt> populateAttempts(List<AttemptEntity> attempts) {
         List<UserAttempt> list=new ArrayList<>();
-        attempts.forEach(a->list.add(new UserAttempt(a.getNumber(),a.getResult(),a.getSecret())));
+        attempts.forEach(a->list.add(new UserAttempt(a.getId(),a.getNumber(),a.getResult(),a.getSecret())));
         return list;
     }
 
-    private UserAttempt makeNewAttempt(){
+    private UserAttempt processAttempt(Integer guessValue){
         UserAttempt attempt=null;
         Integer newNumber=0;
         Boolean guessResult=false;
@@ -78,13 +73,19 @@ public class UserModel implements IUserModel{
             attempt.setAttemptNumber(0);
             attempt.setSecret(computeSecret());
         }
-        if ((newNumber==0)||(guessResult==true)){
+
+        Boolean isNew=(newNumber==0)||(guessResult==true);
+        if (isNew){
             attempt=new UserAttempt();
+            attempts.add(attempt);
         }else{
             attempt=lastAttempt;
         }
         attempt.setAttemptNumber(newNumber);
+        attempt.setResult(attempt.getSecret().equals(guessValue))
 
+        controller.saveUserAttempt(currentUserName, attempt);
+        
         return attempt;
     }
 
