@@ -23,6 +23,9 @@ public class UserEntity {
     @Column(name="login")
     String login;
 
+    @Column(name="suspended")
+    Boolean suspended;
+
     @OneToMany(mappedBy = "user", cascade=CascadeType.ALL,fetch = FetchType.EAGER, orphanRemoval = true)
     List<AttemptEntity> attempts=new ArrayList<>();
 }

@@ -3,6 +3,7 @@ package rnk.t04.ejb;
 import rnk.t04.entities.AttemptEntity;
 import rnk.t04.entities.UserEntity;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -14,7 +15,7 @@ public class GameController{
     @PersistenceContext(unitName = "GAME_PU")
     private EntityManager em;
 
-    @PostCreate
+    @PostConstruct
     void startup(){
         resumeAllUsers();
     }
@@ -61,7 +62,7 @@ public class GameController{
     }
 
     public void suspendUserIfLastAttemptFailed(String login, UserAttempt attempt){
-        if (attempt.attemptNumber()==3)&&(attempt.getResult()==false){
+        if ((attempt.getAttemptNumber()==3)&&(attempt.getResult()==false)){
             UserEntity user=this.findUser(login);
             if (user!=null){
                 user.setSuspended(true);

@@ -5,8 +5,7 @@ import rnk.t04.entities.AttemptEntity;
 import rnk.t04.entities.UserEntity;
 import rnk.t04.rest.model.UserData;
 
-import javax.ejb.EJB;
-import javax.ejb.Stateful;
+import javax.ejb.*;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceUnit;
@@ -31,7 +30,7 @@ public class UserModel implements IUserModel{
     @EJB
     GameController controller;
 
-    @EJB    
+    @EJB
     TimerService timerservice;
 
     @Override
@@ -41,7 +40,7 @@ public class UserModel implements IUserModel{
         currentUserName=userData.getLogin();
         currentGuess=userData.getValue();
 
-        if (checkSuspended(entity)){
+        if (!entity.getSuspended()){
             suspended=false;
             attempts=populateAttempts(entity);
             currentAttempt=processAttempt(userData.getValue());
@@ -140,7 +139,7 @@ public class UserModel implements IUserModel{
 
     private void suspendIfLastAttemptFailed(String login, UserAttempt attempt){
         controller.suspendUserIfLastAttemptFailed(login,attempt);
-        timeservice.createSingleActionTimer(1*60*1000, new TimerConfig(new TimerDto(login),false));
+        timerservice.createSingleActionTimer(1*60*1000, new TimerConfig(new TimerDto(login),false));
     }
 
     @Timeout
