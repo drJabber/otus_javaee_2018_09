@@ -19,6 +19,7 @@ import java.util.List;
 @Stateful(name="UserModel")
 public class UserModel implements IUserModel{
     private String currentUserName;
+    private Integer currentGuess;
     private UserAttempt currentAttempt=new UserAttempt();
     private UserAttempt lastAttempt=null;
     private List<UserAttempt> attempts;
@@ -31,9 +32,10 @@ public class UserModel implements IUserModel{
 
     @Override
     public void initialize(UserData userData) {
-        UserEntity entity=controller.getEntity(userData.getLogin());
-        attempts=populateAttempts(entity.getAttempts());
+        UserEntity entity=controller.findUser(userData.getLogin());
+        attempts=populateAttempts(entity);
         currentUserName=userData.getLogin();
+        currentGuess=userData.getValue();
         currentAttempt=processAttempt(userData.getValue());
     }
 
@@ -52,15 +54,22 @@ public class UserModel implements IUserModel{
         return attempts;
     }
 
-    private List<UserAttempt> populateAttempts(List<AttemptEntity> attempts) {
+    @Override
+    public Integer getCurrentGuess(){
+        return currentGuess;
+    }
+
+    private List<UserAttempt> populateAttempts(UserEntity entity) {
         List<UserAttempt> list=new ArrayList<>();
-        attempts.forEach(a->list.add(new UserAttempt(a.getId(),a.getNumber(),a.getResult(),a.getSecret())));
+        if (entity!=null){
+            entity.getAttempts().forEach(a->list.add(new UserAttempt(a.getId(),a.getNumber(),a.getResult(),a.getSecret())));
+        }
         return list;
     }
 
     private UserAttempt processAttempt(Integer guessValue){
         UserAttempt attempt=null;
-        Integer newNumber=0;
+        Integer newNumber=1;
         Boolean guessResult=false;
 
         if (attempts.size()>0){
@@ -68,25 +77,39 @@ public class UserModel implements IUserModel{
 
             newNumber=(lastAttempt.getAttemptNumber()+1)%3;
             guessResult=lastAttempt.getResult();
-        }else{
-            attempt=new UserAttempt();
-            attempt.setAttemptNumber(0);
-            attempt.setSecret(computeSecret());
         }
 
-        Boolean isNew=(newNumber==0)||(guessResult==true);
+        Boolean isNew=(lastAttempt==null)||(newNumber==0)||(guessResult==true);
         if (isNew){
             attempt=new UserAttempt();
+            attempt.setSecret(computeSecret());
             attempts.add(attempt);
         }else{
             attempt=lastAttempt;
         }
         attempt.setAttemptNumber(newNumber);
-        attempt.setResult(attempt.getSecret().equals(guessValue))
+        attempt.setResult(attempt.getSecret().equals(guessValue));
 
         controller.saveUserAttempt(currentUserName, attempt);
-        
+
+        if (attempt.getResult()==true){
+            attempt.setAttemptNumber(null);
+        }
+
         return attempt;
+    }
+
+    @Override
+    public String getCheckResultText(){
+        if (currentAttempt!=null){
+            if (currentAttempt.getResult()){
+                return "You WIN!";
+            }else{
+                return "Heh... looser...";
+            }
+        } else{
+            return "Not checked yet";
+        }
     }
 
     private Integer computeSecret(){

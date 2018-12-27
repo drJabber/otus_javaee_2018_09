@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -22,6 +23,6 @@ public class UserEntity {
     @Column(name="login")
     String login;
 
-    @OneToMany(mappedBy = "user", cascade=CascadeType.ALL,fetch = FetchType.LAZY, orphanRemoval = true)
-    List<AttemptEntity> attempts;
+    @OneToMany(mappedBy = "user", cascade=CascadeType.ALL,fetch = FetchType.EAGER, orphanRemoval = true)
+    List<AttemptEntity> attempts=new ArrayList<>();
 }

@@ -14,7 +14,7 @@ import javax.ws.rs.core.*;
 import java.util.HashMap;
 import java.util.Map;
 
-@Path("/start")
+@Path("start")
 @Produces(MediaType.APPLICATION_JSON)
 public class GameSvc {
     private static final Logger logger = Logger.getLogger(GameSvc.class.getName());
@@ -23,7 +23,8 @@ public class GameSvc {
     IUserModel model;
 
     @POST
-    @Path("/")
+    @Path("")
+    @Produces("text/html")
     public Response game(@Valid @BeanParam UserData user) {
         model.initialize(user);
 

@@ -1,20 +1,33 @@
 package rnk.t04.ejb;
 
+import rnk.t04.entities.AttemptEntity;
+import rnk.t04.entities.UserEntity;
+
+import javax.ejb.Singleton;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import java.util.List;
+
 @Singleton
 public class GameController{
     @PersistenceContext(unitName = "GAME_PU")
     private EntityManager em;
 
     public UserEntity findUser(String login){
-        Query q=em.createQuery("select e from UserEntity u where u.login=:login").setParameter("login",login);
-        return q.getSingleResult();
+        Query q=em.createQuery("select u from UserEntity u  where u.login=:login").setParameter("login",login);
+        List<UserEntity> list=q.getResultList();
+        if (list.size()>0){
+            return em.find(UserEntity.class,list.get(0).getId());
+        }else{
+            return null;
+        }
     }
 
     public void saveUserAttempt(String login, UserAttempt attempt){
-        UserEntity q=em.createQuery("select u from UserEntity u where u.login=:login").setParameter("login",login);
-        UserEntity user=q.getSingleResult();
+        UserEntity user=this.findUser(login);
 
-        if (q.getSingleResult()==null){
+        if (user==null){
             user=new UserEntity();
             user.setLogin(login);
             em.persist(user);
@@ -25,15 +38,19 @@ public class GameController{
             a.setUser(user);
             a.setNumber(attempt.getAttemptNumber());
             a.setResult(attempt.getResult());
-            a.setSecret(attempt.getSecret())
+            a.setSecret(attempt.getSecret());
+
+            user.getAttempts().add(a);
 
             em.persist(a);
+
+            em.merge(user);
         }else{
             AttemptEntity a=em.find(AttemptEntity.class, attempt.getId());
             a.setNumber(attempt.getAttemptNumber());
             a.setResult(attempt.getResult());           
   
-            em.persist(a);
+            em.merge(a);
         }
     }
 

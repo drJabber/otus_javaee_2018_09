@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.glassfish.jersey.jackson.internal.jackson.jaxrs.json.JacksonJaxbJsonProvider;
 import org.glassfish.jersey.logging.LoggingFeature;
 import org.glassfish.jersey.server.ResourceConfig;
+import org.glassfish.jersey.server.mvc.jsp.JspMvcFeature;
 import rnk.t04.rest.GameSvc;
 
 import javax.ws.rs.ApplicationPath;
@@ -19,7 +20,8 @@ public class RnkRestApp extends ResourceConfig {
     private static final String ENCODING_PROPERTY = "encoding";
 
     public RnkRestApp(){
-
+        property(JspMvcFeature.TEMPLATE_BASE_PATH,"/");
+        register(JspMvcFeature.class);
         registerResourceClasses();
 
         ObjectMapper objectMapper = new ObjectMapper();

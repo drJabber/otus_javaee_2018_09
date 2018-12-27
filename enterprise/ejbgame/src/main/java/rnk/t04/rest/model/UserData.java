@@ -19,8 +19,8 @@ public class UserData implements Serializable{
     private String login;
 
     @NotNull(message = "Input your guess please")
-    @FormParam(value = "guess-text")
-    @DecimalMin(value = "0", message = "Guess shoul be in [0..9]")
-    @DecimalMax(value = "9", message = "Guess shoul be in [0..9]")
+    @FormParam(value = "attempt-text")
+    @DecimalMin(value = "0", message = "Guess should be in [0..9]")
+    @DecimalMax(value = "9", message = "Guess should be in [0..9]")
     private Integer value;
 }

@@ -11,4 +11,6 @@ public interface IUserModel {
     String getCurrentUserName();
     UserAttempt getCurrentAttempt();
     List<UserAttempt> getAttempts();
+    Integer getCurrentGuess();
+    String getCheckResultText();
 }
