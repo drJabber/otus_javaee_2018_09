@@ -30,4 +30,13 @@ public class AttemptEntity {
 
     @Column(name="secret")
     Integer secret;
+
+    public String toString(){
+        if (user!=null){
+            return String.format("attempt(%s, %d)", user.getLogin(),number);
+        }else{
+            return "attempt()";
+        }
+
+    }
 }

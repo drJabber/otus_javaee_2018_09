@@ -4,16 +4,22 @@ import rnk.t04.entities.AttemptEntity;
 import rnk.t04.entities.UserEntity;
 
 import javax.annotation.PostConstruct;
-import javax.ejb.Singleton;
+import javax.annotation.Resource;
+import javax.ejb.*;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.util.List;
 
 @Singleton
+@Startup
 public class GameController{
     @PersistenceContext(unitName = "GAME_PU")
     private EntityManager em;
+
+    @Resource
+    TimerService timerservice;
+
 
     @PostConstruct
     void startup(){
@@ -37,6 +43,7 @@ public class GameController{
         if (user==null){
             user=new UserEntity();
             user.setLogin(login);
+            user.setSuspended(false);
             em.persist(user);
         }
 
@@ -62,11 +69,17 @@ public class GameController{
     }
 
     public void suspendUserIfLastAttemptFailed(String login, UserAttempt attempt){
-        if ((attempt.getAttemptNumber()==3)&&(attempt.getResult()==false)){
+        Integer attemptNumber=attempt.getAttemptNumber();
+        if (((attemptNumber==null) || (attemptNumber==0))&&(attempt.getResult()==false)){
             UserEntity user=this.findUser(login);
             if (user!=null){
                 user.setSuspended(true);
                 em.merge(user);
+
+                TimerDto dto=new TimerDto(login);
+                TimerConfig config=new TimerConfig(dto,true);
+
+                timerservice.createSingleActionTimer(1*60*1000, config);
             }
         }
     }
@@ -80,8 +93,13 @@ public class GameController{
     }
 
     public void resumeAllUsers(){
-        em.createQuery("update User set suspended=false").executeUpdate();
+        em.createQuery("update UserEntity set suspended=false").executeUpdate();
     }
 
+    @Timeout
+    private void timerExpired(Timer timer){
+        TimerDto dto=(TimerDto)timer.getInfo();
+        resumeUser(dto.getLogin());
+    }
 
 }

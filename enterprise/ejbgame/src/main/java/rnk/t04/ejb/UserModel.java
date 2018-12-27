@@ -30,9 +30,6 @@ public class UserModel implements IUserModel{
     @EJB
     GameController controller;
 
-    @EJB
-    TimerService timerservice;
-
     @Override
     public void initialize(UserData userData) {
         UserEntity entity=controller.findUser(userData.getLogin());
@@ -40,8 +37,8 @@ public class UserModel implements IUserModel{
         currentUserName=userData.getLogin();
         currentGuess=userData.getValue();
 
-        if (!entity.getSuspended()){
-            suspended=false;
+        suspended=false;
+        if ((entity==null) || (!entity.getSuspended())){
             attempts=populateAttempts(entity);
             currentAttempt=processAttempt(userData.getValue());
             suspendIfLastAttemptFailed(currentUserName,currentAttempt);
@@ -73,7 +70,8 @@ public class UserModel implements IUserModel{
     @Override
     public String getCheckResultText(){
         if (currentAttempt!=null){
-            if (currentAttempt.getResult()){
+            Boolean result=currentAttempt.getResult();
+            if ((result!=null) &&(result==true)){
                 return "You WIN!";
             }else{
                 return "Heh... looser...";
@@ -138,14 +136,10 @@ public class UserModel implements IUserModel{
     }
 
     private void suspendIfLastAttemptFailed(String login, UserAttempt attempt){
-        controller.suspendUserIfLastAttemptFailed(login,attempt);
-        timerservice.createSingleActionTimer(1*60*1000, new TimerConfig(new TimerDto(login),false));
+        if (attempt!=null){
+            controller.suspendUserIfLastAttemptFailed(login,attempt);
+        }
     }
 
-    @Timeout
-    private void timerExpired(Timer timer){
-        TimerDto dto=(TimerDto)timer.getInfo();
-        controller.resumeUser(dto.getLogin());
-    }
-    
+
 }

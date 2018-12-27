@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,9 +21,11 @@ public class UserEntity {
     @Column(name="id")
     Integer id;
 
+    @NotNull
     @Column(name="login")
     String login;
 
+    @NotNull
     @Column(name="suspended")
     Boolean suspended;
 
