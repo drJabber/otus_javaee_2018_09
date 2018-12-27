@@ -16,6 +16,11 @@
                             Guess the number (attempt#${it.currentAttempt.attemptNumber+1})
                         </td>
                     </tr>
+                    <tr class="state-row">
+                        <td colspan="2">
+                            <div>${it.getSuspendedText()}</div>
+                        </td>
+                    </tr>
                     <tr class="controls-row">
                         <td width="50%">
                             <p><label for="login-text">Player: </label></p>

@@ -19,6 +19,7 @@ import java.util.List;
 @Stateful(name="UserModel")
 public class UserModel implements IUserModel{
     private String currentUserName;
+    private Boolean suspended;
     private Integer currentGuess;
     private UserAttempt currentAttempt=new UserAttempt();
     private UserAttempt lastAttempt=null;
@@ -30,13 +31,24 @@ public class UserModel implements IUserModel{
     @EJB
     GameController controller;
 
+    @EJB    
+    TimerService timerservice;
+
     @Override
     public void initialize(UserData userData) {
         UserEntity entity=controller.findUser(userData.getLogin());
-        attempts=populateAttempts(entity);
+
         currentUserName=userData.getLogin();
         currentGuess=userData.getValue();
-        currentAttempt=processAttempt(userData.getValue());
+
+        if (checkSuspended(entity)){
+            suspended=false;
+            attempts=populateAttempts(entity);
+            currentAttempt=processAttempt(userData.getValue());
+            suspendIfLastAttemptFailed(currentUserName,currentAttempt);
+        }else{
+            suspended=true;
+        }
     }
 
     @Override
@@ -59,6 +71,29 @@ public class UserModel implements IUserModel{
         return currentGuess;
     }
 
+    @Override
+    public String getCheckResultText(){
+        if (currentAttempt!=null){
+            if (currentAttempt.getResult()){
+                return "You WIN!";
+            }else{
+                return "Heh... looser...";
+            }
+        } else{
+            return "Not checked yet";
+        }
+    }
+
+    @Override
+    public String getSuspendedText(){
+        if (suspended){
+            return "This login is suspended for some time, please try again later";
+        }else{
+            return "";
+        }
+    }
+        
+    
     private List<UserAttempt> populateAttempts(UserEntity entity) {
         List<UserAttempt> list=new ArrayList<>();
         if (entity!=null){
@@ -99,21 +134,19 @@ public class UserModel implements IUserModel{
         return attempt;
     }
 
-    @Override
-    public String getCheckResultText(){
-        if (currentAttempt!=null){
-            if (currentAttempt.getResult()){
-                return "You WIN!";
-            }else{
-                return "Heh... looser...";
-            }
-        } else{
-            return "Not checked yet";
-        }
-    }
-
     private Integer computeSecret(){
         return  (int)Math.round(Math.floor(random.getNext()*10));
     }
 
+    private void suspendIfLastAttemptFailed(String login, UserAttempt attempt){
+        controller.suspendUserIfLastAttemptFailed(login,attempt);
+        timeservice.createSingleActionTimer(1*60*1000, new TimerConfig(new TimerDto(login),false));
+    }
+
+    @Timeout
+    private void timerExpired(Timer timer){
+        TimerDto dto=(TimerDto)timer.getInfo();
+        controller.resumeUser(dto.getLogin());
+    }
+    
 }

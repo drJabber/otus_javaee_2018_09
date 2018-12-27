@@ -13,4 +13,5 @@ public interface IUserModel {
     List<UserAttempt> getAttempts();
     Integer getCurrentGuess();
     String getCheckResultText();
+    String getSuspendedText();
 }

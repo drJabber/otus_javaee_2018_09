@@ -14,6 +14,11 @@ public class GameController{
     @PersistenceContext(unitName = "GAME_PU")
     private EntityManager em;
 
+    @PostCreate
+    void startup(){
+        resumeAllUsers();
+    }
+
     public UserEntity findUser(String login){
         Query q=em.createQuery("select u from UserEntity u  where u.login=:login").setParameter("login",login);
         List<UserEntity> list=q.getResultList();
@@ -23,6 +28,7 @@ public class GameController{
             return null;
         }
     }
+
 
     public void saveUserAttempt(String login, UserAttempt attempt){
         UserEntity user=this.findUser(login);
@@ -54,7 +60,27 @@ public class GameController{
         }
     }
 
+    public void suspendUserIfLastAttemptFailed(String login, UserAttempt attempt){
+        if (attempt.attemptNumber()==3)&&(attempt.getResult()==false){
+            UserEntity user=this.findUser(login);
+            if (user!=null){
+                user.setSuspended(true);
+                em.merge(user);
+            }
+        }
+    }
 
+    public void resumeUser(String login){
+        UserEntity user=this.findUser(login);
+        if (user!=null){
+            user.setSuspended(false);
+            em.merge(user);
+        }
+    }
+
+    public void resumeAllUsers(){
+        em.createQuery("update User set suspended=false").executeUpdate();
+    }
 
 
 }
