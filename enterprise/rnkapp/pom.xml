@@ -239,7 +239,47 @@
           <version>2.3.28</version>
       </dependency>
 
-    <dependency>
+      <dependency>
+          <groupId>org.glassfish.main.security</groupId>
+          <artifactId>security</artifactId>
+          <version>5.0</version>
+          <scope>system</scope>
+          <systemPath>/opt/payara5/glassfish/modules/security.jar</systemPath>
+      </dependency>
+
+      <dependency>
+          <groupId>org.glassfish.main.security</groupId>
+          <artifactId>security-ee</artifactId>
+          <version>5.0</version>
+          <scope>system</scope>
+          <systemPath>/opt/payara5/glassfish/modules/security-ee.jar</systemPath>
+      </dependency>
+
+      <dependency>
+          <groupId>org.glassfish.main.common</groupId>
+          <artifactId>glassfish-ee-api</artifactId>
+          <version>5.0</version>
+          <scope>system</scope>
+          <systemPath>/opt/payara5/glassfish/modules/glassfish-ee-api.jar</systemPath>
+      </dependency>
+
+      <dependency>
+          <groupId>org.glassfish.main.connectors</groupId>
+          <artifactId>connectors-internal-api</artifactId>
+          <version>5.0</version>
+          <scope>system</scope>
+          <systemPath>/opt/payara5/glassfish/modules/connectors-internal-api.jar</systemPath>
+      </dependency>
+
+      <dependency>
+          <groupId>org.glassfish.hk2</groupId>
+          <artifactId>hk2-api</artifactId>
+          <version>2.5.0-b61.payara-p1</version>
+          <scope>system</scope>
+          <systemPath>/opt/payara5/glassfish/modules/hk2-api.jar</systemPath>
+      </dependency>
+
+      <dependency>
       <groupId>javax</groupId>
       <artifactId>javaee-api</artifactId>
       <version>${javaee.version}</version>
