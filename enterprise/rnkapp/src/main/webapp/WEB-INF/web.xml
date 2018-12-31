@@ -173,7 +173,7 @@
 
   <login-config>
     <auth-method>FORM</auth-method>
-    <realm-name>rnk-realm</realm-name>
+    <realm-name>RnkRealm</realm-name>
     <form-login-config>
       <form-login-page>/main/login</form-login-page>
       <form-error-page>/main/loginerror</form-error-page>

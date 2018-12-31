@@ -1,6 +1,8 @@
-package rnk.l10.realm;
+package rnk.r10.realm;
 
-import java.io.IOException;
+//import com.sun.xml.internal.rngom.parse.host.Base;
+//
+//import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.Key;
 import java.security.MessageDigest;
@@ -12,8 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
+import java.util.Base64;
 
 public class HashUtils {
     private final static Logger LOGGER = Logger.getLogger(HashUtils.class.getName());
@@ -21,8 +22,8 @@ public class HashUtils {
     private SecureRandom random;
     private static final String CHARSET = "UTF-8";
     private static final String ENCRYPTION_ALGORITHM = "SHA-512";
-    private BASE64Decoder decoder = new BASE64Decoder();
-    private BASE64Encoder encoder = new BASE64Encoder();
+    private Base64.Decoder decoder = Base64.getDecoder();
+    private Base64.Encoder encoder = Base64.getEncoder();
 
     public byte[] salt(int length) {
         random = new SecureRandom();
@@ -62,17 +63,10 @@ public class HashUtils {
     }
 
     public String toBase64(byte[] text) {
-        return encoder.encode(text);
+        return encoder.encodeToString(text);
     }
 
     public byte[] fromBase64(String text) {
-        byte[] textBytes = null;
-        try {
-            textBytes = decoder.decodeBuffer(text);
-        } catch (IOException ex) {
-            LOGGER.log(Level.SEVERE, "encoding failed", ex);
-            Logger.getLogger(HashUtils.class.getName()).log(Level.SEVERE, "Encoding failed!", ex);
-        }
-        return textBytes;
+        return decoder.decode(text);
     }
 }

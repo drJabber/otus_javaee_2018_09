@@ -3,7 +3,7 @@ services:
 
   rnk:
     image: postgres:11.1
-    
+    container_name: db    
     environment:
       POSTGRES_PASSWORD: 1
       POSTGRES_DB: dbotus
@@ -14,9 +14,9 @@ services:
     
   rnk-otus-project:
     image: rnk-otus-project
-
-    # environment:
-    #   JAVA_TOOL_OPTIONS: -agentlib:jdwp=transport=dt_socket,address=42333,server=y,suspend=n
+    container_name: otus
+    environment:
+      - POSTBOOT_COMMANDS=/opt/payara/scripts/create-realm.sh
 
     ports:
       - "18080:8080"

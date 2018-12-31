@@ -1,4 +1,4 @@
-package rnk.l10.realm;
+package rnk.r10.realm;
 
 import com.sun.appserv.security.AppservRealm;
 import com.sun.enterprise.security.auth.realm.BadRealmException;
@@ -17,7 +17,7 @@ public class RnkRealm extends AppservRealm {
 
     @Override
     protected void init(Properties props) throws BadRealmException, NoSuchRealmException {
-        _logger.fine("init()");
+        _logger.info("initialize rnk realm");
         jaasCtxName = props.getProperty("jaas-context", "RnkRealm");
         dsName = props.getProperty("dataSource", "jdbc/rnk-jpa");
         storage = new Storage(dsName);
@@ -34,15 +34,31 @@ public class RnkRealm extends AppservRealm {
     }
 
     public Boolean authenticate(String login, String password) {
+        _logger.info("authenticate user with rnk realm");
+
+        Boolean result=false;
 
         // salt it
         String salt = storage.getSaltForLogin(login);
 
+
+
 //        String[] result =null;
-        Boolean result=false;
 
         if (salt != null) {
             HashUtils utils = new HashUtils();
+
+//            byte[] bsalt=utils.salt(24);
+//            _logger.info("generated salt");
+//            String newSalt=utils.toBase64(bsalt);
+//            _logger.info(newSalt);
+//            byte[] bhash=utils.hash("blah",bsalt);
+//            _logger.info("generated hash");
+//            String newHash=utils.toBase64(bhash);
+//            _logger.info(newHash);
+//            _logger.info(String.format("salt:%s, passwd: %s", newSalt, newHash));
+
+
             // get the byte[] from the salt
             byte[] saltBytes = utils.fromBase64(salt);
 
@@ -51,7 +67,7 @@ public class RnkRealm extends AppservRealm {
 
             // Base64 encode to String
             String encoded_passwd = utils.toBase64(passwordBytes);
-
+            _logger.info(String.format("user: %s, salt:%s, encoded_passwd: %s, encoded_passwd: %s", login,salt, password, encoded_passwd));
             return storage.validateUser(login,encoded_passwd);
 //            // validate it
 //            if (storage.validateUser(login, encoded_passwd)) {
@@ -63,6 +79,7 @@ public class RnkRealm extends AppservRealm {
 
     @Override
     public Enumeration getGroupNames(String login) throws InvalidOperationException, NoSuchUserException {
+        _logger.info("rnk realm - get group names");
         return Collections.enumeration(storage.retrieveGroups(login));
     }
 }
