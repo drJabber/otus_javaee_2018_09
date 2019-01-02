@@ -85,7 +85,7 @@ public class Storage {
 
         try {
             LOGGER.log(Level.INFO, String.format("rnk realm - validate user %s, password %s", login, password));
-            PreparedStatement s = getConnection().prepareStatement(VERIFY_USER);
+            PreparedStatement s = getConnection().prepareStatement(VERIFY_USER,ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
             s.setString(1, login);
             s.setString(2, password);
             ResultSet rs = s.executeQuery();
@@ -107,10 +107,12 @@ public class Storage {
             PreparedStatement s = getConnection().prepareStatement(EXTRACT_GROUPS);
             List<String> l=new ArrayList<>();
             s.setString(1, login);
+            LOGGER.log(Level.INFO, "before retrieve groups");
             ResultSet rs = s.executeQuery();
             while (rs.next()){
                 l.add(rs.getString("role"));
             }
+            LOGGER.log(Level.INFO, "after retrieve groups");
             return l;
 
         } catch (SQLException ex) {

@@ -175,9 +175,6 @@
           <property name="digest-algorithm" value="SHA-1"></property>
           <property name="user-name-column" value="login"></property>
         </auth-realm>
-        <auth-realm classname="rnk.r10.realm.RnkRealm" name="RnkRealm">
-          <property name="jaas-context" value="RnkRealm"></property>
-        </auth-realm>
         <jacc-provider policy-provider="com.sun.enterprise.security.provider.PolicyWrapper" name="default" policy-configuration-factory-provider="com.sun.enterprise.security.provider.PolicyConfigurationFactoryImpl">
           <property name="repository" value="${com.sun.aas.instanceRoot}/generated/policy"></property>
         </jacc-provider>

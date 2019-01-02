@@ -161,6 +161,17 @@
 
   <security-constraint>
     <web-resource-collection>
+      <web-resource-name>Админка</web-resource-name>
+      <url-pattern>/main/soap/*</url-pattern>
+      <url-pattern>/main/rest/*</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>Accountant</role-name>
+    </auth-constraint>
+  </security-constraint>
+
+  <security-constraint>
+    <web-resource-collection>
       <web-resource-name>FreeMarker MVC Views</web-resource-name>
       <url-pattern>*.ftl</url-pattern>
       <url-pattern>*.ftlh</url-pattern>

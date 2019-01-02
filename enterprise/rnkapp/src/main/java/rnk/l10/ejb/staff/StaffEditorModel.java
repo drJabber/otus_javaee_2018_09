@@ -7,12 +7,14 @@ import rnk.l10.entities.RoleEntity;
 import rnk.l10.exception.RnkWebServiceException;
 import rnk.l10.rest.model.StaffDto;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
 import java.io.Serializable;
 import java.util.List;
 
 @Stateful
+@RolesAllowed({"admin"})
 public class StaffEditorModel implements Serializable,IStaffEditorModel{
 
     @EJB

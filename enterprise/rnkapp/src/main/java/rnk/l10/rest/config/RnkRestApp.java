@@ -17,10 +17,7 @@ import org.glassfish.jersey.server.ServerProperties;
 import org.glassfish.jersey.server.mvc.jsp.JspMvcFeature;
 import rnk.l10.exception.ConstraintViolationExceptionMapper;
 import rnk.l10.exception.QueryParamExceptionMapper;
-import rnk.l10.rest.RnkAnnuitetCreditAccounterImpl;
-import rnk.l10.rest.RnkDifferentialCreditAccounterImpl;
-import rnk.l10.rest.RnkStaffEditorImpl;
-import rnk.l10.rest.RnkStaffImpl;
+import rnk.l10.rest.*;
 
 import javax.ws.rs.ApplicationPath;
 import java.nio.charset.StandardCharsets;
@@ -55,7 +52,7 @@ public class RnkRestApp extends ResourceConfig {
         register(jacksonProvider);
 
         logger.setLevel(Level.ALL);
-        register(new LoggingFeature(logger, Level.INFO, LoggingFeature.Verbosity.HEADERS_ONLY,65536));
+        register(new LoggingFeature(logger, Level.INFO, LoggingFeature.Verbosity.PAYLOAD_ANY,65536));
 
         property(ENCODING_PROPERTY, StandardCharsets.UTF_8.toString());
     }
@@ -65,6 +62,7 @@ public class RnkRestApp extends ResourceConfig {
         register(RnkAnnuitetCreditAccounterImpl.class);
         register(RnkStaffEditorImpl.class);
         register(RnkStaffImpl.class);
+        register(AuthImpl.class);
     }
 
 

@@ -4,7 +4,7 @@
 <%@ taglib prefix="display" uri="http://displaytag.sf.net" %>
 <jsp:useBean id="search" class="rnk.l10.entities.beans.StaffSearchBean" scope="session" />
 <c:if test="${!search.isEmpty()}">
-    <display:table requestURI="displaytag.jsp" name="${search.find(pageContext)}" decorator="rnk.l10.entities.decorators.StaffDisplayDecorator" sort="list" pagesize="6" class="display-search" >
+    <display:table requestURI="displaytag.jsp" name="${search.find(pageContext)}" decorator="rnk.l10.decorators.StaffDisplayDecorator" sort="list" pagesize="6" class="display-search" >
         <display:column property="fio" title="Фио"   class="display-search-column" headerClass="display-search-header"/>
         <display:column property="login" title="Login"  class="display-search-column" headerClass="display-search-header"/>
         <display:column property="email" title="Email"   class="display-search-column" headerClass="display-search-header"/>

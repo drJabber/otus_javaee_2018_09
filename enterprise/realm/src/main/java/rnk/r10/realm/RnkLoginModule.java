@@ -6,9 +6,11 @@ import com.sun.enterprise.security.auth.realm.NoSuchUserException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.logging.Logger;
 import javax.security.auth.login.LoginException;
 
 public class RnkLoginModule extends AppservPasswordLoginModule {
+    private final static Logger LOGGER = Logger.getLogger(RnkLoginModule.class.getName());
 
     @Override
     protected void authenticateUser() throws LoginException {
@@ -19,13 +21,17 @@ public class RnkLoginModule extends AppservPasswordLoginModule {
         RnkRealm rnkRealm = (RnkRealm) _currentRealm;
 
 
-        if (rnkRealm.authenticate(_username, _password)) {
+        if (!rnkRealm.authenticate(_username, _password)) {
             throw new LoginException(String.format("Authenthication failed for user %s", _username));
         }
+
+        LOGGER.info("Login ok, start with groups");
+
         // Get group names for the authenticated user from the Realm class
         Enumeration enumeration = null;
         try {
             enumeration = rnkRealm.getGroupNames(_username);
+            LOGGER.info("groups retrieved ok");
         } catch (InvalidOperationException e) {
             throw new LoginException("InvalidOperationException was thrown for getGroupNames() on RnkRealm");
         } catch (NoSuchUserException e) {
@@ -39,6 +45,10 @@ public class RnkLoginModule extends AppservPasswordLoginModule {
 
         String[] authenticatedGroups = g.toArray(new String[g.size()]);
 
+        LOGGER.info("before commit groups");
+        if (authenticatedGroups.length>0) {
+            LOGGER.info(String.format("group: %s", authenticatedGroups[0]));
+        }
         // Call commitUserAuthentication with the group names the user belongs to.
         // Note that this method is called after the authentication has succeeded.
         // If authentication failed do not call this method. Global instance field

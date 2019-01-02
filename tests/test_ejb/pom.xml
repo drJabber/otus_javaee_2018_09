@@ -239,7 +239,16 @@
           <version>2.3.28</version>
       </dependency>
 
-    <dependency>
+      <dependency>
+          <groupId>org.glassfish.main.security</groupId>
+          <artifactId>security-ee</artifactId>
+          <version>5.0</version>
+          <scope>system</scope>
+          <systemPath>/opt/payara5/glassfish/modules/security-ee.jar</systemPath>
+      </dependency>
+
+
+      <dependency>
       <groupId>javax</groupId>
       <artifactId>javaee-api</artifactId>
       <version>${javaee.version}</version>

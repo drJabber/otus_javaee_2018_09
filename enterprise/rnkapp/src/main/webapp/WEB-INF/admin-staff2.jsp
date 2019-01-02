@@ -14,7 +14,7 @@
                 <div>
                     <a href="/rnkapp/api/v2/staffeditor"><button type="button" name="user_add_button" id="user_add_button" class="form-button">Добавить</button></a>
                 </div>
-                <display:table sort="list" pagesize="${sessionScope.staff.getPageSize()}" requestURI="${pageContext.request.contextPath}/main/admin/staff" name="${sessionScope.staff.get(pageContext)}" decorator="rnk.l10.entities.decorators.StaffDisplayDecorator" class="display-search" >
+                <display:table sort="list" pagesize="${sessionScope.staff.getPageSize()}" requestURI="${pageContext.request.contextPath}/main/admin/staff" name="${sessionScope.staff.get(pageContext)}" decorator="rnk.l10.decorators.StaffDisplayDecorator" class="display-search" >
                     <display:column property="fio" title="Фио"   class="display-search-column" headerClass="display-search-header"/>
                     <display:column property="login" title="Login"  class="display-search-column" headerClass="display-search-header"/>
 v                    <display:column property="email" title="Email"   class="display-search-column" headerClass="display-search-header"/>

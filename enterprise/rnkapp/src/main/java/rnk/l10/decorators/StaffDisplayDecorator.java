@@ -1,4 +1,4 @@
-package rnk.l10.entities.decorators;
+package rnk.l10.decorators;
 
 import org.displaytag.decorator.TableDecorator;
 import rnk.l10.entities.StaffEntity;

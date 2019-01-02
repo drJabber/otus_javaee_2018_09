@@ -27,5 +27,14 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Maven: org.glassfish.main.common:glassfish-ee-api:5.0">
+        <CLASSES>
+          <root url="jar:///opt/payara5/glassfish/modules/glassfish-ee-api.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>

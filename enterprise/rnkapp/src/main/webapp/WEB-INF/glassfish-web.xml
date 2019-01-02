@@ -9,6 +9,11 @@
         <role-name>admin</role-name>
         <group-name>admin</group-name>
     </security-role-mapping>
+    <security-role-mapping>
+        <role-name>Accountant</role-name>
+        <group-name>Accountant</group-name>
+        <group-name>admin</group-name>
+    </security-role-mapping>
 
     <class-loader delegate="true"/>
 

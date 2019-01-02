@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import rnk.l10.entities.StaffEntity;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateful;
 import javax.persistence.*;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -19,6 +20,7 @@ import rnk.l10.entities.adapters.JspPaginationAdapter;
 
 //@Data
 @Stateful
+@RolesAllowed({"admin"})
 public class StaffDisplayBean{
     private static final Logger logger = Logger.getLogger(StaffDisplayBean.class.getName());
 

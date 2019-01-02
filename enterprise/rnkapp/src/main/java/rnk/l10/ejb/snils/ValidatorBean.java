@@ -1,5 +1,6 @@
 package rnk.l10.ejb.snils;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.Singleton;
 
 @Singleton(name = "SnilsValidator")
@@ -8,7 +9,8 @@ public class ValidatorBean  implements Validator {
 
     //used code from here
 //    https://github.com/diman4ik/rusnaloglib/tree/master/src/main/java/com/rusnalog/rusnaloglib
-   @Override
+    @RolesAllowed({"Accountant"})
+    @Override
     public Boolean check(String snils){
         String[] parts = snils.split("-| ");
 

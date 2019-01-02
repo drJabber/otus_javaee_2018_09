@@ -54,6 +54,14 @@
             <scope>system</scope>
             <systemPath>/opt/payara5/glassfish/modules/security-ee.jar</systemPath>
         </dependency>
+
+        <dependency>
+            <groupId>org.glassfish.main.common</groupId>
+            <artifactId>glassfish-ee-api</artifactId>
+            <version>5.0</version>
+            <scope>system</scope>
+            <systemPath>/opt/payara5/glassfish/modules/glassfish-ee-api.jar</systemPath>
+        </dependency>
     </dependencies>
     <build>
         <!-- <pluginManagement>
