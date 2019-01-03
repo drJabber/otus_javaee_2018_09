@@ -90,10 +90,7 @@ public class Storage {
             s.setString(2, password);
             ResultSet rs = s.executeQuery();
             if (rs.first()) {
-                LOGGER.log(Level.INFO, "query returns valid user");
                 return true;
-            }else{
-                LOGGER.log(Level.INFO, "query returns empty result");
             }
         } catch (SQLException ex) {
             LOGGER.log(Level.SEVERE, "User validation failed", ex);
@@ -107,12 +104,10 @@ public class Storage {
             PreparedStatement s = getConnection().prepareStatement(EXTRACT_GROUPS);
             List<String> l=new ArrayList<>();
             s.setString(1, login);
-            LOGGER.log(Level.INFO, "before retrieve groups");
             ResultSet rs = s.executeQuery();
             while (rs.next()){
                 l.add(rs.getString("role"));
             }
-            LOGGER.log(Level.INFO, "after retrieve groups");
             return l;
 
         } catch (SQLException ex) {
